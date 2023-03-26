@@ -104,7 +104,7 @@ public class FileValidator {
                 LOGGER.warning(responseAggregation);
             }
 
-            // Get the custom validator configuration
+            /* // Get the custom validator configuration
             Map<String, Object> pdfConfig = (Map<String, Object>) fileTypeConfig.get(fileType);
             Map<String, Object> customValidatorConfig = (Map<String, Object>) pdfConfig.get("custom_validators");
             if (!Objects.isNull(customValidatorConfig)) {
@@ -116,13 +116,14 @@ public class FileValidator {
                     try {
                         // Invoke the method using CustomFileLoader class
                         String filePath = originalFile.getAbsolutePath();
-                        CustomFileLoader.main(new String[]{jarPath, className, methodName, filePath});
+                        CustomFileLoader loader = new CustomFileLoader();
+                        loader.loadClass(jarPath, className, methodName, filePath);
                     } catch (Exception e) {
                         LOGGER.severe(e.toString());
                         return new ValidationResponse(false, "An error occurred while reading file: " + e.getMessage(), originalFile, null);
                     }
                 }
-            }
+            } */
 
             // Check if the file name should be encoded
             Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
