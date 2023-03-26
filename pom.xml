@@ -47,7 +47,7 @@
                     <!-- DO NOT include log4j.properties file in your Jar -->
                     <archive>
                         <manifest>
-                            <mainClass>com.blumo.simpleapp.App</mainClass>
+                            <mainClass>com.blumo.FileSentry4J.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
