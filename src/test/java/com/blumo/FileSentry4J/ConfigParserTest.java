@@ -44,7 +44,6 @@ class ConfigParserTest {
         assertEquals("25504446", pdfConfig.get("magic_bytes"));
         assertEquals("25504446", pdfConfig.get("header_signatures"));
         assertEquals("0A2525454F46", pdfConfig.get("footer_signatures"));
-        assertTrue(pdfConfig.containsKey("custom_validators"));
         assertTrue(pdfConfig.containsKey("antivirus_scan"));
         assertTrue((Boolean) pdfConfig.get("name_encoding"));
         assertTrue((Boolean) pdfConfig.get("size_limit_validation"));
@@ -63,7 +62,6 @@ class ConfigParserTest {
         assertEquals("D0CF11E0A1B11AE1", docConfig.get("magic_bytes"));
         assertEquals("D0CF11E0A1B11AE1", docConfig.get("header_signatures"));
         assertEquals("0000000000000000", docConfig.get("footer_signatures"));
-        assertTrue(docConfig.containsKey("custom_validators"));
         assertTrue(docConfig.containsKey("antivirus_scan"));
         assertTrue((Boolean) docConfig.get("name_encoding"));
         assertTrue((Boolean) docConfig.get("size_limit_validation"));

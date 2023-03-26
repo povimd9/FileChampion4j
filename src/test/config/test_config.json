@@ -9,12 +9,6 @@
       "magic_bytes": "25504446",
       "header_signatures": "25504446",
       "footer_signatures": "0A2525454F46",
-      "custom_validators": {
-        "pdf_cleaner.jar": [
-          "com.PDFSanitizer",
-          "sanitizePDF"
-        ]
-      },
       "antivirus_scan": {
         "clamav_scan.java": [
           "RETURN_TYPE",
@@ -34,13 +28,6 @@
       "magic_bytes": "D0CF11E0A1B11AE1",
       "header_signatures": "D0CF11E0A1B11AE1",
       "footer_signatures": "0000000000000000",
-      "custom_validators": {
-        "sanitize_doc.java": [
-          "file",
-          "new_file_name",
-          "file_path"
-        ]
-      },
       "antivirus_scan": {
         "clamav_scan.java": [
           "RETURN_TYPE",
