@@ -27,3 +27,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/tmp_tests/
+
+### temp files ###
+.java
+/tmp_tests/

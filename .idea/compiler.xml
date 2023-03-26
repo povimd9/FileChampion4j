@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SafeFilez" target="19" />
+      <module name="SafeFilez" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

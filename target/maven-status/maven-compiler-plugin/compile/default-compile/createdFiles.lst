@@ -1,6 +1,6 @@
-main\java\com\blumo\FileSentry4J\ConfigParser.class
-main\java\com\blumo\FileSentry4J\Main.class
-main\java\com\blumo\FileSentry4J\CustomFileLoader.class
-main\java\com\blumo\FileSentry4J\FileValidator.class
-main\java\com\blumo\FileSentry4J\ValidationResponse.class
-main\java\com\blumo\FileSentry4J\CustomFileLoader$MyClassLoader.class
+com\blumo\FileSentry4J\CustomFileLoader$MyClassLoader.class
+com\blumo\FileSentry4J\Main.class
+com\blumo\FileSentry4J\ConfigParser.class
+com\blumo\FileSentry4J\CustomFileLoader.class
+com\blumo\FileSentry4J\ValidationResponse.class
+com\blumo\FileSentry4J\FileValidator.class
