@@ -30,5 +30,6 @@ bin/
 /tmp_tests/
 
 ### temp files ###
-.java
+.*
 /tmp_tests/
+/target/

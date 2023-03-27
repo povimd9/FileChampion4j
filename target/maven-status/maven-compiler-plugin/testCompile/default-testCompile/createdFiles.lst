@@ -1,3 +1,4 @@
-com\blumo\FileSentry4J\ValidationResponseTest.class
-com\blumo\FileSentry4J\FileValidatorTest.class
+com\blumo\FileSentry4J\FileAclHelperTest.class
 com\blumo\FileSentry4J\ConfigParserTest.class
+com\blumo\FileSentry4J\FileAclHelperTest$ChangeFileACLMethod.class
+com\blumo\FileSentry4J\ValidationResponseTest.class

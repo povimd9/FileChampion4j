@@ -14,8 +14,11 @@
           "RETURN_TYPE",
           "param1",
           "param2"
-        ]
-      },
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_group": "Users",
+      "change_ownership_mode": "r",
       "name_encoding": true,
       "size_limit_validation": true,
       "max_size": {
@@ -33,8 +36,11 @@
           "RETURN_TYPE",
           "param1",
           "param2"
-        ]
-      },
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_group": "Users",
+      "change_ownership_mode": "r",
       "name_encoding": true,
       "size_limit_validation": true,
       "max_size": {

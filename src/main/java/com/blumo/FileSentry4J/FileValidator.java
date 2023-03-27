@@ -12,20 +12,20 @@ import java.util.logging.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-// names to consider for the project: FileFilter4J, FileShield4J, FileSentry4J
-// This class can be used by any application to validate file types.
-// The configuration for file types and validations is stored in a JSON file and should be loaded as part of initiation.
-// The originalFile is validated against the configured controls for the file type.
-// The validateFileType method returns a ValidationResponse object that contains:
-// - isValid: a boolean indicating whether the file is valid or not
-// - fileBytes: the file bytes if the file is valid
-// - fileChecksum: the file checksum if the file is valid
-// - resultsInfo: a string containing additional information about the validation results /
-//                      such as reason for failure or the name of the file if it is valid
-// TODO: add try/catch blocks to handle specific exceptions
-// TODO: add unit tests
-// TODO: support cli and jar loading
-
+/**
+ * This class is used to validate file types and checksums
+ * The configuration for file types and validations is stored in a JSON file and should be loaded as part of initiation.
+ * The originalFile is validated against the configured controls for the file type.
+ * The validateFileType method returns a ValidationResponse object that contains:
+ * - isValid: a boolean indicating whether the file is valid or not
+ * - fileBytes: the file bytes if the file is valid
+ * - fileChecksum: the file checksum if the file is valid
+ * - resultsInfo: a string containing additional information about the validation results /
+                      such as reason for failure or the name of the file if it is valid
+TODO: add try/catch blocks to handle specific exceptions
+TODO: add unit tests
+TODO: support cli and jar loading
+*/
 
 public class FileValidator {
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
@@ -144,6 +144,20 @@ public class FileValidator {
                     }
                 }
 
+                // Check if file ownership and permissions should be changed
+                Boolean changeOwnership = (Boolean) extensionConfig.get("change_ownership");
+                if (!Objects.isNull(changeOwnership) && changeOwnership) {
+                    String changeOwnershipUser = (String) extensionConfig.get("change_ownership_user");
+                    String changeOwnershipGroup = (String) extensionConfig.get("change_ownership_group");
+                    String changeOwnershipMode = (String) extensionConfig.get("change_ownership_mode");
+                    try {
+                        // Change the file ACL
+                        FileAclHelper.ChangeFileACL(encodedFilePath, changeOwnershipMode, changeOwnershipUser, changeOwnershipGroup);
+                        LOGGER.info(encodedFilePath + " ACL changed successfully.");
+                    } catch (Exception e) {
+                        responseAggregation = "Error changing file ACL: " + e.getMessage();
+                    }
+                }
 
                 if (responseAggregation.isEmpty() && !Objects.isNull(encodedFilePath)) {
                     File cleanFile = new File(encodedFilePath.toAbsolutePath().toString());
