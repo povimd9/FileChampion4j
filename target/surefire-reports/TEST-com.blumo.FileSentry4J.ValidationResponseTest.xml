@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Amazon Corretto\jdk11.0.18_10\bin"/>
-    <property name="sun.java.command" value="C:\Users\User1\AppData\Local\Temp\surefire16739971327762719803\surefirebooter-20230326184412601_3.jar C:\Users\User1\AppData\Local\Temp\surefire16739971327762719803 2023-03-26T18-44-11_010-jvmRun1 surefire-20230326184412601_1tmp surefire_0-20230326184412601_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\User1\AppData\Local\Temp\surefire2638335158638081156\surefirebooter-20230326194639490_3.jar C:\Users\User1\AppData\Local\Temp\surefire2638335158638081156 2023-03-26T19-46-37_734-jvmRun1 surefire-20230326194639490_1tmp surefire_0-20230326194639490_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\User1\IdeaProjects\SafeFilez\target\test-classes;C:\Users\User1\IdeaProjects\SafeFilez\target\classes;C:\Users\User1\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.14.2\jackson-databind-2.14.2.jar;C:\Users\User1\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.14.2\jackson-annotations-2.14.2.jar;C:\Users\User1\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.14.2\jackson-core-2.14.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.2\junit-jupiter-api-5.9.2.jar;C:\Users\User1\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-commons\1.9.2\junit-platform-commons-1.9.2.jar;C:\Users\User1\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.2\junit-jupiter-engine-5.9.2.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-engine\1.9.2\junit-platform-engine-1.9.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -33,7 +33,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\User1\AppData\Local\Temp\surefire16739971327762719803\surefirebooter-20230326184412601_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\User1\AppData\Local\Temp\surefire2638335158638081156\surefirebooter-20230326194639490_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.18+10-LTS"/>
@@ -60,8 +60,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testGetFileBytes" classname="com.blumo.FileSentry4J.ValidationResponseTest" time="0.001"/>
-  <testcase name="testFailureReason" classname="com.blumo.FileSentry4J.ValidationResponseTest" time="0"/>
+  <testcase name="testGetFileBytes" classname="com.blumo.FileSentry4J.ValidationResponseTest" time="0.002"/>
+  <testcase name="testFailureReason" classname="com.blumo.FileSentry4J.ValidationResponseTest" time="0.001"/>
   <testcase name="testIsValid" classname="com.blumo.FileSentry4J.ValidationResponseTest" time="0"/>
   <testcase name="testGetFileChecksum" classname="com.blumo.FileSentry4J.ValidationResponseTest" time="0"/>
 </testsuite>

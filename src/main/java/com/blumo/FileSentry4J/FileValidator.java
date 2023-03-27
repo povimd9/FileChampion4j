@@ -2,6 +2,9 @@ package com.blumo.FileSentry4J;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
@@ -35,7 +38,7 @@ public class FileValidator {
         this.configMap = configMap;
     }
 
-    public ValidationResponse validateFileType(String fileType, File originalFile) throws IOException {
+    public ValidationResponse validateFileType(String fileType, File originalFile, String outDir) throws IOException {
         // Read the file into a byte array
         byte[] fileBytes = Files.readAllBytes(originalFile.toPath());
         String responseAggregation = "";
@@ -125,38 +128,48 @@ public class FileValidator {
                 }
             } */
 
-            // Check if the file name should be encoded
-            Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
-            if (!Objects.isNull(nameEncode) && nameEncode) {
-                String encodedFileName = Base64.getEncoder().encodeToString(originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_").getBytes());
-                File encodedFile = new File(originalFile.getParentFile(), encodedFileName);
-                boolean success = originalFile.renameTo(encodedFile);
-                if (!success) {
-                    responseAggregation = "Failed to rename file: " + originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
-                    LOGGER.warning(responseAggregation);
-                }
-            }
-
-            // Calculate SHA-256 checksum of file
-            byte[] sha256Bytes = null;
-            try {
-                MessageDigest sha256Digest = MessageDigest.getInstance("SHA-256");
-                sha256Digest.update(fileBytes);
-                sha256Bytes = sha256Digest.digest();
-            } catch (NoSuchAlgorithmException e) {
-                responseAggregation = "Failed to calculate checksum of file: " + originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
-                LOGGER.warning(responseAggregation);
-            }
-            // Convert SHA-256 bytes to Base64 string
-            String sha256Checksum = Base64.getEncoder().encodeToString(sha256Bytes);
-
             if (responseAggregation.isEmpty()) {
-                LOGGER.info(originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_") + " is valid");
-                return new ValidationResponse(true, "File is valid", originalFile, sha256Checksum);
-            } else {
-                return new ValidationResponse(false, responseAggregation, originalFile, sha256Checksum);
-            }
+                // Check if the file name should be encoded
+                Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
+                Path encodedFilePath = null;
+                if (!Objects.isNull(nameEncode) && nameEncode) {
+                    String encodedFileName = Base64.getEncoder().encodeToString(originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_").getBytes());
+                    encodedFilePath = Paths.get(outDir, encodedFileName + "." + getFileExtension(originalFile.getName()));
+                    try {
+                        Files.copy(originalFile.toPath(), encodedFilePath, StandardCopyOption.REPLACE_EXISTING);
+                        String encodingStatus = "File " + originalFile.getName() + " has been successfully encoded and saved in " + encodedFilePath.toAbsolutePath();
+                        LOGGER.info(encodingStatus);
+                    } catch (IOException e) {
+                        responseAggregation = "Failed to encode file: " + encodedFilePath.toAbsolutePath();
+                        LOGGER.warning(responseAggregation);
+                    }
+                }
 
+
+                if (responseAggregation.isEmpty() && !Objects.isNull(encodedFilePath)) {
+                    File cleanFile = new File(encodedFilePath.toAbsolutePath().toString());
+
+                    // Calculate SHA-256 checksum of file
+                    byte[] sha256Bytes = null;
+                    try {
+                        MessageDigest sha256Digest = MessageDigest.getInstance("SHA-256");
+                        sha256Digest.update(Files.readAllBytes(cleanFile.toPath()));
+                        sha256Bytes = sha256Digest.digest();
+                    } catch (NoSuchAlgorithmException e) {
+                        responseAggregation = "Failed to calculate checksum of file: " + cleanFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
+                        LOGGER.warning(responseAggregation);
+                    }
+                    // Convert SHA-256 bytes to Base64 string
+                    String sha256Checksum = Base64.getEncoder().encodeToString(sha256Bytes);
+
+                    LOGGER.info(originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_") + " is valid");
+                    return new ValidationResponse(true, "File is valid", cleanFile, sha256Checksum);
+                } else {
+                    return new ValidationResponse(false, responseAggregation, originalFile, null);
+                }
+            } else {
+                return new ValidationResponse(false, responseAggregation, originalFile, null);
+            }
         } catch (Exception e) {
             LOGGER.severe(e.toString());
             return new ValidationResponse(false, "An error occurred while reading file: " + e.getMessage(), originalFile, null);
@@ -239,7 +252,7 @@ public class FileValidator {
         for (int i = 0; i < hexPattern.length(); i += 2) {
             footerSignatures[i / 2] = (byte) Integer.parseInt(hexPattern.substring(i, i + 2), 16);
         }
-        int footerStartIndex = fileBytes.length - footerSignatures.length;
+        int footerStartIndex = fileBytes.length - footerSignatures.length -1;
         if (footerStartIndex < 0) {
             return false;
         }
