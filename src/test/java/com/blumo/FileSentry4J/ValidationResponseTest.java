@@ -17,7 +17,7 @@ public class ValidationResponseTest {
     public void testFailureReason() {
         String expected = "file too large";
         ValidationResponse response = new ValidationResponse(false, expected, null, null);
-        assertEquals(expected, response.failureReason());
+        assertEquals(expected, response.resultsInfo());
     }
 
     @Test

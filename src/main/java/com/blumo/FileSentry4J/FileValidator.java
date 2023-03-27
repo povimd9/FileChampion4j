@@ -1,33 +1,31 @@
 package com.blumo.FileSentry4J;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.io.File;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
-import java.util.Map;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Objects;
 
 // names to consider for the project: FileFilter4J, FileShield4J, FileSentry4J
-// FileValidator class to validate file types. This class can be used by any application to validate file types.
-// The configuration for file types is stored in a JSON file. The JSON file is parsed into a Map object.
-// The Map object is passed to the FileValidator constructor.
-// The FileValidator class contains a validateFileType method that takes a file type and a file as input.
-// The file type is used to look up the configuration for that file type in the Map object.
-// The file is validated against the configuration for the file type.
-// The validateFileType method returns a ValidationResponse object that contains a boolean indicating whether the file is valid or not.
-// If the file is not valid, the ValidationResponse object contains a failure reason.
+// This class can be used by any application to validate file types.
+// The configuration for file types and validations is stored in a JSON file and should be loaded as part of initiation.
+// The originalFile is validated against the configured controls for the file type.
+// The validateFileType method returns a ValidationResponse object that contains:
+// - isValid: a boolean indicating whether the file is valid or not
+// - fileBytes: the file bytes if the file is valid
+// - fileChecksum: the file checksum if the file is valid
+// - resultsInfo: a string containing additional information about the validation results /
+//                      such as reason for failure or the name of the file if it is valid
 // TODO: add try/catch blocks to handle specific exceptions
-// TODO: add logging
 // TODO: add unit tests
 // TODO: support cli and jar loading
-// TODO: encode name prior to classloading
+
 
 public class FileValidator {
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
@@ -42,12 +40,13 @@ public class FileValidator {
         // Read the file into a byte array
         byte[] fileBytes = Files.readAllBytes(originalFile.toPath());
         String responseAggregation = "";
+        String originalFilenameClean = originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
 
         // Check that the file type is not null or empty
         if (Objects.isNull(fileType) || fileType.isEmpty()) {
             responseAggregation = "File type cannot be null or empty.";
         }
-        LOGGER.info("Validating " + originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_") +  ", as file type: " + fileType);
+        LOGGER.info("Validating " + originalFilenameClean +  ", as file type: " + fileType);
 
         try {
             // Check that the file exists
@@ -65,7 +64,7 @@ public class FileValidator {
             }
 
             // Check that the file extension is allowed
-            String fileExtension = getFileExtension(originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_"));
+            String fileExtension = getFileExtension(originalFilenameClean);
             if (fileExtension.isEmpty() || !allowedExtensions.contains(fileExtension)) {
                 responseAggregation = "File extension not allowed or not configured: " + fileType;
                 LOGGER.warning(responseAggregation);
@@ -118,12 +117,12 @@ public class FileValidator {
                     String methodName = customValidator.get(1);
                     try {
                         // Invoke the method using CustomFileLoader class
-                        String filePath = originalFile.getAbsolutePath();
+                        String filePath = originalFilenameClean.getAbsolutePath();
                         CustomFileLoader loader = new CustomFileLoader();
                         loader.loadClass(jarPath, className, methodName, filePath);
                     } catch (Exception e) {
                         LOGGER.severe(e.toString());
-                        return new ValidationResponse(false, "An error occurred while reading file: " + e.getMessage(), originalFile, null);
+                        return new ValidationResponse(false, "An error occurred while reading file: " + e.getMessage(), originalFilenameClean, null);
                     }
                 }
             } */
@@ -133,11 +132,11 @@ public class FileValidator {
                 Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
                 Path encodedFilePath = null;
                 if (!Objects.isNull(nameEncode) && nameEncode) {
-                    String encodedFileName = Base64.getEncoder().encodeToString(originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_").getBytes());
-                    encodedFilePath = Paths.get(outDir, encodedFileName + "." + getFileExtension(originalFile.getName()));
+                    String encodedFileName = Base64.getEncoder().encodeToString(originalFilenameClean.getBytes())+ "." + getFileExtension(originalFile.getName());
+                    encodedFilePath = Paths.get(outDir, encodedFileName);
                     try {
                         Files.copy(originalFile.toPath(), encodedFilePath, StandardCopyOption.REPLACE_EXISTING);
-                        String encodingStatus = "File " + originalFile.getName() + " has been successfully encoded and saved in " + encodedFilePath.toAbsolutePath();
+                        String encodingStatus = "File " + originalFilenameClean + " has been successfully encoded and saved in " + encodedFilePath.toAbsolutePath();
                         LOGGER.info(encodingStatus);
                     } catch (IOException e) {
                         responseAggregation = "Failed to encode file: " + encodedFilePath.toAbsolutePath();
@@ -150,20 +149,22 @@ public class FileValidator {
                     File cleanFile = new File(encodedFilePath.toAbsolutePath().toString());
 
                     // Calculate SHA-256 checksum of file
-                    byte[] sha256Bytes = null;
+                    byte[] sha256Bytes;
+                    String sha256Checksum;
                     try {
                         MessageDigest sha256Digest = MessageDigest.getInstance("SHA-256");
                         sha256Digest.update(Files.readAllBytes(cleanFile.toPath()));
                         sha256Bytes = sha256Digest.digest();
+                        sha256Checksum = new Formatter().format("%02x", new BigInteger(1, sha256Bytes)).toString();
+                        LOGGER.info("SHA-256 checksum of file " + cleanFile.getName() + " is: " + sha256Checksum);
                     } catch (NoSuchAlgorithmException e) {
-                        responseAggregation = "Failed to calculate checksum of file: " + cleanFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
+                        responseAggregation = "Failed to calculate checksum of file: " + cleanFile.getName();
                         LOGGER.warning(responseAggregation);
+                        return new ValidationResponse(false, responseAggregation, originalFile, null);
                     }
-                    // Convert SHA-256 bytes to Base64 string
-                    String sha256Checksum = Base64.getEncoder().encodeToString(sha256Bytes);
 
-                    LOGGER.info(originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_") + " is valid");
-                    return new ValidationResponse(true, "File is valid", cleanFile, sha256Checksum);
+                    LOGGER.info(originalFilenameClean + " is valid");
+                    return new ValidationResponse(true, originalFilenameClean + " ==> " + cleanFile.getName(), cleanFile, sha256Checksum);
                 } else {
                     return new ValidationResponse(false, responseAggregation, originalFile, null);
                 }
