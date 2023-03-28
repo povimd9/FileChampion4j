@@ -4,7 +4,7 @@ on:
   pull_request:
     workflow_dispatch:
       branches:
-        - main
+        - master
         - feature/*
   schedule:
     - cron: '45 19 * * 5'
