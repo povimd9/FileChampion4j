@@ -14,24 +14,28 @@ jobs:
   build-and-test-on-nix:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/maven_nix.yml
 
   build-and-test-on-macos:
     needs: build-and-test-on-nix
     runs-on: macos-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/maven_macos.yml
 
   build-and-test-on-windows:
     needs: build-and-test-on-macos
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/maven_win.yml
 
   run-codeql-analysis:
     needs: build-and-test-on-windows
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/codeql.yml
 
   upload-dependency-graph:
