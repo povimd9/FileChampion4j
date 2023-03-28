@@ -82,6 +82,7 @@ public class FileAclHelper {
 
         // Set the new ACL
         try {
+            LOGGER.info("Setting new ACL entries on file " + targetFilePath.toAbsolutePath());
             aclView.setAcl(acl);
             LOGGER.info("Added new ACL entries to file " + targetFilePath.toAbsolutePath());
         } catch (IOException e) {
