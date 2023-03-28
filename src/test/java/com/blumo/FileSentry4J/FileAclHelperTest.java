@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 import java.io.File;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,24 +47,48 @@ public class FileAclHelperTest {
     // Test the ChangeFileACL method
     @Test
     void testChangeFileACL() throws Exception {
-        // Get the ACL for the file
-        AclFileAttributeView aclView = Files.getFileAttributeView(tempFile, AclFileAttributeView.class);
-
-        // Check that the owner has been set correctly
-        UserPrincipal owner = aclView.getOwner();
-        String fileOwnerName = owner.getName().contains("\\") ? owner.getName().substring(owner.getName().indexOf("\\") + 1) : owner.getName();
-        assertEquals(userName, fileOwnerName, "Owner not set correctly");
-
-        // Check that the group has been set correctly
-        List<AclEntry> acl = aclView.getAcl();
         String expectedPermissions = "r";
         String actualPermissions = "";
-        if (acl.toString().contains("READ_DATA")) {
-            actualPermissions += "r";
+        String fileOwnerName = "";
+        String os = System.getProperty("os.name");
+        if (os.startsWith("Windows")) {
+            // Get the ACL for the file
+            AclFileAttributeView aclView = Files.getFileAttributeView(tempFile, AclFileAttributeView.class);
+
+            // Check that the owner has been set correctly
+            UserPrincipal owner = aclView.getOwner();
+            fileOwnerName = owner.getName().contains("\\") ? owner.getName().substring(owner.getName().indexOf("\\") + 1) : owner.getName();
+
+            // Prep the permissions for comparison
+            List<AclEntry> acl = aclView.getAcl();
+
+            if (acl.toString().contains("READ_DATA")) {
+                actualPermissions += "r";
+            }
+            if (acl.toString().contains("WRITE_DATA")) {
+                actualPermissions += "w";
+            }
+
+        } else {
+            // Get the owner of the file
+            UserPrincipal owner = Files.getOwner(tempFile);
+            fileOwnerName = owner.getName();
+
+            // Get the permissions of the file
+            Set<PosixFilePermission> permissions = Files.getPosixFilePermissions(tempFile);
+
+            if (permissions.toString().contains("OWNER_READ")) {
+                actualPermissions += "r";
+            }
+            if (permissions.toString().contains("OWNER_WRITE")) {
+                actualPermissions += "w";
+
+            }
         }
-        if (acl.toString().contains("WRITE_DATA")) {
-            actualPermissions += "w";
-        }
+        // Check that the owner is set correctly
+        assertEquals(userName, fileOwnerName, "Owner not set correctly");
+
+        // Check that the permissions are set correctly
         assertEquals(expectedPermissions, actualPermissions, "Permissions not set correctly");
 
         // Check that calling with null targetFilePath throws an IllegalArgumentException
