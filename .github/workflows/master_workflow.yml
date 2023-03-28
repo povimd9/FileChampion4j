@@ -18,23 +18,23 @@ jobs:
 
   build-and-test-on-nix:
     runs-on: ubuntu-latest
-    uses: SafeFilez/SafeFilez/.github/workflows/maven_nix.yml@master
+    uses: ./.github/workflows/maven_nix.yml
 
   build-and-test-on-macos:
     needs: build-and-test-on-nix
     runs-on: macos-latest
-    uses: SafeFilez/SafeFilez/.github/workflows/maven_macos.yml@master
+    uses: ./.github/workflows/maven_macos.yml
 
   build-and-test-on-windows:
     needs: build-and-test-on-macos
     runs-on: windows-latest
-    uses: SafeFilez/SafeFilez/.github/workflows/maven_win.yml@master
+    uses: ./.github/workflows/maven_win.yml
 
   run-codeql-analysis:
     needs: build-and-test-on-windows
     runs-on: ubuntu-latest
-    uses: SafeFilez/SafeFilez/.github/workflows/codeql.yml@master
+    uses: ./.github/workflows/codeql.yml
 
   pin-actions-to-commit-sha:
     runs-on: ubuntu-latest
-    uses: SafeFilez/SafeFilez/.github/workflows/pin_actions_to_commit_sha.yml@master
+    uses: ./.github/workflows/pin_actions_to_commit_sha.yml
