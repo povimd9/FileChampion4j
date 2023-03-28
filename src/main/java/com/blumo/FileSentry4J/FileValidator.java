@@ -143,7 +143,7 @@ public class FileValidator {
                     String encodedFileName = Base64.getEncoder().encodeToString(originalFilenameClean.getBytes())+ "." + getFileExtension(originalFile.getName());
                     encodedFilePath = Paths.get(outDir, encodedFileName);
                     try {
-                        Files.copy(originalFile.toPath(), encodedFilePath, StandardCopyOption.REPLACE_EXISTING);
+                        Files.copy(originalFile.toPath(), encodedFilePath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
                         String encodingStatus = "File " + originalFilenameClean + " has been successfully encoded and saved in " + encodedFilePath.toAbsolutePath();
                         LOGGER.info(encodingStatus);
                     } catch (IOException e) {

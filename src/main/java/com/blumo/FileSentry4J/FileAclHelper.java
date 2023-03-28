@@ -2,14 +2,8 @@ package com.blumo.FileSentry4J;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.AclEntry;
-import java.nio.file.attribute.AclEntryPermission;
-import java.nio.file.attribute.AclEntryType;
-import java.nio.file.attribute.AclFileAttributeView;
-import java.nio.file.attribute.UserPrincipal;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
+import java.nio.file.attribute.*;
+import java.util.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -89,6 +83,27 @@ public class FileAclHelper {
             LOGGER.severe("IOException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
             throw new Exception("IOException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
         } catch (NullPointerException e) {
+            try {
+                // Change the file permissions of the target file
+                Set<PosixFilePermission> permissions = new HashSet<>();
+                if (newPermissions.contains("r")) {
+                    permissions.add(PosixFilePermission.OWNER_READ);
+                }
+                if (newPermissions.contains("w")) {
+                    permissions.add(PosixFilePermission.OWNER_WRITE);
+                }
+                if (newPermissions.contains("a")) {
+                    permissions.add(PosixFilePermission.OWNER_READ);
+                    permissions.add(PosixFilePermission.OWNER_WRITE);
+                }
+                if (newPermissions.contains("x")) {
+                    permissions.add(PosixFilePermission.OWNER_EXECUTE);
+                }
+                Files.setPosixFilePermissions(targetFilePath.toAbsolutePath(), permissions);
+            } catch (Exception e2) {
+                LOGGER.severe("Exception setting permissions on file with ACL & POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
+                throw new Exception("Exception setting permissions on file with ACL & POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
+            }
             LOGGER.severe("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
             throw new Exception("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
         } catch (Exception e) {
