@@ -17,35 +17,29 @@ jobs:
       - uses: ./.github/workflows/maven_nix.yml@master
 
   build-and-test-on-macos:
+    needs: build-and-test-on-nix
     runs-on: macos-latest
     steps:
       - uses: ./.github/workflows/maven_macos.yml@master
-    requires:
-      - build-and-test-on-nix
 
   build-and-test-on-windows:
+    needs: build-and-test-on-macos
     runs-on: windows-latest
     steps:
       - uses: ./.github/workflows/maven_win.yml@master
-    requires:
-      - build-and-test-on-mac
 
   run-codeql-analysis:
+    needs: build-and-test-on-windows
+    runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/codeql.yml@master
-    requires:
-      - build-and-test-on-windows
 
   upload-dependency-graph:
     runs-on: ubuntu-latest
     steps:
       - uses: advanced-security/maven-dependency-submission-action@v3.0.0
-    requires:
-      - build-and-test-on-windows
 
   pin-actions-to-commit-sha:
     runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/pin_actions_to_commit_sha.yml@master
-    requires:
-      - upload-dependency-graph
