@@ -14,8 +14,6 @@ permissions:
   contents: write
   pages: write
 
-version: "master"
-
 jobs:
   check-out-code:
     runs-on: ubuntu-latest
