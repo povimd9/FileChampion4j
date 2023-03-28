@@ -86,8 +86,14 @@ public class FileAclHelper {
             aclView.setAcl(acl);
             LOGGER.info("Added new ACL entries to file " + targetFilePath.toAbsolutePath());
         } catch (IOException e) {
-            LOGGER.severe("Error setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
-            throw new Exception("Error setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+            LOGGER.severe("IOException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+            throw new Exception("IOException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+        } catch (NullPointerException e) {
+            LOGGER.severe("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+            throw new Exception("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+        } catch (Exception e) {
+            LOGGER.severe("Exception setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+            throw new Exception("Exception setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
         }
     }
 }
