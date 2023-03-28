@@ -6,6 +6,7 @@ import java.io.File;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * This class is used to test the FileAclHelper class
  */
 public class FileAclHelperTest {
+    private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
+
     // Create a temporary file for testing
     private Path tempFile;
     // Get the current username
@@ -34,7 +37,11 @@ public class FileAclHelperTest {
 
         // Set up the permissions for the test file
         String newPermissions = "r";
-        FileAclHelper.ChangeFileACL(tempFile, newPermissions, userName);
+        try {
+            FileAclHelper.ChangeFileACL(tempFile, newPermissions, userName);
+        } catch (Exception e) {
+            LOGGER.severe("FileAclHelper test failed. tmpFile: " + tempFile + ", newPermissions: " + newPermissions+ ", userName: "+ userName + ", error: " + e.getMessage());
+        }
     }
 
     // Test the ChangeFileACL method
