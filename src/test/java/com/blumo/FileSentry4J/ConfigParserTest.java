@@ -12,8 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for ConfigParser
  */
 class ConfigParserTest {
+    // Config map
     private Map<String, Object> config;
 
+    // Setup config map
     @BeforeEach
     void setup() throws IOException {
         config = ConfigParser.parseConfig("src/test/config/test_config.json");
