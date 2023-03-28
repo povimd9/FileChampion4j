@@ -20,19 +20,21 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: ./.github/workflows/maven_macos.yml@master
+    requires:
+      - build-and-test-on-nix
 
   build-and-test-on-windows:
     runs-on: windows-latest
     steps:
       - uses: ./.github/workflows/maven_win.yml@master
     requires:
-      - build-and-test-on-nix-mac
+      - build-and-test-on-mac
 
-    run-codeql-analysis:
-      steps:
-        - uses: ./.github/workflows/codeql.yml@master
-      requires:
-        - build-and-test-on-windows
+  run-codeql-analysis:
+    steps:
+      - uses: ./.github/workflows/codeql.yml@master
+    requires:
+      - build-and-test-on-windows
 
   upload-dependency-graph:
     runs-on: ubuntu-latest
