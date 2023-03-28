@@ -134,6 +134,7 @@ public class FileValidator {
                 }
             } */
 
+            // Check if file is valid so far
             if (responseAggregation.isEmpty()) {
                 // Check if the file name should be encoded
                 Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
@@ -151,7 +152,7 @@ public class FileValidator {
                     }
                 }
 
-
+                // Check if validations and encoding were successful
                 if (responseAggregation.isEmpty() && !Objects.isNull(encodedFilePath)) {
                     File cleanFile = new File(encodedFilePath.toAbsolutePath().toString());
 
@@ -187,12 +188,17 @@ public class FileValidator {
                         }
                     }
 
+                    // Return if file is valid
                     LOGGER.info(originalFilenameClean + " is valid");
                     return new ValidationResponse(true, originalFilenameClean + " ==> " + cleanFile.getName(), cleanFile, sha256Checksum);
                 } else {
+                    // Return if file is invalid
+                    LOGGER.info(originalFilenameClean + " is invalid: " + responseAggregation);
                     return new ValidationResponse(false, responseAggregation, originalFile, null);
                 }
             } else {
+                // Return if file is invalid
+                LOGGER.info(originalFilenameClean + " is invalid: " + responseAggregation);
                 return new ValidationResponse(false, responseAggregation, originalFile, null);
             }
         } catch (Exception e) {
