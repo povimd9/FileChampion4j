@@ -1,0 +1,25 @@
+name: pin_actions_to_commit_sha
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout.
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Get current SHA.
+        uses: actions/env@v1
+        with:
+          key: SHA
+          value: ${{ github.sha }}
+      - name: Pin actions to commit SHA.
+        uses: actions/pin@v2
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          sha: ${{ env.SHA }}
