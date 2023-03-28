@@ -15,28 +15,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/maven_nix.yml
+      - uses: SafeFilez/SafeFilez/.github/workflows/maven_nix.yml@master
 
   build-and-test-on-macos:
     needs: build-and-test-on-nix
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/maven_macos.yml
+      - uses: SafeFilez/SafeFilez/.github/workflows/maven_macos.yml@master
 
   build-and-test-on-windows:
     needs: build-and-test-on-macos
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/maven_win.yml
+      - uses: SafeFilez/SafeFilez/.github/workflows/maven_win.yml@master
 
   run-codeql-analysis:
     needs: build-and-test-on-windows
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/codeql.yml
+      - uses: SafeFilez/SafeFilez/.github/workflows/codeql.yml@master
 
   upload-dependency-graph:
     runs-on: ubuntu-latest
@@ -46,4 +46,4 @@ jobs:
   pin-actions-to-commit-sha:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/pin_actions_to_commit_sha.yml
+      - uses: SafeFilez/SafeFilez/.github/workflows/pin_actions_to_commit_sha.yml@master

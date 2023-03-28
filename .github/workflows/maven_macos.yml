@@ -1,6 +1,7 @@
 name: Build_MAC_Maven
 
 on:
+  workflow_call:
   pull_request:
     workflow_dispatch:
       branches:

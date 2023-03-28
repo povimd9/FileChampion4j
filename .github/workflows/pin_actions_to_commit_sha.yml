@@ -1,6 +1,7 @@
 name: pin_actions_to_commit_sha
 
 on:
+  workflow_call:
   pull_request:
     workflow_dispatch:
 
