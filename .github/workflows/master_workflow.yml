@@ -37,7 +37,8 @@ jobs:
 
   upload-dependency-graph:
     runs-on: ubuntu-latest
-    uses: advanced-security/maven-dependency-submission-action@v3.0.0
+    steps:
+      - uses: advanced-security/maven-dependency-submission-action@v3.0.0
 
   pin-actions-to-commit-sha:
     runs-on: ubuntu-latest
