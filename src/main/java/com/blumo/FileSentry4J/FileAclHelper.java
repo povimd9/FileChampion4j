@@ -8,6 +8,7 @@ import java.nio.file.attribute.AclEntryType;
 import java.nio.file.attribute.AclFileAttributeView;
 import java.nio.file.attribute.GroupPrincipal;
 import java.nio.file.attribute.UserPrincipal;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.io.IOException;
@@ -75,13 +76,14 @@ public class FileAclHelper {
                 .build();
 
         // Get the existing ACL and add the new ACL entries
-        List<AclEntry> acl = aclView.getAcl();
+        List<AclEntry> acl = new ArrayList<>();
         acl.add(aclEntry);
         acl.add(groupAclEntry);
 
         // Set the new ACL
         try {
             aclView.setAcl(acl);
+            List<AclEntry> newAcl = aclView.getAcl();
             LOGGER.info("Added new ACL entries to file " + targetFilePath.toAbsolutePath());
         } catch (IOException e) {
             LOGGER.severe("Error setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());

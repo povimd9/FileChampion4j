@@ -144,20 +144,6 @@ public class FileValidator {
                     }
                 }
 
-                // Check if file ownership and permissions should be changed
-                Boolean changeOwnership = (Boolean) extensionConfig.get("change_ownership");
-                if (!Objects.isNull(changeOwnership) && changeOwnership) {
-                    String changeOwnershipUser = (String) extensionConfig.get("change_ownership_user");
-                    String changeOwnershipGroup = (String) extensionConfig.get("change_ownership_group");
-                    String changeOwnershipMode = (String) extensionConfig.get("change_ownership_mode");
-                    try {
-                        // Change the file ACL
-                        FileAclHelper.ChangeFileACL(encodedFilePath, changeOwnershipMode, changeOwnershipUser, changeOwnershipGroup);
-                        LOGGER.info(encodedFilePath + " ACL changed successfully.");
-                    } catch (Exception e) {
-                        responseAggregation = "Error changing file ACL: " + e.getMessage();
-                    }
-                }
 
                 if (responseAggregation.isEmpty() && !Objects.isNull(encodedFilePath)) {
                     File cleanFile = new File(encodedFilePath.toAbsolutePath().toString());
@@ -175,6 +161,21 @@ public class FileValidator {
                         responseAggregation = "Failed to calculate checksum of file: " + cleanFile.getName();
                         LOGGER.warning(responseAggregation);
                         return new ValidationResponse(false, responseAggregation, originalFile, null);
+                    }
+
+                    // Check if file ownership and permissions should be changed
+                    Boolean changeOwnership = (Boolean) extensionConfig.get("change_ownership");
+                    if (!Objects.isNull(changeOwnership) && changeOwnership) {
+                        String changeOwnershipUser = (String) extensionConfig.get("change_ownership_user");
+                        String changeOwnershipGroup = (String) extensionConfig.get("change_ownership_group");
+                        String changeOwnershipMode = (String) extensionConfig.get("change_ownership_mode");
+                        try {
+                            // Change the file ACL
+                            FileAclHelper.ChangeFileACL(encodedFilePath, changeOwnershipMode, changeOwnershipUser, changeOwnershipGroup);
+                            LOGGER.info(encodedFilePath + " ACL changed successfully.");
+                        } catch (Exception e) {
+                            responseAggregation = "Error changing file ACL: " + e.getMessage();
+                        }
                     }
 
                     LOGGER.info(originalFilenameClean + " is valid");
