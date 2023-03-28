@@ -14,15 +14,15 @@
           "RETURN_TYPE",
           "param1",
           "param2"
-        ]
-      },
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_group": "Users",
+      "change_ownership_mode": "r",
       "name_encoding": true,
       "size_limit_validation": true,
-      "max_size": {
-        "pdf": "10MB",
-        "doc": "10MB"
-      }
-    },
+      "max_size": "4000"
+      },
     "doc": {
       "mime_type": "application/msword",
       "magic_bytes": "D0CF11E0A1B11AE1",
@@ -33,14 +33,14 @@
           "RETURN_TYPE",
           "param1",
           "param2"
-        ]
-      },
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_group": "Users",
+      "change_ownership_mode": "r",
       "name_encoding": true,
       "size_limit_validation": true,
-      "max_size": {
-        "pdf": "10MB",
-        "doc": "10MB"
-      }
+      "max_size": "4000"
     }
   }
 }

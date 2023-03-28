@@ -25,7 +25,7 @@ public class Main {
             String cleanFileName = fileValidationResults.resultsInfo();
             System.out.println(cleanFileName + " is a valid document file. Checksum: " + fileValidationResults.getFileChecksum());
         } else {
-            System.out.println(pdfFile.getName() + " is not a valid document file  because" + fileValidationResults.resultsInfo());
+            System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
         }
     }
 }

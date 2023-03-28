@@ -49,10 +49,13 @@ class ConfigParserTest {
         assertTrue(pdfConfig.containsKey("antivirus_scan"));
         assertTrue((Boolean) pdfConfig.get("name_encoding"));
         assertTrue((Boolean) pdfConfig.get("size_limit_validation"));
-        Map<String, Object> maxSize = (Map<String, Object>) pdfConfig.get("max_size");
-        assertEquals("10MB", maxSize.get("pdf"));
-        assertEquals("10MB", maxSize.get("doc"));
+        assertTrue((Boolean) pdfConfig.get("change_ownership"));
+        assertEquals("User1", pdfConfig.get("change_ownership_user"));
+        assertEquals("Users", pdfConfig.get("change_ownership_group"));
+        assertEquals("r", pdfConfig.get("change_ownership_mode"));
+        assertEquals("4000", pdfConfig.get("max_size"));
     }
+
 
     // Test parsing of testParsingDocConfig from config file
     @Test
@@ -67,8 +70,10 @@ class ConfigParserTest {
         assertTrue(docConfig.containsKey("antivirus_scan"));
         assertTrue((Boolean) docConfig.get("name_encoding"));
         assertTrue((Boolean) docConfig.get("size_limit_validation"));
-        Map<String, Object> maxSize = (Map<String, Object>) docConfig.get("max_size");
-        assertEquals("10MB", maxSize.get("pdf"));
-        assertEquals("10MB", maxSize.get("doc"));
+        assertTrue((Boolean) docConfig.get("change_ownership"));
+        assertEquals("User1", docConfig.get("change_ownership_user"));
+        assertEquals("Users", docConfig.get("change_ownership_group"));
+        assertEquals("r", docConfig.get("change_ownership_mode"));
+        assertEquals("4000", docConfig.get("max_size"));
     }
 }

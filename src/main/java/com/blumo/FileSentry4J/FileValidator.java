@@ -70,15 +70,22 @@ public class FileValidator {
                 LOGGER.warning(responseAggregation);
             }
 
-            // Check that the file size is not greater than the maximum allowed size
-            String mimeType = Files.probeContentType(originalFile.toPath());
+            // Get the configuration for the file extension
             Map<String, Object> extensionConfig = (Map<String, Object>) fileTypeConfig.get(fileExtension);
             if (extensionConfig == null) {
-                responseAggregation = "mime_type not configured for file extension: " + fileExtension;
+                responseAggregation = "Missing configuration for allowed_extension: " + fileExtension;
+                LOGGER.warning(responseAggregation);
+            }
+
+            // Check that the file size is not greater than the maximum allowed size
+            String maxFileSize = (String) extensionConfig.get("max_size");
+            if (!Objects.isNull(maxFileSize) && Math.floorDiv(fileBytes.length, 1000) > Integer.parseInt(maxFileSize)) {
+                responseAggregation = "File size (" + Math.floorDiv(fileBytes.length, 1000) + "KB) exceeds maximum allowed size ("+ maxFileSize + "KB) for file extension: " + fileExtension;
                 LOGGER.warning(responseAggregation);
             }
 
             // Check that the mime type is allowed
+            String mimeType = Files.probeContentType(originalFile.toPath());
             String expectedMimeType = (String) extensionConfig.get("mime_type");
             if (Objects.isNull(expectedMimeType) || !expectedMimeType.equals(mimeType)) {
                 responseAggregation = "Invalid mime_type for file extension: " + fileExtension;
@@ -92,14 +99,14 @@ public class FileValidator {
                 LOGGER.warning(responseAggregation);
             }
 
-            // Check header signatures
+            // Check header signatures (optional)
             String headerSignaturesPattern = (String) extensionConfig.get("header_signatures");
             if (!Objects.isNull(headerSignaturesPattern) && !containsHeaderSignatures(fileBytes, headerSignaturesPattern)) {
                 responseAggregation = "Invalid header_signatures for file extension: " + fileExtension;
                 LOGGER.warning(responseAggregation);
             }
 
-            // Check footer signatures
+            // Check footer signatures (optional)
             String footerSignaturesPattern = (String) extensionConfig.get("footer_signatures");
             if (!Objects.isNull(footerSignaturesPattern) && !containsFooterSignatures(fileBytes, footerSignaturesPattern)) {
                 responseAggregation = "Invalid footer_signatures for file extension: " + fileExtension;
@@ -175,6 +182,8 @@ public class FileValidator {
                             LOGGER.info(encodedFilePath + " ACL changed successfully.");
                         } catch (Exception e) {
                             responseAggregation = "Error changing file ACL: " + e.getMessage();
+                            LOGGER.warning(responseAggregation);
+                            return new ValidationResponse(false, responseAggregation, originalFile, null);
                         }
                     }
 
