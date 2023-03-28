@@ -11,11 +11,18 @@ on:
         - feature/*
 
 jobs:
-  build-and-test-on-nix-mac:
+  build-and-test-on-nix:
+    runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/maven_nix.yml@master
 
+  build-and-test-on-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: ./.github/workflows/maven_macos.yml@master
+
   build-and-test-on-windows:
+    runs-on: windows-latest
     steps:
       - uses: ./.github/workflows/maven_win.yml@master
     requires:
@@ -28,12 +35,14 @@ jobs:
         - build-and-test-on-windows
 
   upload-dependency-graph:
+    runs-on: ubuntu-latest
     steps:
       - uses: advanced-security/maven-dependency-submission-action@v3.0.0
     requires:
       - build-and-test-on-windows
 
   pin-actions-to-commit-sha:
+    runs-on: ubuntu-latest
     steps:
       - uses: ./.github/workflows/pin_actions_to_commit_sha.yml@master
     requires:
