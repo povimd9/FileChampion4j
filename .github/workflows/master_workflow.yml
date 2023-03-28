@@ -11,39 +11,34 @@ on:
         - feature/*
 
 jobs:
-  build-and-test-on-nix:
+  check-out-code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: SafeFilez/SafeFilez/.github/workflows/maven_nix.yml@master
+
+  build-and-test-on-nix:
+    runs-on: ubuntu-latest
+    uses: SafeFilez/SafeFilez/.github/workflows/maven_nix.yml@master
 
   build-and-test-on-macos:
     needs: build-and-test-on-nix
     runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: SafeFilez/SafeFilez/.github/workflows/maven_macos.yml@master
+    uses: SafeFilez/SafeFilez/.github/workflows/maven_macos.yml@master
 
   build-and-test-on-windows:
     needs: build-and-test-on-macos
     runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: SafeFilez/SafeFilez/.github/workflows/maven_win.yml@master
+    uses: SafeFilez/SafeFilez/.github/workflows/maven_win.yml@master
 
   run-codeql-analysis:
     needs: build-and-test-on-windows
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: SafeFilez/SafeFilez/.github/workflows/codeql.yml@master
+    uses: SafeFilez/SafeFilez/.github/workflows/codeql.yml@master
 
   upload-dependency-graph:
     runs-on: ubuntu-latest
-    steps:
-      - uses: advanced-security/maven-dependency-submission-action@v3.0.0
+    uses: advanced-security/maven-dependency-submission-action@v3.0.0
 
   pin-actions-to-commit-sha:
     runs-on: ubuntu-latest
-    steps:
-      - uses: SafeFilez/SafeFilez/.github/workflows/pin_actions_to_commit_sha.yml@master
+    uses: SafeFilez/SafeFilez/.github/workflows/pin_actions_to_commit_sha.yml@master
