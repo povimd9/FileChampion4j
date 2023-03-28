@@ -24,7 +24,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -44,9 +44,7 @@ jobs:
 
       - name: Make mvnw executable (Linux)
         run: |
-          if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
-            chmod +x ${{ github.workspace }}/mvnw
-          fi
+          chmod +x ${{ github.workspace }}/mvnw
 
       - name: Build with Maven
         run: mvn -B -U package --file pom.xml
