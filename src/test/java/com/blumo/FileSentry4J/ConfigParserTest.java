@@ -51,7 +51,6 @@ class ConfigParserTest {
         assertTrue((Boolean) pdfConfig.get("size_limit_validation"));
         assertTrue((Boolean) pdfConfig.get("change_ownership"));
         assertEquals("User1", pdfConfig.get("change_ownership_user"));
-        assertEquals("Users", pdfConfig.get("change_ownership_group"));
         assertEquals("r", pdfConfig.get("change_ownership_mode"));
         assertEquals("4000", pdfConfig.get("max_size"));
     }
@@ -72,7 +71,6 @@ class ConfigParserTest {
         assertTrue((Boolean) docConfig.get("size_limit_validation"));
         assertTrue((Boolean) docConfig.get("change_ownership"));
         assertEquals("User1", docConfig.get("change_ownership_user"));
-        assertEquals("Users", docConfig.get("change_ownership_group"));
         assertEquals("r", docConfig.get("change_ownership_mode"));
         assertEquals("4000", docConfig.get("max_size"));
     }

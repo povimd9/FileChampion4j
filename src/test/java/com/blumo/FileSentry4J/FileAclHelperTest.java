@@ -17,15 +17,10 @@ public class FileAclHelperTest {
     private Path tempFile;
     // Get the current username
     private String userName;
-    // Get the current group name
-    private String groupName;
 
     // Detect OS and create a temporary file for testing with the appropriate User/Group permissions
     @BeforeEach
     public void setup() throws Exception {
-        // get the operating system name
-        String osName = System.getProperty("os.name");
-
         // Create a temporary file for testing and get the path
         tempFile = Files.createTempFile("test", ".txt");
         Files.write(tempFile, "test".getBytes());
@@ -37,24 +32,9 @@ public class FileAclHelperTest {
         // get the current username
         userName = System.getProperty("user.name");
 
-        // check if the platform is Windows, Linux, or macOS, and set the group name accordingly
-        if (osName.matches(".*Windows.*")) {
-            groupName = "Users";
-        } else if (osName.matches(".*Linux.*")) {
-            Path path = Path.of("/");
-            UserPrincipalLookupService lookupService = path.getFileSystem().getUserPrincipalLookupService();
-            groupName = lookupService.lookupPrincipalByGroupName("users").getName();
-        } else if (osName.matches(".*Mac.*")) {
-            groupName = "staff";
-        } else if (osName.matches(".*SunOS.*")) {
-            groupName = "users";
-        } else {
-            throw new Exception("Unsupported operating system: " + osName);
-        }
-
         // Set up the permissions for the test file
         String newPermissions = "r";
-        FileAclHelper.ChangeFileACL(tempFile, newPermissions, userName, groupName);
+        FileAclHelper.ChangeFileACL(tempFile, newPermissions, userName);
     }
 
     // Test the ChangeFileACL method
@@ -82,12 +62,12 @@ public class FileAclHelperTest {
 
         // Check that calling with null targetFilePath throws an IllegalArgumentException
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                FileAclHelper.ChangeFileACL(null, "r", userName, groupName));
+                FileAclHelper.ChangeFileACL(null, "r", userName));
         assertEquals("Missing required parameter: targetFilePath", exception.getMessage(), "Missing targetFilePath check failed");
 
         // Check that calling with null newPermissions throws an IllegalArgumentException
         exception = assertThrows(IllegalArgumentException.class, () ->
-                FileAclHelper.ChangeFileACL(tempFile, null, userName, groupName));
+                FileAclHelper.ChangeFileACL(tempFile, null, userName));
         assertEquals("Missing required parameter: newPermissions", exception.getMessage(), "Missing newPermissions check failed");
     }
 }

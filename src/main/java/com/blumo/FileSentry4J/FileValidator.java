@@ -175,11 +175,10 @@ public class FileValidator {
                     Boolean changeOwnership = (Boolean) extensionConfig.get("change_ownership");
                     if (!Objects.isNull(changeOwnership) && changeOwnership) {
                         String changeOwnershipUser = (String) extensionConfig.get("change_ownership_user");
-                        String changeOwnershipGroup = (String) extensionConfig.get("change_ownership_group");
                         String changeOwnershipMode = (String) extensionConfig.get("change_ownership_mode");
                         try {
                             // Change the file ACL
-                            FileAclHelper.ChangeFileACL(encodedFilePath, changeOwnershipMode, changeOwnershipUser, changeOwnershipGroup);
+                            FileAclHelper.ChangeFileACL(encodedFilePath, changeOwnershipMode, changeOwnershipUser);
                             LOGGER.info(encodedFilePath + " ACL changed successfully.");
                         } catch (Exception e) {
                             responseAggregation = "Error changing file ACL: " + e.getMessage();

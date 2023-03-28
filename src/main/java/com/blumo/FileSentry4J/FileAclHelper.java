@@ -6,7 +6,6 @@ import java.nio.file.attribute.AclEntry;
 import java.nio.file.attribute.AclEntryPermission;
 import java.nio.file.attribute.AclEntryType;
 import java.nio.file.attribute.AclFileAttributeView;
-import java.nio.file.attribute.GroupPrincipal;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -26,7 +25,7 @@ import java.util.logging.Logger;
 
 public class FileAclHelper {
     private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
-    public static void ChangeFileACL(Path targetFilePath, String newPermissions, String... newOwnerUsername) throws Exception {
+    public static void ChangeFileACL(Path targetFilePath, String newPermissions, String newOwnerUsername) throws Exception {
         // Check the parameters
         if (targetFilePath == null || targetFilePath.getNameCount() == 0) {
             LOGGER.severe("Missing required parameter: targetFilePath");
@@ -37,20 +36,11 @@ public class FileAclHelper {
             throw new IllegalArgumentException("Missing required parameter: newPermissions");
         }
 
-        // Get the new owner and group
-        String username = null;
-        String group = null;
-        if (newOwnerUsername.length > 0) {
-            username = (newOwnerUsername[0] != null && !newOwnerUsername[0].isEmpty()) ? newOwnerUsername[0] : null;
-        }
-        if (newOwnerUsername.length > 1) {
-            group = (newOwnerUsername[1] != null && !newOwnerUsername[1].isEmpty()) ? newOwnerUsername[1] : username;
-        }
 
         // Change the owner of the file
-        UserPrincipal newOwner = targetFilePath.getFileSystem().getUserPrincipalLookupService().lookupPrincipalByName(username);
+        UserPrincipal newOwner = targetFilePath.getFileSystem().getUserPrincipalLookupService().lookupPrincipalByName(newOwnerUsername);
         Files.setOwner(targetFilePath, newOwner);
-        LOGGER.info("Changed owner of file " + targetFilePath.toAbsolutePath() + " to " + username);
+        LOGGER.info("Changed owner of file " + targetFilePath.toAbsolutePath() + " to " + newOwnerUsername);
 
         // Change the permissions of the file using ACLs
         AclFileAttributeView aclView = Files.getFileAttributeView(targetFilePath, AclFileAttributeView.class);
@@ -58,32 +48,38 @@ public class FileAclHelper {
         AclEntryPermission writePermission = AclEntryPermission.WRITE_DATA;
         AclEntryPermission readAttributesPermission = AclEntryPermission.READ_ATTRIBUTES;
         AclEntryPermission writeAttributesPermission = AclEntryPermission.WRITE_ATTRIBUTES;
+        AclEntryPermission executePermission = AclEntryPermission.EXECUTE;
+
         AclEntryType allow = AclEntryType.ALLOW;
-        UserPrincipal owner = aclView.getOwner();
+
+        EnumSet<AclEntryPermission> actualPermissions = EnumSet.noneOf(AclEntryPermission.class);
+        if (newPermissions.contains("r")) {
+            actualPermissions.add(readPermission);
+        }
+        if (newPermissions.contains("w")) {
+            actualPermissions.add(writePermission);
+        }
+        if (newPermissions.contains("a")) {
+            actualPermissions.add(readAttributesPermission);
+            actualPermissions.add(writeAttributesPermission);
+        }
+        if (newPermissions.contains("x")) {
+            actualPermissions.add(executePermission);
+        }
 
         AclEntry aclEntry = AclEntry.newBuilder()
                 .setType(allow)
                 .setPrincipal(newOwner)
-                .setPermissions(EnumSet.of(readPermission, readAttributesPermission, writeAttributesPermission))
-                .build();
-
-        // Add the owner group to the ACL
-        GroupPrincipal ownerGroup = targetFilePath.getFileSystem().getUserPrincipalLookupService().lookupPrincipalByGroupName(group);
-        AclEntry groupAclEntry = AclEntry.newBuilder()
-                .setType(allow)
-                .setPrincipal(ownerGroup)
-                .setPermissions(EnumSet.of(readPermission, readAttributesPermission, writeAttributesPermission))
+                .setPermissions(actualPermissions)
                 .build();
 
         // Get the existing ACL and add the new ACL entries
         List<AclEntry> acl = new ArrayList<>();
         acl.add(aclEntry);
-        acl.add(groupAclEntry);
 
         // Set the new ACL
         try {
             aclView.setAcl(acl);
-            List<AclEntry> newAcl = aclView.getAcl();
             LOGGER.info("Added new ACL entries to file " + targetFilePath.toAbsolutePath());
         } catch (IOException e) {
             LOGGER.severe("Error setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
