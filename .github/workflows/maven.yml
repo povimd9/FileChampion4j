@@ -44,9 +44,8 @@ jobs:
 
       - name: Make mvnw executable (Linux)
         run: |
-          if ([ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]); then
+          if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
             chmod +x ${{ github.workspace }}/mvnw
-          fi
 
       - name: Build with Maven
         run: mvn -B -U package --file pom.xml
