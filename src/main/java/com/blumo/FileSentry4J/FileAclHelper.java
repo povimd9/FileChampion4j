@@ -52,6 +52,7 @@ public class FileAclHelper {
 
         AclEntryType allow = AclEntryType.ALLOW;
 
+        LOGGER.info("Prepping new ACL entries for file " + targetFilePath.toAbsolutePath() + " with permissions " + newPermissions);
         EnumSet<AclEntryPermission> actualPermissions = EnumSet.noneOf(AclEntryPermission.class);
         if (newPermissions.contains("r")) {
             actualPermissions.add(readPermission);
@@ -67,12 +68,14 @@ public class FileAclHelper {
             actualPermissions.add(executePermission);
         }
 
+        LOGGER.info("AclEntryBuilder: " + newOwner + " " + actualPermissions);
         AclEntry aclEntry = AclEntry.newBuilder()
                 .setType(allow)
                 .setPrincipal(newOwner)
                 .setPermissions(actualPermissions)
                 .build();
 
+        LOGGER.info("add new acl to existing acl");
         // Get the existing ACL and add the new ACL entries
         List<AclEntry> acl = new ArrayList<>();
         acl.add(aclEntry);
