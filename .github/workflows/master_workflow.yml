@@ -14,7 +14,7 @@ permissions:
   contents: write
   pages: write
 
-version: master
+version: "master"
 
 jobs:
   check-out-code:
