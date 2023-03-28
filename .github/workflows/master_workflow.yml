@@ -40,5 +40,6 @@ jobs:
     uses: SafeFilez/SafeFilez/.github/workflows/codeql.yml@master
 
   pin-actions-to-commit-sha:
+    needs: build-and-test-on-windows
     runs-on: ubuntu-latest
     uses: SafeFilez/SafeFilez/.github/workflows/pin_actions_to_commit_sha.yml@master
