@@ -1,5 +1,9 @@
 name: pin_actions_to_commit_sha
 
+on:
+  pull_request:
+    workflow_dispatch:
+
 permissions:
   contents: write
   pages: write
