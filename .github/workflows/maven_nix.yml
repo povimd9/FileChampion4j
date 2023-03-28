@@ -7,7 +7,7 @@
 # documentation.
 # works:windows-latest, testing: ubuntu, mac
 
-name: Java CI with Maven
+name: Build Nix/MAC Maven
 
 on:
   push:
