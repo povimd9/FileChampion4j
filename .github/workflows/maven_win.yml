@@ -9,10 +9,7 @@
 name: Windows Maven Build
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  manual:
 
 permissions: 
   contents: write
