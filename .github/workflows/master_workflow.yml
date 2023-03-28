@@ -22,24 +22,24 @@ jobs:
 
   build-and-test-on-nix:
     runs-on: ubuntu-latest
-    uses: ./maven_nix.yml
+    uses: ./maven_nix.yml@v1
 
   build-and-test-on-macos:
     needs: build-and-test-on-nix
     runs-on: macos-latest
-    uses: ./maven_macos.yml
+    uses: ./maven_macos.yml@v1
 
   build-and-test-on-windows:
     needs: build-and-test-on-macos
     runs-on: windows-latest
-    uses: ./maven_win.yml
+    uses: ./maven_win.yml@v1
 
   run-codeql-analysis:
     needs: build-and-test-on-windows
     runs-on: ubuntu-latest
-    uses: ./codeql.yml
+    uses: ./codeql.yml@v1
 
   pin-actions-to-commit-sha:
     needs: build-and-test-on-windows
     runs-on: ubuntu-latest
-    uses: ./pin_actions_to_commit_sha.yml
+    uses: ./pin_actions_to_commit_sha.yml@v1
