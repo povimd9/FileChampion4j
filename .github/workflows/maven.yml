@@ -5,6 +5,7 @@
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
+# works:windows-latest, testing: ubuntu, mac
 
 name: Java CI with Maven
 
@@ -21,8 +22,10 @@ permissions:
 
 jobs:
   build:
-
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -32,8 +35,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - if: ${{ matrix.os }} == "ubuntu-latest"
       run: mvn -B -U package --file pom.xml
+    - if: ${{ matrix.os }} == "windows-latest"
+      run: mvnw -B -U package --file pom.xml
 
 # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Maven Dependency Tree Dependency Submission
