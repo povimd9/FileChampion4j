@@ -35,10 +35,9 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - if: ${{ matrix.os }} == "ubuntu-latest"
+    - name: Build with Maven
       run: mvn -B -U package --file pom.xml
-    - if: ${{ matrix.os }} == "windows-latest"
-      run: mvnw -B -U package --file pom.xml
+
 
 # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Maven Dependency Tree Dependency Submission
