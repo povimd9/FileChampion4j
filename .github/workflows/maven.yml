@@ -19,8 +19,10 @@ jobs:
 
     runs-on: windows-latest
     
-    permissions:
-      contents: read|write
+    permissions: 
+      contents: write
+      pages: write
+      id-token: read
 
     steps:
     - uses: actions/checkout@v3
