@@ -7,6 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * This class is used to parse the JSON configuration file into a Map object.
+ * The Map object is used to store the configuration data in a nested dictionary structure.
+ * The Map object is then used to create the Config object.
+ */
+
 public class ConfigParser {
 
     public static Map<String, Object> parseConfig(String configPath) throws IOException {
