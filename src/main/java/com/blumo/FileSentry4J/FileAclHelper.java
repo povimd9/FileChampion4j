@@ -104,8 +104,6 @@ public class FileAclHelper {
                 LOGGER.severe("Exception setting permissions on file with ACL & POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
                 throw new Exception("Exception setting permissions on file with ACL & POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
             }
-            LOGGER.severe("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
-            throw new Exception("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
         } catch (Exception e) {
             LOGGER.severe("Exception setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
             throw new Exception("Exception setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
