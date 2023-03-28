@@ -4,7 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.*;
 import java.util.*;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +18,7 @@ import java.util.logging.Logger;
 
 public class FileAclHelper {
     private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
+
     public static void ChangeFileACL(Path targetFilePath, String newPermissions, String newOwnerUsername) throws Exception {
         // Check the parameters
         if (targetFilePath == null || targetFilePath.getNameCount() == 0) {
@@ -36,82 +36,78 @@ public class FileAclHelper {
         Files.setOwner(targetFilePath, newOwner);
         LOGGER.info("Changed owner of file " + targetFilePath.toAbsolutePath() + " to " + newOwnerUsername);
 
-        // Change the permissions of the file using ACLs
-        AclFileAttributeView aclView = Files.getFileAttributeView(targetFilePath, AclFileAttributeView.class);
-        AclEntryPermission readPermission = AclEntryPermission.READ_DATA;
-        AclEntryPermission writePermission = AclEntryPermission.WRITE_DATA;
-        AclEntryPermission readAttributesPermission = AclEntryPermission.READ_ATTRIBUTES;
-        AclEntryPermission writeAttributesPermission = AclEntryPermission.WRITE_ATTRIBUTES;
-        AclEntryPermission executePermission = AclEntryPermission.EXECUTE;
+        String os = System.getProperty("os.name");
+        if (os.startsWith("Windows")) {
+            try {
+                LOGGER.info("Attempting to change permissions of file using ACLs on Windows");
+                // Change the permissions of the file using ACLs
+                AclFileAttributeView aclView = Files.getFileAttributeView(targetFilePath, AclFileAttributeView.class);
+                AclEntryPermission readPermission = AclEntryPermission.READ_DATA;
+                AclEntryPermission writePermission = AclEntryPermission.WRITE_DATA;
+                AclEntryPermission readAttributesPermission = AclEntryPermission.READ_ATTRIBUTES;
+                AclEntryPermission writeAttributesPermission = AclEntryPermission.WRITE_ATTRIBUTES;
+                AclEntryPermission executePermission = AclEntryPermission.EXECUTE;
 
-        AclEntryType allow = AclEntryType.ALLOW;
+                AclEntryType allow = AclEntryType.ALLOW;
 
-        LOGGER.info("Prepping new ACL entries for file " + targetFilePath.toAbsolutePath() + " with permissions " + newPermissions);
-        EnumSet<AclEntryPermission> actualPermissions = EnumSet.noneOf(AclEntryPermission.class);
-        if (newPermissions.contains("r")) {
-            actualPermissions.add(readPermission);
-        }
-        if (newPermissions.contains("w")) {
-            actualPermissions.add(writePermission);
-        }
-        if (newPermissions.contains("a")) {
-            actualPermissions.add(readAttributesPermission);
-            actualPermissions.add(writeAttributesPermission);
-        }
-        if (newPermissions.contains("x")) {
-            actualPermissions.add(executePermission);
-        }
-
-        LOGGER.info("AclEntryBuilder: " + newOwner + " " + actualPermissions);
-        AclEntry aclEntry = AclEntry.newBuilder()
-                .setType(allow)
-                .setPrincipal(newOwner)
-                .setPermissions(actualPermissions)
-                .build();
-
-        LOGGER.info("add new acl to existing acl");
-        // Get the existing ACL and add the new ACL entries
-        List<AclEntry> acl = new ArrayList<>();
-        acl.add(aclEntry);
-
-        // Set the new ACL
-        try {
-            LOGGER.info("Setting new ACL entries on file " + targetFilePath.toAbsolutePath());
-            if (aclView == null) {
-                try {
-                    // Change the file permissions of the target file
-                    Set<PosixFilePermission> permissions = new HashSet<>();
-                    if (newPermissions.contains("r")) {
-                        permissions.add(PosixFilePermission.OWNER_READ);
-                    }
-                    if (newPermissions.contains("w")) {
-                        permissions.add(PosixFilePermission.OWNER_WRITE);
-                    }
-                    if (newPermissions.contains("a")) {
-                        permissions.add(PosixFilePermission.OWNER_READ);
-                        permissions.add(PosixFilePermission.OWNER_WRITE);
-                    }
-                    if (newPermissions.contains("x")) {
-                        permissions.add(PosixFilePermission.OWNER_EXECUTE);
-                    }
-                    Files.setPosixFilePermissions(targetFilePath.toAbsolutePath(), permissions);
-                } catch (Exception e2) {
-                    LOGGER.severe("Exception setting permissions on file with ACL & POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
-                    throw new Exception("Exception setting permissions on file with ACL & POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
+                EnumSet<AclEntryPermission> actualPermissions = EnumSet.noneOf(AclEntryPermission.class);
+                if (newPermissions.contains("r")) {
+                    actualPermissions.add(readPermission);
                 }
-            } else {
+                if (newPermissions.contains("w")) {
+                    actualPermissions.add(writePermission);
+                }
+                if (newPermissions.contains("a")) {
+                    actualPermissions.add(readAttributesPermission);
+                    actualPermissions.add(writeAttributesPermission);
+                }
+                if (newPermissions.contains("x")) {
+                    actualPermissions.add(executePermission);
+                }
+
+                LOGGER.info("AclEntryBuilder: " + newOwner + " " + actualPermissions);
+                AclEntry aclEntry = AclEntry.newBuilder()
+                        .setType(allow)
+                        .setPrincipal(newOwner)
+                        .setPermissions(actualPermissions)
+                        .build();
+
+                // Get the existing ACL and add the new ACL entries
+                List<AclEntry> acl = new ArrayList<>();
+                acl.add(aclEntry);
+
+                // Set the new ACL
                 aclView.setAcl(acl);
+
+                LOGGER.info("Changed permissions of file " + targetFilePath.toAbsolutePath() + " to " + newPermissions);
+            } catch (Exception e) {
+                LOGGER.severe("Exception setting permissions on file with ACL: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+                throw new Exception("Exception setting permissions on file with ACL: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
             }
-            LOGGER.info("Added new ACL entries to file " + targetFilePath.toAbsolutePath());
-        } catch (IOException e) {
-            LOGGER.severe("IOException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
-            throw new Exception("IOException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
-        } catch (NullPointerException e) {
-            LOGGER.severe("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
-            throw new Exception("NullPointerException setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
-        } catch (Exception e) {
-            LOGGER.severe("Exception setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
-            throw new Exception("Exception setting ACL on file: " + targetFilePath.toAbsolutePath() + ". " + e.getMessage());
+        } else {
+            try {
+                LOGGER.info("Attempting to change permissions of file using POSIX on Linux");
+                // Change the file permissions of the target file using POSIX
+                Set<PosixFilePermission> permissions = new HashSet<>();
+                if (newPermissions.contains("r")) {
+                    permissions.add(PosixFilePermission.OWNER_READ);
+                }
+                if (newPermissions.contains("w")) {
+                    permissions.add(PosixFilePermission.OWNER_WRITE);
+                }
+                if (newPermissions.contains("a")) {
+                    permissions.add(PosixFilePermission.OWNER_READ);
+                    permissions.add(PosixFilePermission.OWNER_WRITE);
+                }
+                if (newPermissions.contains("x")) {
+                    permissions.add(PosixFilePermission.OWNER_EXECUTE);
+                }
+                Files.setPosixFilePermissions(targetFilePath.toAbsolutePath(), permissions);
+                LOGGER.info("Changed permissions of file " + targetFilePath.toAbsolutePath() + " to " + newPermissions);
+            } catch (Exception e2) {
+                LOGGER.severe("Exception setting permissions on file with POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
+                throw new Exception("Exception setting permissions on file with POSIX: " + targetFilePath.toAbsolutePath() + ". " + e2.getMessage());
+            }
         }
     }
 }
