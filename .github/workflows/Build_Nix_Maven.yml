@@ -39,7 +39,7 @@ jobs:
           key: SHA
           value: ${{ github.sha }}
       - name: Pin actions to commit SHA.
-        uses: actions/pin@v3
+        uses: actions/pin@v2
         with:
           repository: ${{ github.repository }}
           ref: ${{ github.ref }}
