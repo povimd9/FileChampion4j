@@ -1,0 +1,51 @@
+name: Master Workflow
+
+on:
+  push:
+    branches:
+      - main
+    pull_request:
+      workflow_dispatch:
+        branches:
+          - main
+
+jobs:
+  build-and-test-on-nix-mac:
+    steps:
+      - uses: maven_nix.yml@master
+
+  build-and-test-on-windows:
+    steps:
+      - uses: maven_win.yml@master
+    requires:
+      - build-and-test-on-nix-mac
+
+    run-codeql-analysis:
+      steps:
+        - uses: codeql.yml@master
+      requires:
+        - build-and-test-on-windows
+
+    upload-dependency-graph:
+      steps:
+        - uses: advanced-security/maven-dependency-submission-action@v3.0.0
+      requires:
+        - build-and-test-on-windows
+
+  pin-actions-to-commit-sha:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout.
+        uses: actions/checkout@v3
+      - name: Get current SHA.
+                - uses: actions/env@v3
+                with:
+                  key: SHA
+                  .env:
+                    SHA={{github.sha}}
+      - name: Pin actions to commit SHA.
+        uses: actions/pin-actions@v1
+        with:
+            repository: ${{github.repo}}
+            actions:
+              ${{env.SHA}}
