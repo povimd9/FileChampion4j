@@ -13,17 +13,17 @@ on:
 jobs:
   build-and-test-on-nix-mac:
     steps:
-      - uses: maven_nix.yml@master
+      - uses: ./.github/workflows/maven_nix.yml@master
 
   build-and-test-on-windows:
     steps:
-      - uses: maven_win.yml@master
+      - uses: ./.github/workflows/maven_win.yml@master
     requires:
       - build-and-test-on-nix-mac
 
     run-codeql-analysis:
       steps:
-        - uses: codeql.yml@master
+        - uses: ./.github/workflows/codeql.yml@master
       requires:
         - build-and-test-on-windows
 
@@ -35,6 +35,6 @@ jobs:
 
   pin-actions-to-commit-sha:
     steps:
-      - uses: pin_actions_to_commit_sha.yml@master
+      - uses: ./.github/workflows/pin_actions_to_commit_sha.yml@master
     requires:
       - upload-dependency-graph
