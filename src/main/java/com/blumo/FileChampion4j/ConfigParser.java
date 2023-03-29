@@ -1,4 +1,4 @@
-package com.blumo.FileSentry4J;
+package com.blumo.FileChampion4j;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

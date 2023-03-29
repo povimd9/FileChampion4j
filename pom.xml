@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.blumo</groupId>
-    <artifactId>FileSentry4J</artifactId>
+    <artifactId>FileChampion4j</artifactId>
     <version>0.9.0</version>
     <packaging>jar</packaging>
     <name>FileSentry4J</name>
@@ -105,7 +105,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.blumo.FileSentry4J.Main</mainClass>
+                            <mainClass>com.blumo.FileChampion4j.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

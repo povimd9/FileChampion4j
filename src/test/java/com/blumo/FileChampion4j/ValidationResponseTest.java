@@ -1,4 +1,4 @@
-package com.blumo.FileSentry4J;
+package com.blumo.FileChampion4j;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

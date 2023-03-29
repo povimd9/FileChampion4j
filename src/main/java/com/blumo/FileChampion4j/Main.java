@@ -1,4 +1,4 @@
-package com.blumo.FileSentry4J;
+package com.blumo.FileChampion4j;
 
 import java.io.File;
 import java.io.IOException;

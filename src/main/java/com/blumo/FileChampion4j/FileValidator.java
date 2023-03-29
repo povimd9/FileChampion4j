@@ -1,4 +1,4 @@
-package com.blumo.FileSentry4J;
+package com.blumo.FileChampion4j;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * This class is used to validate file types and checksums
+ * This class is used to validate file types
  * The configuration for file types and validations is stored in a JSON file and should be loaded as part of initiation.
  * The originalFile is validated against the configured controls for the file type.
  * The validateFileType method returns a ValidationResponse object that contains:
