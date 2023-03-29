@@ -72,3 +72,42 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B -U package --file pom.xml
+
+  analyze:
+    name: Analyze
+    needs: [build-and-test-on-nix, build-and-test-on-macos, build-and-test-on-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java' ]
+
+    steps:
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      - run: |
+          echo "Run, Build Application using script"
+          ./mvnw -B -U package --file pom.xml
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: "/language:${{matrix.language}}"
