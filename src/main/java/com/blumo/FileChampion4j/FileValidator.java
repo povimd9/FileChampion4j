@@ -20,11 +20,14 @@ import java.security.NoSuchAlgorithmException;
  * - isValid: a boolean indicating whether the file is valid or not
  * - fileBytes: the file bytes if the file is valid
  * - fileChecksum: the file checksum if the file is valid
- * - resultsInfo: a string containing additional information about the validation results /
-                      such as reason for failure or the name of the file if it is valid
-TODO: add try/catch blocks to handle specific exceptions
-TODO: add unit tests
-TODO: support cli and jar loading
+ * - resultsInfo: a string containing additional information about the validation results such as reason for failure or the name of the file if it is valid
+  
+                      TODO: reduce cognitive complexity
+                      TODO: add try/catch blocks to handle specific exceptions
+
+                      TODO: add unit tests
+
+                      TODO: support cli and jar loading
 */
 
 public class FileValidator {
@@ -40,47 +43,65 @@ public class FileValidator {
         // Read the file into a byte array
         byte[] fileBytes = Files.readAllBytes(originalFile.toPath());
         String responseAggregation = "";
+        int responseMsgCount = 0;
+        StringBuilder sb = new StringBuilder(responseAggregation);
+        String logMessage;
         String originalFilenameClean = originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
 
         // Check that the file type is not null or empty
         if (Objects.isNull(fileType) || fileType.isEmpty()) {
-            responseAggregation = "File type cannot be null or empty.";
+            sb.append(++responseMsgCount + ". ")
+                .append("File type cannot be null or empty.");
         }
-        LOGGER.info("Validating " + originalFilenameClean +  ", as file type: " + fileType);
+        logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileType);
+        LOGGER.info(logMessage);
 
         try {
             // Check that the file exists
             Map<String, Object> fileTypeConfig = (Map<String, Object>) configMap.get(fileType);
             if (Objects.isNull(fileTypeConfig)) {
-                responseAggregation = "File type not configured: " + fileType;
+                sb.append(++responseMsgCount + ". ")
+                .append("File type not configured: ")
+                .append(fileType);
                 LOGGER.warning(responseAggregation);
             }
 
             // Check that the file is not empty
             List<String> allowedExtensions = (List<String>) fileTypeConfig.get("allowed_extensions");
             if (Objects.isNull(allowedExtensions) || allowedExtensions.isEmpty()) {
-                responseAggregation = "No allowed extensions found for file type: " + fileType;
+                sb.append(++responseMsgCount + ". ")
+                    .append("No allowed extensions found for file type: ")
+                    .append(fileType);
                 LOGGER.warning(responseAggregation);
             }
 
             // Check that the file extension is allowed
             String fileExtension = getFileExtension(originalFilenameClean);
             if (fileExtension.isEmpty() || !allowedExtensions.contains(fileExtension)) {
-                responseAggregation = "File extension not allowed or not configured: " + fileType;
+                sb.append(++responseMsgCount + ". ")
+                    .append("File extension not allowed or not configured: ")
+                    .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
             // Get the configuration for the file extension
             Map<String, Object> extensionConfig = (Map<String, Object>) fileTypeConfig.get(fileExtension);
             if (extensionConfig == null) {
-                responseAggregation = "Missing configuration for allowed_extension: " + fileExtension;
+                sb.append(++responseMsgCount + ". ")
+                    .append("Missing configuration for allowed_extension: ")
+                    .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
             // Check that the file size is not greater than the maximum allowed size
             String maxFileSize = (String) extensionConfig.get("max_size");
             if (!Objects.isNull(maxFileSize) && Math.floorDiv(fileBytes.length, 1000) > Integer.parseInt(maxFileSize)) {
-                responseAggregation = "File size (" + Math.floorDiv(fileBytes.length, 1000) + "KB) exceeds maximum allowed size ("+ maxFileSize + "KB) for file extension: " + fileExtension;
+                sb.append(++responseMsgCount + ". ")
+                    .append("File size (")
+                    .append(Math.floorDiv(fileBytes.length, 1000))
+                    .append("KB) exceeds maximum allowed size (")
+                    .append(maxFileSize).append("KB) for file extension: ")
+                    .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
@@ -88,28 +109,36 @@ public class FileValidator {
             String mimeType = Files.probeContentType(originalFile.toPath());
             String expectedMimeType = (String) extensionConfig.get("mime_type");
             if (Objects.isNull(expectedMimeType) || !expectedMimeType.equals(mimeType)) {
-                responseAggregation = "Invalid mime_type for file extension: " + fileExtension;
+                sb.append(++responseMsgCount + ". ")
+                    .append("Invalid mime_type for file extension: ")
+                    .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
             // Check that the file size is not greater than the maximum allowed size
             String magicBytesPattern = (String) extensionConfig.get("magic_bytes");
             if (Objects.isNull(magicBytesPattern) || !containsMagicBytes(fileBytes, magicBytesPattern)) {
-                responseAggregation = "Invalid magic_bytes for file extension: " + fileExtension;
+                sb.append(++responseMsgCount + ". ")
+                    .append("Invalid magic_bytes for file extension: ")
+                    .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
             // Check header signatures (optional)
             String headerSignaturesPattern = (String) extensionConfig.get("header_signatures");
             if (!Objects.isNull(headerSignaturesPattern) && !containsHeaderSignatures(fileBytes, headerSignaturesPattern)) {
-                responseAggregation = "Invalid header_signatures for file extension: " + fileExtension;
+                sb.append(++responseMsgCount + ". ")
+                    .append("Invalid header_signatures for file extension: ")
+                    .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
             // Check footer signatures (optional)
             String footerSignaturesPattern = (String) extensionConfig.get("footer_signatures");
             if (!Objects.isNull(footerSignaturesPattern) && !containsFooterSignatures(fileBytes, footerSignaturesPattern)) {
-                responseAggregation = "Invalid footer_signatures for file extension: " + fileExtension;
+                sb.append(++responseMsgCount + ". ")
+                    .append("Invalid footer_signatures for file extension: ")
+                    .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
@@ -140,11 +169,11 @@ public class FileValidator {
                 Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
                 Path encodedFilePath = null;
                 if (!Objects.isNull(nameEncode) && nameEncode) {
-                    String encodedFileName = Base64.getEncoder().encodeToString(originalFilenameClean.getBytes())+ "." + getFileExtension(originalFile.getName());
+                    String encodedFileName = String.format("%s.%s",Base64.getEncoder().encodeToString(originalFilenameClean.getBytes()),  getFileExtension(originalFile.getName()));
                     encodedFilePath = Paths.get(outDir, encodedFileName);
                     try {
                         Files.copy(originalFile.toPath(), encodedFilePath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
-                        String encodingStatus = "File " + originalFilenameClean + " has been successfully encoded and saved in " + encodedFilePath.toAbsolutePath();
+                        String encodingStatus = String.format("File %s has been successfully encoded and saved in %s", originalFilenameClean, encodedFilePath.toAbsolutePath());
                         LOGGER.info(encodingStatus);
                     } catch (IOException e) {
                         responseAggregation = "Failed to encode file: " + encodedFilePath.toAbsolutePath();
@@ -164,9 +193,13 @@ public class FileValidator {
                         sha256Digest.update(Files.readAllBytes(cleanFile.toPath()));
                         sha256Bytes = sha256Digest.digest();
                         sha256Checksum = new Formatter().format("%02x", new BigInteger(1, sha256Bytes)).toString();
-                        LOGGER.info("SHA-256 checksum of file " + cleanFile.getName() + " is: " + sha256Checksum);
+
+                        logMessage = String.format("SHA-256 checksum of file %s is: %s", cleanFile.getName(), sha256Checksum);
+                        LOGGER.info(logMessage);
                     } catch (NoSuchAlgorithmException e) {
-                        responseAggregation = "Failed to calculate checksum of file: " + cleanFile.getName();
+                        sb.append(++responseMsgCount + ". ")
+                            .append("Failed to calculate checksum of file: ")
+                            .append(cleanFile.getName());
                         LOGGER.warning(responseAggregation);
                         return new ValidationResponse(false, responseAggregation, originalFile, null);
                     }
@@ -179,30 +212,38 @@ public class FileValidator {
                         try {
                             // Change the file ACL
                             FileAclHelper.ChangeFileACL(encodedFilePath, changeOwnershipMode, changeOwnershipUser);
-                            LOGGER.info(encodedFilePath + " ACL changed successfully.");
+                            logMessage = String.format("File %s ACL changed successfully", encodedFilePath);
+                            LOGGER.info(logMessage);
                         } catch (Exception e) {
-                            responseAggregation = "Error changing file ACL: " + e.getMessage();
+                            sb.append(++responseMsgCount + ". ")
+                                .append("Error changing file ACL: ")
+                                .append(e.getMessage());
                             LOGGER.warning(responseAggregation);
                             return new ValidationResponse(false, responseAggregation, originalFile, null);
                         }
                     }
 
                     // Return if file is valid
-                    LOGGER.info(originalFilenameClean + " is valid");
-                    return new ValidationResponse(true, originalFilenameClean + " ==> " + cleanFile.getName(), cleanFile, sha256Checksum);
+                    logMessage = String.format("File %s is valid", originalFilenameClean);
+                    LOGGER.info(logMessage);
+                    String validDescription = String.format("%s ==> %s", originalFilenameClean, cleanFile.getName());
+                    return new ValidationResponse(true, validDescription, cleanFile, sha256Checksum);
                 } else {
                     // Return if file is invalid
-                    LOGGER.info(originalFilenameClean + " is invalid: " + responseAggregation);
+                    logMessage = String.format("File %s is invalid: %s", originalFilenameClean, responseAggregation);
+                    LOGGER.info(logMessage);
                     return new ValidationResponse(false, responseAggregation, originalFile, null);
                 }
             } else {
                 // Return if file is invalid
-                LOGGER.info(originalFilenameClean + " is invalid: " + responseAggregation);
+                logMessage = String.format("File %s is invalid: %s", originalFilenameClean, responseAggregation);
+                LOGGER.info(logMessage);
                 return new ValidationResponse(false, responseAggregation, originalFile, null);
             }
         } catch (Exception e) {
             LOGGER.severe(e.toString());
-            return new ValidationResponse(false, "An error occurred while reading file: " + e.getMessage(), originalFile, null);
+            String errorResponse = String.format("An error occurred while reading file: %s", e.getMessage());
+            return new ValidationResponse(false, errorResponse, originalFile, null);
         }
     }
 
