@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.blumo.FileSentry4J.ConfigParserTest" time="0.244" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.blumo.FileSentry4J.ConfigParserTest" time="0.234" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Amazon Corretto\jdk11.0.18_10\bin"/>
-    <property name="sun.java.command" value="C:\Users\User1\AppData\Local\Temp\surefire7650710411496701505\surefirebooter-20230328025924264_3.jar C:\Users\User1\AppData\Local\Temp\surefire7650710411496701505 2023-03-28T02-59-22_243-jvmRun1 surefire-20230328025924264_1tmp surefire_0-20230328025924264_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\User1\AppData\Local\Temp\surefire14155356935664411229\surefirebooter-20230329000930883_11.jar C:\Users\User1\AppData\Local\Temp\surefire14155356935664411229 2023-03-29T00-09-16_853-jvmRun1 surefire-20230329000930883_9tmp surefire_2-20230329000930883_10tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\User1\IdeaProjects\SafeFilez\target\test-classes;C:\Users\User1\IdeaProjects\SafeFilez\target\classes;C:\Users\User1\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.14.2\jackson-databind-2.14.2.jar;C:\Users\User1\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.14.2\jackson-annotations-2.14.2.jar;C:\Users\User1\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.14.2\jackson-core-2.14.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.2\junit-jupiter-api-5.9.2.jar;C:\Users\User1\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-commons\1.9.2\junit-platform-commons-1.9.2.jar;C:\Users\User1\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.2\junit-jupiter-engine-5.9.2.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-engine\1.9.2\junit-platform-engine-1.9.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -33,7 +33,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\User1\AppData\Local\Temp\surefire7650710411496701505\surefirebooter-20230328025924264_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\User1\AppData\Local\Temp\surefire14155356935664411229\surefirebooter-20230329000930883_11.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.18+10-LTS"/>
@@ -47,7 +47,7 @@
     <property name="localRepository" value="C:\Users\User1\.m2\repository"/>
     <property name="java.vendor.url.bug" value="https://github.com/corretto/corretto-11/issues/"/>
     <property name="java.io.tmpdir" value="C:\Users\User1\AppData\Local\Temp\"/>
-    <property name="java.version" value="11.0.18"/>
+    <property name="java.version" value="11"/>
     <property name="user.dir" value="C:\Users\User1\IdeaProjects\SafeFilez"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
@@ -60,7 +60,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testParsingAllowedExtensions" classname="com.blumo.FileSentry4J.ConfigParserTest" time="0.218"/>
+  <testcase name="testParsingAllowedExtensions" classname="com.blumo.FileSentry4J.ConfigParserTest" time="0.208"/>
   <testcase name="testParsingDocConfig" classname="com.blumo.FileSentry4J.ConfigParserTest" time="0.002"/>
   <testcase name="testParsingPDFConfig" classname="com.blumo.FileSentry4J.ConfigParserTest" time="0.002"/>
 </testsuite>
