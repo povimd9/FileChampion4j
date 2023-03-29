@@ -1,0 +1,74 @@
+name: master_build_workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+      - feature/*
+
+permissions:
+  contents: write
+  security-events: write
+
+
+jobs:
+  check-out-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+  build-and-test-on-nix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Make mvnw executable (Linux)
+        run: |
+          chmod +x ${{ github.workspace }}/mvnw
+
+      - name: Build with Maven
+        run: mvn -B -U package --file pom.xml
+
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+  build-and-test-on-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Make mvnw executable (Linux)
+        run: |
+          chmod +x ${{ github.workspace }}/mvnw
+
+      - name: Build with Maven
+        run: mvn -B -U package --file pom.xml
+
+  build-and-test-on-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B -U package --file pom.xml
