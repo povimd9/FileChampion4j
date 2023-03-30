@@ -39,33 +39,109 @@ public class FileValidator {
         this.configMap = configMap;
     }
 
+    /**
+     * This method checks and cast the configuration value for the input file type.
+     * Returns null if the configuration value does not exist.
+     * @param <T>
+     * @param extensionConfig
+     * @param key
+     * @param clazz
+     * @return
+     */
+    private static <T> T getConfigValue(Map<String, Object> extensionConfig, String key, Class<T> clazz) {
+        Object value = extensionConfig.get(key);
+        if (value == null) {
+            return null;
+        }
+        try {
+            return clazz.cast(value);
+        } catch (ClassCastException e) {
+            throw new IllegalArgumentException("Invalid value type for configuration key: " + key, e);
+        }
+    }
+
+    // Check that the file type is configured in the JSON file
+    private String checkFileTypeExist(String fileType) {
+        Object fileTypeConfigObj;
+        Map<String, Object> fileTypeConfig;
+        fileTypeConfigObj = configMap.get(fileType);
+        if (fileTypeConfigObj instanceof Map) {
+            try {
+                fileTypeConfig = (Map<String, Object>) configMap.get(fileType);
+            } catch (Exception e) {
+                LOGGER.severe(String.format("Error parsing fileTpye configuration: %s", e.getMessage()));
+                return String.format("Error parsing fileTpye configuration: %s", e.getMessage());
+            }
+            if (!Objects.isNull(fileTypeConfig)) { 
+                String logMessage = String.format("Found configurations for: %s", fileType);
+                LOGGER.info(logMessage);
+                return "true"; 
+            }
+            else { 
+                String logMessage = String.format("No configurations found for: %s", fileType);
+                LOGGER.severe(logMessage);
+                return String.format("File type not configured: %s", fileType);
+            }
+        } else {
+            String logMessage = String.format("Error parsing json configuration: %s", fileTypeConfigObj);
+            LOGGER.severe(logMessage);
+            return String.format("Error parsing json configuration: %s", fileTypeConfigObj);
+        }
+    }
+
+    /**
+     * This method checks that input parameters are not null or empty.
+     * @param fileType
+     * @param inFile
+     * @param outDir
+     * @return Returns true if all parameters are not null or failure reason.
+     */
+    private String checkMethodInputs(String fileType, File inFile, String outDir) {
+        if (Objects.isNull(fileType) || fileType.isEmpty()) {
+            return "File type cannot be null or empty.";
+        }
+        if (Objects.isNull(outDir) || outDir.isEmpty()) {
+            return "OutDir cannot be null or empty.";
+        }
+        if (inFile.length() == 0) {
+            return "InFile cannot be empty.";
+        }
+        return "true";
+    }
+    
     public ValidationResponse validateFileType(String fileType, File originalFile, String outDir) throws IOException {
+        String checkArgs = checkMethodInputs(fileType, originalFile, outDir);
+        if (!checkArgs.equals("true")) {
+            return new ValidationResponse(false, checkArgs, null, null);
+        }
+
         // Read the file into a byte array
         byte[] fileBytes = Files.readAllBytes(originalFile.toPath());
         String responseAggregation = "";
         int responseMsgCount = 0;
         StringBuilder sb = new StringBuilder(responseAggregation);
+        String statusMsg;
         String logMessage;
         String originalFilenameClean = originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
 
-        // Check that the file type is not null or empty
-        if (Objects.isNull(fileType) || fileType.isEmpty()) {
+        // Check that the file type arg is not null or empty
+        statusMsg = checkFileTypeInput(fileType);
+        if (!statusMsg.equals("true")) {
             sb.append(++responseMsgCount + ". ")
-                .append("File type cannot be null or empty.");
+                .append(statusMsg);
         }
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileType);
         LOGGER.info(logMessage);
 
+        // Check that the file type is configured in config file
+        statusMsg = checkFileTypeExist(fileType);
+        if (!statusMsg.equals("true")) {
+            sb.append(++responseMsgCount + ". ")
+                .append(statusMsg);
+        }
+        
+    
         try {
-            // Check that the file exists
-            Map<String, Object> fileTypeConfig = (Map<String, Object>) configMap.get(fileType);
-            if (Objects.isNull(fileTypeConfig)) {
-                sb.append(++responseMsgCount + ". ")
-                .append("File type not configured: ")
-                .append(fileType);
-                LOGGER.warning(responseAggregation);
-            }
-
             // Check that the file is not empty
             List<String> allowedExtensions = (List<String>) fileTypeConfig.get("allowed_extensions");
             if (Objects.isNull(allowedExtensions) || allowedExtensions.isEmpty()) {
