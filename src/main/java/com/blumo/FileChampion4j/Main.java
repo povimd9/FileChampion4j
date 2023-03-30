@@ -2,6 +2,7 @@ package com.blumo.FileChampion4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
 
@@ -18,8 +19,9 @@ public class Main {
         FileValidator validator = new FileValidator(configMap);
 
         File pdfFile = new File("samples/In/Binary Coding (2017).pdf");
+        byte[] fileInBytes = Files.readAllBytes(pdfFile.toPath());
         String outDir = "samples/Out";
-        ValidationResponse fileValidationResults = validator.validateFileType("Documents", pdfFile, outDir);
+        ValidationResponse fileValidationResults = validator.validateFileType("Documents", fileInBytes, pdfFile.getName(),outDir);
 
         if (fileValidationResults.isValid()) {
             String cleanFileName = fileValidationResults.resultsInfo();

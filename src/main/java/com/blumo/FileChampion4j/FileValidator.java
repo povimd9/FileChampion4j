@@ -13,12 +13,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * This class is used to validate file types
- * The configuration for file types and validations is stored in a JSON file and should be loaded as part of initiation.
- * The originalFile is validated against the configured controls for the file type.
+ * This class is used to validate untrusted files
+ * validateFileType argments:
+ * - fileType: the file type category to be validated
+ * - inFile: the file bytes of the file to be validated
+ * - fileName: the name of the file to be validated
+ * - outDir: the directory where the file will be saved if it is valid
+ * 
  * The validateFileType method returns a ValidationResponse object that contains:
  * - isValid: a boolean indicating whether the file is valid or not
- * - fileBytes: the file bytes if the file is valid
+ * - fileBytes: the file bytes of the validated file
  * - fileChecksum: the file checksum if the file is valid
  * - resultsInfo: a string containing additional information about the validation results such as reason for failure or the name of the file if it is valid
   
@@ -31,125 +35,87 @@ import java.security.NoSuchAlgorithmException;
 */
 
 public class FileValidator {
+    // Initialize logger
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
 
+    // Initialize configMap
     private final Map<String, Object> configMap;
-
     public FileValidator(Map<String, Object> configMap) {
         this.configMap = configMap;
     }
 
-    /**
-     * This method checks and cast the configuration value for the input file type.
-     * Returns null if the configuration value does not exist.
-     * @param <T>
-     * @param extensionConfig
-     * @param key
-     * @param clazz
-     * @return
-     */
-    private static <T> T getConfigValue(Map<String, Object> extensionConfig, String key, Class<T> clazz) {
-        Object value = extensionConfig.get(key);
-        if (value == null) {
-            return null;
-        }
-        try {
-            return clazz.cast(value);
-        } catch (ClassCastException e) {
-            throw new IllegalArgumentException("Invalid value type for configuration key: " + key, e);
-        }
-    }
-
-    // Check that the file type is configured in the JSON file
-    private String checkFileTypeExist(String fileType) {
-        Object fileTypeConfigObj;
-        Map<String, Object> fileTypeConfig;
-        fileTypeConfigObj = configMap.get(fileType);
-        if (fileTypeConfigObj instanceof Map) {
-            try {
-                fileTypeConfig = (Map<String, Object>) configMap.get(fileType);
-            } catch (Exception e) {
-                LOGGER.severe(String.format("Error parsing fileTpye configuration: %s", e.getMessage()));
-                return String.format("Error parsing fileTpye configuration: %s", e.getMessage());
-            }
-            if (!Objects.isNull(fileTypeConfig)) { 
-                String logMessage = String.format("Found configurations for: %s", fileType);
-                LOGGER.info(logMessage);
-                return "true"; 
-            }
-            else { 
-                String logMessage = String.format("No configurations found for: %s", fileType);
-                LOGGER.severe(logMessage);
-                return String.format("File type not configured: %s", fileType);
-            }
-        } else {
-            String logMessage = String.format("Error parsing json configuration: %s", fileTypeConfigObj);
-            LOGGER.severe(logMessage);
-            return String.format("Error parsing json configuration: %s", fileTypeConfigObj);
-        }
-    }
-
-    /**
-     * This method checks that input parameters are not null or empty.
-     * @param fileType
-     * @param inFile
-     * @param outDir
-     * @return Returns true if all parameters are not null or failure reason.
-     */
-    private String checkMethodInputs(String fileType, File inFile, String outDir) {
+    // Validate method arguments
+    private String checkMethodInputs(String fileType, byte[] inFile, String outDir) {
         if (Objects.isNull(fileType) || fileType.isEmpty()) {
             return "File type cannot be null or empty.";
         }
         if (Objects.isNull(outDir) || outDir.isEmpty()) {
             return "OutDir cannot be null or empty.";
         }
-        if (inFile.length() == 0) {
+        if (inFile.length == 0) {
             return "InFile cannot be empty.";
         }
         return "true";
     }
-    
-    public ValidationResponse validateFileType(String fileType, File originalFile, String outDir) throws IOException {
-        String checkArgs = checkMethodInputs(fileType, originalFile, outDir);
-        if (!checkArgs.equals("true")) {
-            return new ValidationResponse(false, checkArgs, null, null);
-        }
 
-        // Read the file into a byte array
-        byte[] fileBytes = Files.readAllBytes(originalFile.toPath());
+    // Check that the file type category is configured in config file
+    private boolean isFileTypeConfigured(String fileType) {
+        return Optional.ofNullable(configMap.get(fileType))
+            .map(categoryConfig -> {
+                String logMessage = String.format("Found configurations for: %s", fileType);
+                LOGGER.info(logMessage);
+                return true;
+            }).orElse(false);
+    }
+
+    // Get the configuration for the file type category
+    private List<String> getAllowedExtensions() {
+        return Optional.ofNullable(configMap.get("allowed_extensions"))
+            .filter(List.class::isInstance)
+            .map(List.class::cast)
+            .map(Collections::<String>unmodifiableList)
+            .orElse(Collections.emptyList());
+    }
+    
+    public ValidationResponse validateFileType(String fileType, byte[] originalFile, String fileName, String outDir) throws IOException {
+        // Initialize variables
         String responseAggregation = "";
         int responseMsgCount = 0;
         StringBuilder sb = new StringBuilder(responseAggregation);
         String statusMsg;
         String logMessage;
-        String originalFilenameClean = originalFile.getName().replaceAll("[^a-zA-Z0-9.]", "_");
+        String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
 
-        // Check that the file type arg is not null or empty
-        statusMsg = checkFileTypeInput(fileType);
-        if (!statusMsg.equals("true")) {
-            sb.append(++responseMsgCount + ". ")
-                .append(statusMsg);
+        // Check that the input parameters are not null or empty
+        String checkArgs = checkMethodInputs(fileType, originalFile, outDir);
+        if (!checkArgs.equals("true")) {
+            logMessage = String.format("validateFileType() Invalid arguments: %s", checkArgs);
+            LOGGER.info(logMessage);
+            return new ValidationResponse(false, logMessage, null, null);
         }
+
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileType);
         LOGGER.info(logMessage);
 
-        // Check that the file type is configured in config file
-        statusMsg = checkFileTypeExist(fileType);
-        if (!statusMsg.equals("true")) {
-            sb.append(++responseMsgCount + ". ")
-                .append(statusMsg);
+        // Check that the file type category is configured in config file
+        if (!isFileTypeConfigured(fileType)) {
+            logMessage = String.format("No configurations found for: %s", fileType);
+            LOGGER.info(logMessage);
+            return new ValidationResponse(false, logMessage, null, null);
         }
-        
+
+        // Get the configuration for the file type category
+        List<String> allowedExtensions = Optional.ofNullable(getAllowedExtensions())
+            .filter(list -> !list.isEmpty())
+            .orElseThrow(() -> {
+                LOGGER.severe("Allowed extensions list is null or empty.");
+                return new IllegalStateException("Allowed extensions list is null or empty.");
+            });
+
+
     
         try {
-            // Check that the file is not empty
-            List<String> allowedExtensions = (List<String>) fileTypeConfig.get("allowed_extensions");
-            if (Objects.isNull(allowedExtensions) || allowedExtensions.isEmpty()) {
-                sb.append(++responseMsgCount + ". ")
-                    .append("No allowed extensions found for file type: ")
-                    .append(fileType);
-                LOGGER.warning(responseAggregation);
-            }
+
 
             // Check that the file extension is allowed
             String fileExtension = getFileExtension(originalFilenameClean);
@@ -171,10 +137,10 @@ public class FileValidator {
 
             // Check that the file size is not greater than the maximum allowed size
             String maxFileSize = (String) extensionConfig.get("max_size");
-            if (!Objects.isNull(maxFileSize) && Math.floorDiv(fileBytes.length, 1000) > Integer.parseInt(maxFileSize)) {
+            if (!Objects.isNull(maxFileSize) && Math.floorDiv(originalFileBytes.length, 1000) > Integer.parseInt(maxFileSize)) {
                 sb.append(++responseMsgCount + ". ")
                     .append("File size (")
-                    .append(Math.floorDiv(fileBytes.length, 1000))
+                    .append(Math.floorDiv(originalFileBytes.length, 1000))
                     .append("KB) exceeds maximum allowed size (")
                     .append(maxFileSize).append("KB) for file extension: ")
                     .append(fileExtension);
@@ -193,7 +159,7 @@ public class FileValidator {
 
             // Check that the file size is not greater than the maximum allowed size
             String magicBytesPattern = (String) extensionConfig.get("magic_bytes");
-            if (Objects.isNull(magicBytesPattern) || !containsMagicBytes(fileBytes, magicBytesPattern)) {
+            if (Objects.isNull(magicBytesPattern) || !containsMagicBytes(originalFileBytes, magicBytesPattern)) {
                 sb.append(++responseMsgCount + ". ")
                     .append("Invalid magic_bytes for file extension: ")
                     .append(fileExtension);
@@ -202,7 +168,7 @@ public class FileValidator {
 
             // Check header signatures (optional)
             String headerSignaturesPattern = (String) extensionConfig.get("header_signatures");
-            if (!Objects.isNull(headerSignaturesPattern) && !containsHeaderSignatures(fileBytes, headerSignaturesPattern)) {
+            if (!Objects.isNull(headerSignaturesPattern) && !containsHeaderSignatures(originalFileBytes, headerSignaturesPattern)) {
                 sb.append(++responseMsgCount + ". ")
                     .append("Invalid header_signatures for file extension: ")
                     .append(fileExtension);
@@ -211,7 +177,7 @@ public class FileValidator {
 
             // Check footer signatures (optional)
             String footerSignaturesPattern = (String) extensionConfig.get("footer_signatures");
-            if (!Objects.isNull(footerSignaturesPattern) && !containsFooterSignatures(fileBytes, footerSignaturesPattern)) {
+            if (!Objects.isNull(footerSignaturesPattern) && !containsFooterSignatures(originalFileBytes, footerSignaturesPattern)) {
                 sb.append(++responseMsgCount + ". ")
                     .append("Invalid footer_signatures for file extension: ")
                     .append(fileExtension);
@@ -245,7 +211,7 @@ public class FileValidator {
                 Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
                 Path encodedFilePath = null;
                 if (!Objects.isNull(nameEncode) && nameEncode) {
-                    String encodedFileName = String.format("%s.%s",Base64.getEncoder().encodeToString(originalFilenameClean.getBytes()),  getFileExtension(originalFile.getName()));
+                    String encodedFileName = String.format("%s.%s",Base64.getEncoder().encodeToString(originalFilenameClean.getBytes()),  getFileExtension(fileName));
                     encodedFilePath = Paths.get(outDir, encodedFileName);
                     try {
                         Files.copy(originalFile.toPath(), encodedFilePath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
@@ -338,8 +304,8 @@ public class FileValidator {
     }
 
     // Check if the file contains the magic bytes
-    private boolean containsMagicBytes(byte[] fileBytes, String magicBytesPattern) {
-        if (Objects.isNull(fileBytes) || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
+    private boolean containsMagicBytes(byte[] originalFileBytes, String magicBytesPattern) {
+        if (Objects.isNull(originalFileBytes) || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
             return false;
         }
         magicBytesPattern = magicBytesPattern.replaceAll("\\s", "");
@@ -350,10 +316,10 @@ public class FileValidator {
         for (int i = 0; i < magicBytesPattern.length(); i += 2) {
             magicBytes[i / 2] = (byte) Integer.parseInt(magicBytesPattern.substring(i, i + 2), 16);
         }
-        for (int i = 0; i < fileBytes.length - magicBytes.length; i++) {
+        for (int i = 0; i < originalFileBytes.length - magicBytes.length; i++) {
             boolean found = true;
             for (int j = 0; j < magicBytes.length; j++) {
-                if (fileBytes[i + j] != magicBytes[j]) {
+                if (originalFileBytes[i + j] != magicBytes[j]) {
                     found = false;
                     break;
                 }
