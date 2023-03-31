@@ -9,22 +9,29 @@ import java.nio.file.StandardCopyOption;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URLConnection;
+
+
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * This class is used to validate untrusted files
- * validateFileType argments:
- * - fileType: the file type category to be validated
- * - inFile: the file bytes of the file to be validated
- * - fileName: the name of the file to be validated
- * - outDir: the directory where the file will be saved if it is valid
+ * validateFile() argments:
+ * @param fileCategory: the file type category to be validated
+ * @param inFile: the file bytes of the file to be validated
+ * @param fileName: the name of the file to be validated
+ * @param outDir: the directory where the file will be saved if it is valid
  * 
- * The validateFileType method returns a ValidationResponse object that contains:
- * - isValid: a boolean indicating whether the file is valid or not
- * - fileBytes: the file bytes of the validated file
- * - fileChecksum: the file checksum if the file is valid
- * - resultsInfo: a string containing additional information about the validation results such as reason for failure or the name of the file if it is valid
+ * The validateFile method returns a ValidationResponse object that contains:
+ * @return isValid: a boolean indicating whether the file is valid or not
+ * @return fileBytes: the file bytes of the validated file
+ * @return fileChecksum: the file checksum if the file is valid
+ * @return resultsInfo: a string containing additional information about the validation results such as reason for failure or the name of the file if it is valid
   
                       TODO: reduce cognitive complexity
                       TODO: add try/catch blocks to handle specific exceptions
@@ -38,138 +45,79 @@ public class FileValidator {
     // Initialize logger
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
 
-    // Initialize configMap
-    private final Map<String, Object> configMap;
-    public FileValidator(Map<String, Object> configMap) {
-        this.configMap = configMap;
-    }
-
     // Validate method arguments
-    private String checkMethodInputs(String fileType, byte[] inFile, String outDir) {
-        if (Objects.isNull(fileType) || fileType.isEmpty()) {
-            return "File type cannot be null or empty.";
+    private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
+    String fileName, String outDir) {
+        if (fileCategory.isBlank() || originalFile.length > 0 || fileName.isBlank() ||
+        outDir.isBlank() ||  configJsonObject.isEmpty()) {
+            String excMsg = String.format("Invalid argument(s) provided: fileCategory=%s, originalFile=%s, fileName=%s, outDir=%s, configJsonObject=%s",   
+            fileCategory, originalFile, fileName, outDir, configJsonObject);
+            LOGGER.severe(excMsg);
+            throw new IllegalArgumentException(excMsg);
         }
-        if (Objects.isNull(outDir) || outDir.isEmpty()) {
-            return "OutDir cannot be null or empty.";
-        }
-        if (inFile.length == 0) {
-            return "InFile cannot be empty.";
-        }
-        return "true";
     }
 
-    // Check that the file type category is configured in config file
-    private boolean isFileTypeConfigured(String fileType) {
-        return Optional.ofNullable(configMap.get(fileType))
-            .map(categoryConfig -> {
-                String logMessage = String.format("Found configurations for: %s", fileType);
-                LOGGER.info(logMessage);
-                return true;
-            }).orElse(false);
-    }
 
-    // Get the configuration for the file type category
-    private List<String> getAllowedExtensions() {
-        return Optional.ofNullable(configMap.get("allowed_extensions"))
-            .filter(List.class::isInstance)
-            .map(List.class::cast)
-            .map(Collections::<String>unmodifiableList)
-            .orElse(Collections.emptyList());
-    }
-    
-    public ValidationResponse validateFileType(String fileType, byte[] originalFile, String fileName, String outDir) throws IOException {
+    public ValidationResponse validateFile(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
+            String fileName, String outDir) throws IOException {
+        // Check that the input parameters are not null or empty
+        checkMethodInputs(configJsonObject, fileCategory, originalFile, fileName, outDir);
+
         // Initialize variables
         String responseAggregation = "";
         int responseMsgCount = 0;
-        StringBuilder sb = new StringBuilder(responseAggregation);
+        StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
         String statusMsg;
         String logMessage;
+        String fileExtension = getFileExtension(fileName);
+        Extension extensionConfig;
+
+        // Get the configuration for the file type category and extension
+        try {
+            extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject);
+        } catch (IllegalArgumentException e) {
+            LOGGER.severe(e.getMessage());
+            throw new IllegalArgumentException(e);
+        }
+        
+        // Clean the file name to replace special characters with underscores
         String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
 
-        // Check that the input parameters are not null or empty
-        String checkArgs = checkMethodInputs(fileType, originalFile, outDir);
-        if (!checkArgs.equals("true")) {
-            logMessage = String.format("validateFileType() Invalid arguments: %s", checkArgs);
-            LOGGER.info(logMessage);
-            return new ValidationResponse(false, logMessage, null, null);
-        }
-
-        logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileType);
+        // Log the file type category being validated
+        logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
         LOGGER.info(logMessage);
 
-        // Check that the file type category is configured in config file
-        if (!isFileTypeConfigured(fileType)) {
-            logMessage = String.format("No configurations found for: %s", fileType);
-            LOGGER.info(logMessage);
-            return new ValidationResponse(false, logMessage, null, null);
+        // Check that the file size is not greater than the maximum allowed size
+        if (!checkFileSize(originalFile.length, extensionConfig.getMaxSize())) {
+            sbResponseAggregation.append(++responseMsgCount + ". ")
+                .append("File size (")
+                .append(Math.floorDiv(originalFile.length, 1000))
+                .append("KB) exceeds maximum allowed size (")
+                .append(extensionConfig.getMaxSize()).append("KB) for file extension: ")
+                .append(fileExtension);
+            LOGGER.warning(responseAggregation);
         }
 
-        // Get the configuration for the file type category
-        List<String> allowedExtensions = Optional.ofNullable(getAllowedExtensions())
-            .filter(list -> !list.isEmpty())
-            .orElseThrow(() -> {
-                LOGGER.severe("Allowed extensions list is null or empty.");
-                return new IllegalStateException("Allowed extensions list is null or empty.");
-            });
+        // Check that the mime type is allowed
+        if (!checkMimeType(originalFile, extensionConfig.getMimeType())) {
+            sbResponseAggregation.append(++responseMsgCount + ". ")
+                .append("Invalid mime_type for file extension: ")
+                .append(fileExtension);
+            LOGGER.warning(responseAggregation);
+        }
 
-
-    
-        try {
-
-
-            // Check that the file extension is allowed
-            String fileExtension = getFileExtension(originalFilenameClean);
-            if (fileExtension.isEmpty() || !allowedExtensions.contains(fileExtension)) {
-                sb.append(++responseMsgCount + ". ")
-                    .append("File extension not allowed or not configured: ")
-                    .append(fileExtension);
-                LOGGER.warning(responseAggregation);
-            }
-
-            // Get the configuration for the file extension
-            Map<String, Object> extensionConfig = (Map<String, Object>) fileTypeConfig.get(fileExtension);
-            if (extensionConfig == null) {
-                sb.append(++responseMsgCount + ". ")
-                    .append("Missing configuration for allowed_extension: ")
-                    .append(fileExtension);
-                LOGGER.warning(responseAggregation);
-            }
-
-            // Check that the file size is not greater than the maximum allowed size
-            String maxFileSize = (String) extensionConfig.get("max_size");
-            if (!Objects.isNull(maxFileSize) && Math.floorDiv(originalFileBytes.length, 1000) > Integer.parseInt(maxFileSize)) {
-                sb.append(++responseMsgCount + ". ")
-                    .append("File size (")
-                    .append(Math.floorDiv(originalFileBytes.length, 1000))
-                    .append("KB) exceeds maximum allowed size (")
-                    .append(maxFileSize).append("KB) for file extension: ")
-                    .append(fileExtension);
-                LOGGER.warning(responseAggregation);
-            }
-
-            // Check that the mime type is allowed
-            String mimeType = Files.probeContentType(originalFile.toPath());
-            String expectedMimeType = (String) extensionConfig.get("mime_type");
-            if (Objects.isNull(expectedMimeType) || !expectedMimeType.equals(mimeType)) {
-                sb.append(++responseMsgCount + ". ")
-                    .append("Invalid mime_type for file extension: ")
-                    .append(fileExtension);
-                LOGGER.warning(responseAggregation);
-            }
-
-            // Check that the file size is not greater than the maximum allowed size
-            String magicBytesPattern = (String) extensionConfig.get("magic_bytes");
-            if (Objects.isNull(magicBytesPattern) || !containsMagicBytes(originalFileBytes, magicBytesPattern)) {
-                sb.append(++responseMsgCount + ". ")
-                    .append("Invalid magic_bytes for file extension: ")
-                    .append(fileExtension);
-                LOGGER.warning(responseAggregation);
-            }
+        // Check that the file contains the magic bytes
+        if (extensionConfig.getMagicBytes().isEmpty() || !containsMagicBytes(originalFile, extensionConfig.getMagicBytes())) {
+            sbResponseAggregation.append(++responseMsgCount + ". ")
+                .append("Invalid magic_bytes for file extension: ")
+                .append(fileExtension);
+            LOGGER.warning(responseAggregation);
+        }
 
             // Check header signatures (optional)
             String headerSignaturesPattern = (String) extensionConfig.get("header_signatures");
             if (!Objects.isNull(headerSignaturesPattern) && !containsHeaderSignatures(originalFileBytes, headerSignaturesPattern)) {
-                sb.append(++responseMsgCount + ". ")
+                sbResponseAggregation.append(++responseMsgCount + ". ")
                     .append("Invalid header_signatures for file extension: ")
                     .append(fileExtension);
                 LOGGER.warning(responseAggregation);
@@ -178,14 +126,20 @@ public class FileValidator {
             // Check footer signatures (optional)
             String footerSignaturesPattern = (String) extensionConfig.get("footer_signatures");
             if (!Objects.isNull(footerSignaturesPattern) && !containsFooterSignatures(originalFileBytes, footerSignaturesPattern)) {
-                sb.append(++responseMsgCount + ". ")
+                sbResponseAggregation.append(++responseMsgCount + ". ")
                     .append("Invalid footer_signatures for file extension: ")
                     .append(fileExtension);
                 LOGGER.warning(responseAggregation);
             }
 
+
+            //ProcessBuilder pb = new ProcessBuilder(toolName, toolArgs);
+            //Process p = pb.start();
+            // ... Handle the output and errors of the process as needed ...
+
+            
             /* // Get the custom validator configuration
-            Map<String, Object> pdfConfig = (Map<String, Object>) fileTypeConfig.get(fileType);
+            Map<String, Object> pdfConfig = (Map<String, Object>) fileCategoryConfig.get(fileCategory);
             Map<String, Object> customValidatorConfig = (Map<String, Object>) pdfConfig.get("custom_validators");
             if (!Objects.isNull(customValidatorConfig)) {
                 // Iterate over the custom validators and invoke them using the CustomFileLoader class
@@ -239,7 +193,7 @@ public class FileValidator {
                         logMessage = String.format("SHA-256 checksum of file %s is: %s", cleanFile.getName(), sha256Checksum);
                         LOGGER.info(logMessage);
                     } catch (NoSuchAlgorithmException e) {
-                        sb.append(++responseMsgCount + ". ")
+                        sbResponseAggregation.append(++responseMsgCount + ". ")
                             .append("Failed to calculate checksum of file: ")
                             .append(cleanFile.getName());
                         LOGGER.warning(responseAggregation);
@@ -257,7 +211,7 @@ public class FileValidator {
                             logMessage = String.format("File %s ACL changed successfully", encodedFilePath);
                             LOGGER.info(logMessage);
                         } catch (Exception e) {
-                            sb.append(++responseMsgCount + ". ")
+                            sbResponseAggregation.append(++responseMsgCount + ". ")
                                 .append("Error changing file ACL: ")
                                 .append(e.getMessage());
                             LOGGER.warning(responseAggregation);
@@ -291,6 +245,23 @@ public class FileValidator {
 
     // Helper methods
     // ==============
+
+    // Check if file size does not exceed the maximum allowed size
+    private Boolean checkFileSize(int originalFileSize, int extensionMaxSize) {
+        return Objects.isNull(extensionMaxSize) || Math.floorDiv(originalFileSize, 1000) <= extensionMaxSize;
+    }
+
+    // Get the file mime type from the file bytes and checks if it matches allowed mime types
+    private boolean checkMimeType(byte[] originalFileBytes, String mimeType) {
+        String fileMimeType = null;
+        try {
+            fileMimeType = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(originalFileBytes));
+        } catch (IOException e) {
+            LOGGER.severe("checkMimeType failed: " + e.getMessage());
+        }
+        return fileMimeType != null || fileMimeType.equals(mimeType);
+    }
+    
     // Get the file extension from the file name
     private String getFileExtension(String fileName) {
         if (Objects.isNull(fileName) || fileName.isEmpty()) {

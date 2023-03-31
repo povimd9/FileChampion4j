@@ -21,7 +21,7 @@ public class Main {
         File pdfFile = new File("samples/In/Binary Coding (2017).pdf");
         byte[] fileInBytes = Files.readAllBytes(pdfFile.toPath());
         String outDir = "samples/Out";
-        ValidationResponse fileValidationResults = validator.validateFileType("Documents", fileInBytes, pdfFile.getName(),outDir);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, pdfFile.getName(),outDir);
 
         if (fileValidationResults.isValid()) {
             String cleanFileName = fileValidationResults.resultsInfo();
