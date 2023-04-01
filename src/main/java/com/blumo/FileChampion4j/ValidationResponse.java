@@ -1,6 +1,5 @@
 package com.blumo.FileChampion4j;
 
-import java.io.File;
 
 /**
  * This class is used to return the results of a file validation.

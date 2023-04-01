@@ -21,7 +21,6 @@ public class Extension {
     private JSONArray antivirusScanJson;
     private boolean changeOwnership;
     private String changeOwnershipUser;
-    private String changeOwnershipGroup;
     private String changeOwnershipMode;
     private boolean nameEncoding;
     private int maxSize;
@@ -76,10 +75,6 @@ public class Extension {
         return changeOwnershipUser;
     }
 
-    public String getChangeOwnershipGroup() {
-        return changeOwnershipGroup;
-    }
-
     public String getChangeOwnershipMode() {
         return changeOwnershipMode;
     }
@@ -108,7 +103,6 @@ public class Extension {
         this.antivirusScanJson = extensionJson.optJSONArray("antivirus_scan");
         this.changeOwnership = extensionJson.optBoolean("change_ownership");
         this.changeOwnershipUser = extensionJson.optString("change_ownership_user");
-        this.changeOwnershipGroup = extensionJson.optString("change_ownership_group");
         this.changeOwnershipMode = extensionJson.optString("change_ownership_mode");
         this.nameEncoding = extensionJson.optBoolean("name_encoding");
         this.maxSize = extensionJson.optInt("max_size");

@@ -1,7 +1,6 @@
 package com.blumo.FileChampion4j;
 
-import java.math.BigInteger;
-import java.io.File;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -11,16 +10,11 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-
+import java.io.File;
 import java.net.URLConnection;
-
-
 import org.json.JSONObject;
-
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 
 /**
  * This class is used to validate untrusted files
@@ -73,108 +67,80 @@ public class FileValidator {
         String responseAggregation = "";
         int responseMsgCount = 0;
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
-        String statusMsg;
         String logMessage;
         String fileExtension = getFileExtension(fileName);
+        String commonLogString = String.format(" for file extension: %s", fileExtension);
         String fileChecksum = calculateChecksum(originalFile);
         Extension extensionConfig;
+
+        // Clean the file name to replace special characters with underscores
+        String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
 
         // Get the configuration for the file type category and extension
         try {
             extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject);
         } catch (IllegalArgumentException e) {
-            LOGGER.severe(e.getMessage());
-            throw new IllegalArgumentException(e);
+            LOGGER.warning(e.getMessage());
+            return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
         }
-        
-        // Clean the file name to replace special characters with underscores
-        String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
 
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
         LOGGER.info(logMessage);
 
         // Check that the file size is not greater than the maximum allowed size
-        if (!checkFileSize(originalFile.length, extensionConfig.getMaxSize())) {
+        if (Boolean.FALSE.equals(checkFileSize(originalFile.length, extensionConfig.getMaxSize()))) {
             sbResponseAggregation.append(++responseMsgCount + ". ")
                 .append("File size (")
-                .append(Math.floorDiv(originalFile.length, 1000))
+                .append(originalFile.length / 1000)
                 .append("KB) exceeds maximum allowed size (")
-                .append(extensionConfig.getMaxSize()).append("KB) for file extension: ")
-                .append(fileExtension);
+                .append(extensionConfig.getMaxSize()).append("KB)")
+                .append(commonLogString);
             LOGGER.warning(responseAggregation);
         }
 
         // Check that the mime type is allowed
         if (!checkMimeType(originalFile, extensionConfig.getMimeType())) {
             sbResponseAggregation.append(++responseMsgCount + ". ")
-                .append("Invalid mime_type for file extension: ")
-                .append(fileExtension);
+                .append("Invalid mime_type")
+                .append(commonLogString);
             LOGGER.warning(responseAggregation);
         }
 
         // Check that the file contains the magic bytes
         if (extensionConfig.getMagicBytes().isEmpty() || !containsMagicBytes(originalFile, extensionConfig.getMagicBytes())) {
             sbResponseAggregation.append(++responseMsgCount + ". ")
-                .append("Invalid magic_bytes for file extension: ")
-                .append(fileExtension);
+                .append("Invalid magic_bytes")
+                .append(commonLogString);
             LOGGER.warning(responseAggregation);
         }
 
         // Check header signatures (optional)
-        
-        if (!Objects.isNull(extensionConfig.getHeaderSignatures()) && !containsHeaderSignatures(originalFile, extensionConfig.getHeaderSignatures())) {
+        if (extensionConfig.getHeaderSignatures() != null && !containsHeaderSignatures(originalFile, extensionConfig.getHeaderSignatures())) {
             sbResponseAggregation.append(++responseMsgCount + ". ")
-                .append("Invalid header_signatures for file extension: ")
-                .append(fileExtension);
+                .append("Invalid header_signatures")
+                .append(commonLogString);
             LOGGER.warning(responseAggregation);
         }
 
         // Check footer signatures (optional)
-        if (!Objects.isNull(extensionConfig.getFooterSignatures()) && !containsFooterSignatures(originalFile, extensionConfig.getFooterSignatures())) {
+        if (extensionConfig.getFooterSignatures() != null && !containsFooterSignatures(originalFile, extensionConfig.getFooterSignatures())) {
             sbResponseAggregation.append(++responseMsgCount + ". ")
-                .append("Invalid footer_signatures for file extension: ")
-                .append(fileExtension);
+                .append("Invalid footer_signatures")
+                .append(commonLogString);
             LOGGER.warning(responseAggregation);
         }
 
-
-        //ProcessBuilder pb = new ProcessBuilder(toolName, toolArgs);
-            //Process p = pb.start();
-            // ... Handle the output and errors of the process as needed ...
-
-            
-            /* // Get the custom validator configuration
-            Map<String, Object> pdfConfig = (Map<String, Object>) fileCategoryConfig.get(fileCategory);
-            Map<String, Object> customValidatorConfig = (Map<String, Object>) pdfConfig.get("custom_validators");
-            if (!Objects.isNull(customValidatorConfig)) {
-                // Iterate over the custom validators and invoke them using the CustomFileLoader class
-                for (String jarPath : customValidatorConfig.keySet()) {
-                    List<String> customValidator = (List<String>) customValidatorConfig.get(jarPath);
-                    String className = customValidator.get(0);
-                    String methodName = customValidator.get(1);
-                    try {
-                        // Invoke the method using CustomFileLoader class
-                        String filePath = originalFilenameClean.getAbsolutePath();
-                        CustomFileLoader loader = new CustomFileLoader();
-                        loader.loadClass(jarPath, className, methodName, filePath);
-                    } catch (Exception e) {
-                        LOGGER.severe(e.toString());
-                        return new ValidationResponse(false, "An error occurred while reading file: " + e.getMessage(), originalFilenameClean, null);
-                    }
-                }
-            } */
-
-
         // Check if file passed all defined validations, return false and reason if not.
-        if (!responseAggregation.isEmpty()) {
+        if (responseMsgCount > 0) {
             return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
         }
 
         // Check if the file name should be encoded
         String encodedFileName = "";
         if (extensionConfig.isNameEncoding()) { 
-            encodedFileName = String.format("%s.%s",Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8)),  fileExtension);
+            encodedFileName = String.format("%s.%s",
+            Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8)),  fileExtension);
             String encodingStatus = String.format("File name: '%s' has been successfully encoded to: '%s'", originalFilenameClean, encodedFileName);
             LOGGER.info(encodingStatus);
         }
@@ -182,20 +148,12 @@ public class FileValidator {
         String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;
 
         // Check if the file should be saved to output directory
+        String savedFilePath;
         if (!outDir.isEmpty()) {
-            Path targetFilePath = Paths.get(outDir, targetFileName);
-            String savingStatus;
-            try {
-                Files.write(targetFilePath, originalFile, StandardOpenOption.TRUNCATE_EXISTING);
-                savingStatus = String.format("Originale file '%s' has been successfully saved to: '%s'", originalFilenameClean, targetFilePath.toAbsolutePath());
-                LOGGER.info(savingStatus);
-            } catch (IOException e) {
-                savingStatus = String.format("Failed to save file: '%s', to: '%s', error: %s", 
-                    originalFilenameClean, targetFilePath.toAbsolutePath(), e.getMessage());
-                sbResponseAggregation.append(++responseMsgCount + ". ")
-                    .append(savingStatus).append("\n");
-                LOGGER.severe(responseAggregation);
-                return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
+            savedFilePath = saveFileToOutputDir(outDir, targetFileName, originalFile, extensionConfig);
+            if (savedFilePath.contains("Error:")) {
+                String validMessage = String.format("File is valid but was not saved to output directory: %s", savedFilePath);
+                return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
             }
         }
 
@@ -204,35 +162,52 @@ public class FileValidator {
         LOGGER.info(validMessage);
         return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
     }
-
-
-        
     
 
     // Helper methods
     // ==============
 
+    // save the file to the output directory with appropriate owner and permissions
+    private String saveFileToOutputDir(String outDir, String fileName, byte[] fileBytes, Extension extensionConfig) {
+        Path targetFilePath = Paths.get(outDir, fileName);
+        try {
+            Files.write(targetFilePath, fileBytes, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            String errString = String.format("Error: Save file to output directory failed: %s", e.getMessage());
+            LOGGER.severe(errString);
+            return errString;
+        }
+        
+        // Try to set the file owner and permissions
+        String newFileAttributesStatus = FileAclHelper.changeFileAcl(targetFilePath, extensionConfig.getOwner(), extensionConfig.getPermissions());
+        if (newFileAttributesStatus.contains("Error:")) {
+            LOGGER.severe(newFileAttributesStatus);
+            Files.deleteIfExists(targetFilePath);
+            return newFileAttributesStatus;
+        }
+
+        // Return the full path to the saved file since no errors were encountered
+        return targetFilePath.toAbsolutePath().toString();
+    }
+
     // Check if file size does not exceed the maximum allowed size
     private Boolean checkFileSize(int originalFileSize, int extensionMaxSize) {
-        return Objects.isNull(extensionMaxSize) || Math.floorDiv(originalFileSize, 1000) <= extensionMaxSize;
+        return (extensionMaxSize == 0) || (originalFileSize / 1000) <= extensionMaxSize;
     }
 
     // Get the file mime type from the file bytes and checks if it matches allowed mime types
     private boolean checkMimeType(byte[] originalFileBytes, String mimeType) {
-        String fileMimeType = null;
+        String fileMimeType = "";
         try {
             fileMimeType = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(originalFileBytes));
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.severe("checkMimeType failed: " + e.getMessage());
         }
-        return fileMimeType != null || fileMimeType.equals(mimeType);
+        return !fileMimeType.isBlank() && fileMimeType.equals(mimeType);
     }
     
     // Get the file extension from the file name
     private String getFileExtension(String fileName) {
-        if (Objects.isNull(fileName) || fileName.isEmpty()) {
-            return "";
-        }
         int dotIndex = fileName.lastIndexOf('.');
         if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
             return "";
@@ -242,7 +217,7 @@ public class FileValidator {
 
     // Check if the file contains the magic bytes
     private boolean containsMagicBytes(byte[] originalFileBytes, String magicBytesPattern) {
-        if (Objects.isNull(originalFileBytes) || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
+        if (originalFileBytes.length == 0 || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
             return false;
         }
         magicBytesPattern = magicBytesPattern.replaceAll("\\s", "");
@@ -270,7 +245,7 @@ public class FileValidator {
 
     // Check if the file contains the header signatures
     private boolean containsHeaderSignatures(byte[] fileBytes, String headerSignaturesPattern) {
-        if (Objects.isNull(headerSignaturesPattern) || headerSignaturesPattern.isEmpty()) {
+        if (headerSignaturesPattern.isBlank()) {
             return true;
         }
         String hexPattern = headerSignaturesPattern.replaceAll("\\s", "");
@@ -291,7 +266,7 @@ public class FileValidator {
 
     // Check if the file contains the footer signatures
     private boolean containsFooterSignatures(byte[] fileBytes, String footerSignaturesPattern) {
-        if (Objects.isNull(footerSignaturesPattern) || footerSignaturesPattern.isEmpty()) {
+        if (footerSignaturesPattern.isBlank()) {
             return true;
         }
         String hexPattern = footerSignaturesPattern.replaceAll("\\s", "");
