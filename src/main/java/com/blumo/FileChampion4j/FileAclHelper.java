@@ -27,10 +27,6 @@ public class FileAclHelper {
 
     private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
 
-    private FileAclHelper() {
-        // Prevent instantiation
-    }
-
     public String changeFileAcl(Path targetFilePath, String newOwnerUsername, String newPermissions) {
         this.targetFilePath = targetFilePath;
         this.newOwnerUsername = newOwnerUsername;

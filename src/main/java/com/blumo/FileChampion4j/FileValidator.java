@@ -10,7 +10,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.net.URLConnection;
 import org.json.JSONObject;
 import java.security.MessageDigest;
@@ -54,9 +53,8 @@ public class FileValidator {
         }
     }
 
-
     public ValidationResponse validateFile(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
-            String fileName, String... outputDir) throws IOException {
+            String fileName, String... outputDir) {
         // Get the output directory if provided
         String outDir = outputDir.length > 0 ? outputDir[0] : "";
         
@@ -167,28 +165,6 @@ public class FileValidator {
     // Helper methods
     // ==============
 
-    // save the file to the output directory with appropriate owner and permissions
-    private String saveFileToOutputDir(String outDir, String fileName, byte[] fileBytes, Extension extensionConfig) {
-        Path targetFilePath = Paths.get(outDir, fileName);
-        try {
-            Files.write(targetFilePath, fileBytes, StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (IOException e) {
-            String errString = String.format("Error: Save file to output directory failed: %s", e.getMessage());
-            LOGGER.severe(errString);
-            return errString;
-        }
-        
-        // Try to set the file owner and permissions
-        String newFileAttributesStatus = FileAclHelper.changeFileAcl(targetFilePath, extensionConfig.getOwner(), extensionConfig.getPermissions());
-        if (newFileAttributesStatus.contains("Error:")) {
-            LOGGER.severe(newFileAttributesStatus);
-            Files.deleteIfExists(targetFilePath);
-            return newFileAttributesStatus;
-        }
-
-        // Return the full path to the saved file since no errors were encountered
-        return targetFilePath.toAbsolutePath().toString();
-    }
 
     // Check if file size does not exceed the maximum allowed size
     private Boolean checkFileSize(int originalFileSize, int extensionMaxSize) {
@@ -299,5 +275,31 @@ public class FileValidator {
             e.printStackTrace();
             return null;
         }
+    }
+
+    // save the file to the output directory with appropriate owner and permissions
+    private String saveFileToOutputDir(String outDir, String fileName, byte[] fileBytes, Extension extensionConfig) {
+        Path targetFilePath = Paths.get(outDir, fileName);
+        try {
+            Files.write(targetFilePath, fileBytes, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            String errString = String.format("Error: Save file to output directory failed: %s", e.getMessage());
+            LOGGER.severe(errString);
+            return errString;
+        }
+        
+        // Try to set the file owner and permissions
+        FileAclHelper fileAclHelper = new FileAclHelper();
+        String newFileAttributesStatus = fileAclHelper.changeFileAcl(targetFilePath, extensionConfig.getChangeOwnershipUser(), extensionConfig.getChangeOwnershipMode());
+        if (newFileAttributesStatus.contains("Error:")) {
+            try {
+                Files.deleteIfExists(targetFilePath);
+            } catch (IOException e) { LOGGER.severe("Error: Failed to delete file: " + e.getMessage());}
+            LOGGER.severe(newFileAttributesStatus);
+            return newFileAttributesStatus;
+        }
+
+        // Return the full path to the saved file since no errors were encountered
+        return targetFilePath.toAbsolutePath().toString();
     }
 }
