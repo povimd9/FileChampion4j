@@ -139,7 +139,7 @@ public class FileValidator {
         }
 
 
-            //ProcessBuilder pb = new ProcessBuilder(toolName, toolArgs);
+        //ProcessBuilder pb = new ProcessBuilder(toolName, toolArgs);
             //Process p = pb.start();
             // ... Handle the output and errors of the process as needed ...
 
@@ -166,133 +166,48 @@ public class FileValidator {
             } */
 
 
-            // Check if file passed all defined validations, return false and reason if not.
-            if (!responseAggregation.isEmpty()) {
-                return new ValidationResponse(false, responseAggregation, originalFile, fileChecksum);
-            }
-
-            // Check if the file name should be encoded
-            String encodedFileName;
-            if (extensionConfig.isNameEncoding()) { 
-                encodedFileName = String.format("%s.%s",Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8)),  fileExtension);
-                String encodingStatus = String.format("File name: '%s' has been successfully encoded to: '%s'", originalFilenameClean, encodedFileName);
-                LOGGER.info(encodingStatus);
-            }
-            
-            String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;
-
-            // Check if the file should be saved to output directory
-            if (!outDir.isEmpty()) {
-                Path targetFilePath = Paths.get(outDir, targetFileName);
-                String savingStatus;
-                try {
-                    Files.write(targetFilePath, originalFile, StandardOpenOption.TRUNCATE_EXISTING);
-                    savingStatus = String.format("Originale file '%s' has been successfully saved to: '%s'", originalFilenameClean, targetFilePath.toAbsolutePath());
-                    LOGGER.info(savingStatus);
-                } catch (IOException e) {
-                    savingStatus = String.format("Failed to save file: '%s', to: '%s', error: %s", 
-                        originalFilenameClean, targetFilePath.toAbsolutePath(), e.getMessage());
-                    sbResponseAggregation.append(++responseMsgCount + ". ")
-                        .append(savingStatus).append("\n");
-                    LOGGER.severe(responseAggregation);
-                    return new ValidationResponse(false, responseAggregation, originalFile, fileChecksum);
-                }
-
-
-            
-            }
-
-            // Return valid response if file passed all validations but was not saved to output directory
-            logMessage = String.format("File %s is valid", originalFilenameClean);
-                    LOGGER.info(logMessage);
-                    String validDescription = String.format("%s ==> %s", originalFilenameClean, cleanFile.getName());
-                    return new ValidationResponse(true, validDescription, originalFilenameClean, originalFile, fileChecksum);
-
-
-            // Check if file is valid so far
-            if (responseAggregation.isEmpty()) {
-
-                // Check if the file name should be encoded
-                Boolean nameEncode = (Boolean) extensionConfig.get("name_encoding");
-                Path encodedFilePath = null;
-                if (!Objects.isNull(nameEncode) && nameEncode) {
-                    String encodedFileName = String.format("%s.%s",Base64.getEncoder().encodeToString(originalFilenameClean.getBytes()),  getFileExtension(fileName));
-                    encodedFilePath = Paths.get(outDir, encodedFileName);
-                    try {
-                        Files.copy(originalFile.toPath(), encodedFilePath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
-                        String encodingStatus = String.format("File %s has been successfully encoded and saved in %s", originalFilenameClean, encodedFilePath.toAbsolutePath());
-                        LOGGER.info(encodingStatus);
-                    } catch (IOException e) {
-                        responseAggregation = "Failed to encode file: " + encodedFilePath.toAbsolutePath();
-                        LOGGER.warning(responseAggregation);
-                    }
-                }
-
-                // Check if validations and encoding were successful
-                if (responseAggregation.isEmpty() && !Objects.isNull(encodedFilePath)) {
-                    File cleanFile = new File(encodedFilePath.toAbsolutePath().toString());
-
-                    // Calculate SHA-256 checksum of file
-                    byte[] sha256Bytes;
-                    String sha256Checksum;
-                    try {
-                        MessageDigest sha256Digest = MessageDigest.getInstance("SHA-256");
-                        sha256Digest.update(Files.readAllBytes(cleanFile.toPath()));
-                        sha256Bytes = sha256Digest.digest();
-                        sha256Checksum = new Formatter().format("%02x", new BigInteger(1, sha256Bytes)).toString();
-
-                        logMessage = String.format("SHA-256 checksum of file %s is: %s", cleanFile.getName(), sha256Checksum);
-                        LOGGER.info(logMessage);
-                    } catch (NoSuchAlgorithmException e) {
-                        sbResponseAggregation.append(++responseMsgCount + ". ")
-                            .append("Failed to calculate checksum of file: ")
-                            .append(cleanFile.getName());
-                        LOGGER.warning(responseAggregation);
-                        return new ValidationResponse(false, responseAggregation, originalFile, null);
-                    }
-
-                    // Check if file ownership and permissions should be changed
-                    Boolean changeOwnership = (Boolean) extensionConfig.get("change_ownership");
-                    if (!Objects.isNull(changeOwnership) && changeOwnership) {
-                        String changeOwnershipUser = (String) extensionConfig.get("change_ownership_user");
-                        String changeOwnershipMode = (String) extensionConfig.get("change_ownership_mode");
-                        try {
-                            // Change the file ACL
-                            FileAclHelper.ChangeFileACL(encodedFilePath, changeOwnershipMode, changeOwnershipUser);
-                            logMessage = String.format("File %s ACL changed successfully", encodedFilePath);
-                            LOGGER.info(logMessage);
-                        } catch (Exception e) {
-                            sbResponseAggregation.append(++responseMsgCount + ". ")
-                                .append("Error changing file ACL: ")
-                                .append(e.getMessage());
-                            LOGGER.warning(responseAggregation);
-                            return new ValidationResponse(false, responseAggregation, originalFile, null);
-                        }
-                    }
-
-                    // Return if file is valid
-                    logMessage = String.format("File %s is valid", originalFilenameClean);
-                    LOGGER.info(logMessage);
-                    String validDescription = String.format("%s ==> %s", originalFilenameClean, cleanFile.getName());
-                    return new ValidationResponse(true, validDescription, cleanFile, sha256Checksum);
-                } else {
-                    // Return if file is invalid
-                    logMessage = String.format("File %s is invalid: %s", originalFilenameClean, responseAggregation);
-                    LOGGER.info(logMessage);
-                    return new ValidationResponse(false, responseAggregation, originalFile, null);
-                }
-            } else {
-                // Return if file is invalid
-                logMessage = String.format("File %s is invalid: %s", originalFilenameClean, responseAggregation);
-                LOGGER.info(logMessage);
-                return new ValidationResponse(false, responseAggregation, originalFile, null);
-            }
-        } catch (Exception e) {
-            LOGGER.severe(e.toString());
-            String errorResponse = String.format("An error occurred while reading file: %s", e.getMessage());
-            return new ValidationResponse(false, errorResponse, originalFile, null);
+        // Check if file passed all defined validations, return false and reason if not.
+        if (!responseAggregation.isEmpty()) {
+            return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
         }
+
+        // Check if the file name should be encoded
+        String encodedFileName = "";
+        if (extensionConfig.isNameEncoding()) { 
+            encodedFileName = String.format("%s.%s",Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8)),  fileExtension);
+            String encodingStatus = String.format("File name: '%s' has been successfully encoded to: '%s'", originalFilenameClean, encodedFileName);
+            LOGGER.info(encodingStatus);
+        }
+        
+        String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;
+
+        // Check if the file should be saved to output directory
+        if (!outDir.isEmpty()) {
+            Path targetFilePath = Paths.get(outDir, targetFileName);
+            String savingStatus;
+            try {
+                Files.write(targetFilePath, originalFile, StandardOpenOption.TRUNCATE_EXISTING);
+                savingStatus = String.format("Originale file '%s' has been successfully saved to: '%s'", originalFilenameClean, targetFilePath.toAbsolutePath());
+                LOGGER.info(savingStatus);
+            } catch (IOException e) {
+                savingStatus = String.format("Failed to save file: '%s', to: '%s', error: %s", 
+                    originalFilenameClean, targetFilePath.toAbsolutePath(), e.getMessage());
+                sbResponseAggregation.append(++responseMsgCount + ". ")
+                    .append(savingStatus).append("\n");
+                LOGGER.severe(responseAggregation);
+                return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
+            }
+        }
+
+        // Return valid response if file passed all validations but was not saved to output directory
+        String validMessage = String.format("File is valid: %s", originalFilenameClean);
+        LOGGER.info(validMessage);
+        return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
     }
+
+
+        
+    
 
     // Helper methods
     // ==============
