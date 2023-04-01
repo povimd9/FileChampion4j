@@ -7,7 +7,7 @@ package com.blumo.FileChampion4j;
  * @param resultsInfo: a String containing the results of the validation
  * @param fileBytes: the file bytes
  * @param fileChecksum: the file checksum
- * @param validFilePath: optional valid file path if outputDir was set in the FileChampion4j constructor
+ * @param validFilePath[0]: optional valid file path if outputDir was set in the FileChampion4j constructor
  * @return a ValidationResponse object
  */
 

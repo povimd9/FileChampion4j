@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
@@ -57,15 +56,6 @@ public class FileValidator {
     }
     
     
-    /**
-     * This method is used to validate a file against a set of rules
-     * @param configJsonObject
-     * @param fileCategory
-     * @param originalFile
-     * @param fileName
-     * @param outputDir
-     * @return
-     */
     public ValidationResponse validateFile(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
             String fileName, String... outputDir) {
         // Get the output directory if provided
@@ -174,12 +164,16 @@ public class FileValidator {
         if (!outDir.isEmpty()) {
             savedFilePath = saveFileToOutputDir(outDir, targetFileName, originalFile, extensionConfig);
             if (savedFilePath.contains("Error:")) {
+                // Return valid file response if file failed to save to output directory
                 String validMessage = String.format("File is valid but was not saved to output directory: %s", savedFilePath);
                 return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
             }
+            // Return valid file response if file was saved to output directory
+            String validMessage = String.format("File is valid and was saved to output directory: %s", savedFilePath);
+            return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum, savedFilePath);
         }
 
-        // Return valid response if file passed all validations but was not saved to output directory
+        // Return valid response if file passed all validations but is not meant to be saved to disk
         String validMessage = String.format("File is valid: %s", originalFilenameClean);
         LOGGER.info(validMessage);
         return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
