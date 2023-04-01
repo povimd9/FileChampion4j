@@ -6,11 +6,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
-import java.io.ByteArrayInputStream;
-import java.net.URLConnection;
 import org.json.JSONObject;
 import java.security.MessageDigest;
 
@@ -29,7 +28,6 @@ import java.security.MessageDigest;
  * @return fileChecksum: the file checksum if the file is valid
  * @return resultsInfo: a string containing additional information about the validation results such as reason for failure or the name of the file if it is valid
   
-                      TODO: reduce cognitive complexity
                       TODO: add filenname and checksum to loggers
 
                       TODO: add unit tests
@@ -42,17 +40,32 @@ public class FileValidator {
     // Initialize logger
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
 
-    // Validate method arguments
-    private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
-    String fileName) {
-        if (fileCategory.isBlank() || originalFile.length > 0 || fileName.isBlank() || configJsonObject.isEmpty()) {
-            String excMsg = String.format("Invalid argument(s) provided: fileCategory=%s, originalFile=%s, fileName=%s, configJsonObject=%s",   
-            fileCategory, originalFile, fileName, configJsonObject);
-            LOGGER.severe(excMsg);
-            throw new IllegalArgumentException(excMsg);
+    // Check caller arguments
+    private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile, String fileName) {
+        if (fileCategory.isBlank()) {
+            throw new IllegalArgumentException("fileCategory cannot be blank.");
+        }
+        if (fileName.isBlank()) {
+            throw new IllegalArgumentException("fileName cannot be blank.");
+        }
+        if (configJsonObject.isEmpty()) {
+            throw new IllegalArgumentException("configJsonObject cannot be empty.");
+        }
+        if (originalFile == null || originalFile.length == 0) {
+            throw new IllegalArgumentException("originalFile cannot be null or empty.");
         }
     }
-
+    
+    
+    /**
+     * This method is used to validate a file against a set of rules
+     * @param configJsonObject
+     * @param fileCategory
+     * @param originalFile
+     * @param fileName
+     * @param outputDir
+     * @return
+     */
     public ValidationResponse validateFile(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
             String fileName, String... outputDir) {
         // Get the output directory if provided
@@ -62,13 +75,8 @@ public class FileValidator {
         checkMethodInputs(configJsonObject, fileCategory, originalFile, fileName);
 
         // Initialize variables
-        String responseAggregation = "";
-        int responseMsgCount = 0;
-        StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
         String logMessage;
         String fileExtension = getFileExtension(fileName);
-        String commonLogString = String.format(" for file extension: %s", fileExtension);
-        String fileChecksum = calculateChecksum(originalFile);
         Extension extensionConfig;
 
         // Clean the file name to replace special characters with underscores
@@ -85,7 +93,18 @@ public class FileValidator {
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
         LOGGER.info(logMessage);
+     
+        return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, outDir));
+    }
 
+    private ValidationResponse doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String outDir) {
+        String commonLogString = String.format(" for file extension: %s", fileExtension);
+        String fileChecksum = calculateChecksum(originalFile);
+        String responseAggregation = "";
+        int responseMsgCount = 0;
+        StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
+
+    
         // Check that the file size is not greater than the maximum allowed size
         if (Boolean.FALSE.equals(checkFileSize(originalFile.length, extensionConfig.getMaxSize()))) {
             sbResponseAggregation.append(++responseMsgCount + ". ")
@@ -94,14 +113,16 @@ public class FileValidator {
                 .append("KB) exceeds maximum allowed size (")
                 .append(extensionConfig.getMaxSize()).append("KB)")
                 .append(commonLogString);
+            responseAggregation = sbResponseAggregation.toString();
             LOGGER.warning(responseAggregation);
         }
 
         // Check that the mime type is allowed
-        if (!checkMimeType(originalFile, extensionConfig.getMimeType())) {
+        if (!checkMimeType(originalFile, fileExtension,extensionConfig.getMimeType())) {
             sbResponseAggregation.append(++responseMsgCount + ". ")
                 .append("Invalid mime_type")
                 .append(commonLogString);
+            responseAggregation = sbResponseAggregation.toString();
             LOGGER.warning(responseAggregation);
         }
 
@@ -110,6 +131,7 @@ public class FileValidator {
             sbResponseAggregation.append(++responseMsgCount + ". ")
                 .append("Invalid magic_bytes")
                 .append(commonLogString);
+            responseAggregation = sbResponseAggregation.toString();
             LOGGER.warning(responseAggregation);
         }
 
@@ -118,6 +140,7 @@ public class FileValidator {
             sbResponseAggregation.append(++responseMsgCount + ". ")
                 .append("Invalid header_signatures")
                 .append(commonLogString);
+            responseAggregation = sbResponseAggregation.toString();
             LOGGER.warning(responseAggregation);
         }
 
@@ -126,6 +149,7 @@ public class FileValidator {
             sbResponseAggregation.append(++responseMsgCount + ". ")
                 .append("Invalid footer_signatures")
                 .append(commonLogString);
+            responseAggregation = sbResponseAggregation.toString();
             LOGGER.warning(responseAggregation);
         }
 
@@ -172,14 +196,18 @@ public class FileValidator {
     }
 
     // Get the file mime type from the file bytes and checks if it matches allowed mime types
-    private boolean checkMimeType(byte[] originalFileBytes, String mimeType) {
+    private boolean checkMimeType(byte[] originalFileBytes, String fileExtension, String mimeType) {
         String fileMimeType = "";
         try {
-            fileMimeType = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(originalFileBytes));
+            // Create a temporary directory
+            Path tempDir = Files.createTempDirectory("tempDir");
+            Path tempFile = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
+            Files.write(tempFile, originalFileBytes);
+            fileMimeType = Files.probeContentType(tempFile);
         } catch (Exception e) {
             LOGGER.severe("checkMimeType failed: " + e.getMessage());
         }
-        return !fileMimeType.isBlank() && fileMimeType.equals(mimeType);
+        return fileMimeType != null && !fileMimeType.isBlank() && fileMimeType.equals(mimeType);
     }
     
     // Get the file extension from the file name
@@ -281,7 +309,7 @@ public class FileValidator {
     private String saveFileToOutputDir(String outDir, String fileName, byte[] fileBytes, Extension extensionConfig) {
         Path targetFilePath = Paths.get(outDir, fileName);
         try {
-            Files.write(targetFilePath, fileBytes, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(targetFilePath, fileBytes, StandardOpenOption.CREATE);
         } catch (IOException e) {
             String errString = String.format("Error: Save file to output directory failed: %s", e.getMessage());
             LOGGER.severe(errString);
@@ -294,7 +322,7 @@ public class FileValidator {
         if (newFileAttributesStatus.contains("Error:")) {
             try {
                 Files.deleteIfExists(targetFilePath);
-            } catch (IOException e) { LOGGER.severe("Error: Failed to delete file: " + e.getMessage());}
+            } catch (IOException e) { LOGGER.severe("Error: Failed to set file owner and permissions: " + e.getMessage());}
             LOGGER.severe(newFileAttributesStatus);
             return newFileAttributesStatus;
         }

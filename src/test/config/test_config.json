@@ -1,14 +1,10 @@
 {
   "Documents": {
-    "allowed_extensions": [
-      "pdf",
-      "doc"
-    ],
     "pdf": {
       "mime_type": "application/pdf",
       "magic_bytes": "25504446",
       "header_signatures": "25504446",
-      "footer_signatures": "0A2525454F46",
+      "footer_signatures": "2525454f46",
       "antivirus_scan": {
         "clamav_scan.java": [
           "RETURN_TYPE",
@@ -19,7 +15,6 @@
       "change_ownership_user": "User1",
       "change_ownership_mode": "r",
       "name_encoding": true,
-      "size_limit_validation": true,
       "max_size": "4000"
       },
     "doc": {
@@ -37,7 +32,42 @@
       "change_ownership_user": "User1",
       "change_ownership_mode": "r",
       "name_encoding": true,
-      "size_limit_validation": true,
+      "max_size": "4000"
+    }
+  },
+  "Pictures": {
+    "jpg": {
+      "mime_type": "image/jpeg",
+      "magic_bytes": "FFD8",
+      "header_signatures": "FFD8FF",
+      "footer_signatures": "FFD9",
+      "antivirus_scan": {
+        "clamav_scan.java": [
+          "RETURN_TYPE",
+          "param1",
+          "param2"
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_mode": "r",
+      "name_encoding": true,
+      "max_size": "4000"
+      },
+    "png": {
+      "mime_type": "image/png",
+      "magic_bytes": "89504E470D0A1A0A",
+      "header_signatures": "89504E470D0A1A0A0000000D49484452",
+      "footer_signatures": "49454E44AE426082",
+      "antivirus_scan": {
+        "clamav_scan.java": [
+          "RETURN_TYPE",
+          "param1",
+          "param2"
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_mode": "r",
+      "name_encoding": true,
       "max_size": "4000"
     }
   }

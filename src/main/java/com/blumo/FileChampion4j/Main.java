@@ -19,26 +19,26 @@ public class Main {
         JSONObject jsonObject;
         byte[] fileInBytes;
         FileValidator validator = new FileValidator();
+        String outDir = "C:/Users/User1/git/FileChampion4j/samples/Out";
         File pdfFile = new File("samples/In/Binary Coding (2017).pdf");
+
 
 
         try {
             String jsonFileContent = new String(Files.readAllBytes(Paths.get("config/config.json")));
             jsonObject = new JSONObject(jsonFileContent);
             fileInBytes = Files.readAllBytes(pdfFile.toPath());
+            ValidationResponse fileValidationResults = validator.validateFile(jsonObject, "Documents", fileInBytes, pdfFile.getName(),outDir);
+
+            if (fileValidationResults.isValid()) {
+                String cleanFileName = fileValidationResults.resultsInfo();
+                System.out.println(cleanFileName + " is a valid document file. Checksum: " + fileValidationResults.getFileChecksum());
+            } else {
+                System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
-        }
-
-        String outDir = "samples/Out";
-        ValidationResponse fileValidationResults = validator.validateFile(jsonObject, "Documents", fileInBytes, pdfFile.getName(),outDir);
-
-        if (fileValidationResults.isValid()) {
-            String cleanFileName = fileValidationResults.resultsInfo();
-            System.out.println(cleanFileName + " is a valid document file. Checksum: " + fileValidationResults.getFileChecksum());
-        } else {
-            System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
         }
     }
 }
