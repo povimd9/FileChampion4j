@@ -10,13 +10,10 @@ The FileSentry4j class is a Java class for file validation. It can be used to va
 The configuration for file types and associated validations is stored in a JSON file and should be loaded as part of initiation using configParser.
 Configurations are expected to take the following format, where file types (such as Documents) may be aggregated together.
 When validating a file, only parent key of type is required in the argument for fileType (see example below).
-<pre>
+
+```javascript
 {
   "Documents": {
-    "allowed_extensions": [
-      "pdf",
-      "doc"
-    ],
     "pdf": {
       "mime_type": "application/pdf",
       "magic_bytes": "25504446",
@@ -30,10 +27,8 @@ When validating a file, only parent key of type is required in the argument for 
         ]},
       "change_ownership": true,
       "change_ownership_user": "User1",
-      "change_ownership_group": "Users",
       "change_ownership_mode": "r",
       "name_encoding": true,
-      "size_limit_validation": true,
       "max_size": "4000"
       },
     "doc": {
@@ -49,15 +44,50 @@ When validating a file, only parent key of type is required in the argument for 
         ]},
       "change_ownership": true,
       "change_ownership_user": "User1",
-      "change_ownership_group": "Users",
       "change_ownership_mode": "r",
       "name_encoding": true,
-      "size_limit_validation": true,
+      "max_size": "4000"
+    }
+  },
+  "Images": {
+    "jpg": {
+      "mime_type": "image/jpeg",
+      "magic_bytes": "FFD8",
+      "header_signatures": "FFD8FF",
+      "footer_signatures": "FFD9",
+      "antivirus_scan": {
+        "clamav_scan.java": [
+          "RETURN_TYPE",
+          "param1",
+          "param2"
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_mode": "r",
+      "name_encoding": true,
+      "max_size": "4000"
+      },
+    "png": {
+      "mime_type": "image/png",
+      "magic_bytes": "89504E470D0A1A0A",
+      "header_signatures": "89504E470D0A1A0A0000000D49484452",
+      "footer_signatures": "49454E44AE426082",
+      "antivirus_scan": {
+        "clamav_scan.java": [
+          "RETURN_TYPE",
+          "param1",
+          "param2"
+        ]},
+      "change_ownership": true,
+      "change_ownership_user": "User1",
+      "change_ownership_mode": "r",
+      "name_encoding": true,
       "max_size": "4000"
     }
   }
 }
-</pre>
+```
+
 
 ### Validation
 The originalFile is validated against the configured controls for the file type. The validateFileType method returns a ValidationResponse object that contains:
@@ -67,20 +97,52 @@ The originalFile is validated against the configured controls for the file type.
 * fileChecksum: the file checksum if the file is valid
 * resultsInfo: a string containing additional information about the validation results, such as reason for failure or the name of the file if it is valid
 
-### Examples
+### Example
 The following code shows how to use the FileSentry4j class to validate a file:
-<pre>
-Map<String, Object> configMap = ConfigParser.parseConfig("config/config.json");
-FileValidator validator = new FileValidator(configMap);
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Path to the file to be validated in this simple example
+        File pdfFile = new File("Path/to/file");
 
-File pdfFile = new File("some_pdf_file.pdf"); // file to be validated
-String outDir = "samples/Out"; // target directory for validated files
-ValidationResponse fileValidationResults = validator.validateFileType("Documents", pdfFile, outDir); // validate pdfFile against config 'Documents' configurations
+        // Path to the config.json file
+        String filePath = "config/config.json";
 
-if (fileValidationResults.isValid()) {
-    String cleanFileName = fileValidationResults.resultsInfo();
-    System.out.println(cleanFileName + " is a valid document file. Checksum: " + fileValidationResults.getFileChecksum());
-} else {
-    System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+        // Placeholders for the JSON object and the file in bytes
+        JSONObject jsonObject;
+        byte[] fileInBytes;
+
+        // Path to the output directory
+        String outDir = "Path/to/output/directory";
+        
+        // Create a new FileValidator object
+        FileValidator validator = new FileValidator();
+
+        try {
+            // Read the JSON object from the config.json file
+            jsonObject = new JSONObject(Files.readString(Paths.get(filePath)));
+            // Read the file to be validated into a byte array
+            fileInBytes = Files.readAllBytes(pdfFile.toPath());
+
+            // Validate the file
+            ValidationResponse fileValidationResults = validator.validateFile(jsonObject, "Documents", fileInBytes, pdfFile.getName(),outDir);
+
+            // Check if the file is valid
+            if (fileValidationResults.isValid()) {
+                // Print the results if the file is valid
+                String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s", 
+                    fileValidationResults.resultsInfo(),
+                    fileValidationResults.getValidFilePath()[0],
+                    fileValidationResults.getFileChecksum());
+                System.out.println(validMessage);
+            } else {
+                // Print the results if the file is invalid
+                System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 }
-</pre>
+```
