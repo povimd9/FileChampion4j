@@ -19,27 +19,41 @@ import org.json.JSONObject;
 
 public class Main {
     public static void main(String[] args) {
+        // Path to the file to be validated in this simple example
+        File pdfFile = new File("Path/to/file");
+
+        // Path to the config.json file
+        String filePath = "config/config.json";
+
+        // Placeholders for the JSON object and the file in bytes
         JSONObject jsonObject;
         byte[] fileInBytes;
+
+        // Path to the output directory
+        String outDir = "Path/to/output/directory";
+        
+        // Create a new FileValidator object
         FileValidator validator = new FileValidator();
-        String outDir = "C:/Users/User1/git/FileChampion4j/samples/Out";
-        File pdfFile = new File("samples/In/Binary Coding (2017).pdf");
-
-
 
         try {
-            String jsonFileContent = new String(Files.readAllBytes(Paths.get("config/config.json")));
-            jsonObject = new JSONObject(jsonFileContent);
+            // Read the JSON object from the config.json file
+            jsonObject = new JSONObject(Files.readString(Paths.get(filePath)));
+            // Read the file to be validated into a byte array
             fileInBytes = Files.readAllBytes(pdfFile.toPath());
+
+            // Validate the file
             ValidationResponse fileValidationResults = validator.validateFile(jsonObject, "Documents", fileInBytes, pdfFile.getName(),outDir);
 
+            // Check if the file is valid
             if (fileValidationResults.isValid()) {
+                // Print the results if the file is valid
                 String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s", 
                     fileValidationResults.resultsInfo(),
                     fileValidationResults.getValidFilePath()[0],
                     fileValidationResults.getFileChecksum());
                 System.out.println(validMessage);
             } else {
+                // Print the results if the file is invalid
                 System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
             }
         } catch (IOException e) {
