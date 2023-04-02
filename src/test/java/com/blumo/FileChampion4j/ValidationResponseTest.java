@@ -1,42 +1,33 @@
 package com.blumo.FileChampion4j;
 
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
-
-/*
- * Test class for ValidationResponse
+/**
+ * Unit tests for the ValidationResponse class.
  */
+
 public class ValidationResponseTest {
-    // Test isValid method
-    @Test
-    public void testIsValid() {
-        ValidationResponse response = new ValidationResponse(true, null, null, null);
-        assertTrue(response.isValid());
-    }
 
-    // Test failureReason method
     @Test
-    public void testFailureReason() {
-        String expected = "file too large";
-        ValidationResponse response = new ValidationResponse(false, expected, null, null);
-        assertEquals(expected, response.resultsInfo());
-    }
+    void testValidationResponse() {
+        boolean isValid = true;
+        String resultsInfo = "Validation successful";
+        String cleanFileName = "test-file.txt";
+        byte[] fileBytes = new byte[] {0x01, 0x02, 0x03};
+        String fileChecksum = "abc123";
+        String[] validFilePath = new String[] {"path/to/valid/file"};
 
-    // Test getFileBytes method
-    @Test
-    public void testGetFileBytes() {
-        File expected = new File("test.txt");
-        ValidationResponse response = new ValidationResponse(false, null, expected, null);
-        assertEquals(expected, response.getFileBytes());
-    }
+        ValidationResponse response = new ValidationResponse(isValid, resultsInfo, cleanFileName, fileBytes, fileChecksum, validFilePath);
 
-    // Test getFileChecksum method
-    @Test
-    public void testGetFileChecksum() {
-        String expected = "abcdefg";
-        ValidationResponse response = new ValidationResponse(false, null, null, expected);
-        assertEquals(expected, response.getFileChecksum());
+        // Check that the response fields match the input parameters
+        Assertions.assertTrue(response.isValid());
+        Assertions.assertEquals(resultsInfo, response.resultsInfo());
+        Assertions.assertEquals(cleanFileName, response.getCleanFileName());
+        Assertions.assertArrayEquals(fileBytes, response.getFileBytes());
+        Assertions.assertEquals(fileChecksum, response.getFileChecksum());
+        Assertions.assertArrayEquals(validFilePath, response.getValidFilePath());
     }
 }
+

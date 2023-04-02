@@ -2,30 +2,49 @@ package com.blumo.FileChampion4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.json.JSONObject;
 
 
-// This class is used to validate files against a set of rules
-// ValidationResponse contains the results of the validation with:
-// - isValid: a boolean indicating whether the file is valid or not
-// - failureReason: a string containing the reason for failure if the file is invalid
-// - fileBytes: the file bytes if the file is valid
-// - fileChecksum: the file checksum if the file is valid
+/**
+    This is an example implementation of the FileChampion4j library using FileValidator.validateFile()
+    ValidationResponse.resultsInfo() contains the results of the validation, including:
+    - the name of the file if it is valid or empty if it is invalid
+    - the reason why the file is invalid if it is invalid
+    - the path + name of the file if it is valid and outputDir was set in the FileChampion4j constructor
+    - the checksum of the file if it is valid    
+*/
+
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Map<String, Object> configMap = ConfigParser.parseConfig("config/config.json");
-        FileValidator validator = new FileValidator(configMap);
-
+    public static void main(String[] args) {
+        JSONObject jsonObject;
+        byte[] fileInBytes;
+        FileValidator validator = new FileValidator();
+        String outDir = "C:/Users/User1/git/FileChampion4j/samples/Out";
         File pdfFile = new File("samples/In/Binary Coding (2017).pdf");
-        String outDir = "samples/Out";
-        ValidationResponse fileValidationResults = validator.validateFileType("Documents", pdfFile, outDir);
 
-        if (fileValidationResults.isValid()) {
-            String cleanFileName = fileValidationResults.resultsInfo();
-            System.out.println(cleanFileName + " is a valid document file. Checksum: " + fileValidationResults.getFileChecksum());
-        } else {
-            System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+
+
+        try {
+            String jsonFileContent = new String(Files.readAllBytes(Paths.get("config/config.json")));
+            jsonObject = new JSONObject(jsonFileContent);
+            fileInBytes = Files.readAllBytes(pdfFile.toPath());
+            ValidationResponse fileValidationResults = validator.validateFile(jsonObject, "Documents", fileInBytes, pdfFile.getName(),outDir);
+
+            if (fileValidationResults.isValid()) {
+                String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s", 
+                    fileValidationResults.resultsInfo(),
+                    fileValidationResults.getValidFilePath()[0],
+                    fileValidationResults.getFileChecksum());
+                System.out.println(validMessage);
+            } else {
+                System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 }

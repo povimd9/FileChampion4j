@@ -1,104 +1,126 @@
 package com.blumo.FileChampion4j;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.AclEntry;
+import java.nio.file.attribute.AclEntryPermission;
+import java.nio.file.attribute.AclFileAttributeView;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.attribute.UserPrincipalLookupService;
+import java.util.EnumSet;
+import java.util.Set;
 
-import java.io.File;
-import java.nio.file.*;
-import java.nio.file.attribute.*;
-import java.util.*;
-import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * This class is used to test the FileAclHelper class
- */
 public class FileAclHelperTest {
-    private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
 
-    // Create a temporary file for testing
-    private Path tempFile;
-    // Get the current username
-    private String userName;
+    private Path tempFilePath;
+    private String newPermissions;
+    private String newOwnerUsername;
 
-    // Detect OS and create a temporary file for testing with the appropriate User/Group permissions
     @BeforeEach
-    public void setup() throws Exception {
-        // Create a temporary file for testing and get the path
-        tempFile = Files.createTempFile("test", ".txt");
-        Files.write(tempFile, "test".getBytes());
+    void setUp() throws Exception {
+        // Create a temporary file
+        tempFilePath = Files.createTempFile("test-file", ".txt");
 
-        // Create a File object for testing
-        File testFile = new File(tempFile.toString());
-        testFile.deleteOnExit();
-
-        // get the current username
-        userName = System.getProperty("user.name");
-
-        // Set up the permissions for the test file
-        String newPermissions = "r";
-        try {
-            FileAclHelper.ChangeFileACL(tempFile, newPermissions, userName);
-        } catch (Exception e) {
-            LOGGER.severe("FileAclHelper test failed. tmpFile: " + tempFile + ", newPermissions: " + newPermissions+ ", userName: "+ userName + ", error: " + e.getMessage());
-        }
+        // Set up new owner and permissions
+        newPermissions = "rwx";
+        newOwnerUsername = System.getProperty("user.name");
     }
 
-    // Test the ChangeFileACL method
     @Test
-    void testChangeFileACL() throws Exception {
-        String expectedPermissions = "r";
+    void testChangeFileAcl() throws Exception {
+        FileAclHelper aclHelper = new FileAclHelper();
+
+        // Change the ACL of the temporary file
+        String result = aclHelper.changeFileAcl(tempFilePath, newOwnerUsername, newPermissions);
+
+        // Check that the result is success
+        Assertions.assertTrue(result.startsWith("Success"));
+
+        // Check that the new owner is correct
+        UserPrincipalLookupService lookupService = tempFilePath.getFileSystem().getUserPrincipalLookupService();
+        UserPrincipal owner = lookupService.lookupPrincipalByName(newOwnerUsername);
+        UserPrincipal actualOwner = Files.getOwner(tempFilePath);
+        Assertions.assertEquals(owner, actualOwner);
+
+        // Check that the new permissions are correct
         String actualPermissions = "";
-        String fileOwnerName = "";
         String os = System.getProperty("os.name");
         if (os.startsWith("Windows")) {
-            // Get the ACL for the file
-            AclFileAttributeView aclView = Files.getFileAttributeView(tempFile, AclFileAttributeView.class);
-
-            // Check that the owner has been set correctly
-            UserPrincipal owner = aclView.getOwner();
-            fileOwnerName = owner.getName().contains("\\") ? owner.getName().substring(owner.getName().indexOf("\\") + 1) : owner.getName();
-
-            // Prep the permissions for comparison
-            List<AclEntry> acl = aclView.getAcl();
-
-            if (acl.toString().contains("READ_DATA")) {
-                actualPermissions += "r";
+            // Get the ACL entries for the tmp test file
+            AclFileAttributeView view = Files.getFileAttributeView(
+                Paths.get(tempFilePath.toUri()), AclFileAttributeView.class);
+            
+            // Get the ACL entries for the file
+            String permissions = "";
+            for (AclEntry entry : view.getAcl()) {
+                // Check each permission and add the corresponding symbol to the output string
+                if (entry.permissions().contains(AclEntryPermission.READ_DATA)) {
+                permissions += "r";
+                } else {
+                permissions += "-";
+                }
+                if (entry.permissions().contains(AclEntryPermission.WRITE_DATA)) {
+                permissions += "w";
+                } else {
+                permissions += "-";
+                }
+                if (entry.permissions().contains(AclEntryPermission.APPEND_DATA)) {
+                permissions += "a";
+                } else {
+                permissions += "-";
+                }
+                if (entry.permissions().contains(AclEntryPermission.EXECUTE)) {
+                permissions += "x";
+                } else {
+                permissions += "-";
+                }
+                if (entry.permissions().contains(AclEntryPermission.DELETE)) {
+                permissions += "d";
+                } else {
+                permissions += "-";
+                }
+                if (entry.permissions().contains(AclEntryPermission.READ_ATTRIBUTES)) {
+                permissions += "r";
+                } else {
+                permissions += "-";
+                }
+                if (entry.permissions().contains(AclEntryPermission.WRITE_ATTRIBUTES)) {
+                permissions += "w";
+                } else {
+                permissions += "-";
+                }
             }
-            if (acl.toString().contains("WRITE_DATA")) {
-                actualPermissions += "w";
-            }
-
+            actualPermissions = permissions.replace(String.valueOf("-"), "" );
         } else {
-            // Get the owner of the file
-            UserPrincipal owner = Files.getOwner(tempFile);
-            fileOwnerName = owner.getName();
+            // Get the Posix file permissions for the file
+            Set<PosixFilePermission> permissions = Files.getPosixFilePermissions(tempFilePath);
 
-            // Get the permissions of the file
-            Set<PosixFilePermission> permissions = Files.getPosixFilePermissions(tempFile);
-
-            if (permissions.toString().contains("OWNER_READ")) {
-                actualPermissions += "r";
+            // Convert the user permissions to rwx format
+            StringBuilder rwxPermissions = new StringBuilder();
+            for (PosixFilePermission permission : EnumSet.copyOf(permissions)) {
+                switch (permission) {
+                    case OWNER_READ:
+                        rwxPermissions.append("r");
+                        break;
+                    case OWNER_WRITE:
+                        rwxPermissions.append("w");
+                        break;
+                    case OWNER_EXECUTE:
+                        rwxPermissions.append("x");
+                        break;
+                    default:
+                        rwxPermissions.append("-");
+                        break;
+                }
             }
-            if (permissions.toString().contains("OWNER_WRITE")) {
-                actualPermissions += "w";
-
-            }
+            actualPermissions = rwxPermissions.toString();
         }
-        // Check that the owner is set correctly
-        assertEquals(userName, fileOwnerName, "Owner not set correctly");
-
-        // Check that the permissions are set correctly
-        assertEquals(expectedPermissions, actualPermissions, "Permissions not set correctly");
-
-        // Check that calling with null targetFilePath throws an IllegalArgumentException
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                FileAclHelper.ChangeFileACL(null, "r", userName));
-        assertEquals("Missing required parameter: targetFilePath", exception.getMessage(), "Missing targetFilePath check failed");
-
-        // Check that calling with null newPermissions throws an IllegalArgumentException
-        exception = assertThrows(IllegalArgumentException.class, () ->
-                FileAclHelper.ChangeFileACL(tempFile, null, userName));
-        assertEquals("Missing required parameter: newPermissions", exception.getMessage(), "Missing newPermissions check failed");
+        Assertions.assertEquals(newPermissions, actualPermissions);
     }
 }
