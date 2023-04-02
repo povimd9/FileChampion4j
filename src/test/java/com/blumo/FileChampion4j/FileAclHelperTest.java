@@ -12,6 +12,7 @@ import java.nio.file.attribute.AclFileAttributeView;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.UserPrincipal;
 import java.nio.file.attribute.UserPrincipalLookupService;
+import java.util.EnumSet;
 import java.util.Set;
 
 
@@ -100,13 +101,25 @@ public class FileAclHelperTest {
             // Get the Posix file permissions for the file
             Set<PosixFilePermission> permissions = Files.getPosixFilePermissions(tempFilePath);
 
-            // Extract the user permissions
-            String userPermissions = "";
-            for (int i = 0; i < 3; i++) {
-            PosixFilePermission permission = permissions.toArray(new PosixFilePermission[0])[i];
-            userPermissions += Integer.parseInt(permission.toString().substring(0, 1), 8);
-            actualPermissions = userPermissions.replace(String.valueOf("-"), "" );
+            // Convert the user permissions to rwx format
+            StringBuilder rwxPermissions = new StringBuilder();
+            for (PosixFilePermission permission : EnumSet.copyOf(permissions)) {
+                switch (permission) {
+                    case OWNER_READ:
+                        rwxPermissions.append("r");
+                        break;
+                    case OWNER_WRITE:
+                        rwxPermissions.append("w");
+                        break;
+                    case OWNER_EXECUTE:
+                        rwxPermissions.append("x");
+                        break;
+                    default:
+                        rwxPermissions.append("-");
+                        break;
+                }
             }
+            actualPermissions = rwxPermissions.toString();
         }
         Assertions.assertEquals(newPermissions, actualPermissions);
     }
