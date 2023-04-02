@@ -37,7 +37,7 @@ public class Extension {
      * @throws IllegalArgumentException: if the file category or file extension is not found in the Json configuration data
      */
     public Extension(String fileCategory, String fileExtension, JSONObject configJsonObject) {
-        if (fileCategory == null || fileExtension == null || configJsonObject == null) {
+        if (fileCategory.isBlank()) {
             String excMsg = String.format("Invalid argument(s) provided: fileCategory=%s, fileExtension=%s, json=%s", 
               fileCategory, fileExtension, configJsonObject);
             throw new IllegalArgumentException(excMsg);
@@ -88,14 +88,16 @@ public class Extension {
     }
 
     private void setValuesFromJson(JSONObject configJsonObject) {
-        JSONObject categoryJson = configJsonObject.optJSONObject(fileCategory);
-        if (categoryJson == null) {
+        if (!configJsonObject.has(fileCategory)) {
             throw new IllegalArgumentException("Category not found in JSON: " + fileCategory);
         }
-        JSONObject extensionJson = categoryJson.optJSONObject(fileExtension);
-        if (extensionJson == null) {
+        JSONObject categoryJson = configJsonObject.optJSONObject(fileCategory);
+
+        if (!categoryJson.has(fileExtension)) {
             throw new IllegalArgumentException("Extension not found in JSON: " + fileExtension);
         }
+        JSONObject extensionJson = categoryJson.optJSONObject(fileExtension);
+
         this.mimeType = extensionJson.optString("mime_type");
         this.magicBytes = extensionJson.optString("magic_bytes");
         this.headerSignatures = extensionJson.optString("header_signatures");

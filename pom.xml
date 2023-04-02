@@ -35,13 +35,6 @@
             <version>20230227</version>
         </dependency>
 
-        <!-- Jetbrain Annotations -->
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>24.0.1</version>
-        </dependency>
-
         <!-- junit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -56,10 +49,18 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- iText for pdf creation-->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.3</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>FileSentry4J</finalName>
+        <finalName>FileChampion4j</finalName>
         <plugins>
             <!-- Set a JDK compiler level -->
             <plugin>

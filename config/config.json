@@ -35,7 +35,7 @@
       "max_size": "4000"
     }
   },
-  "Pictures": {
+  "Images": {
     "jpg": {
       "mime_type": "image/jpeg",
       "magic_bytes": "FFD8",

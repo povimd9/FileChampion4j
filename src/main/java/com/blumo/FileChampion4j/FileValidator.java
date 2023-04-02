@@ -42,10 +42,10 @@ public class FileValidator {
     // Check caller arguments
     private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile, String fileName) {
         if (fileCategory.isBlank()) {
-            throw new IllegalArgumentException("fileCategory cannot be blank.");
+            throw new IllegalArgumentException("fileCategory cannot be null or empty.");
         }
         if (fileName.isBlank()) {
-            throw new IllegalArgumentException("fileName cannot be blank.");
+            throw new IllegalArgumentException("fileName cannot be null or empty.");
         }
         if (configJsonObject.isEmpty()) {
             throw new IllegalArgumentException("configJsonObject cannot be empty.");
@@ -75,7 +75,7 @@ public class FileValidator {
         // Get the configuration for the file type category and extension
         try {
             extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             LOGGER.warning(e.getMessage());
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
         }
@@ -95,9 +95,9 @@ public class FileValidator {
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
 
     
-        // Check that the file size is not greater than the maximum allowed size
+        // Check that the file size is not greater than the maximum allowed size, dont continue if it is
         if (Boolean.FALSE.equals(checkFileSize(originalFile.length, extensionConfig.getMaxSize()))) {
-            sbResponseAggregation.append(++responseMsgCount + ". ")
+            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
                 .append("File size (")
                 .append(originalFile.length / 1000)
                 .append("KB) exceeds maximum allowed size (")
@@ -105,11 +105,12 @@ public class FileValidator {
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
             LOGGER.warning(responseAggregation);
+            return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
         }
 
         // Check that the mime type is allowed
         if (!checkMimeType(originalFile, fileExtension,extensionConfig.getMimeType())) {
-            sbResponseAggregation.append(++responseMsgCount + ". ")
+            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
                 .append("Invalid mime_type")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
@@ -118,7 +119,7 @@ public class FileValidator {
 
         // Check that the file contains the magic bytes
         if (extensionConfig.getMagicBytes().isEmpty() || !containsMagicBytes(originalFile, extensionConfig.getMagicBytes())) {
-            sbResponseAggregation.append(++responseMsgCount + ". ")
+            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
                 .append("Invalid magic_bytes")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
@@ -127,7 +128,7 @@ public class FileValidator {
 
         // Check header signatures (optional)
         if (extensionConfig.getHeaderSignatures() != null && !containsHeaderSignatures(originalFile, extensionConfig.getHeaderSignatures())) {
-            sbResponseAggregation.append(++responseMsgCount + ". ")
+            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
                 .append("Invalid header_signatures")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
@@ -136,7 +137,7 @@ public class FileValidator {
 
         // Check footer signatures (optional)
         if (extensionConfig.getFooterSignatures() != null && !containsFooterSignatures(originalFile, extensionConfig.getFooterSignatures())) {
-            sbResponseAggregation.append(++responseMsgCount + ". ")
+            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
                 .append("Invalid footer_signatures")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
@@ -287,7 +288,7 @@ public class FileValidator {
         return true;
     }
 
-    // Calculate the file checksum
+    // Calculate file checksum
     private static String calculateChecksum(byte[] fileBytes) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
