@@ -1,11 +1,19 @@
 Provide support for validating and sanitizing files as bytes, allowing developers to choose in-memory or on-disk mode depending on their use case.
+
 Library should use a JSON configuration file, which should be well-documented and easy to use. This will enable engineers/developers to customize the library's behavior to fit their specific needs.
+
 Provide a tool that produces validation configurations for known file types. This will make it easier for engineers/developers to get started quickly with the library without having to write custom rules.
+
 Allow developers to define their own custom validation and sanitization rules. This will enable them to handle more complex scenarios and ensure that the library is adaptable to their specific needs.
+
 Provide comprehensive error handling and reporting, including clear and detailed error messages, readable by machine and human to help diagnose issues, and track validations.
+
 Ensure that the library is performant and scalable, even when handling large numbers of files or large file sizes.
+
 Support any file type and formats with supporterd identification patterns.
+
 Provide support for multiple languages and character encodings, ensuring that the library can handle files in a wide range of languages and formats.
+
 Ensure that the library is secure and can protect against common security risks such as file injection attacks and malicious file content.
 
 Validations should include:
