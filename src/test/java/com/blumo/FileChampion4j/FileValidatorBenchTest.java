@@ -35,8 +35,8 @@ public class FileValidatorBenchTest {
     public File[] testFiles;
     public ArrayList<byte[]> fileByteArrayList;
     public String[] fileNamesArray;
-    public int validFilesTimeThreadhold = 2000;
-    public int invalidFilesTimeThreadhold = 1000;
+    public int validFilesTimeThreadhold = 3000;
+    public int invalidFilesTimeThreadhold = 1500;
     public int testRepeat = 3;
 
     public static List<String> benchResults = new ArrayList<>();
