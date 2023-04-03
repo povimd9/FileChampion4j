@@ -6,11 +6,6 @@ import org.json.JSONArray;
 /**
  * This class is used to fetch the Json configuration data for a single file extension.
  * The Json configuration data is then used to create an Extension object.
- * @param fileCategory: the file category (e.g. "Documents")
- * @param fileExtension: the file extension (e.g. "pdf")
- * @param configJsonObject: the Json configuration data
- * @return an Extension object
- * @throws IllegalArgumentException: if the file category or file extension is not found in the Json configuration data
  */
 
 public class Extension {
@@ -87,6 +82,11 @@ public class Extension {
         return maxSize;
     }
 
+    /**
+     * This method is used to set the values of the Extension object from the Json configuration data.
+     * @param configJsonObject: the Json configuration data
+     * @throws IllegalArgumentException: if the file category or file extension is not found in the Json configuration data
+     */
     private void setValuesFromJson(JSONObject configJsonObject) {
         if (!configJsonObject.has(fileCategory)) {
             throw new IllegalArgumentException("Category not found in JSON: " + fileCategory);

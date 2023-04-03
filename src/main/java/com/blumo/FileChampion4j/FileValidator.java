@@ -9,37 +9,43 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
+
 import org.json.JSONObject;
 import java.security.MessageDigest;
 
 
 /**
  * This class is used to validate untrusted files
- * validateFile() argments:
- * @param fileCategory: the file type category to be validated
- * @param inFile: the file bytes of the file to be validated
- * @param fileName: the name of the file to be validated
- * @param outDir: optional directory where the file will be saved if it is valid
- * 
- * The validateFile method returns a ValidationResponse object that contains:
- * @return isValid: a boolean indicating whether the file is valid or not
- * @return fileBytes: the file bytes of the validated file
- * @return fileChecksum: the file checksum if the file is valid
- * @return resultsInfo: a string containing additional information about the validation results such as reason for failure or the name of the file if it is valid
-  
-                      TODO: add filenname and checksum to loggers
 
-                      TODO: add unit tests
+                      TODO: add filenname and checksum to loggers
 
                       TODO: support cli and jar loading
 
+                      TODO: add support for validation and sanitization extensions
+
 */
-
 public class FileValidator {
-    // Initialize logger
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
+    private final JSONObject configJsonObject;
 
-    // Check caller arguments
+    /**
+     * This method is used to get the json configurations
+     * @param configJsonObject
+     */
+    public FileValidator(JSONObject configJsonObject) {
+        if (configJsonObject == null || configJsonObject.isEmpty()) {
+            throw new IllegalArgumentException("Config JSON object cannot be null or empty.");
+        }
+        this.configJsonObject = configJsonObject;
+    }
+
+    /**
+     * This method is used to check that method inputs are not null or empty
+     * @param configJsonObject
+     * @param fileCategory
+     * @param originalFile
+     * @param fileName
+     */
     private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile, String fileName) {
         if (fileCategory.isBlank()) {
             throw new IllegalArgumentException("fileCategory cannot be null or empty.");
@@ -55,8 +61,16 @@ public class FileValidator {
         }
     }
     
-    
-    public ValidationResponse validateFile(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
+    /**
+     * This method is the main entry point for validating files, initializing the validation process and variables
+     * @param fileCategory: (String) a string containing the file type category to validate the file against
+     * @param originalFile: (byte[]) a byte array containing the file bytes of the file to be validated
+     * @param fileName: (String) a string containing the name of the file to be validated
+     * @param outputDir: (String) an optional string containing path to the output directory for validated files [optional]
+     * @return ValidationResponse: (ValidationResponse) a ValidationResponse object containing the results of the validation
+     * @throws IllegalArgumentException if any of the input parameters are null or empty
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile,
             String fileName, String... outputDir) {
         // Get the output directory if provided
         String outDir = outputDir.length > 0 ? outputDir[0] : "";
@@ -87,6 +101,15 @@ public class FileValidator {
         return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, outDir));
     }
 
+    /**
+     * If file category was found in the config, this method is used to validate the file
+     * @param originalFilenameClean: (String) a string containing the cleaned file name
+     * @param fileExtension: (String) a string containing the file extension
+     * @param extensionConfig: (Extension) an Extension object containing the configuration for the file type category and extension
+     * @param originalFile: (byte[]) a byte array containing the file bytes of the file to be validated
+     * @param outDir: (String) a string containing the path to the output directory for validated files
+     * @return ValidationResponse: (ValidationResponse) a ValidationResponse object containing the results of the validation
+     */
     private ValidationResponse doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String outDir) {
         String commonLogString = String.format(" for file extension: %s", fileExtension);
         String fileChecksum = calculateChecksum(originalFile);
@@ -190,15 +213,45 @@ public class FileValidator {
         return (extensionMaxSize == 0) || (originalFileSize / 1000) <= extensionMaxSize;
     }
 
-    // Get the file mime type from the file bytes and checks if it matches allowed mime types
-    private boolean checkMimeType(byte[] originalFileBytes, String fileExtension, String mimeType) {
-        String fileMimeType = "";
+    // Save the file to temporary directory for analysis
+    private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
+        Path tempFilePath = null;
         try {
             // Create a temporary directory
             Path tempDir = Files.createTempDirectory("tempDir");
-            Path tempFile = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
-            Files.write(tempFile, originalFileBytes);
+            tempFilePath = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
+            Files.write(tempFilePath, originalFile);
+        } catch (Exception e) {
+            String errMessage = String.format("saveFileToTempDir failed: %s", e.getMessage());
+            LOGGER.severe(errMessage);
+            return null;
+        }
+        return tempFilePath;
+    }
+
+    // Explicitley delete the temporary directory and file
+    private Boolean deleteTempDir(Path tempFilePath) {
+        try {
+            Files.delete(tempFilePath);
+            Files.delete(tempFilePath.getParent());
+            return true;
+        } catch (Exception e) {
+            String errMessage = String.format("deleteTempDir failed: %s", e.getMessage());
+            LOGGER.severe(errMessage);
+            return false;
+        }
+    }
+
+    // Get the file mime type from the file bytes and checks if it matches allowed mime types
+    private boolean checkMimeType(byte[] originalFileBytes, String fileExtension, String mimeType) {
+        String fileMimeType = "";
+        Path tempFile = saveFileToTempDir(fileExtension, originalFileBytes);
+        if (tempFile == null) {
+            return false;
+        }
+        try {
             fileMimeType = Files.probeContentType(tempFile);
+            deleteTempDir(tempFile);
         } catch (Exception e) {
             LOGGER.severe("checkMimeType failed: " + e.getMessage());
         }

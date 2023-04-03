@@ -76,7 +76,15 @@ public class FileValidatorTest {
     @BeforeEach
     void setUp() throws IOException {
         tempDirectory = Files.createTempDirectory("temp");
-        validator = new FileValidator();
+        validator = new FileValidator(CONFIG_JSON);
+    }
+
+    // Test empty json config object
+    @Test
+    void testEmptyConfigJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        assertEquals("Config JSON object cannot be null or empty.", exception.getMessage());
     }
 
     // Test empty fileCategory
@@ -85,7 +93,7 @@ public class FileValidatorTest {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-        validator.validateFile(CONFIG_JSON, "", fileInBytes, fileName, tempDirectory.toString()));
+        validator.validateFile("", fileInBytes, fileName, tempDirectory.toString()));
     assertEquals("fileCategory cannot be null or empty.", exception.getMessage());
     }
     
@@ -95,19 +103,8 @@ public class FileValidatorTest {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile(CONFIG_JSON, "Documents", fileInBytes, fileName, tempDirectory.toString());        });
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());        });
         assertEquals("fileName cannot be null or empty.", exception.getMessage());
-    }
-    
-    // Test empty json config object
-    @Test
-    void testEmptyConfigJsonObject() throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        byte[] fileInBytes = "1234".getBytes();
-        String fileName = "test.pdf";
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile(jsonObject, "Documents", fileInBytes, fileName, tempDirectory.toString());        });
-        assertEquals("configJsonObject cannot be empty.", exception.getMessage());
     }
     
     // Test originalFile Bytes is null
@@ -116,7 +113,7 @@ public class FileValidatorTest {
         byte[] fileInBytes = null;
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile(CONFIG_JSON, "Documents", fileInBytes, fileName, tempDirectory.toString());        });
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());        });
         assertEquals("originalFile cannot be null or empty.", exception.getMessage());
     }
 
@@ -125,7 +122,7 @@ public class FileValidatorTest {
     void testFileCategoryNotConfigured() throws Exception {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "test.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile(CONFIG_JSON, "0934jt0-349rtj3409rj3409rj", fileInBytes, fileName, tempDirectory.toString());
+        ValidationResponse fileValidationResults = validator.validateFile("0934jt0-349rtj3409rj3409rj", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid with non existing fileCategory");
         assertTrue(fileValidationResults.resultsInfo().contains("Category not found in JSON:"));
     }
@@ -135,7 +132,7 @@ public class FileValidatorTest {
     void testInvalidExtension() throws Exception {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "test.txt";
-        ValidationResponse fileValidationResults = validator.validateFile(CONFIG_JSON, "Documents", fileInBytes, fileName, tempDirectory.toString());
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid with .txt extension");
         assertTrue(fileValidationResults.resultsInfo().contains("Extension not found in JSON:"));
     }
@@ -145,7 +142,7 @@ public class FileValidatorTest {
     void testFileTooLarge() throws Exception {
         byte[] fileInBytes = generatePdfBytes(5000000);
         String fileName = "largeFile.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile(CONFIG_JSON, "Documents", fileInBytes, fileName, tempDirectory.toString());
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid for file size:" + fileInBytes.length);
         assertTrue(fileValidationResults.resultsInfo().contains("exceeds maximum allowed size"));
     }
@@ -155,7 +152,7 @@ public class FileValidatorTest {
     void testValidInputs() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile(CONFIG_JSON, "Documents", fileInBytes, fileName, tempDirectory.toString());
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
     }
@@ -165,9 +162,19 @@ public class FileValidatorTest {
     void testContenMismatch() throws Exception {
         byte[] fileInBytes = "This is not a pdf file".getBytes();
         String fileName = "notReal.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile(CONFIG_JSON, "Documents", fileInBytes, fileName, tempDirectory.toString());
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid when content does not match extension");
         assertTrue(fileValidationResults.resultsInfo().contains("Invalid magic_bytes for file extension:"), "Expected 'Invalid mime_type', got: " + fileValidationResults.resultsInfo());
+    }
+
+    // Test saving to non existing directory
+    @Test
+    void testSaveToNonExistingDirectory() throws Exception {
+        byte[] fileInBytes = generatePdfBytes(250000);
+        String fileName = "test.pdf";
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid when saving to non existing directory");
+        assertTrue(fileValidationResults.resultsInfo().contains("File is valid but was not saved to output directory:"), "Expected 'File is valid but was not saved to output directory', got: " + fileValidationResults.resultsInfo());
     }
 
     // Helper methods

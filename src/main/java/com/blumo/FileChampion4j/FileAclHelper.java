@@ -13,11 +13,7 @@ import java.util.logging.Logger;
  * Set Owner uses java.nio.file.Files.setOwner for cross-platform support.
  * Set Permissions attempts to identify the Operating System, using java.nio.file.attribute.AclFileAttributeView for Windows, 
  * and java.nio.file.attribute.PosixFileAttributeView for any other.
- * @param targetFilePath: the path of the file to change
- * @param newOwnerUsername: the new owner of the file
- * @param newPermissions: the new permissions of the file (e.g. "rwx")
- * @return a String containing the result of the operation
-*/
+ */
 
 public class FileAclHelper {
     private Path targetFilePath;
@@ -28,6 +24,13 @@ public class FileAclHelper {
 
     private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
 
+    /**
+     * changeFileAcl is the main method of this class. It attempts to change the owner and permissions of a file.
+    * @param targetFilePath: the path of the file to change
+    * @param newOwnerUsername: the new owner of the file
+    * @param newPermissions: the new permissions of the file (e.g. "rwx")
+    * @return a String containing the result of the operation
+    */
     public String changeFileAcl(Path targetFilePath, String newOwnerUsername, String newPermissions) {
         this.targetFilePath = targetFilePath;
         this.newOwnerUsername = newOwnerUsername;
@@ -61,6 +64,7 @@ public class FileAclHelper {
         return changeAclResult;
     }
 
+    // Get the user principal for the new owner
     private UserPrincipal getUserPrinciple (Path targetFilePath, String newOwnerUsername) {
         try {
             return targetFilePath.getFileSystem()
@@ -73,6 +77,7 @@ public class FileAclHelper {
         }
     }
 
+    // Change the owner of the file
     private String setNewOwner(UserPrincipal newOwner) {
         try {
             // Change the owner of the file
@@ -96,6 +101,7 @@ public class FileAclHelper {
         }
     }
 
+    // Check the OS and call the appropriate method to change the permissions
     private String setNewPermissions(UserPrincipal newOwner) {
         String os = System.getProperty("os.name");
 
@@ -106,6 +112,7 @@ public class FileAclHelper {
         }
     }
 
+    // Change the permissions of the file using ACL on Windows OS
     private String setNewPermissionsWindows(UserPrincipal newOwner) {
         try {
             String statusMessage;
@@ -160,6 +167,7 @@ public class FileAclHelper {
         }
     }
 
+    // Change the permissions of the file using POSIX on Unix OS
     private String setNewPermissionsUnix() {
         String statusMessage;
 
