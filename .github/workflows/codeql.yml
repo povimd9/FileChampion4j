@@ -42,4 +42,6 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
-
+        
+    - name: 'Dependency Review'
+      uses: actions/dependency-review-action@v2
