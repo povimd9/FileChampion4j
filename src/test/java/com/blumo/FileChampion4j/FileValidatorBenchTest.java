@@ -41,8 +41,10 @@ public class FileValidatorBenchTest {
 
     public static List<String> benchResults = new ArrayList<>();
 
+    private static final String testUsername = System.getProperty("user.name");
+
     // Config JSON object for testing
-    public static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
+    private static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
             + "  \"Documents\": {\r\n"
             + "    \"pdf\": {\r\n"
             + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -56,7 +58,7 @@ public class FileValidatorBenchTest {
             + "          \"param2\"\r\n"
             + "        ]},\r\n"
             + "      \"change_ownership\": true,\r\n"
-            + "      \"change_ownership_user\": \"User1\",\r\n"
+            + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
             + "      \"change_ownership_mode\": \"r\",\r\n"
             + "      \"name_encoding\": true,\r\n"
             + "      \"max_size\": \"4000\"\r\n"
