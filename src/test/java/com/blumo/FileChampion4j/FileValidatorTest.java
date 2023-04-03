@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FileValidatorTest {
     private Path tempDirectory;
     private FileValidator validator;
+    private static final String testUsername = System.getProperty("user.name");
 
     // Config JSON object for testing
     private static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
@@ -46,7 +47,7 @@ public class FileValidatorTest {
             + "          \"param2\"\r\n"
             + "        ]},\r\n"
             + "      \"change_ownership\": true,\r\n"
-            + "      \"change_ownership_user\": \"User1\",\r\n"
+            + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
             + "      \"change_ownership_mode\": \"r\",\r\n"
             + "      \"name_encoding\": true,\r\n"
             + "      \"max_size\": \"4000\"\r\n"
