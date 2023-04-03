@@ -10,40 +10,28 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import java.security.MessageDigest;
 
 
 /**
  * This class is used to validate untrusted files
- * @param configJsonObject: (JSONObject) a JSONObject containing the configuration for the file type categories and extensions
- * @param fileCategory: (String) a string containing the file type category to validate the file against
- * @param originalFile: (byte[]) a byte array containing the file bytes of the file to be validated
- * @param fileName: (String) a string containing the name of the file to be validated
- * @param outputDir: (String) an optional string containing path to the output directory for validated files [optional]
- * 
- * The validateFile method returns a ValidationResponse object that contains:
- * @return ValidationResponse: (ValidationResponse) a ValidationResponse object containing the results of the validation
- * @throws IllegalArgumentException if any of the input parameters are null or empty
-  
-                      TODO: add filenname and checksum to loggers
 
-                      TODO: add unit tests
+                      TODO: add filenname and checksum to loggers
 
                       TODO: support cli and jar loading
 
+                      TODO: add support for validation and sanitization extensions
+
 */
-
 public class FileValidator {
-    // Initialize logger
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
-
-    // Instance variable for configJsonObject
     private final JSONObject configJsonObject;
 
-    // Constructor that takes configJsonObject as input
+    /**
+     * This method is used to get the json configurations
+     * @param configJsonObject
+     */
     public FileValidator(JSONObject configJsonObject) {
         if (configJsonObject == null || configJsonObject.isEmpty()) {
             throw new IllegalArgumentException("Config JSON object cannot be null or empty.");
@@ -51,7 +39,13 @@ public class FileValidator {
         this.configJsonObject = configJsonObject;
     }
 
-    // Check caller arguments
+    /**
+     * This method is used to check that method inputs are not null or empty
+     * @param configJsonObject
+     * @param fileCategory
+     * @param originalFile
+     * @param fileName
+     */
     private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile, String fileName) {
         if (fileCategory.isBlank()) {
             throw new IllegalArgumentException("fileCategory cannot be null or empty.");
@@ -67,7 +61,15 @@ public class FileValidator {
         }
     }
     
-    
+    /**
+     * This method is the main entry point for validating files, initializing the validation process and variables
+     * @param fileCategory: (String) a string containing the file type category to validate the file against
+     * @param originalFile: (byte[]) a byte array containing the file bytes of the file to be validated
+     * @param fileName: (String) a string containing the name of the file to be validated
+     * @param outputDir: (String) an optional string containing path to the output directory for validated files [optional]
+     * @return ValidationResponse: (ValidationResponse) a ValidationResponse object containing the results of the validation
+     * @throws IllegalArgumentException if any of the input parameters are null or empty
+     */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile,
             String fileName, String... outputDir) {
         // Get the output directory if provided
@@ -99,6 +101,15 @@ public class FileValidator {
         return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, outDir));
     }
 
+    /**
+     * If file category was found in the config, this method is used to validate the file
+     * @param originalFilenameClean: (String) a string containing the cleaned file name
+     * @param fileExtension: (String) a string containing the file extension
+     * @param extensionConfig: (Extension) an Extension object containing the configuration for the file type category and extension
+     * @param originalFile: (byte[]) a byte array containing the file bytes of the file to be validated
+     * @param outDir: (String) a string containing the path to the output directory for validated files
+     * @return ValidationResponse: (ValidationResponse) a ValidationResponse object containing the results of the validation
+     */
     private ValidationResponse doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String outDir) {
         String commonLogString = String.format(" for file extension: %s", fileExtension);
         String fileChecksum = calculateChecksum(originalFile);
