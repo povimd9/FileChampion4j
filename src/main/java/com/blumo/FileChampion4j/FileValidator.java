@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.security.MessageDigest;
 
@@ -37,6 +40,17 @@ public class FileValidator {
     // Initialize logger
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
 
+    // Instance variable for configJsonObject
+    private final JSONObject configJsonObject;
+
+    // Constructor that takes configJsonObject as input
+    public FileValidator(JSONObject configJsonObject) {
+        if (configJsonObject == null || configJsonObject.isEmpty()) {
+            throw new IllegalArgumentException("Config JSON object cannot be null or empty.");
+        }
+        this.configJsonObject = configJsonObject;
+    }
+
     // Check caller arguments
     private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile, String fileName) {
         if (fileCategory.isBlank()) {
@@ -54,7 +68,7 @@ public class FileValidator {
     }
     
     
-    public ValidationResponse validateFile(JSONObject configJsonObject, String fileCategory, byte[] originalFile,
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile,
             String fileName, String... outputDir) {
         // Get the output directory if provided
         String outDir = outputDir.length > 0 ? outputDir[0] : "";

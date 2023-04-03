@@ -20,36 +20,48 @@ import org.json.JSONObject;
 public class Main {
     public static void main(String[] args) {
         // Path to the file to be validated in this simple example
-        File pdfFile = new File("Path/to/file");
+        File pdfFile = new File("samples/In/Binary Coding (2017).pdf");
 
         // Path to the config.json file
         String filePath = "config/config.json";
 
         // Placeholders for the JSON object and the file in bytes
-        JSONObject jsonObject;
-        byte[] fileInBytes;
+        JSONObject jsonObject = null;
+        byte[] fileInBytes = null;
+        FileValidator validator = null;
 
         // Path to the output directory
-        String outDir = "Path/to/output/directory";
+        String outDir = "samples/Out/";
         
-        // Create a new FileValidator object
-        FileValidator validator = new FileValidator();
-
+        // Create a new FileValidator object with json config file
         try {
             // Read the JSON object from the config.json file
             jsonObject = new JSONObject(Files.readString(Paths.get(filePath)));
+            // Create a new FileValidator object
+            validator = new FileValidator(jsonObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } finally {
+            if (jsonObject == null || validator == null) {
+                System.out.println("Error reading config file");
+                System.exit(1);
+            }
+        }
+
+        try {
             // Read the file to be validated into a byte array
             fileInBytes = Files.readAllBytes(pdfFile.toPath());
 
             // Validate the file
-            ValidationResponse fileValidationResults = validator.validateFile(jsonObject, "Documents", fileInBytes, pdfFile.getName(),outDir);
+            ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, pdfFile.getName(),outDir);
 
             // Check if the file is valid
             if (fileValidationResults.isValid()) {
                 // Print the results if the file is valid
                 String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s", 
                     fileValidationResults.resultsInfo(),
-                    fileValidationResults.getValidFilePath()[0],
+                    fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
                     fileValidationResults.getFileChecksum());
                 System.out.println(validMessage);
             } else {
