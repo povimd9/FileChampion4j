@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class Main {
     public static void main(String[] args) {
         // Path to the file to be validated in this simple example
-        File pdfFile = new File("samples/In/Binary Coding (2017).pdf");
+        File pdfFile = new File("samples/In/DataMining-ch1.pdf");
 
         // Path to the config.json file
         String filePath = "config/config.json";
@@ -42,11 +42,10 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
-        } finally {
-            if (jsonObject == null || validator == null) {
-                System.out.println("Error reading config file");
-                System.exit(1);
-            }
+        } catch (Exception e) {
+            System.out.println("Error reading config file");
+            System.exit(1);
+
         }
 
         try {
