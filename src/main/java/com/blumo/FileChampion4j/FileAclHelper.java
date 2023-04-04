@@ -26,10 +26,10 @@ public class FileAclHelper {
 
     /**
      * changeFileAcl is the main method of this class. It attempts to change the owner and permissions of a file.
-    * @param targetFilePath: the path of the file to change
-    * @param newOwnerUsername: the new owner of the file
-    * @param newPermissions: the new permissions of the file (e.g. "rwx")
-    * @return a String containing the result of the operation
+    * @param targetFilePath (Path) the path of the file to change
+    * @param newOwnerUsername (String) the new owner of the file
+    * @param newPermissions (String the new permissions of the file (e.g. "rwx")
+    * @return (String) a String containing the result of the operation
     */
     public String changeFileAcl(Path targetFilePath, String newOwnerUsername, String newPermissions) {
         this.targetFilePath = targetFilePath;
