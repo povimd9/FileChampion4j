@@ -63,12 +63,12 @@ public class FileValidator {
     
     /**
      * This method is the main entry point for validating files, initializing the validation process and variables
-     * @param fileCategory: (String) a string containing the file type category to validate the file against
-     * @param originalFile: (byte[]) a byte array containing the file bytes of the file to be validated
-     * @param fileName: (String) a string containing the name of the file to be validated
-     * @param outputDir: (String) an optional string containing path to the output directory for validated files [optional]
-     * @return ValidationResponse: (ValidationResponse) a ValidationResponse object containing the results of the validation
-     * @throws IllegalArgumentException if any of the input parameters are null or empty
+     * @param fileCategory (String) a string containing the file type category to validate the file against
+     * @param originalFile (byte[]) a byte array containing the file bytes of the file to be validated
+     * @param fileName (String) a string containing the name of the file to be validated
+     * @param outputDir (String) an optional string containing path to the output directory for validated files [optional]
+     * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
+     * @throws IllegalArgumentException (IllegalArgumentException) if any of the input parameters are null or empty
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile,
             String fileName, String... outputDir) {
@@ -103,12 +103,12 @@ public class FileValidator {
 
     /**
      * If file category was found in the config, this method is used to validate the file
-     * @param originalFilenameClean: (String) a string containing the cleaned file name
-     * @param fileExtension: (String) a string containing the file extension
-     * @param extensionConfig: (Extension) an Extension object containing the configuration for the file type category and extension
-     * @param originalFile: (byte[]) a byte array containing the file bytes of the file to be validated
-     * @param outDir: (String) a string containing the path to the output directory for validated files
-     * @return ValidationResponse: (ValidationResponse) a ValidationResponse object containing the results of the validation
+     * @param originalFilenameClean (String) a string containing the cleaned file name
+     * @param fileExtension (String) a string containing the file extension
+     * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
+     * @param originalFile:(byte[]) a byte array containing the file bytes of the file to be validated
+     * @param outDir (String) a string containing the path to the output directory for validated files
+     * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
      */
     private ValidationResponse doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String outDir) {
         String commonLogString = String.format(" for file extension: %s", fileExtension);
