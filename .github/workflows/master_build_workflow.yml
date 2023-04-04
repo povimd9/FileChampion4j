@@ -113,7 +113,11 @@ jobs:
           echo "Run, Build Application using script"
           ./mvnw -B -U package --file pom.xml
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
           category: "/language:${{matrix.language}}"
+        
