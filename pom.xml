@@ -7,7 +7,7 @@
     <artifactId>FileChampion4j</artifactId>
     <version>0.9.0</version>
     <packaging>jar</packaging>
-    <name>FileSentry4J</name>
+    <name>FileChampion4j</name>
 
     <properties>
         <jdk8.version>1.8</jdk8.version>
