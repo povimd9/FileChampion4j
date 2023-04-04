@@ -45,3 +45,6 @@ jobs:
         
     - name: 'Dependency Review'
       uses: actions/dependency-review-action@v2
+    
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
