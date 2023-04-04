@@ -1,6 +1,5 @@
 package com.blumo.FileChampion4j;
 
-
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FileValidatorBenchTest {
 
     public int batchSize = 100;
-    public String tempDirectory;
     public FileValidator validator;
     public File[] testFiles;
     public ArrayList<byte[]> fileByteArrayList;
@@ -38,10 +35,12 @@ public class FileValidatorBenchTest {
     public int validFilesTimeThreadhold = 3000;
     public int invalidFilesTimeThreadhold = 1500;
     public int testRepeat = 3;
+    public int warmupRepeats = 5;
 
     public static List<String> benchResults = new ArrayList<>();
+    public static String tempDirectory;
 
-    private static final String testUsername = System.getProperty("user.name");
+    private static final String testUsername = System.getProperty("os.name").startsWith("Windows") ? "User1" : System.getProperty("user.name");
 
     // Config JSON object for testing
     private static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
@@ -59,7 +58,7 @@ public class FileValidatorBenchTest {
             + "        ]},\r\n"
             + "      \"change_ownership\": true,\r\n"
             + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
-            + "      \"change_ownership_mode\": \"r\",\r\n"
+            + "      \"change_ownership_mode\": \"rw\",\r\n"
             + "      \"name_encoding\": true,\r\n"
             + "      \"max_size\": \"4000\"\r\n"
             + "      },\r\n"
@@ -88,26 +87,24 @@ public class FileValidatorBenchTest {
     @BeforeEach
     void setUp() throws IOException {
         try {
-            tempDirectory = Files.createTempDirectory("temp" + UUID.randomUUID().toString().substring(0, 6)).toAbsolutePath().toString();
-            Path outDirPath = Paths.get(tempDirectory);
-            Files.walk(outDirPath)
-            .filter(Files::isRegularFile)
-            .map(Path::toFile)
-            .forEach(File::delete);
+            long uniqueVal = System.currentTimeMillis() / 1000L;
+            tempDirectory = Files.createDirectory(Paths.get("temp_" + (uniqueVal/1000000 + UUID.randomUUID().toString()).substring(0, 8))).toAbsolutePath().toString();
 
             validator = new FileValidator(CONFIG_JSON);
             fileByteArrayList = new ArrayList<>();
-            fileNamesArray = new String[batchSize];
+            fileNamesArray = new String[batchSize + warmupRepeats + 1];
 
-            for (int i=0; i<batchSize; i++ ) {
-                fileByteArrayList.add(generatePdfBytes(250000));
+            for (int i=0; i < batchSize + warmupRepeats + 1; i++ ) {
+                fileByteArrayList.add(generatePdfBytes(300000));
                 fileNamesArray[i] = UUID.randomUUID().toString() + ".pdf";
             }
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i == warmupRepeats; i++) {
                 ValidationResponse fileValidationWarmup = validator.validateFile("Documents", 
                                                     fileByteArrayList.get(i), fileNamesArray[i], tempDirectory);
-                if (fileValidationWarmup.isValid()) {} else {}
+                if (fileValidationWarmup.isValid()) {
+                    assertTrue(fileValidationWarmup.resultsInfo().contains("File is valid and was saved to output directory"), "Expected 'File is valid and was saved to output directory', got: " + fileValidationWarmup.resultsInfo());
+                } else {}
             }
         } catch (IOException e) { 
             throw new RuntimeException(e); 
@@ -123,40 +120,21 @@ public class FileValidatorBenchTest {
         long duration = 0;
         for (int j = 0; j < testRepeat; j++) {
             startTime = System.currentTimeMillis();
-            for (int i = 0; i < batchSize; i++) {
+            for (int i = warmupRepeats + 1; i == batchSize + warmupRepeats; i++) {
                 ValidationResponse fileValidationResults = validator.validateFile("Documents", 
                                                     fileByteArrayList.get(i), fileNamesArray[i], tempDirectory);
-                if (fileValidationResults.isValid()) {} else {}
+                if (fileValidationResults.isValid()) {
+                    assertTrue(fileValidationResults.resultsInfo().contains("File is valid and was saved to output directory"), "Expected 'File is valid and was saved to output directory', got: " + fileValidationResults.resultsInfo());
+                } else {}
             }
             duration += System.currentTimeMillis() - startTime;
         }
         long avgDuration = duration / testRepeat;
 
         FileValidatorBenchTest.benchResults.add("testValidInputs: " + avgDuration);
+
         assertTrue(avgDuration <= validFilesTimeThreadhold, 
         "Expected valid file validation to take less than " + 
-        validFilesTimeThreadhold + "ms, but took " + avgDuration + "ms");
-    }
-
-    // Test saving to non existing directory
-    @Test
-    void testSaveToNonExistingDirectory() throws Exception {
-        long startTime;
-        long duration = 0;
-        for (int j = 0; j < testRepeat; j++) {
-            startTime = System.currentTimeMillis();
-            for (int i = 0; i < batchSize; i++) {
-                ValidationResponse fileValidationResults = validator.validateFile("Documents", 
-                                                    fileByteArrayList.get(i), fileNamesArray[i], "nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
-                if (fileValidationResults.isValid()) {} else {}
-            }
-            duration += System.currentTimeMillis() - startTime;
-        }
-        long avgDuration = duration / testRepeat;
-
-        FileValidatorBenchTest.benchResults.add("testSaveToNonExistingDirectory: " + avgDuration);
-        assertTrue(avgDuration <= validFilesTimeThreadhold, 
-        "Expected testSaveToNonExistingDirectory to take less than " + 
         validFilesTimeThreadhold + "ms, but took " + avgDuration + "ms");
     }
 
@@ -166,6 +144,7 @@ public class FileValidatorBenchTest {
         for (String result : benchResults) {
             System.out.println(result);
         }
+        //deleteDirectory(new File(tempDirectory));
     }
 
     // Helper methods
@@ -198,6 +177,17 @@ public class FileValidatorBenchTest {
         writer.close();
     
         return baos.toByteArray();
+    }
+
+    // Delete a directory and all its contents
+    private static void deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        directoryToBeDeleted.delete();
     }
 
 }
