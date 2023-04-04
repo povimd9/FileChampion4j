@@ -95,12 +95,22 @@ public class FileAclHelperTest {
     void testAccessDeniedFailure() throws Exception {
         String newPermissions = "r";
         FileAclHelper aclHelper = new FileAclHelper();
-        String newOwnerUsername = System.getProperty("os.name").startsWith("Windows") ? System.getProperty("user.name") : "root";
+        String result = "";
 
-        // Change the ACL of the temporary file
-        aclHelper.changeFileAcl(tempFilePath, newOwnerUsername, newPermissions);
-
-        String result = aclHelper.changeFileAcl(tempFilePath, System.getProperty("user.name"), "rwx");
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            aclHelper.changeFileAcl(tempFilePath, System.getProperty("user.name"), newPermissions);
+            result = aclHelper.changeFileAcl(tempFilePath, System.getProperty("user.name"), "rwx");
+        } else {
+            // Create the test user
+            Process process = Runtime.getRuntime().exec("sudo useradd -m testuser");
+            process.waitFor();
+            process = Runtime.getRuntime().exec("echo 'password' | sudo passwd --stdin testuser");
+            process.waitFor();
+            // Switch to the test user account
+            Process lowPrivProcess = Runtime.getRuntime().exec("echo 'password' | sudo -S su testuser");
+            lowPrivProcess.waitFor();
+            result = aclHelper.changeFileAcl(tempFilePath, "root", "rwx");
+        }
 
         // Check that the result is success
         String expectedErrMsg = "Error: Access denied";
