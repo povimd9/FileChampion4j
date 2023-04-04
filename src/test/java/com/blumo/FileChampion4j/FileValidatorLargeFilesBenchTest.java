@@ -96,7 +96,7 @@ public class FileValidatorLargeFilesBenchTest {
             fileNamesArray = new String[batchSize + warmupRepeats + 1];
 
             for (int i=0; i < batchSize + warmupRepeats + 1; i++ ) {
-                fileByteArrayList.add(generatePdfBytes(5000000));
+                fileByteArrayList.add(generatePdfBytes(1000000));
                 fileNamesArray[i] = UUID.randomUUID().toString() + ".pdf";
             }
 

@@ -144,6 +144,8 @@
                     <perCoreThreadCount>true</perCoreThreadCount>
                     <printSummary>true</printSummary>
                     <printFailures>true</printFailures>
+                    <argLine>${jacocoArgLine}</argLine>
+                    <argLine>${jacocoReportArgLine}</argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -177,6 +179,32 @@
                                 <include>**/Test*.java</include>
                                 <include>**/*Test.java</include>
                             </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.9</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <propertyName>jacocoArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <propertyName>jacocoReportArgLine</propertyName>
                         </configuration>
                     </execution>
                 </executions>

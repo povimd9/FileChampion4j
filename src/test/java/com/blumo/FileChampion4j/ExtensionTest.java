@@ -23,6 +23,14 @@ import org.junit.jupiter.api.Test;
     }
 
     @Test
+    void testConstructorWithEmptyFileCategory() {
+        JSONObject configJsonObject = new JSONObject();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Extension("", FILE_EXTENSION, configJsonObject);
+        });
+    }
+
+    @Test
     void testConstructorWithInvalidFileCategory() {
         JSONObject configJsonObject = new JSONObject();
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -62,6 +70,7 @@ import org.junit.jupiter.api.Test;
         Assertions.assertEquals("25 50 44 46", extension.getMagicBytes());
         Assertions.assertEquals("255,216,255", extension.getHeaderSignatures());
         Assertions.assertEquals("37,80,68,70", extension.getFooterSignatures());
+        Assertions.assertEquals(2, extension.getAntivirusScanJson().length());
         Assertions.assertTrue(extension.isChangeOwnership());
         Assertions.assertEquals("myuser", extension.getChangeOwnershipUser());
         Assertions.assertEquals("rwxrwxrwx", extension.getChangeOwnershipMode());
