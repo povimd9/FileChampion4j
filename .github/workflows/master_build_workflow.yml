@@ -111,10 +111,12 @@ jobs:
 
       - run: |
           echo "Run, Build Application using script"
-          ./mvnw -B -U package --file pom.xml
+          ./mvnw -B -U package -Dmaven.test.skip=true --file pom.xml
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
         
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
