@@ -15,12 +15,12 @@ public class ValidationResponse {
 
     /**
      * ValidationResponse is used to return the results of a file validation.
-    * @param isValid: true if the file is valid, false otherwise
-    * @param resultsInfo: a String containing the results of the validation
-    * @param fileBytes: the file bytes
-    * @param fileChecksum: the file checksum
-    * @param validFilePath[0]: optional valid file path if outputDir was set in the FileChampion4j constructor
-    * @return ValidationResponse: (ValidationResponse) object with FileValidator.validateFile() results
+    * @param isValid (Boolean) true if the file is valid, false otherwise
+    * @param resultsInfo (String) a String containing the results of the validation
+    * @param fileBytes (bytes[]) the file bytes
+    * @param fileChecksum (String) the file checksum
+    * @param validFilePath[0] (String) optional valid file path if outputDir was set in the FileChampion4j constructor
+    * @return ValidationResponse (ValidationResponse) object with FileValidator.validateFile() results
     */
     public ValidationResponse(boolean isValid, String resultsInfo, String cleanFileName, byte[] fileBytes, String fileChecksum, String... validFilePath) {
         this.isValid = isValid;
