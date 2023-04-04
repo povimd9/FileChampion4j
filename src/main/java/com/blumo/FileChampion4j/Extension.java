@@ -25,11 +25,11 @@ public class Extension {
 
     /**
      * Constructor
-     * @param fileCategory: the file category (e.g. "Documents")
-     * @param fileExtension: the file extension (e.g. "pdf")
-     * @param configJsonObject: the Json configuration data
-     * @return an Extension object
-     * @throws IllegalArgumentException: if the file category or file extension is not found in the Json configuration data
+     * @param fileCategory (String) the file category (e.g. "Documents")
+     * @param fileExtension (String) the file extension (e.g. "pdf")
+     * @param configJsonObject (JSONObject) the Json configuration data
+     * @return (Extension) an Extension object
+     * @throws IllegalArgumentException (IllegalArgumentException) if the file category or file extension is not found in the Json configuration data
      */
     public Extension(String fileCategory, String fileExtension, JSONObject configJsonObject) {
         if (fileCategory.isBlank()) {
