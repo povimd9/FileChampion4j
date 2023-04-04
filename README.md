@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/povimd9/FileChampion4j/branch/master/graph/badge.svg?token=WUCKTU7ALO)](https://codecov.io/gh/povimd9/FileChampion4j)
+
 # FileChampion4j
 A Java class for file validation.
 
