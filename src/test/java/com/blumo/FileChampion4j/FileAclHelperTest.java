@@ -95,12 +95,12 @@ public class FileAclHelperTest {
     void testAccessDeniedFailure() throws Exception {
         String newPermissions = "r";
         FileAclHelper aclHelper = new FileAclHelper();
-        String newOwnerUsername = System.getProperty("user.name");
+        String newOwnerUsername = System.getProperty("os.name").startsWith("Windows") ? System.getProperty("user.name") : "root";
 
         // Change the ACL of the temporary file
         aclHelper.changeFileAcl(tempFilePath, newOwnerUsername, newPermissions);
 
-        String result = aclHelper.changeFileAcl(tempFilePath, newOwnerUsername, "rwx");
+        String result = aclHelper.changeFileAcl(tempFilePath, System.getProperty("user.name"), "rwx");
 
         // Check that the result is success
         String expectedErrMsg = "Error: Access denied";
