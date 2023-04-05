@@ -4,6 +4,7 @@ package com.blumo.FileChampion4j;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Nested;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
@@ -28,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 
 public class FileValidatorTest {
+    
     private Path tempDirectory;
     private FileValidator validator;
     private static final String testUsername = System.getProperty("user.name");
@@ -80,10 +82,72 @@ public class FileValidatorTest {
         validator = new FileValidator(CONFIG_JSON);
     }
 
+
+    class TestCustomJsonObject {
+        @Nested
+        @Test
+        void testCheckMimeType() throws Exception {
+            JSONObject CONFIG_JSON = new JSONObject("{\r\n"
+            + "  \"Documents\": {\r\n"
+            + "    \"pdf\": {\r\n"
+            + "      \"mime_type\": \"application/non-existing-mime-type\",\r\n"
+            + "      \"magic_bytes\": \"25504446\",\r\n"
+            + "      \"header_signatures\": \"25504446\",\r\n"
+            + "      \"footer_signatures\": \"2525454f46\",\r\n"
+            + "      \"antivirus_scan\": {\r\n"
+            + "        \"clamav_scan.java\": [\r\n"
+            + "          \"RETURN_TYPE\",\r\n"
+            + "          \"param1\",\r\n"
+            + "          \"param2\"\r\n"
+            + "        ]},\r\n"
+            + "      \"change_ownership\": true,\r\n"
+            + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
+            + "      \"change_ownership_mode\": \"r\",\r\n"
+            + "      \"name_encoding\": true,\r\n"
+            + "      \"max_size\": \"4000\"\r\n"
+            + "      },\r\n"
+            + "    \"doc\": {\r\n"
+            + "      \"mime_type\": \"application/msword\",\r\n"
+            + "      \"magic_bytes\": \"D0CF11E0A1B11AE1\",\r\n"
+            + "      \"header_signatures\": \"D0CF11E0A1B11AE1\",\r\n"
+            + "      \"footer_signatures\": \"0000000000000000\",\r\n"
+            + "      \"antivirus_scan\": {\r\n"
+            + "        \"clamav_scan.java\": [\r\n"
+            + "          \"RETURN_TYPE\",\r\n"
+            + "          \"param1\",\r\n"
+            + "          \"param2\"\r\n"
+            + "        ]},\r\n"
+            + "      \"change_ownership\": true,\r\n"
+            + "      \"change_ownership_user\": \"User1\",\r\n"
+            + "      \"change_ownership_mode\": \"r\",\r\n"
+            + "      \"name_encoding\": true,\r\n"
+            + "      \"max_size\": \"4000\"\r\n"
+            + "    }\r\n"
+            + "  }\r\n"
+            + "}");
+
+            FileValidator validator = new FileValidator(CONFIG_JSON);
+
+            byte[] fileInBytes = generatePdfBytes(250000);
+            String fileName = "test.pdf";
+            ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
+            assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid when mime type does not match extension");
+            assertTrue(fileValidationResults.resultsInfo().contains("Invalid mime_type"), "Expected 'Invalid mime_type', got: " + fileValidationResults.resultsInfo());
+        }
+    }
+
     // Test empty json config object
     @Test
     void testEmptyConfigJsonObject() {
         JSONObject jsonObject = new JSONObject();
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        assertEquals("Config JSON object cannot be null or empty.", exception.getMessage());
+    }
+
+    // Test null json config object
+    @Test
+    void testNullConfigJsonObject() {
+        JSONObject jsonObject = null;
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
         assertEquals("Config JSON object cannot be null or empty.", exception.getMessage());
     }
@@ -112,6 +176,16 @@ public class FileValidatorTest {
     @Test
     void testNullOriginalFile() throws Exception {
         byte[] fileInBytes = null;
+        String fileName = "test.pdf";
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());        });
+        assertEquals("originalFile cannot be null or empty.", exception.getMessage());
+    }
+
+    // Test originalFile Bytes is empty
+    @Test
+    void testEmptyOriginalFile() throws Exception {
+        byte[] fileInBytes = new byte[]{};
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
         validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());        });
@@ -148,24 +222,34 @@ public class FileValidatorTest {
         assertTrue(fileValidationResults.resultsInfo().contains("exceeds maximum allowed size"));
     }
 
-    // Test valid inputs including valid pdf file
+    // Test valid inputs including valid pdf file with storage
     @Test
-    void testValidInputs() throws Exception {
+    void testValidInputsStore() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
     }
+
+    // Test valid inputs including valid pdf file without storage
+    @Test
+    void testValidInputs() throws Exception {
+        byte[] fileInBytes = generatePdfBytes(250000);
+        String fileName = "test.pdf";
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
+    }
     
-    // Test file with content mismatching its extension
+    // Test file with content mismatching its extension inclufing magic bytes, header and footer, validations
     @Test
     void testContenMismatch() throws Exception {
         byte[] fileInBytes = "This is not a pdf file".getBytes();
         String fileName = "notReal.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid when content does not match extension");
-        assertTrue(fileValidationResults.resultsInfo().contains("Invalid magic_bytes for file extension:"), "Expected 'Invalid mime_type', got: " + fileValidationResults.resultsInfo());
+        assertTrue(fileValidationResults.resultsInfo().contains("Invalid magic_bytes for file extension:"), "Expected 'Invalid magic_bytes', got: " + fileValidationResults.resultsInfo());
     }
 
     // Test saving to non existing directory
@@ -177,6 +261,8 @@ public class FileValidatorTest {
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid when saving to non existing directory");
         assertTrue(fileValidationResults.resultsInfo().contains("File is valid but was not saved to output directory:"), "Expected 'File is valid but was not saved to output directory', got: " + fileValidationResults.resultsInfo());
     }
+
+
 
     // Helper methods
 
