@@ -1,5 +1,6 @@
 package com.blumo.FileChampion4j;
 
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Unit test for FileValidator class.
  */
 
-public class FileValidatorBenchTest {
+public class FileValidatorLargeFilesBench {
 
-    public int batchSize = 100;
+    public int batchSize = 20;
     public FileValidator validator;
     public File[] testFiles;
     public ArrayList<byte[]> fileByteArrayList;
@@ -95,7 +96,7 @@ public class FileValidatorBenchTest {
             fileNamesArray = new String[batchSize + warmupRepeats + 1];
 
             for (int i=0; i < batchSize + warmupRepeats + 1; i++ ) {
-                fileByteArrayList.add(generatePdfBytes(300000));
+                fileByteArrayList.add(generatePdfBytes(1000000));
                 fileNamesArray[i] = UUID.randomUUID().toString() + ".pdf";
             }
 
@@ -131,7 +132,7 @@ public class FileValidatorBenchTest {
         }
         long avgDuration = duration / testRepeat;
 
-        FileValidatorBenchTest.benchResults.add("testValidInputs: " + avgDuration);
+        FileValidatorBench.benchResults.add("testValidInputs: " + avgDuration);
 
         assertTrue(avgDuration <= validFilesTimeThreadhold, 
         "Expected valid file validation to take less than " + 

@@ -10,13 +10,8 @@
     <name>FileChampion4j</name>
 
     <properties>
-        <jdk8.version>1.8</jdk8.version>
-        <jdk9.version>9</jdk9.version>
-        <jdk10.version>10</jdk10.version>
-        <jdk11.version>11</jdk11.version>
-        <maven.compiler.source>${jdk11.version}</maven.compiler.source>
-        <maven.compiler.target>${jdk11.version}</maven.compiler.target>
-
+        <maven.compiler.source>${java.major.version}</maven.compiler.source>
+        <maven.compiler.target>${java.major.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -69,6 +64,27 @@
     <build>
         <finalName>FileChampion4j</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                    <id>extract-major-java-version</id>
+                    <goals>
+                        <goal>set-system-properties</goal>
+                    </goals>
+                    <configuration>
+                        <properties>
+                        <property>
+                            <name>java.major.version</name>
+                            <value>${java.version.split("\\.")[0]}</value>
+                        </property>
+                        </properties>
+                    </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Set a JDK compiler level -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -76,43 +92,13 @@
                 <version>3.11.0</version>
                 <executions>
                     <execution>
-                        <id>compile-java-8</id>
+                        <id>compile-java</id>
                         <goals>
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>compile-java-9</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <source>9</source>
-                            <target>9</target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>compile-java-10</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <source>10</source>
-                            <target>10</target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>compile-java-11</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <source>11</source>
-                            <target>11</target>
+                            <source>${java.major.version}</source>
+                            <target>${java.major.version}</target>
                         </configuration>
                     </execution>
                 </executions>
@@ -126,11 +112,12 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.blumo.FileChampion4j.Main</mainClass>
+                            <mainClass>com.blumo.FileChampion4j.FileValidator</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -151,17 +138,17 @@
                     <perCoreThreadCount>true</perCoreThreadCount>
                     <printSummary>true</printSummary>
                     <printFailures>true</printFailures>
+                    <argLine>-Xmx12g</argLine>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>test-java-8</id>
+                        <id>test-java</id>
                         <goals>
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <argLine>--illegal-access=permit</argLine>
                             <systemPropertyVariables>
-                                <java.version>1.8</java.version>
+                                <java.version>${java.version}</java.version>
                             </systemPropertyVariables>
                             <includes>
                                 <include>**/Test*.java</include>
@@ -169,21 +156,6 @@
                             </includes>
                             <printSummary>true</printSummary>
                             <printFailures>true</printFailures>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-java-11</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <java.version>11</java.version>
-                            </systemPropertyVariables>
-                            <includes>
-                                <include>**/Test*.java</include>
-                                <include>**/*Test.java</include>
-                            </includes>
                         </configuration>
                     </execution>
                 </executions>

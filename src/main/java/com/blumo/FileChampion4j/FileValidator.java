@@ -46,10 +46,10 @@ public class FileValidator {
      * @param fileName
      */
     private void checkMethodInputs( String fileCategory, byte[] originalFile, String fileName) {
-        if (fileCategory.isBlank()) {
+        if (isBlank(fileCategory)) {
             throw new IllegalArgumentException("fileCategory cannot be null or empty.");
         }
-        if (fileName.isBlank()) {
+        if (isBlank(fileName)) {
             throw new IllegalArgumentException("fileName cannot be null or empty.");
         }
         if (originalFile == null || originalFile.length == 0) {
@@ -200,9 +200,15 @@ public class FileValidator {
     }
     
 
-    // Helper methods
-    // ==============
+    ////////////////////
+    // Helper methods //
+    ////////////////////
 
+    // String.isBlank() is only available in Java 11
+    public static boolean isBlank(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+    
 
     // Check if file size does not exceed the maximum allowed size
     private Boolean checkFileSize(int originalFileSize, int extensionMaxSize) {
@@ -251,7 +257,7 @@ public class FileValidator {
         } catch (Exception e) {
             LOGGER.severe("checkMimeType failed: " + e.getMessage());
         }
-        return fileMimeType != null && !fileMimeType.isBlank() && fileMimeType.equals(mimeType);
+        return fileMimeType != null && !isBlank(fileMimeType) && fileMimeType.equals(mimeType);
     }
     
     // Get the file extension from the file name
@@ -293,7 +299,7 @@ public class FileValidator {
 
     // Check if the file contains the header signatures
     private boolean containsHeaderSignatures(byte[] fileBytes, String headerSignaturesPattern) {
-        if (headerSignaturesPattern.isBlank()) {
+        if (isBlank(headerSignaturesPattern)) {
             return true;
         }
         String hexPattern = headerSignaturesPattern.replaceAll("\\s", "");
@@ -314,7 +320,7 @@ public class FileValidator {
 
     // Check if the file contains the footer signatures
     private boolean containsFooterSignatures(byte[] fileBytes, String footerSignaturesPattern) {
-        if (footerSignaturesPattern.isBlank()) {
+        if (isBlank(footerSignaturesPattern)) {
             return true;
         }
         String hexPattern = footerSignaturesPattern.replaceAll("\\s", "");
