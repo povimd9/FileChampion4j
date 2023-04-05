@@ -29,6 +29,9 @@ jobs:
         with:
           java-version: '${{ matrix.java-version }}'
           distribution: 'temurin'
+      - name: Set JAVA_HOME
+        run: |
+          echo "JAVA_HOME=$(dirname $(dirname $(readlink $(which javac))))" >> $GITHUB_ENV
 
       - name: Make mvnw executable (${{ matrix.os }})
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
