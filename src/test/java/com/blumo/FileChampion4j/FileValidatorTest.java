@@ -82,60 +82,6 @@ public class FileValidatorTest {
         validator = new FileValidator(CONFIG_JSON);
     }
 
-
-    class TestCustomJsonObject {
-        @Nested
-        @Test
-        void testCheckMimeType() throws Exception {
-            JSONObject CONFIG_JSON = new JSONObject("{\r\n"
-            + "  \"Documents\": {\r\n"
-            + "    \"pdf\": {\r\n"
-            + "      \"mime_type\": \"application/non-existing-mime-type\",\r\n"
-            + "      \"magic_bytes\": \"25504446\",\r\n"
-            + "      \"header_signatures\": \"25504446\",\r\n"
-            + "      \"footer_signatures\": \"2525454f46\",\r\n"
-            + "      \"antivirus_scan\": {\r\n"
-            + "        \"clamav_scan.java\": [\r\n"
-            + "          \"RETURN_TYPE\",\r\n"
-            + "          \"param1\",\r\n"
-            + "          \"param2\"\r\n"
-            + "        ]},\r\n"
-            + "      \"change_ownership\": true,\r\n"
-            + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
-            + "      \"change_ownership_mode\": \"r\",\r\n"
-            + "      \"name_encoding\": true,\r\n"
-            + "      \"max_size\": \"4000\"\r\n"
-            + "      },\r\n"
-            + "    \"doc\": {\r\n"
-            + "      \"mime_type\": \"application/msword\",\r\n"
-            + "      \"magic_bytes\": \"D0CF11E0A1B11AE1\",\r\n"
-            + "      \"header_signatures\": \"D0CF11E0A1B11AE1\",\r\n"
-            + "      \"footer_signatures\": \"0000000000000000\",\r\n"
-            + "      \"antivirus_scan\": {\r\n"
-            + "        \"clamav_scan.java\": [\r\n"
-            + "          \"RETURN_TYPE\",\r\n"
-            + "          \"param1\",\r\n"
-            + "          \"param2\"\r\n"
-            + "        ]},\r\n"
-            + "      \"change_ownership\": true,\r\n"
-            + "      \"change_ownership_user\": \"User1\",\r\n"
-            + "      \"change_ownership_mode\": \"r\",\r\n"
-            + "      \"name_encoding\": true,\r\n"
-            + "      \"max_size\": \"4000\"\r\n"
-            + "    }\r\n"
-            + "  }\r\n"
-            + "}");
-
-            FileValidator validator = new FileValidator(CONFIG_JSON);
-
-            byte[] fileInBytes = generatePdfBytes(250000);
-            String fileName = "test.pdf";
-            ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
-            assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid when mime type does not match extension");
-            assertTrue(fileValidationResults.resultsInfo().contains("Invalid mime_type"), "Expected 'Invalid mime_type', got: " + fileValidationResults.resultsInfo());
-        }
-    }
-
     // Test empty json config object
     @Test
     void testEmptyConfigJsonObject() {

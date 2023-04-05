@@ -46,7 +46,7 @@ public class FileValidator {
      * @param originalFile
      * @param fileName
      */
-    private void checkMethodInputs(JSONObject configJsonObject, String fileCategory, byte[] originalFile, String fileName) {
+    private void checkMethodInputs( String fileCategory, byte[] originalFile, String fileName) {
         if (fileCategory.isBlank()) {
             throw new IllegalArgumentException("fileCategory cannot be null or empty.");
         }
@@ -73,7 +73,7 @@ public class FileValidator {
         String outDir = outputDir.length > 0 ? outputDir[0] : "";
         
         // Check that the input parameters are not null or empty
-        checkMethodInputs(configJsonObject, fileCategory, originalFile, fileName);
+        checkMethodInputs(fileCategory, originalFile, fileName);
 
         // Initialize variables
         String logMessage;
