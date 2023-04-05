@@ -10,11 +10,8 @@
     <name>FileChampion4j</name>
 
     <properties>
-        <jdk8.version>1.8</jdk8.version>
-        <jdk11.version>11</jdk11.version>
-        <jdk17.version>17</jdk17.version>
-        <maven.compiler.source>${jdk11.version}</maven.compiler.source>
-        <maven.compiler.target>${jdk11.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -94,7 +91,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.blumo.FileChampion4j.Main</mainClass>
+                            <mainClass>com.blumo.FileChampion4j.FileValidator</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -122,14 +119,14 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>test-java-8</id>
+                        <id>test-java</id>
                         <goals>
                             <goal>test</goal>
                         </goals>
                         <configuration>
                             <argLine>--illegal-access=permit</argLine>
                             <systemPropertyVariables>
-                                <java.version>1.8</java.version>
+                                <java.version>${java.version}</java.version>
                             </systemPropertyVariables>
                             <includes>
                                 <include>**/Test*.java</include>
@@ -137,36 +134,6 @@
                             </includes>
                             <printSummary>true</printSummary>
                             <printFailures>true</printFailures>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-java-11</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <java.version>11</java.version>
-                            </systemPropertyVariables>
-                            <includes>
-                                <include>**/Test*.java</include>
-                                <include>**/*Test.java</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-java-17</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <java.version>17</java.version>
-                            </systemPropertyVariables>
-                            <includes>
-                                <include>**/Test*.java</include>
-                                <include>**/*Test.java</include>
-                            </includes>
                         </configuration>
                     </execution>
                 </executions>
