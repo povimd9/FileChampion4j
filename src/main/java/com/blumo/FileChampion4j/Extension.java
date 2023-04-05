@@ -32,7 +32,7 @@ public class Extension {
      * @throws IllegalArgumentException (IllegalArgumentException) if the file category or file extension is not found in the Json configuration data
      */
     public Extension(String fileCategory, String fileExtension, JSONObject configJsonObject) {
-        if (fileCategory.isBlank()) {
+        if (fileCategory == null || fileCategory.trim().isEmpty()) {
             String excMsg = String.format("Invalid argument(s) provided: fileCategory=%s, fileExtension=%s, json=%s", 
               fileCategory, fileExtension, configJsonObject);
             throw new IllegalArgumentException(excMsg);
