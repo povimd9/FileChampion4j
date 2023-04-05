@@ -14,25 +14,25 @@ permissions:
   security-events: write
 
 jobs:
-  check-out-code:
-    runs-on: ubuntu-latest
+  build-and-test:
+    name: Build and Test on ${{ matrix.os }} with JDK ${{ matrix.java-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        java-version: [8, 11, 17]
     steps:
       - uses: actions/checkout@v3
 
-  build-and-test-on-nix:
-    name: Build and Test on Linux
-    needs: check-out-code
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK 11
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '${{ matrix.java-version }}'
           distribution: 'temurin'
+          cache: maven
 
-      - name: Make mvnw executable (Linux)
+      - name: Make mvnw executable (${{ matrix.os }})
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
         run: |
           chmod +x ${{ github.workspace }}/mvnw
 
@@ -47,55 +47,10 @@ jobs:
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
 
-  build-and-test-on-macos:
-    name: Build and Test on MacOS
-    needs: check-out-code
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-
-      - name: Make mvnw executable (Linux)
-        run: |
-          chmod +x ${{ github.workspace }}/mvnw
-
-      - name: Build with Maven
-        run: mvn -B -U clean install --file pom.xml
-      
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-
-  build-and-test-on-windows:
-    name: Build and Test on Windows
-    needs: check-out-code
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: maven
-      - name: Build with Maven
-        run: mvn -B -U clean install --file pom.xml
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
 
   analyze:
     name: Analyze
-    needs: [build-and-test-on-nix, build-and-test-on-macos, build-and-test-on-windows]
+    needs: [build-and-test]
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -125,10 +80,9 @@ jobs:
 
       - run: |
           echo "Run, Build Application using script"
-          ./mvnw -B -U package -Dmaven.test.skip=true --file pom.xml
+          ./mvnw -B -U package --file pom.xml
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
           category: "/language:${{matrix.language}}"
-        
