@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
     @Test
     void testConstructorWithNullArguments() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new Extension(null, null, null);
         });
     }
