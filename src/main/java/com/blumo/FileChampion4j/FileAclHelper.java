@@ -19,7 +19,6 @@ public class FileAclHelper {
     private Path targetFilePath;
     private String newPermissions;
     private String newOwnerUsername;
-    private String changeAclResult;
     private String errMsg;
 
     private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
@@ -34,6 +33,12 @@ public class FileAclHelper {
     public String changeFileAcl(Path targetFilePath, String newOwnerUsername, String newPermissions) {
         this.targetFilePath = targetFilePath;
         this.newOwnerUsername = newOwnerUsername;
+        if(!newPermissions.matches("[rwx]+")) {
+            errMsg = String.format("Error: Invalid permissions: %s", newPermissions);
+            return errMsg;
+        }
+
+
         this.newPermissions = newPermissions;
         
         UserPrincipal newOwner = getUserPrinciple(targetFilePath, newOwnerUsername);
@@ -58,10 +63,6 @@ public class FileAclHelper {
         String successMessage = String.format("Success: Changed owner and permissions of file %s", targetFilePath.toAbsolutePath());
         LOGGER.info(successMessage);
         return successMessage;
-    }
-
-    public String getChangeAclResult() {
-        return changeAclResult;
     }
 
     // Get the user principal for the new owner
@@ -120,8 +121,6 @@ public class FileAclHelper {
             AclFileAttributeView aclView = Files.getFileAttributeView(targetFilePath, AclFileAttributeView.class);
             AclEntryPermission readPermission = AclEntryPermission.READ_DATA;
             AclEntryPermission writePermission = AclEntryPermission.WRITE_DATA;
-            AclEntryPermission readAttributesPermission = AclEntryPermission.READ_ATTRIBUTES;
-            AclEntryPermission writeAttributesPermission = AclEntryPermission.WRITE_ATTRIBUTES;
             AclEntryPermission executePermission = AclEntryPermission.EXECUTE;
 
             AclEntryType allow = AclEntryType.ALLOW;
@@ -132,10 +131,6 @@ public class FileAclHelper {
             }
             if (newPermissions.contains("w")) {
                 actualPermissions.add(writePermission);
-            }
-            if (newPermissions.contains("a")) {
-                actualPermissions.add(readAttributesPermission);
-                actualPermissions.add(writeAttributesPermission);
             }
             if (newPermissions.contains("x")) {
                 actualPermissions.add(executePermission);
@@ -177,10 +172,6 @@ public class FileAclHelper {
             permissions.add(PosixFilePermission.OWNER_READ);
         }
         if (newPermissions.contains("w")) {
-            permissions.add(PosixFilePermission.OWNER_WRITE);
-        }
-        if (newPermissions.contains("a")) {
-            permissions.add(PosixFilePermission.OWNER_READ);
             permissions.add(PosixFilePermission.OWNER_WRITE);
         }
         if (newPermissions.contains("x")) {
