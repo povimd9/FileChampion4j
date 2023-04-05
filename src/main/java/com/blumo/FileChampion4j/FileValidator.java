@@ -41,7 +41,6 @@ public class FileValidator {
 
     /**
      * This method is used to check that method inputs are not null or empty
-     * @param configJsonObject
      * @param fileCategory
      * @param originalFile
      * @param fileName
@@ -103,7 +102,7 @@ public class FileValidator {
      * @param originalFilenameClean (String) a string containing the cleaned file name
      * @param fileExtension (String) a string containing the file extension
      * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
-     * @param originalFile:(byte[]) a byte array containing the file bytes of the file to be validated
+     * @param originalFile (byte[]) a byte array containing the file bytes of the file to be validated
      * @param outDir (String) a string containing the path to the output directory for validated files
      * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
      */
