@@ -178,16 +178,4 @@ public class FileValidatorBenchTest {
     
         return baos.toByteArray();
     }
-
-    // Delete a directory and all its contents
-    private static void deleteDirectory(File directoryToBeDeleted) {
-        File[] allContents = directoryToBeDeleted.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                deleteDirectory(file);
-            }
-        }
-        directoryToBeDeleted.delete();
-    }
-
 }
