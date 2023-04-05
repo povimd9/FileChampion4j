@@ -203,7 +203,7 @@ public class FileValidatorTest {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
-        assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid when saving to non existing directory");
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to non existing directory");
         assertTrue(fileValidationResults.resultsInfo().contains("File is valid but was not saved to output directory:"), "Expected 'File is valid but was not saved to output directory', got: " + fileValidationResults.resultsInfo());
     }
 
