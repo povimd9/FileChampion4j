@@ -10,8 +10,8 @@
     <name>FileChampion4j</name>
 
     <properties>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.major.version}</maven.compiler.source>
+        <maven.compiler.target>${java.major.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -64,6 +64,27 @@
     <build>
         <finalName>FileChampion4j</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                    <id>extract-major-java-version</id>
+                    <goals>
+                        <goal>set-system-properties</goal>
+                    </goals>
+                    <configuration>
+                        <properties>
+                        <property>
+                            <name>java.major.version</name>
+                            <value>${java.version.split("\\.")[0]}</value>
+                        </property>
+                        </properties>
+                    </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Set a JDK compiler level -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -76,8 +97,8 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <source>${java.version}</source>
-                            <target>${java.version}</target>
+                            <source>${java.major.version}</source>
+                            <target>${java.major.version}</target>
                         </configuration>
                     </execution>
                 </executions>
