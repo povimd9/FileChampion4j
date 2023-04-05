@@ -84,8 +84,8 @@ public class Extension {
 
     /**
      * This method is used to set the values of the Extension object from the Json configuration data.
-     * @param configJsonObject: the Json configuration data
-     * @throws IllegalArgumentException: if the file category or file extension is not found in the Json configuration data
+     * @param configJsonObject (JSONObject) the Json configuration data
+     * @throws IllegalArgumentException if the file category or file extension is not found in the Json configuration data
      */
     private void setValuesFromJson(JSONObject configJsonObject) {
         if (!configJsonObject.has(fileCategory)) {
