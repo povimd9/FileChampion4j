@@ -36,7 +36,7 @@ jobs:
           chmod +x ${{ github.workspace }}/mvnw
 
       - name: Build with Maven
-        run: mvn -B -U clean install --file pom.xml -Dmaven.compiler.target=${{ matrix.java-version }} -Dmaven.compiler.source=${{ matrix.java-version }}
+        run: mvn -B -U clean install --file pom.xml
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
