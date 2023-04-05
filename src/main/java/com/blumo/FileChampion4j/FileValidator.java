@@ -53,9 +53,6 @@ public class FileValidator {
         if (fileName.isBlank()) {
             throw new IllegalArgumentException("fileName cannot be null or empty.");
         }
-        if (configJsonObject.isEmpty()) {
-            throw new IllegalArgumentException("configJsonObject cannot be empty.");
-        }
         if (originalFile == null || originalFile.length == 0) {
             throw new IllegalArgumentException("originalFile cannot be null or empty.");
         }
