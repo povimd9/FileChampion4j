@@ -28,10 +28,26 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '${{ matrix.java-version }}'
-          distribution: 'temurin'
-      - name: Set JAVA_HOME
+          distribution: 'corretto'
+      
+      - name: Set JAVA_HOME_NIX
+        if: startsWith(runner.os, 'Linux')
         run: |
-          echo "JAVA_HOME=$(dirname $(dirname $(readlink $(which javac))))" >> $GITHUB_ENV
+          export JAVA_HOME=$(dirname $(dirname $(dirname $(readlink -f $(which javac)))))
+          echo "JAVA_HOME=${JAVA_HOME}" >> $GITHUB_ENV
+
+      - name: Set JAVA_HOME_WIN
+        if: startsWith(runner.os, 'Windows')
+        run: |
+          $jdkPath = Get-ChildItem -Path 'C:\Program Files\Amazon Corretto\' -Filter "jdk-*" -Directory -Depth 1 | Select-Object -Last 1
+          $jdkPath = Join-Path $jdkPath.FullName "bin"
+          echo "JAVA_HOME=$jdkPath" >> $GITHUB_ENV
+
+
+      - name: Set JAVA_HOME (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          echo "JAVA_HOME=C:\Program Files\Java\jdk-${{ matrix.java-version }}" >> $GITHUB_ENV
 
       - name: Make mvnw executable (${{ matrix.os }})
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
