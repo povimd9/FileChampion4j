@@ -8,8 +8,6 @@ on:
       - completed
     branches:
       - master
-    results:
-      - success
 
 permissions:
   contents: write
@@ -26,7 +24,6 @@ jobs:
         with:
           java-version: 8
           distribution: 'corretto'
-      - name: Set JDK 8 path
         env:
             JAVA8_HOME: ${{ env.JAVA_HOME }}
 
@@ -35,7 +32,6 @@ jobs:
         with:
           java-version: 11
           distribution: 'corretto'
-      - name: Set JDK 11 path
         env:
             JAVA11_HOME: ${{ env.JAVA_HOME }}
             
@@ -44,7 +40,6 @@ jobs:
         with:
           java-version: 17
           distribution: 'corretto'
-      - name: Set JDK 17 path
         env:
             JAVA17_HOME: ${{ env.JAVA_HOME }}
 
