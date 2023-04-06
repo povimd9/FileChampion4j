@@ -4,10 +4,20 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - 'target/**'
+      - '.vscode/**'
+      - '.idea/**'
+      - '.git/**'
   pull_request:
     branches:
       - master
       - feature-*
+    paths-ignore:
+      - 'target/**'
+      - '.vscode/**'
+      - '.idea/**'
+      - '.git/**'
 
 permissions:
   contents: write
@@ -18,7 +28,7 @@ jobs:
     name: Build and Test on ${{ matrix.os }} with JDK ${{ matrix.java-version }}
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 1
+      max-parallel: 2
       matrix:
         os: [ ubuntu-20.04, ubuntu-latest, windows-latest]
         java-version: [8, 11, 17]

@@ -8,6 +8,7 @@ on:
       - completed
     branches:
       - master
+      - feature-*
 
 permissions:
   contents: write
@@ -60,6 +61,7 @@ jobs:
           git config --global user.name "povimd9"
           git config --global user.email "povimd9@users.noreply.github.com"
           git add target/FileChampion4j.jar
-          git commit -m "Add new package.jar"
+          git add target/FileChampion4j-jar-with-dependencies.jar
+          git commit -m "Add new package dist JARs"
           git push
 
