@@ -49,7 +49,7 @@ jobs:
       - name: Create version branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LATEST_VER: ${{ env.LATEST_VERSION }}
+          LATEST_VER: ${{ vars.LATEST_VERSION }}
         run: |
           git config --global user.name "povimd9"
           git config --global user.email "povimd9@users.noreply.github.com"
