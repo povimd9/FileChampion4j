@@ -8,6 +8,7 @@ on:
       - completed
     branches:
       - master
+      - feature-*
 
 permissions:
   contents: write

@@ -4,11 +4,16 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - 'target/**'
+      - '.vscode/**'
+      - '.idea/**'
+      - '.git/**'
   pull_request:
     branches:
       - master
       - feature-*
-  paths-ignore:
+    paths-ignore:
       - 'target/**'
       - '.vscode/**'
       - '.idea/**'
