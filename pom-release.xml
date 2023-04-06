@@ -80,7 +80,7 @@
                             <source>1.8</source>
                             <target>1.8</target>
                             <fork>true</fork>
-                            <executable>/usr/lib/jvm/java-1.8.0-amazon-corretto/bin/javac</executable>
+                            <executable>${env.JAVA8_HOME}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>1.8</arg>
@@ -97,7 +97,7 @@
                             <source>11</source>
                             <target>11</target>
                             <fork>true</fork>
-                            <executable>/usr/lib/jvm/java-11-amazon-corretto/usr/lib/jvm/java-11-amazon-corretto/bin/javac</executable>
+                            <executable>${env.JAVA11_HOME}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>11</arg>
@@ -114,7 +114,7 @@
                             <source>17</source>
                             <target>17</target>
                             <fork>true</fork>
-                            <executable>/usr/lib/jvm/java-17-amazon-corretto/bin/javac</executable>
+                            <executable>${env.JAVA17_HOME}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>17</arg>
