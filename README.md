@@ -9,6 +9,9 @@ A Java class for file validation.
 ### Introduction
 The FileSentry4j class is a Java class for file validation. It can be used to validate files against configured set of controls, and return machine and human readable validation results.
 
+### Releases
+Working release versions, including slim/fat JARs, can be found on 'release-* branches.
+
 ### Intent
 The intent of this package is to provide a secure and reliable way to validate and sanitize files as bytes. The package will support a variety of file types and formats, and will be able to protect against common security risks such as file injection attacks and malicious file content.
 
