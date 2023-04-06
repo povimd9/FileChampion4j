@@ -30,7 +30,6 @@ bin/
 /tmp_tests/
 
 ### temp files ###
-.*
 /tmp_tests/
 /target/
 target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst

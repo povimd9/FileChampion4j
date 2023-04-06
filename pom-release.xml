@@ -10,8 +10,8 @@
     <name>FileChampion4j</name>
 
     <properties>
-        <maven.compiler.source>${java.major.version}</maven.compiler.source>
-        <maven.compiler.target>${java.major.version}</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -64,30 +64,6 @@
     <build>
         <finalName>FileChampion4j</finalName>
         <plugins>
-
-        <!-- Set jdk version property -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>1.1.0</version>
-                <executions>
-                    <execution>
-                    <id>extract-major-java-version</id>
-                    <goals>
-                        <goal>set-system-properties</goal>
-                    </goals>
-                    <configuration>
-                        <properties>
-                        <property>
-                            <name>java.major.version</name>
-                            <value>${java.version.split("\\.")[0]}</value>
-                        </property>
-                        </properties>
-                    </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Set a JDK compiler level -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -95,13 +71,54 @@
                 <version>3.11.0</version>
                 <executions>
                     <execution>
-                        <id>compile-java</id>
+                        <id>compile-jdk8</id>
+                        <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <source>${java.major.version}</source>
-                            <target>${java.major.version}</target>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <fork>true</fork>
+                            <executable>${JAVA8_HOME}/bin/javac</executable>
+                            <compilerArgs>
+                                <arg>--release</arg>
+                                <arg>1.8</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile-jdk11</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <source>11</source>
+                            <target>11</target>
+                            <fork>true</fork>
+                            <executable>${JAVA11_HOME}/bin/javac</executable>
+                            <compilerArgs>
+                                <arg>--release</arg>
+                                <arg>11</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile-jdk17</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <source>17</source>
+                            <target>17</target>
+                            <fork>true</fork>
+                            <executable>${JAVA17_HOME}/bin/javac</executable>
+                            <compilerArgs>
+                                <arg>--release</arg>
+                                <arg>17</arg>
+                            </compilerArgs>
                         </configuration>
                     </execution>
                 </executions>
@@ -117,11 +134,13 @@
                         <manifest>
                             <mainClass>com.blumo.FileChampion4j.FileValidator</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <Multi-Release>true</Multi-Release>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
 
-            <!-- Run tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -132,11 +151,11 @@
                     <!--suppress UnresolvedMavenProperty reported by Idea-->
                     <argLine>${argLine}</argLine>
                     <systemPropertyVariables>
-                        <java.version>${java.version}</java.version>
+                        <java.version>1.8</java.version>
                     </systemPropertyVariables>
                     <includes>
-                        <include>**/Test*.java</include>
-                        <include>**/*Test.java</include>
+                        <include>**/Bench*.java</include>
+                        <include>**/*Bench.java</include>
                     </includes>
                     <parallel>classes</parallel>
                     <perCoreThreadCount>true</perCoreThreadCount>
@@ -152,11 +171,11 @@
                         </goals>
                         <configuration>
                             <systemPropertyVariables>
-                                <java.version>${java.version}</java.version>
+                                <java.version>1.8</java.version>
                             </systemPropertyVariables>
                             <includes>
-                                <include>**/Test*.java</include>
-                                <include>**/*Test.java</include>
+                                <include>**/Bench*.java</include>
+                                <include>**/*Bench.java</include>
                             </includes>
                             <printSummary>true</printSummary>
                             <printFailures>true</printFailures>
