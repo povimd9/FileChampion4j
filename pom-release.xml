@@ -64,6 +64,29 @@
     <build>
         <finalName>FileChampion4j</finalName>
         <plugins>
+           <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                    <id>java-home-placeholder</id>
+                    <goals>
+                        <goal>set-system-properties</goal>
+                    </goals>
+                    <configuration>
+                        <properties>
+                        <property>
+                            <name>java.home</name>
+                            <value>${env.JAVA_HOME}</value>
+                        </property>
+                        </properties>
+                    </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+                 
             <!-- Set a JDK compiler level -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -80,7 +103,7 @@
                             <source>1.8</source>
                             <target>1.8</target>
                             <fork>true</fork>
-                            <executable>${env.JAVA8_HOME}/bin/javac</executable>
+                            <executable>${java.home}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>1.8</arg>
@@ -97,7 +120,7 @@
                             <source>11</source>
                             <target>11</target>
                             <fork>true</fork>
-                            <executable>${env.JAVA11_HOME}/bin/javac</executable>
+                            <executable>${java.home}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>11</arg>
@@ -114,7 +137,7 @@
                             <source>17</source>
                             <target>17</target>
                             <fork>true</fork>
-                            <executable>${env.JAVA17_HOME}/bin/javac</executable>
+                            <executable>${java.home}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>17</arg>
