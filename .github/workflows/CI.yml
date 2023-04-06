@@ -48,7 +48,7 @@ jobs:
           chmod +x ${{ github.workspace }}/mvnw
 
       - name: Build with Maven
-        run: mvn -B -U clean install --file pom-release.xml "-Djava8.home=$JAVA8_HOME -D=java11.home=$JAVA11_HOME -Djava17.home=$JAVA17_HOME"
+        run: mvn -B -U clean install --file pom-release.xml "-Djava8.home=$JAVA8_HOME" "-D=java11.home=$JAVA11_HOME" "-Djava17.home=$JAVA17_HOME"
 
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
