@@ -1,0 +1,12 @@
+   com.fasterxml.jackson.core:jackson-databind:jar:2.14.2:compile[36m -- module com.fasterxml.jackson.databind[m
+   com.fasterxml.jackson.core:jackson-annotations:jar:2.14.2:compile[36m -- module com.fasterxml.jackson.annotation[m
+   com.fasterxml.jackson.core:jackson-core:jar:2.14.2:compile[36m -- module com.fasterxml.jackson.core[m
+   org.json:json:jar:20230227:compile[36m -- module org.json[0;1m [auto][m
+   org.junit.jupiter:junit-jupiter-api:jar:5.9.2:test[36m -- module org.junit.jupiter.api[m
+   org.opentest4j:opentest4j:jar:1.2.0:test[36m -- module org.opentest4j[m
+   org.junit.platform:junit-platform-commons:jar:1.9.2:test[36m -- module org.junit.platform.commons[m
+   org.apiguardian:apiguardian-api:jar:1.1.2:test[36m -- module org.apiguardian.api[m
+   org.junit.jupiter:junit-jupiter-engine:jar:5.9.2:test[36m -- module org.junit.jupiter.engine[m
+   org.junit.platform:junit-platform-engine:jar:1.9.2:test[36m -- module org.junit.platform.engine[m
+   org.junit.jupiter:junit-jupiter-params:jar:5.9.2:test[36m -- module org.junit.jupiter.params[m
+   com.itextpdf:itextpdf:jar:5.5.13.3:test[36m -- module itextpdf[0;1;33m (auto)[m
