@@ -77,8 +77,16 @@
                     <configuration>
                         <properties>
                         <property>
-                            <name>java.home</name>
-                            <value>${env.JAVA_HOME}</value>
+                            <name>java8.home</name>
+                            <value>${env.JAVA8_HOME}</value>
+                        </property>
+                        <property>
+                            <name>java11.home</name>
+                            <value>${env.JAVA11_HOME}</value>
+                        </property>
+                        <property>
+                            <name>java17.home</name>
+                            <value>${env.JAVA17_HOME}</value>
                         </property>
                         </properties>
                     </configuration>
@@ -103,7 +111,7 @@
                             <source>1.8</source>
                             <target>1.8</target>
                             <fork>true</fork>
-                            <executable>${java.home}/bin/javac</executable>
+                            <executable>${java8.home}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>1.8</arg>
@@ -120,7 +128,7 @@
                             <source>11</source>
                             <target>11</target>
                             <fork>true</fork>
-                            <executable>${java.home}/bin/javac</executable>
+                            <executable>${java11.home}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>11</arg>
@@ -137,7 +145,7 @@
                             <source>17</source>
                             <target>17</target>
                             <fork>true</fork>
-                            <executable>${java.home}/bin/javac</executable>
+                            <executable>${java17.home}/bin/javac</executable>
                             <compilerArgs>
                                 <arg>--release</arg>
                                 <arg>17</arg>
