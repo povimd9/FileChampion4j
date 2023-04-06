@@ -52,7 +52,7 @@ jobs:
         run: |
           git config --global user.name "povimd9"
           git config --global user.email "povimd9@users.noreply.github.com"
-          git checkout -b release-${{ env.LATEST_VERSION }}
+          git checkout -b "release-${{ env.LATEST_VERSION }}"
           git add target/dependency-list.txt
           git add target/FileChampion4j.jar
           git add target/FileChampion4j-jar-with-dependencies.jar
