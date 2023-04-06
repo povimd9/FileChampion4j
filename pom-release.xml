@@ -113,7 +113,6 @@
                             <fork>true</fork>
                             <executable>${java8.home}/bin/javac</executable>
                             <compilerArgs>
-                                <arg>--release</arg>
                                 <arg>1.8</arg>
                             </compilerArgs>
                         </configuration>
@@ -130,7 +129,6 @@
                             <fork>true</fork>
                             <executable>${java11.home}/bin/javac</executable>
                             <compilerArgs>
-                                <arg>--release</arg>
                                 <arg>11</arg>
                             </compilerArgs>
                         </configuration>
@@ -147,7 +145,6 @@
                             <fork>true</fork>
                             <executable>${java17.home}/bin/javac</executable>
                             <compilerArgs>
-                                <arg>--release</arg>
                                 <arg>17</arg>
                             </compilerArgs>
                         </configuration>
