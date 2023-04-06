@@ -14,6 +14,12 @@ permissions:
   contents: write
 
 jobs:
+  check-master-build-result:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps: 
+      - run: exit 1
+
   bench-and-package:
     name: Build, Bench, and Package
     runs-on: ubuntu-20.04
