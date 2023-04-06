@@ -112,9 +112,6 @@
                             <target>1.8</target>
                             <fork>true</fork>
                             <executable>${java8.home}/bin/javac</executable>
-                            <compilerArgs>
-                                <arg>1.8</arg>
-                            </compilerArgs>
                         </configuration>
                     </execution>
                     <execution>
@@ -128,9 +125,6 @@
                             <target>11</target>
                             <fork>true</fork>
                             <executable>${java11.home}/bin/javac</executable>
-                            <compilerArgs>
-                                <arg>11</arg>
-                            </compilerArgs>
                         </configuration>
                     </execution>
                     <execution>
@@ -144,9 +138,6 @@
                             <target>17</target>
                             <fork>true</fork>
                             <executable>${java17.home}/bin/javac</executable>
-                            <compilerArgs>
-                                <arg>17</arg>
-                            </compilerArgs>
                         </configuration>
                     </execution>
                 </executions>
