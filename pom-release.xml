@@ -274,7 +274,7 @@
 		<configuration>
 			<verbose>true</verbose>
 			<certs>true</certs>
-			<keystore>${blumo.jks}</keystore>
+			<keystore>./blumo.jks</keystore>
 			<alias>blumo</alias>
 			<storepass>${signkey.pass}</storepass>
 			<keypass>${signkey.pass}</keypass>
