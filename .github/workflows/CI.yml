@@ -45,7 +45,7 @@ jobs:
           SIGN_KEY_PASS: ${{ secrets.SIGN_KEY_PASS }}
         run: |
           echo ${{ secrets.BLUMO_JKS }} | openssl base64 -d > ./blumo.p12
-          keytool -importkeystore -srckeystore ./blumo.p12 -srcstoretype PKCS12 -destkeystore ./blumo.jks -deststoretype JKS  -srcstorepass "$SIGN_KEY_PASS" -deststorepass "$SIGN_KEY_PASS"
+          keytool -importkeystore -srckeystore ./blumo.p12 -srcstoretype PKCS12 -destkeystore ./blumo.jks -deststoretype JKS  -srcstorepass ${{ secrets.SIGN_KEY_PASS }} -deststorepass ${{ secrets.SIGN_KEY_PASS }}
           mvn -B -U clean install --file pom-release.xml "-Djava8.home=$JAVA8_HOME" "-Dsignkey.pass=$SIGN_KEY_PASS" "-Dblumo.jks=./blumo.jks"
 
       - name: Update dependency graph
