@@ -66,7 +66,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILE_TO_COMMIT: target/dependency-list.txt
-          DESTINATION_BRANCH: release-$LATEST_VER
+          DESTINATION_BRANCH: release-${{ vars.LATEST_VERSION }}
         run: |
           export TODAY=$( date -u '+%Y-%m-%d' )
           export MESSAGE="regenerate $FILE_TO_COMMIT for $TODAY"
@@ -80,7 +80,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILE_TO_COMMIT: target/FileChampion4j.jar
-          DESTINATION_BRANCH: release-$LATEST_VER
+          DESTINATION_BRANCH: release-${{ vars.LATEST_VERSION }}
         run: |
           export TODAY=$( date -u '+%Y-%m-%d' )
           export MESSAGE="regenerate $FILE_TO_COMMIT for $TODAY"
@@ -94,7 +94,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILE_TO_COMMIT: target/FileChampion4j-jar-with-dependencies.jar
-          DESTINATION_BRANCH: release-$LATEST_VER
+          DESTINATION_BRANCH: release-${{ vars.LATEST_VERSION }}
         run: |
           export TODAY=$( date -u '+%Y-%m-%d' )
           export MESSAGE="regenerate $FILE_TO_COMMIT for $TODAY"
