@@ -62,5 +62,5 @@ jobs:
           git add target/FileChampion4j.jar
           git add target/FileChampion4j-jar-with-dependencies.jar
           git commit -m "Add new package dist JARs"
-          git push --set-upstream origin "release-$LATEST_VER"
+          git push -f --set-upstream origin "release-$LATEST_VER"
           
