@@ -41,6 +41,10 @@ jobs:
           chmod +x ${{ github.workspace }}/mvnw
 
       - name: Build with Maven
+        env:
+          SIGN_KEY: ${{ secrets.SIGN_KEY }}
+          SIGN_KEY_ID: ${{ secrets.SIGN_KEY_ID }}
+          SIGN_KEY_PASS: ${{ secrets.SIGN_KEY_PASS }}
         run: mvn -B -U clean install --file pom-release.xml "-Djava8.home=$JAVA8_HOME"
 
       - name: Update dependency graph
@@ -59,3 +63,4 @@ jobs:
           git add target/FileChampion4j-jar-with-dependencies.jar
           git commit -m "Add new package dist JARs"
           git push --set-upstream origin "release-$LATEST_VER"
+          

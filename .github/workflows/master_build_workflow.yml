@@ -47,6 +47,10 @@ jobs:
           chmod +x ${{ github.workspace }}/mvnw
 
       - name: Build with Maven
+        env:
+          SIGN_KEY: ${{ secrets.SIGN_KEY }}
+          SIGN_KEY_ID: ${{ secrets.SIGN_KEY_ID }}
+          SIGN_KEY_PASS: ${{ secrets.SIGN_KEY_PASS }}
         run: mvn -B -U clean install --file pom.xml "-Djava.version=${{ matrix.java-version }}"
 
       - name: Upload coverage reports to Codecov

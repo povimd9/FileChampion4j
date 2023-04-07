@@ -81,18 +81,18 @@
                     </goals>
                     <configuration>
                         <properties>
-                        <property>
-                            <name>java8.home</name>
-                            <value>${env.JAVA8_HOME}</value>
-                        </property>
-                        <property>
-                            <name>java11.home</name>
-                            <value>${env.JAVA11_HOME}</value>
-                        </property>
-                        <property>
-                            <name>java17.home</name>
-                            <value>${env.JAVA17_HOME}</value>
-                        </property>
+                            <property>
+                                <name>java8.home</name>
+                                <value>${env.JAVA8_HOME}</value>
+                            </property>
+                            <property>
+                                <name>java11.home</name>
+                                <value>${env.JAVA11_HOME}</value>
+                            </property>
+                            <property>
+                                <name>java17.home</name>
+                                <value>${env.JAVA17_HOME}</value>
+                            </property>
                         </properties>
                     </configuration>
                     </execution>
@@ -244,6 +244,20 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Sign the jar -->
+            <plugin>
+                <groupId>org.simplify4u.plugins</groupId>
+                <artifactId>sign-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>
