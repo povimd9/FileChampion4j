@@ -101,9 +101,6 @@
                                 <name>signkey.pass</name>
                                 <value>${env.SIGN_KEY_PASS}</value>
                             </property>
-
-
-
                         </properties>
                     </configuration>
                     </execution>
@@ -257,32 +254,32 @@
             </plugin>
             <!-- Sign the jar -->
             <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<version>3.0</version>
-				<executions>
-					<execution>
-						<id>sign</id>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>verify</id>
-						<goals>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<verbose>true</verbose>
-					<certs>true</certs>
-					<keystore>${blumo.jks}</keystore>
-					<alias>blumo</alias>
-					<storepass>${signkey.pass}</storepass>
-					<keypass>${signkey.pass}</keypass>
-				</configuration>
-			</plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-jarsigner-plugin</artifactId>
+		<version>3.0.0</version>
+		<executions>
+			<execution>
+				<id>sign</id>
+				<goals>
+					<goal>sign</goal>
+				</goals>
+			</execution>
+			<execution>
+				<id>verify</id>
+				<goals>
+					<goal>verify</goal>
+				</goals>
+			</execution>
+		</executions>
+		<configuration>
+			<verbose>true</verbose>
+			<certs>true</certs>
+			<keystore>${blumo.jks}</keystore>
+			<alias>blumo</alias>
+			<storepass>${signkey.pass}</storepass>
+			<keypass>${signkey.pass}</keypass>
+		</configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
