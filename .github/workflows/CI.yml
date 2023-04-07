@@ -42,10 +42,10 @@ jobs:
 
       - name: Build with Maven
         env:
-          SIGN_KEY: ${{ secrets.SIGN_KEY }}
-          SIGN_KEY_ID: ${{ secrets.SIGN_KEY_ID }}
           SIGN_KEY_PASS: ${{ secrets.SIGN_KEY_PASS }}
-        run: mvn -B -U clean install --file pom-release.xml "-Djava8.home=$JAVA8_HOME"
+        run: |
+          echo $ { { secrets.BLUMO_JKS }} | base64 -d > ./blumo.jks
+          mvn -B -U clean install --file pom-release.xml "-Djava8.home=$JAVA8_HOME" "-Dsignkey.pass=$SIGN_KEY_PASS" "-Dblumo.jks=./blumo.jks"
 
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
@@ -58,9 +58,48 @@ jobs:
           git config --global user.name "povimd9"
           git config --global user.email "povimd9@users.noreply.github.com"
           git checkout -b "release-$LATEST_VER"
-          git add target/dependency-list.txt
-          git add target/FileChampion4j.jar
-          git add target/FileChampion4j-jar-with-dependencies.jar
-          git commit -m "Add new package dist JARs"
           git push -f --set-upstream origin "release-$LATEST_VER"
-          
+
+      # Use the REST API to commit changes, so we get automatic commit signing
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILE_TO_COMMIT: target/dependency-list.txt
+          DESTINATION_BRANCH: release-$LATEST_VER
+        run: |
+          export TODAY=$( date -u '+%Y-%m-%d' )
+          export MESSAGE="regenerate $FILE_TO_COMMIT for $TODAY"
+          export SHA=$( git rev-parse $DESTINATION_BRANCH:$FILE_TO_COMMIT )
+          gh api --method PUT /repos/:owner/:repo/contents/$FILE_TO_COMMIT \
+            --field message="$MESSAGE" \
+            --field content=@<( base64 -i $FILE_TO_COMMIT )
+            --field branch="$DESTINATION_BRANCH" \
+            --field sha="$SHA"
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILE_TO_COMMIT: target/FileChampion4j.jar
+          DESTINATION_BRANCH: release-$LATEST_VER
+        run: |
+          export TODAY=$( date -u '+%Y-%m-%d' )
+          export MESSAGE="regenerate $FILE_TO_COMMIT for $TODAY"
+          export SHA=$( git rev-parse $DESTINATION_BRANCH:$FILE_TO_COMMIT )
+          gh api --method PUT /repos/:owner/:repo/contents/$FILE_TO_COMMIT \
+            --field message="$MESSAGE" \
+            --field content=@<( base64 -i $FILE_TO_COMMIT )
+            --field branch="$DESTINATION_BRANCH" \
+            --field sha="$SHA"
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILE_TO_COMMIT: target/FileChampion4j-jar-with-dependencies.jar
+          DESTINATION_BRANCH: release-$LATEST_VER
+        run: |
+          export TODAY=$( date -u '+%Y-%m-%d' )
+          export MESSAGE="regenerate $FILE_TO_COMMIT for $TODAY"
+          export SHA=$( git rev-parse $DESTINATION_BRANCH:$FILE_TO_COMMIT )
+          gh api --method PUT /repos/:owner/:repo/contents/$FILE_TO_COMMIT \
+            --field message="$MESSAGE" \
+            --field content=@<( base64 -i $FILE_TO_COMMIT )
+            --field branch="$DESTINATION_BRANCH" \
+            --field sha="$SHA"
