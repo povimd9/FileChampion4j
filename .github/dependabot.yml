@@ -4,5 +4,4 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
-    commit-message: "Dependabot package update"
     target-branch: "master"
