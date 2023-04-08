@@ -1,0 +1,15 @@
+
+The following files have been resolved:
+   com.fasterxml.jackson.core:jackson-databind:jar:2.14.2:compile
+   com.fasterxml.jackson.core:jackson-annotations:jar:2.14.2:compile
+   com.fasterxml.jackson.core:jackson-core:jar:2.14.2:compile
+   org.json:json:jar:20230227:compile
+   org.junit.jupiter:junit-jupiter-api:jar:5.9.2:test
+   org.opentest4j:opentest4j:jar:1.2.0:test
+   org.junit.platform:junit-platform-commons:jar:1.9.2:test
+   org.apiguardian:apiguardian-api:jar:1.1.2:test
+   org.junit.jupiter:junit-jupiter-engine:jar:5.9.2:test
+   org.junit.platform:junit-platform-engine:jar:1.9.2:test
+   org.junit.jupiter:junit-jupiter-params:jar:5.9.2:test
+   com.itextpdf:itextpdf:jar:5.5.13.3:test
+
