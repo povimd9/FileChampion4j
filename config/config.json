@@ -1,74 +1,122 @@
 {
-  "Documents": {
-    "pdf": {
-      "mime_type": "application/pdf",
-      "magic_bytes": "25504446",
-      "header_signatures": "25504446",
-      "footer_signatures": "2525454f46",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "126000"
-      },
-    "doc": {
-      "mime_type": "application/msword",
-      "magic_bytes": "D0CF11E0A1B11AE1",
-      "header_signatures": "D0CF11E0A1B11AE1",
-      "footer_signatures": "0000000000000000",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "4000"
+  "Validations": {
+    "Documents": {
+      "pdf": {
+        "mime_type": "application/pdf",
+        "magic_bytes": "25504446",
+        "header_signatures": "25504446",
+        "footer_signatures": "2525454f46",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "126000"
+        },
+      "doc": {
+        "mime_type": "application/msword",
+        "magic_bytes": "D0CF11E0A1B11AE1",
+        "header_signatures": "D0CF11E0A1B11AE1",
+        "footer_signatures": "0000000000000000",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+      }
+    },
+    "Images": {
+      "jpg": {
+        "mime_type": "image/jpeg",
+        "magic_bytes": "FFD8",
+        "header_signatures": "FFD8FF",
+        "footer_signatures": "FFD9",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+        },
+      "png": {
+        "mime_type": "image/png",
+        "magic_bytes": "89504E470D0A1A0A",
+        "header_signatures": "89504E470D0A1A0A0000000D49484452",
+        "footer_signatures": "49454E44AE426082",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+      }
     }
   },
-  "Images": {
-    "jpg": {
-      "mime_type": "image/jpeg",
-      "magic_bytes": "FFD8",
-      "header_signatures": "FFD8FF",
-      "footer_signatures": "FFD9",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "4000"
+  "Extensions": {
+    "virus_total": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
+      "method": "POST",
+      "body": {
+        "apikey": "${vt_api_key}",
+        "file": {
+          "name": "${file_name}",
+          "content": "${file_content}"
+        }
       },
-    "png": {
-      "mime_type": "image/png",
-      "magic_bytes": "89504E470D0A1A0A",
-      "header_signatures": "89504E470D0A1A0A0000000D49484452",
-      "footer_signatures": "49454E44AE426082",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "4000"
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED"
+    },
+    "ExampleAPICall": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "endpoint": "https://example.com/api/v1/scan",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${api_key}:${api_secret}"
+      },
+      "body": {
+        "file": {
+          "name": "${file_name}",
+          "content": "${file_content}"
+        }
+      },
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED"
+    },
+    "ExampleCLICall": {
+      "type": "cli",
+      "file_path": "/usr/bin/scan",
+      "args": [
+        "${file_path}"
+      ],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED"
     }
   }
 }
