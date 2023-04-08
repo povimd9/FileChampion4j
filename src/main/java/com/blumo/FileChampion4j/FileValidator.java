@@ -77,18 +77,38 @@ public class FileValidator {
         // Initialize variables
         String logMessage;
         String fileExtension = getFileExtension(fileName);
+        JsonLoader jsonLoader;
         Extension extensionConfig;
+        Plugins pluginConfig;
 
         // Clean the file name to replace special characters with underscores
         String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
 
-        // Get the configuration for the file type category and extension
+        // Get the json configurations
         try {
-            extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject);
+            jsonLoader = new JsonLoader(configJsonObject);
         } catch (Exception e) {
             LOGGER.warning(e.getMessage());
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
         }
+
+        // Get the configuration for the file type category and extension
+        try {
+            extensionConfig = new Extension(fileCategory, fileExtension, jsonLoader.getJsonExtensionObject());
+        } catch (Exception e) {
+            LOGGER.warning(e.getMessage());
+            return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
+        }
+
+        // Get the configuration for the plugins
+        try {
+            pluginConfig = new Plugins(jsonLoader.getJsonPluginsObject());
+        } catch (Exception e) {
+            LOGGER.warning(e.getMessage());
+            return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
+        }
+
+
 
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
