@@ -21,6 +21,7 @@ public class Extension {
     private int maxSize;
     private String fileCategory;
     private String fileExtension;
+    private String[] plugins;
 
 
     /**
@@ -82,6 +83,10 @@ public class Extension {
         return maxSize;
     }
 
+    public String[] getPlugins() {
+        return plugins;
+    }
+
     /**
      * This method is used to set the values of the Extension object from the Json configuration data.
      * @param configJsonObject (JSONObject) the Json configuration data
@@ -108,5 +113,6 @@ public class Extension {
         this.changeOwnershipMode = extensionJson.optString("change_ownership_mode");
         this.nameEncoding = extensionJson.optBoolean("name_encoding");
         this.maxSize = extensionJson.optInt("max_size");
+        this.plugins = extensionJson.optString("plugins").split(",");
     }
 }

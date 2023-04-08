@@ -11,8 +11,9 @@
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
         "name_encoding": true,
-        "max_size": "126000"
-        },
+        "max_size": "126000",
+        "plugins": ["virus_total", "ExampleCLIcall"]
+      },
       "doc": {
         "mime_type": "application/msword",
         "magic_bytes": "D0CF11E0A1B11AE1",
@@ -23,7 +24,8 @@
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
         "name_encoding": true,
-        "max_size": "4000"
+        "max_size": "4000",
+        "plugins": ["virus_total", "ExampleAPICall"]
       }
     },
     "Images": {
@@ -68,7 +70,9 @@
       },
       "pass_codes": [200, 201],
       "pass_body_contains": "OK",
-      "fail_body_contains": "FAILED"
+      "fail_body_contains": "FAILED",
+      "timeout": 60,
+      "on_timeout": "fail"
     },
     "ExampleAPICall": {
       "type": "http",
@@ -96,7 +100,9 @@
         "${file_path}"
       ],
       "pass_body_contains": "OK",
-      "fail_body_contains": "FAILED"
+      "fail_body_contains": "FAILED",
+      "timeout": 60,
+      "on_timeout": "fail"
     }
   }
 }
