@@ -1,9 +1,0 @@
-Manifest-version: 1.0
-Built-By: povimd9
-Build-Jdk: 1.8
-Created-By: Apache Maven 3.11
-Archiver-Version: Plexus Archiver
-
-Name: com/blumo/FileChampion4j/
-Implementation-Title: Your FileChampion4j
-Implementation-Version: 0.9

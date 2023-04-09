@@ -19,7 +19,9 @@ import java.security.MessageDigest;
 
                       TODO: add filenname and checksum to loggers
 
-                      TODO: support cli and jar loading
+                      TODO: add support for plugins (http and cli)
+                      TODO: init plugins to memory for performance
+                      TODO: add tests of plugins validity upon init
 
                       TODO: add support for validation and sanitization extensions
 
@@ -37,6 +39,26 @@ public class FileValidator {
             throw new IllegalArgumentException("Config JSON object cannot be null or empty.");
         }
         this.configJsonObject = configJsonObject;
+
+        // INIT JSON OBJECTS, INCLUDING OBJECT FOR EACH EXTENSION AND EACH PLUGIN.
+        // ITERATE THROUGH EACH EXTENSION AND PLUGIN AND INIT EACH ONE AT CLASS INIT.
+        // MAKE ARRAY OF OBJECTS FOR EACH EXTENSION AND EACH PLUGIN.
+        // VALIDATION METHODS WILL USE THE SPECIFIC OBJECTS FOR EACH EXTENSION AND ASSOCIATED PLUGINS.
+        // THIS WILL ALLOW FOR FASTER VALIDATION AND SANITIZATION OF FILES.
+        JsonLoader jsonLoader = new JsonLoader(configJsonObject);
+        JSONObject jsonExtensionObject = jsonLoader.getJsonExtensionObject();
+        JSONObject jsonPluginsObject = jsonLoader.getJsonPluginsObject();
+
+        // Initialize the extensions
+        Iterator<String> extensionKeys = jsonExtensionObject.keys();
+        while (extensionKeys.hasNext()) {
+            String extensionKey = extensionKeys.next();
+            object[] extensionObjectArray;
+            extensionObjectArray[extensionKey] 
+            = new Extension(extensionKey, jsonExtensionObject.getJSONObject(extensionKey));
+        }
+
+
     }
 
     /**
@@ -79,7 +101,7 @@ public class FileValidator {
         String fileExtension = getFileExtension(fileName);
         JsonLoader jsonLoader;
         Extension extensionConfig;
-        Plugins pluginConfig;
+        PluginsApiHelper pluginConfig;
 
         // Clean the file name to replace special characters with underscores
         String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
@@ -102,7 +124,7 @@ public class FileValidator {
 
         // Get the configuration for the plugins
         try {
-            pluginConfig = new Plugins(jsonLoader.getJsonPluginsObject());
+            pluginConfig = new PluginsApiHelper(jsonLoader.getJsonPluginsObject());
         } catch (Exception e) {
             LOGGER.warning(e.getMessage());
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
