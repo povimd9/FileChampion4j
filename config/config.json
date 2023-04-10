@@ -25,7 +25,7 @@
         "change_ownership_mode": "r",
         "name_encoding": true,
         "max_size": "4000",
-        "plugins": ["virus_total", "ExampleAPICall"]
+        "plugins": ["virus_total_small_file", "virus_total_hash"]
       }
     },
     "Images": {
@@ -56,38 +56,37 @@
     }
   },
   "Plugins": {
-    "virus_total_file": {
+    "virus_total_small_file": {
       "type": "http",
-      "creds_file": "creds.json",
-      "creds_key1": "vt_api_key",
+      "creds_path": "secure_location/vt_example_secrets/",
       "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
       "method": "POST",
+      "headers":{
+        "accept": "application/json",
+        "x-apikey": "${vt_api_key.secret}",
+        "content-type": "multipart/form-data"
+      },
       "body": {
-        "apikey": "${vt_api_key}",
         "file": {
-          "name": "${file_name}",
-          "content": "${file_content}"
+          "filename": "${file_name}",
+          "contents": "${file_content}"
         }
       },
       "pass_codes": [200, 201],
       "pass_body_contains": "OK",
       "fail_body_contains": "FAILED",
-      "timeout": 60,
+      "timeout": 180,
       "on_timeout": "fail"
     },
     "virus_total_hash": {
       "type": "http",
-      "creds_file": "creds.json",
-      "creds_key1": "vt_api_key",
-      "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
+      "creds_path": "secure_location/vt_secrets/",
+      "endpoint": "https://www.virustotal.com/api/v3/search?query=${file_hash}",
       "method": "GET",
-      "body": {
-        "apikey": "${vt_api_key}",
-        "file": {
-          "name": "${file_name}",
-          "content": "${file_content}"
-        }
-      },
+      "headers":{
+        "accept": "application/json",
+        "x-apikey": "${vt_api_key.secret}"
+        },
       "pass_codes": [200, 201],
       "pass_body_contains": "OK",
       "fail_body_contains": "FAILED",
@@ -96,13 +95,12 @@
     },
     "ExampleApiPUTCall": {
       "type": "http",
-      "creds_file": "creds.json",
-      "creds_key1": "vt_api_key",
+      "creds_path": "secure_location/vt_secrets/",
       "endpoint": "https://example.com/api/v1/scan",
       "method": "PUT",
       "headers": {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${api_key}:${api_secret}"
+        "Authorization": "Bearer ${example_token.secret}"
       },
       "body": {
         "file": {
@@ -116,14 +114,12 @@
     },
     "ExampleApiGETCall": {
       "type": "http",
-      "creds_file": "creds.json",
-      "creds_key1": "sample_session_id",
-      "creds_key2": "sample_token",
+      "creds_path": "secure_location_example/example_secrets/",
       "endpoint": "https://example.com/api/v1/scan",
       "method": "GET",
       "headers": {
-        "Cookie": "session=${session_id}",
-        "Authorization": "Bearer ${sample_token}"
+        "Cookie": "session=${example_session_id.secret}",
+        "Authorization": "Bearer ${example_token.secret}"
       },
       "body": {
         "name": "${file_name}",

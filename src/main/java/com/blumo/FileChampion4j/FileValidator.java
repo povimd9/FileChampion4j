@@ -10,6 +10,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
+
 import org.json.JSONObject;
 import java.security.MessageDigest;
 
@@ -22,6 +24,7 @@ import java.security.MessageDigest;
                       TODO: add support for plugins (http and cli)
                       TODO: init plugins to memory for performance
                       TODO: add tests of plugins validity upon init
+                      TODO: add cache for credentials
 
                       TODO: add support for validation and sanitization extensions
 
@@ -29,6 +32,8 @@ import java.security.MessageDigest;
 public class FileValidator {
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
     private final JSONObject configJsonObject;
+    private CredsLoadHelper credsValues;
+    private long credsCacheTime = System.currentTimeMillis();
 
     /**
      * This method is used to get the json configurations
@@ -56,7 +61,15 @@ public class FileValidator {
             object[] extensionObjectArray;
             extensionObjectArray[extensionKey] 
             = new Extension(extensionKey, jsonExtensionObject.getJSONObject(extensionKey));
+            
+            // MOVE TO WHEN NEEDED ONLY
+            if (extensionKey.equals("creds_path")) {
+                this.credsValues = new CredsLoadHelper(configJsonObject.getString("creds_path"));
+            }
+
+
         }
+        
 
 
     }
@@ -88,8 +101,16 @@ public class FileValidator {
      * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
      * @throws IllegalArgumentException (IllegalArgumentException) if any of the input parameters are null or empty
      */
-    public ValidationResponse validateFile(String fileCategory, byte[] originalFile,
-            String fileName, String... outputDir) {
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String... outputDir) {
+        //Check credentials cache and clear it if it is older than 5 minutes
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - credsCacheTime > 5000) {
+            credsValues.clearCredValues();
+            credsCacheTime = currentTime;
+        }
+
+
+
         // Get the output directory if provided
         String outDir = outputDir.length > 0 ? outputDir[0] : "";
         

@@ -1,0 +1,146 @@
+{
+  "Validations": {
+    "Documents": {
+      "pdf": {
+        "mime_type": "application/pdf",
+        "magic_bytes": "25504446",
+        "header_signatures": "25504446",
+        "footer_signatures": "2525454f46",
+        "plugin": "virus_total",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "126000",
+        "plugins": ["virus_total", "ExampleCLIcall"]
+      },
+      "doc": {
+        "mime_type": "application/msword",
+        "magic_bytes": "D0CF11E0A1B11AE1",
+        "header_signatures": "D0CF11E0A1B11AE1",
+        "footer_signatures": "0000000000000000",
+        "plugin": "virus_total",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000",
+        "plugins": ["virus_total", "ExampleAPICall"]
+      }
+    },
+    "Images": {
+      "jpg": {
+        "mime_type": "image/jpeg",
+        "magic_bytes": "FFD8",
+        "header_signatures": "FFD8FF",
+        "footer_signatures": "FFD9",
+        "plugin": "virus_total",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+        },
+      "png": {
+        "mime_type": "image/png",
+        "magic_bytes": "89504E470D0A1A0A",
+        "header_signatures": "89504E470D0A1A0A0000000D49484452",
+        "footer_signatures": "49454E44AE426082",
+        "plugin": "virus_total",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+      }
+    }
+  },
+  "Plugins": {
+    "virus_total_file": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "creds_key": "vt_api_key",
+      "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
+      "method": "POST",
+      "body": {
+        "apikey": "${vt_api_key}",
+        "file": { // IF 'file' KEY IS SET, MULTIPART UPLOAD IS USED. 
+          "name": "${file_name}",
+          "content": "${file_content}"
+        }
+      },
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED",
+      "timeout": 60,
+      "on_timeout": "fail"
+    },
+    "virus_total_hash": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "creds_key": "vt_api_key",
+      "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
+      "method": "GET",
+      "body": {
+        "apikey": "${vt_api_key}",
+        "file": {
+          "name": "${file_name}",
+          "content": "${file_content}"
+        }
+      },
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED",
+      "timeout": 60,
+      "on_timeout": "fail"
+    },
+    "ExampleApiPUTCall": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "creds_key": "vt_api_key",
+      "endpoint": "https://example.com/api/v1/scan",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${api_key}:${api_secret}"
+      },
+      "body": {
+        "file": {
+          "name": "${file_name}",
+          "content": "${file_content}"
+        }
+      },
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED"
+    },
+    "ExampleApiGETCall": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "creds_key": "get_session_id",
+      "endpoint": "https://example.com/api/v1/scan",
+      "method": "GET",
+      "headers": {
+        "Cookie": "session=${session_id}"
+      },
+      "body": {
+        "name": "${file_name}",
+        "content": "${file_content}"
+      },
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED"
+    },
+    "ExampleCLICall": {
+      "type": "cli",
+      "file_path": "/usr/bin/scan",
+      "args": [
+        "${file_path}"
+      ],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED",
+      "timeout": 60,
+      "on_timeout": "fail"
+    }
+  }
+}

@@ -20,7 +20,7 @@ public class PluginsApiHelper {
     private String pluginFailString;
     private int pluginTimeout;
     private String pluginOnTimeout;
-    
+    private String pluginCredsPassword;
 
     /**
      * This constructor is used to create a PluginsApiHelper object from the Json configuration data.
@@ -111,4 +111,32 @@ public class PluginsApiHelper {
         this.nameEncoding = extensionJson.optBoolean("name_encoding");
         this.maxSize = extensionJson.optInt("max_size");
     }
+
+    public String doApiRequest(byte[] fileBytes, String fileName) {
+        String result = null;
+        try {
+            String url = pluginEndpoint;
+            String method = pluginMethod;
+            String credsFile = pluginCredsFile;
+            String credsPassword = pluginCredsPassword;
+            JSONArray header = pluginHeader;
+            JSONArray body = pluginBody;
+            int timeout = pluginTimeout;
+            String onTimeout = pluginOnTimeout;
+            String passString = pluginPassString;
+            String failString = pluginFailString;
+            JSONArray passCodes = pluginPassCodes;
+
+            result = ApiRequest.doApiRequest(url, method, credsFile, credsPassword, header, body, timeout, onTimeout, passString, failString, passCodes, fileBytes, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private String apiRequest() {
+        
+
+    }
+
 }
