@@ -56,9 +56,10 @@
     }
   },
   "Plugins": {
-    "virus_total": {
+    "virus_total_file": {
       "type": "http",
       "creds_file": "creds.json",
+      "creds_key1": "vt_api_key",
       "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
       "method": "POST",
       "body": {
@@ -74,9 +75,29 @@
       "timeout": 60,
       "on_timeout": "fail"
     },
-    "ExampleAPICall": {
+    "virus_total_hash": {
       "type": "http",
       "creds_file": "creds.json",
+      "creds_key1": "vt_api_key",
+      "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
+      "method": "GET",
+      "body": {
+        "apikey": "${vt_api_key}",
+        "file": {
+          "name": "${file_name}",
+          "content": "${file_content}"
+        }
+      },
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED",
+      "timeout": 60,
+      "on_timeout": "fail"
+    },
+    "ExampleApiPUTCall": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "creds_key1": "vt_api_key",
       "endpoint": "https://example.com/api/v1/scan",
       "method": "PUT",
       "headers": {
@@ -88,6 +109,25 @@
           "name": "${file_name}",
           "content": "${file_content}"
         }
+      },
+      "pass_codes": [200, 201],
+      "pass_body_contains": "OK",
+      "fail_body_contains": "FAILED"
+    },
+    "ExampleApiGETCall": {
+      "type": "http",
+      "creds_file": "creds.json",
+      "creds_key1": "sample_session_id",
+      "creds_key2": "sample_token",
+      "endpoint": "https://example.com/api/v1/scan",
+      "method": "GET",
+      "headers": {
+        "Cookie": "session=${session_id}",
+        "Authorization": "Bearer ${sample_token}"
+      },
+      "body": {
+        "name": "${file_name}",
+        "content": "${file_content}"
       },
       "pass_codes": [200, 201],
       "pass_body_contains": "OK",

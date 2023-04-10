@@ -1,8 +1,4 @@
 {
-    "VirusTotal": {
-        "apikey": "notrealcredentials"
-    },
-    "Someother": {
-        "Authorization": "Bearer fake_api_key:fake_api_secret"
-    }
+    "apikey": "notrealcredentials",
+    "apisecret": "notrealcredentials"
 }
