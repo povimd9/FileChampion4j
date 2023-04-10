@@ -12,7 +12,7 @@
         "change_ownership_mode": "r",
         "name_encoding": true,
         "max_size": "126000",
-        "plugins": ["virus_total", "ExampleCLIcall"]
+        "plugins": ["virus_total_small_file", "virus_total_hash"]
       },
       "doc": {
         "mime_type": "application/msword",
