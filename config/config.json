@@ -100,7 +100,7 @@
       "method": "PUT",
       "headers": {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${example_token.secret}"
+        "Authorization": "${example_token.secret}"
       },
       "body": {
         "file": {
