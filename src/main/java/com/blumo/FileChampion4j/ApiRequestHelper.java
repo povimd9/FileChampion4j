@@ -21,15 +21,17 @@ import java.net.URI;
 import java.util.Map;
 
 public class ApiRequestHelper {
-    private final Map<String, Object> reqHeaders;
     private final String endpoint;
     private final String method;
-    private final Map<String, Object> body;
+    private final Map<String, Object> reqHeaders;
+    private final Map<String, Object> requestBody;
     private final int[] passCodes;
     private final String passBodyContains;
     private final String failBodyContains;
     private CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-    private String response;
+    private HttpResponse apiResponse;
+    private String requestStatus;
+
     private byte[] fileBytes;
     private String fileName;
     private String fileChecksum;
@@ -39,13 +41,13 @@ public class ApiRequestHelper {
         this.endpoint = endpoint;
         this.method = method;
         this.reqHeaders = reqHeaders;
-        this.body = body;
+        this.requestBody = body;
         this.passCodes = passCodes;
         this.passBodyContains = passBodyContains;
         this.failBodyContains = failBodyContains;
     }
 
-    private String buildRequest(String fName, byte[] fileContent, String fChecksum) {
+    public String doRequest(String fName, byte[] fileContent, String fChecksum) {
         this.fileName = fName;
         this.fileBytes = fileContent;
         this.fileChecksum = fChecksum;
@@ -64,45 +66,54 @@ public class ApiRequestHelper {
 
     private String doGetRequest() {
         // Build and execute GET request
-        HttpGet httpGet = new HttpGet(endpoint);
-        URI uri = new URIBuilder(httpGet.getURI()).build();
+        HttpGet apiGetResponse = new HttpGet(endpoint);
+        URI uri = new URIBuilder(apiGetResponse.getURI()).build();
         for (Map.Entry<String, Object> entry : reqHeaders.entrySet()) {
             // add request headers
-            httpGet.addHeader(entry.getKey(), entry.getValue().toString());
+            apiGetResponse.addHeader(entry.getKey(), entry.getValue().toString());
         }
-        for (Map.Entry<String, Object> entry : body.entrySet()) {
+        for (Map.Entry<String, Object> entry : requestBody.entrySet()) {
             // add GET request parameters
             uri = new URIBuilder(uri).addParameter(entry.getKey(), entry.getValue().toString()).build();
         }
-        httpGet.setURI(uri);
-
+        apiGetResponse.setURI(uri);
         try {
-            response = httpClient.execute(httpGet, responseHandler);
-        } catch (Exception e) {
-            response = "Error: " + e.getMessage();
-        } finally {
-            if (response == null) {
-                response = "Error: No response";
+            HttpResponse getResponse = httpClient.execute(apiGetResponse);
+            HttpEntity entity = getResponse.getEntity();
+            for (int i=0; i<passCodes.length; i++) {
+                if (getResponse.getStatusLine().getStatusCode() == passCodes[i]) {
+                    if ( EntityUtils.toString(entity).contains(passBodyContains) && !EntityUtils.toString(entity).contains(failBodyContains) {
+                        apiGetResponse.releaseConnection();
+                        return "Pass";
+                    } else {
+                        apiGetResponse.releaseConnection();
+                        return String.format("Failed: %s", EntityUtils.toString(entity));
+                    }
+                }
             }
-            httpGet.releaseConnection();
+            return "Failed: could not find defined pass codes.";
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        } finally {
+            apiGetResponse.releaseConnection();
             httpClient.close();
         }
-        return response;
     }
 
     private String doPostRequest() {
         // Build and execute POST request
-        HttpPost httpPost = new HttpPost(endpoint);
-
-        URI uri = new URIBuilder(httpPost.getURI()).build();
+        HttpPost apiPostRequest = new HttpPost(endpoint);
+        URI uri = new URIBuilder(apiPostRequest.getURI()).build();
         for (Map.Entry<String, Object> entry : reqHeaders.entrySet()) {
             // add request headers
-            httpPost.addHeader(entry.getKey(), entry.getValue().toString());
+            apiPostRequest.addHeader(entry.getKey(), entry.getValue().toString());
         }
-        for (Map.Entry<String, Object> entry : body.entrySet()) {
-            // add GET request parameters
+
+        /////////////////////////////////////////////////
+        for (Map.Entry<String, Object> entry : requestBody.entrySet()) {
+            // add POST request parameters
             if (entry.getKey().equals("file")) {
-                // add file to request
+
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create();
                 builder.addPart("file", new ByteArrayBody((byte[]) entry.getValue(), ContentType.DEFAULT_BINARY, "file"));
                 httpPost.setEntity(builder.build());
@@ -127,23 +138,18 @@ public class ApiRequestHelper {
         }
     }
 
-
-
     private String doPutRequest() {
         // Build and execute PUT request
     }
 
-
-
-
     /**
      * Response handler for HTTP requests
      */
-    private ResponseHandler < String > responseHandler = httpResponse -> {
+    private ResponseHandler < HttpEntity > responseHandler = httpResponse -> {
         int status = httpResponse.getStatusLine().getStatusCode();
         if (status >= 200 && status < 300) {
             HttpEntity entity = httpResponse.getEntity();
-            return entity != null ? EntityUtils.toString(entity) : null;
+            return entity != null ? entity : null;
         } else {
             throw new ClientProtocolException("Unexpected response status: " + status);
         }

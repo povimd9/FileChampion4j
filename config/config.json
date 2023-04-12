@@ -57,19 +57,74 @@
   },
   "Plugins": {
     "virus_total_small_file": {
+      "step1.step": {
+        "type": "http",
+        "creds_path": "secure_location/vt_example_secrets/",
+        "endpoint": "https://www.virustotal.com/api/v3/files",
+        "method": "POST",
+        "headers":{
+          "accept": "application/json",
+          "x-apikey": "${vt_api_key.secret}",
+          "content-type": "multipart/form-data"
+        },
+        "body": {
+          "file": {
+            "filename": "${file_name}",
+            "contents": "${file_content}"
+          }
+        },
+        "pass_codes": [200],
+        "timeout": 180,
+        "on_timeout": "fail",
+        "response": "{\"data\": {\"type\": \"${step1.response.id}\"}}"
+      },
+      "step2.step": {
+        "type": "http",
+        "creds_path": "secure_location/vt_example_secrets/",
+        "endpoint": "https://www.virustotal.com/api/v3/analyses/${step1.response.id}",
+        "method": "GET",
+        "headers":{
+          "accept": "application/json",
+          "x-apikey": "${vt_api_key.secret}"
+        },
+        "pass_codes": [200],
+        "pass_body_contains": ["\"malicious\": 0", "\"suspicious\": 0"],
+        "timeout": 180,
+        "on_timeout": "fail"
+      }
+    },
+
+    "virus_total_hash": {
+      "step1.step": {
+        "type": "http",
+        "creds_path": "secure_location/vt_secrets/",
+        "endpoint": "https://www.virustotal.com/api/v3/search?query=${file_hash}",
+        "method": "GET",
+        "headers":{
+          "accept": "application/json",
+          "x-apikey": "${vt_api_key.secret}"
+          },
+        "pass_codes": [200, 201],
+        "pass_body_contains": "OK",
+        "fail_body_contains": "FAILED",
+        "timeout": 60,
+        "on_timeout": "fail"
+      }
+    },
+
+    "ExampleApiPostCall": {
       "type": "http",
       "creds_path": "secure_location/vt_example_secrets/",
       "endpoint": "https://www.virustotal.com/vtapi/v2/file/scan",
       "method": "POST",
       "headers":{
         "accept": "application/json",
-        "x-apikey": "${vt_api_key.secret}",
         "content-type": "multipart/form-data"
       },
       "body": {
-        "file": {
-          "filename": "${file_name}",
-          "contents": "${file_content}"
+        "apiExampleKey": "${example_api_key.secret}",
+        "filename": "${file_name}",
+        "contents": "${file_content}"
         }
       },
       "pass_codes": [200, 201],
@@ -78,22 +133,8 @@
       "timeout": 180,
       "on_timeout": "fail"
     },
-    "virus_total_hash": {
-      "type": "http",
-      "creds_path": "secure_location/vt_secrets/",
-      "endpoint": "https://www.virustotal.com/api/v3/search?query=${file_hash}",
-      "method": "GET",
-      "headers":{
-        "accept": "application/json",
-        "x-apikey": "${vt_api_key.secret}"
-        },
-      "pass_codes": [200, 201],
-      "pass_body_contains": "OK",
-      "fail_body_contains": "FAILED",
-      "timeout": 60,
-      "on_timeout": "fail"
-    },
-    "ExampleApiPUTCall": {
+
+    "ExampleApiPutCall": {
       "type": "http",
       "creds_path": "secure_location/vt_secrets/",
       "endpoint": "https://example.com/api/v1/scan",
@@ -112,6 +153,7 @@
       "pass_body_contains": "OK",
       "fail_body_contains": "FAILED"
     },
+
     "ExampleApiGETCall": {
       "type": "http",
       "creds_path": "secure_location_example/example_secrets/",
@@ -121,14 +163,11 @@
         "Cookie": "session=${example_session_id.secret}",
         "Authorization": "Bearer ${example_token.secret}"
       },
-      "body": {
-        "name": "${file_name}",
-        "content": "${file_content}"
-      },
       "pass_codes": [200, 201],
       "pass_body_contains": "OK",
       "fail_body_contains": "FAILED"
     },
+
     "ExampleCLICall": {
       "type": "cli",
       "file_path": "/usr/bin/scan",
