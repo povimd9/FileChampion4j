@@ -70,5 +70,25 @@
       "name_encoding": true,
       "max_size": "4000"
     }
+  },
+  "Plugins": {
+    "clean_pdf_documents": {
+      "step1.step": {
+        "type": "cli",
+        "endpoint": "java -jar pdfsanitizer.jar ${file_name}",
+        "timeout": 320,
+        "on_timeout": "fail",
+        "response": "Success: ${step1.file_name}"
+      }
+    },
+    "clean_pdf_documents2": {
+      "step1.step": {
+        "type": "cli",
+        "endpoint": "java -jar pdfsanitizer.jar ${file_name}",
+        "timeout": 320,
+        "on_timeout": "fail",
+        "response": "Success: ${step1.file_name}"
+      }
+    }
   }
 }
