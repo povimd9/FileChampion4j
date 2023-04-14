@@ -33,8 +33,8 @@ public class FileValidator {
      * @param configJsonObject
      */
     public FileValidator(JSONObject configJsonObject) {
-        if (configJsonObject == null || configJsonObject.isEmpty()) {
-            throw new IllegalArgumentException("Config JSON object cannot be null or empty.");
+        if (configJsonObject == null || configJsonObject.isEmpty() || !configJsonObject.has("Validations")) {
+            throw new IllegalArgumentException("Config JSON object cannot be null or empty, and must have Validations section.");
         }
         this.configJsonObject = configJsonObject;
     }
@@ -84,7 +84,7 @@ public class FileValidator {
 
         // Get the configuration for the file type category and extension
         try {
-            extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject);
+            extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject.getJSONObject("Validations"));
         } catch (Exception e) {
             LOGGER.warning(e.getMessage());
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);

@@ -35,43 +35,46 @@ public class FileValidatorTest {
 
     // Config JSON object for testing
     private static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
-            + "  \"Documents\": {\r\n"
-            + "    \"pdf\": {\r\n"
-            + "      \"mime_type\": \"application/pdf\",\r\n"
-            + "      \"magic_bytes\": \"25504446\",\r\n"
-            + "      \"header_signatures\": \"25504446\",\r\n"
-            + "      \"footer_signatures\": \"2525454f46\",\r\n"
-            + "      \"antivirus_scan\": {\r\n"
-            + "        \"clamav_scan.java\": [\r\n"
-            + "          \"RETURN_TYPE\",\r\n"
-            + "          \"param1\",\r\n"
-            + "          \"param2\"\r\n"
-            + "        ]},\r\n"
-            + "      \"change_ownership\": true,\r\n"
-            + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
-            + "      \"change_ownership_mode\": \"r\",\r\n"
-            + "      \"name_encoding\": true,\r\n"
-            + "      \"max_size\": \"4000\"\r\n"
-            + "      },\r\n"
-            + "    \"doc\": {\r\n"
-            + "      \"mime_type\": \"application/msword\",\r\n"
-            + "      \"magic_bytes\": \"D0CF11E0A1B11AE1\",\r\n"
-            + "      \"header_signatures\": \"D0CF11E0A1B11AE1\",\r\n"
-            + "      \"footer_signatures\": \"0000000000000000\",\r\n"
-            + "      \"antivirus_scan\": {\r\n"
-            + "        \"clamav_scan.java\": [\r\n"
-            + "          \"RETURN_TYPE\",\r\n"
-            + "          \"param1\",\r\n"
-            + "          \"param2\"\r\n"
-            + "        ]},\r\n"
-            + "      \"change_ownership\": true,\r\n"
-            + "      \"change_ownership_user\": \"User1\",\r\n"
-            + "      \"change_ownership_mode\": \"r\",\r\n"
-            + "      \"name_encoding\": true,\r\n"
-            + "      \"max_size\": \"4000\"\r\n"
-            + "    }\r\n"
-            + "  }\r\n"
-            + "}");
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"antivirus_scan\": {\r\n"
+    + "        \"clamav_scan.java\": [\r\n"
+    + "          \"RETURN_TYPE\",\r\n"
+    + "          \"param1\",\r\n"
+    + "          \"param2\"\r\n"
+    + "        ]},\r\n"
+    + "      \"change_ownership\": true,\r\n"
+    + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
+    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "      },\r\n"
+    + "    \"doc\": {\r\n"
+    + "      \"mime_type\": \"application/msword\",\r\n"
+    + "      \"magic_bytes\": \"D0CF11E0A1B11AE1\",\r\n"
+    + "      \"header_signatures\": \"D0CF11E0A1B11AE1\",\r\n"
+    + "      \"footer_signatures\": \"0000000000000000\",\r\n"
+    + "      \"antivirus_scan\": {\r\n"
+    + "        \"clamav_scan.java\": [\r\n"
+    + "          \"RETURN_TYPE\",\r\n"
+    + "          \"param1\",\r\n"
+    + "          \"param2\"\r\n"
+    + "        ]},\r\n"
+    + "      \"change_ownership\": true,\r\n"
+    + "      \"change_ownership_user\": \"User1\",\r\n"
+    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "    }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
+    + "}");
     
 
     // Setup temp directory and FileValidator instance
@@ -86,7 +89,7 @@ public class FileValidatorTest {
     void testEmptyConfigJsonObject() {
         JSONObject jsonObject = new JSONObject();
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
-        assertEquals("Config JSON object cannot be null or empty.", exception.getMessage());
+        assertEquals("Config JSON object cannot be null or empty, and must have Validations section.", exception.getMessage());
     }
 
     // Test null json config object
@@ -94,7 +97,7 @@ public class FileValidatorTest {
     void testNullConfigJsonObject() {
         JSONObject jsonObject = null;
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
-        assertEquals("Config JSON object cannot be null or empty.", exception.getMessage());
+        assertEquals("Config JSON object cannot be null or empty, and must have Validations section.", exception.getMessage());
     }
 
     // Test empty fileCategory

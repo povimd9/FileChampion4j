@@ -27,29 +27,33 @@ public class FileValidatorJsonTest {
 
     // Config JSON object for testing mime type
     private static final JSONObject CONFIG_JSON_MIME = new JSONObject("{\r\n"
-            + "  \"Documents\": {\r\n"
-            + "    \"pdf\": {\r\n"
-            + "      \"mime_type\": \"non_existing_mime\",\r\n"
-            + "      \"magic_bytes\": \"25504446\",\r\n"
-            + "      \"header_signatures\": \"25504446\",\r\n"
-            + "      \"footer_signatures\": \"2525454f46\",\r\n"
-            + "      \"antivirus_scan\": {\r\n"
-            + "        \"clamav_scan.java\": [\r\n"
-            + "          \"RETURN_TYPE\",\r\n"
-            + "          \"param1\",\r\n"
-            + "          \"param2\"\r\n"
-            + "        ]},\r\n"
-            + "      \"change_ownership\": true,\r\n"
-            + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
-            + "      \"change_ownership_mode\": \"r\",\r\n"
-            + "      \"name_encoding\": true,\r\n"
-            + "      \"max_size\": \"4000\"\r\n"
-            + "      }\r\n"
-            + "  }\r\n"
-            + "}");
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"non_existing_mime\",\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"antivirus_scan\": {\r\n"
+    + "        \"clamav_scan.java\": [\r\n"
+    + "          \"RETURN_TYPE\",\r\n"
+    + "          \"param1\",\r\n"
+    + "          \"param2\"\r\n"
+    + "        ]},\r\n"
+    + "      \"change_ownership\": true,\r\n"
+    + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
+    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
+    + "}");
 
     // Config JSON object for testing magic bytes
     private static final JSONObject CONFIG_JSON_MAGIC = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -69,10 +73,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing header signatures
     private static final JSONObject CONFIG_JSON_HEADER = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -92,10 +99,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing header signatures
     private static final JSONObject CONFIG_JSON_FOOTER = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -115,10 +125,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing name encoding false
     private static final JSONObject CONFIG_JSON_ENCODE = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -138,10 +151,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing size 0
     private static final JSONObject CONFIG_JSON_SIZE = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -161,10 +177,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"0\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing only basic parameters
     private static final JSONObject CONFIG_JSON_BASIC = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -174,10 +193,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing without mime type
     private static final JSONObject CONFIG_JSON_NOMIME = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"magic_bytes\": \"25504446\",\r\n"
@@ -186,10 +208,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing without magic bytes
     private static final JSONObject CONFIG_JSON_NOMAGIC = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -198,10 +223,13 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     // Config JSON object for testing without header and footer signatures
     private static final JSONObject CONFIG_JSON_NOSIGS = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
     + "      \"mime_type\": \"application/pdf\",\r\n"
@@ -209,6 +237,8 @@ public class FileValidatorJsonTest {
     + "      \"max_size\": \"4000\"\r\n"
     + "      }\r\n"
     + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": {}\r\n"
     + "}");
 
     
