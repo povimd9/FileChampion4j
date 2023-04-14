@@ -11,6 +11,10 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import org.json.JSONObject;
+
+import com.blumo.FileChampion4j.PluginsHelper.PluginConfig;
+import com.blumo.FileChampion4j.PluginsHelper.StepConfig;
+
 import java.security.MessageDigest;
 
 
@@ -26,7 +30,10 @@ import java.security.MessageDigest;
 */
 public class FileValidator {
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
+    
     private final JSONObject configJsonObject;
+    private PluginsHelper pluginsHelper;
+
 
     /**
      * This method is used to get the json configurations
@@ -37,6 +44,14 @@ public class FileValidator {
             throw new IllegalArgumentException("Config JSON object cannot be null or empty, and must have Validations section.");
         }
         this.configJsonObject = configJsonObject;
+        if (configJsonObject.has("Plugins")) {
+            try {
+                pluginsHelper = new PluginsHelper(configJsonObject.getJSONObject("Plugins"));
+            } catch (Exception e) {
+                LOGGER.severe("Error initializing plugins: " + e.getMessage());
+            }
+        }
+        
     }
 
     /**
@@ -78,6 +93,7 @@ public class FileValidator {
         String logMessage;
         String fileExtension = getFileExtension(fileName);
         Extension extensionConfig;
+        
 
         // Clean the file name to replace special characters with underscores
         String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
@@ -89,6 +105,26 @@ public class FileValidator {
             LOGGER.warning(e.getMessage());
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
         }
+
+        
+        ///////////////////consider if you want to call api/cli helpers from here or from PluginHelper/////
+        if (!pluginsHelper.getPluginConfigs().isEmpty()) {
+            for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs()) {
+                List<StepConfig> stepConfigs = pluginConfig.getStepConfigs();
+                for (StepConfig stepConfig : stepConfigs) {
+                    logMessage = String.format("Plugin: %s, %s", pluginConfig.getName(), stepConfig.getName());
+                    LOGGER.info(logMessage);
+                    if(stepConfig.getType().equals("cli")) {
+                        logMessage = String.format("CLI: %s", stepConfig.getEndpoint());
+                        LOGGER.info(logMessage);
+                    } else if (stepConfig.getType().equals("http")) {
+                        logMessage = String.format("JAR: %s", stepConfig.getEndpoint());
+                        LOGGER.info(logMessage);
+                    }
+                }
+            }   
+        }
+
 
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);

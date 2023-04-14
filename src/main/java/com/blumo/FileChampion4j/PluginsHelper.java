@@ -11,15 +11,15 @@ import java.util.List;
  * Returns a list of PluginConfig objects.
  */
 public class PluginsHelper {
-    private JSONObject config;
+    private JSONObject plugins;
 
     /**
      * Constructor
      * @param config (JSONObject) the Json configuration data
      * @return (PluginsHelper) a PluginsHelper object
      */
-    public PluginsHelper(JSONObject config) {
-        this.config = config;
+    public PluginsHelper(JSONObject plugins) {
+        this.plugins = plugins;
     }
 
     /**
@@ -29,7 +29,6 @@ public class PluginsHelper {
     public List<PluginConfig> getPluginConfigs() {
         List<PluginConfig> pluginConfigs = new ArrayList<>();
 
-        JSONObject plugins = config.getJSONObject("Plugins");
         for (String pluginName : plugins.keySet()) {
             JSONObject plugin = plugins.getJSONObject(pluginName);
             PluginConfig pluginConfig = new PluginConfig();
@@ -38,22 +37,31 @@ public class PluginsHelper {
             for (String stepName : plugin.keySet()) {
                 JSONObject step = plugin.getJSONObject(stepName);
                 StepConfig stepConfig = new StepConfig();
-                stepConfig.setName(stepName);
-                stepConfig.setType(step.optString("type"));
+                stepConfig.setName(stepName.substring(0, stepName.lastIndexOf('.')));
+                stepConfig.setType(step.getString("type"));
                 stepConfig.setCredsPath(step.optString("creds_path"));
                 stepConfig.setTimeout(step.optInt("timeout"));
                 stepConfig.setOnTimeout(step.optString("on_timeout"));
                 stepConfig.setEndpoint(step.optString("endpoint"));
                 stepConfig.setResponse(step.optString("response"));
 
-                if (!stepConfig.getType().isEmpty() && stepConfig.getType().equals("http")) {
-                    stepConfig.setMethod(step.optString("method"));
-                    stepConfig.setHeaders(step.optJSONObject("headers"));
-                    stepConfig.setBody(step.optJSONObject("body"));
-                    stepConfig.setHttpPassCode(step.optInt("http_pass_code"));
-                    stepConfig.setHttpFailCode(step.optInt("http_fail_code"));
+                switch (stepConfig.getType()) {
+                    case "cli":
+                        CliPluginHelper cliPluginHelper = new CliPluginHelper(this);////////////////////////
+                        stepConfig.setCliPluginHelper(cliPluginHelper);
+                        stepConfigs.add(stepConfig);
+                        break;
+                    case "http":
+                        stepConfig.setMethod(step.optString("method"));
+                        stepConfig.setHeaders(step.optJSONObject("headers"));
+                        stepConfig.setBody(step.optJSONObject("body"));
+                        stepConfig.setHttpPassCode(step.optInt("http_pass_code"));
+                        stepConfig.setHttpFailCode(step.optInt("http_fail_code"));
+                        stepConfigs.add(stepConfig);
+                        break;
+                    default:
+                        break;
                 }
-                stepConfigs.add(stepConfig);
             }
             pluginConfig.setStepConfigs(stepConfigs);
             pluginConfigs.add(pluginConfig);
@@ -103,6 +111,15 @@ public class PluginsHelper {
         private int httpPassCode;
         private int httpFailCode;
         private String credsPath;
+        private CliPluginHelper cliPluginHelper;
+
+        public CliPluginHelper getCliPluginHelper() {
+            return cliPluginHelper;
+        }
+
+        public void setCliPluginHelper(CliPluginHelper cliPluginHelper) {
+            this.cliPluginHelper = cliPluginHelper;
+        }
 
         public String getName() {
             return name;
