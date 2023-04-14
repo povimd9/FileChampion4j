@@ -47,8 +47,8 @@ public class PluginsHelper {
 
                 switch (stepConfig.getType()) {
                     case "cli":
-                        CliPluginHelper cliPluginHelper = new CliPluginHelper(this);////////////////////////
-                        stepConfig.setCliPluginHelper(cliPluginHelper);
+                        CliPluginHelper cliPluginStep = new CliPluginHelper(stepConfig);
+                        stepConfig.setCliPluginHelper(cliPluginStep);
                         stepConfigs.add(stepConfig);
                         break;
                     case "http":

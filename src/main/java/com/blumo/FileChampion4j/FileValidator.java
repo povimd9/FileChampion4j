@@ -93,7 +93,7 @@ public class FileValidator {
         String logMessage;
         String fileExtension = getFileExtension(fileName);
         Extension extensionConfig;
-        
+        String fileChecksum = calculateChecksum(originalFile);
 
         // Clean the file name to replace special characters with underscores
         String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
@@ -115,7 +115,8 @@ public class FileValidator {
                     logMessage = String.format("Plugin: %s, %s", pluginConfig.getName(), stepConfig.getName());
                     LOGGER.info(logMessage);
                     if(stepConfig.getType().equals("cli")) {
-                        logMessage = String.format("CLI: %s", stepConfig.getEndpoint());
+                        String stepResults = stepConfig.getCliPluginHelper().execute(originalFilenameClean, originalFile, fileChecksum);
+                        logMessage = String.format("Step: %s, Results: %s", stepConfig.getName(), stepResults);
                         LOGGER.info(logMessage);
                     } else if (stepConfig.getType().equals("http")) {
                         logMessage = String.format("JAR: %s", stepConfig.getEndpoint());
@@ -130,7 +131,7 @@ public class FileValidator {
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
         LOGGER.info(logMessage);
      
-        return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, outDir));
+        return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, fileChecksum, outDir));
     }
 
     /**
@@ -142,9 +143,8 @@ public class FileValidator {
      * @param outDir (String) a string containing the path to the output directory for validated files
      * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
      */
-    private ValidationResponse doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String outDir) {
+    private ValidationResponse doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String fileChecksum, String outDir) {
         String commonLogString = String.format(" for file extension: %s", fileExtension);
-        String fileChecksum = calculateChecksum(originalFile);
         String responseAggregation = "";
         int responseMsgCount = 0;
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
@@ -401,7 +401,7 @@ public class FileValidator {
             LOGGER.severe(errString);
             return errString;
         }
-        
+        runplugins!!!
         // Try to set the file owner and permissions
         FileAclHelper fileAclHelper = new FileAclHelper();
         String newFileAttributesStatus = fileAclHelper.changeFileAcl(targetFilePath, extensionConfig.getChangeOwnershipUser(), extensionConfig.getChangeOwnershipMode());
