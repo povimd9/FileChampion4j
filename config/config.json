@@ -89,20 +89,20 @@
       "step1.step": {
         "type": "cli",
         "run_before": true,
-        "endpoint": "java -jar pdfsanitizer.jar ${fileName}",
+        "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
         "timeout": 320,
         "on_timeout": "fail",
-        "response": "Success: ${step1.fileName}"
+        "response": "Success: ${step1.newFilePath}"
       }
     },
     "clean_pdf_documents2": {
       "step1.step": {
         "type": "cli",
         "run_after": true,
-        "endpoint": "java -jar pdfsanitizer.jar ${fileName}",
+        "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
         "timeout": 320,
         "on_timeout": "fail",
-        "response": "Success: ${step1.fileName}"
+        "response": "Success: ${step1.newFilePath}"
       }
     }
   }

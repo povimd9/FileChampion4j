@@ -1,7 +1,9 @@
 package com.blumo.FileChampion4j;
 
 
+import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -120,17 +122,34 @@ public class FileValidator {
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
         }
 
+        Map<String, String> stepResultsMap = new HashMap<>();
         if (extensionConfig.getExtensionPlugins() != null) {
             for (int i = 0; i < extensionConfig.getExtensionPlugins().length(); i++) {
                 String extensionPlugin = extensionConfig.getExtensionPlugins().getString(i);
                 for (String step : stepConfigs.keySet()) {
                     if (step.equals(extensionPlugin) && stepConfigs.get(extensionPlugin).isrunBefore()) {
-                        logMessage = String.format("Step: %s", stepConfigs.get(extensionPlugin).getName());
+                        String extensionPluginName = stepConfigs.get(extensionPlugin).getName();
+                        logMessage = String.format("Step: %s", extensionPluginName);
                         LOGGER.info(logMessage);
                         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
-                                String stepResults = stepConfigs.get(extensionPlugin).getCliPluginHelper().execute(tempTargetFile.toString(), originalFile, fileChecksum);
-                                logMessage = String.format("Step: %s, Results: %s", stepConfigs.get(extensionPlugin).getName(), stepResults);
-                                LOGGER.info(logMessage);
+                            Map<String, Map<String, String>> stepResults = stepConfigs.get(extensionPlugin).getCliPluginHelper().execute(tempTargetFile.toString(), originalFile, fileChecksum);    
+                            stepResultsMap.putAll(stepResults.get(stepResults.keySet().toArray()[0]));
+                            if (!stepResultsMap.isEmpty()) {
+                                if (stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1,
+                                    extensionPluginName.length()) + ".filePath") != null) {
+                                    try {
+                                        originalFile = Files.readAllBytes(new File(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
+                                        extensionPluginName.length()) + ".filePath")).toPath());
+                                    } catch (IOException e) {
+                                        LOGGER.severe(e.getMessage());
+                                    }
+                                }
+                                originalFile = stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, extensionPluginName.length()) + ".fileContent") != null ? 
+                                Base64.getDecoder().decode(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, extensionPluginName.length()) + ".fileContent")) : originalFile;
+                                fileChecksum = calculateChecksum(originalFile);
+                            }
+                            logMessage = String.format("Step: %s, Results: %s", stepConfigs.get(extensionPlugin).getName(), stepResults);
+                            LOGGER.info(logMessage);
                         } else if (stepConfigs.get(extensionPlugin).getType().equals("http")) {
                             logMessage = String.format("JAR: %s", stepConfigs.get(extensionPlugin).getEndpoint());
                             LOGGER.info(logMessage);
@@ -138,6 +157,13 @@ public class FileValidator {
                     }
                 }
             }
+        }
+        if (Boolean.TRUE.equals(deleteTempDir(tempTargetFile.getParent() ))) {
+            logMessage = String.format("Temp directory: %s deleted successfully", tempTargetFile.getParent());
+            LOGGER.info(logMessage);
+        } else {
+            logMessage = String.format("Error deleting temp directory: %s", tempTargetFile.getParent());
+            LOGGER.severe(logMessage);
         }
         
         // Log the file type category being validated
@@ -283,8 +309,10 @@ public class FileValidator {
     // Explicitley delete the temporary directory and file
     private Boolean deleteTempDir(Path tempFilePath) {
         try {
-            Files.delete(tempFilePath);
-            Files.delete(tempFilePath.getParent());
+            Files.walk(tempFilePath)
+            .sorted(Comparator.reverseOrder())
+            .map(Path::toFile)
+            .forEach(File::delete);
             return true;
         } catch (Exception e) {
             String errMessage = String.format("deleteTempDir failed: %s", e.getMessage());
@@ -395,14 +423,13 @@ public class FileValidator {
     // Calculate file checksum
     private static String calculateChecksum(byte[] fileBytes) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(fileBytes);
-            return Base64.getEncoder().encodeToString(hash);
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
+            return new BigInteger(1, hash).toString(16);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }
+    }   
 
     // save the file to the output directory with appropriate owner and permissions
     private String saveFileToOutputDir(String outDir, String fileName, byte[] fileBytes, Extension extensionConfig) {
