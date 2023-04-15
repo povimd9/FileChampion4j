@@ -3,7 +3,9 @@ package com.blumo.FileChampion4j;
 import org.json.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is used to fetch and load the Json configuration data for all plugins.
@@ -26,19 +28,25 @@ public class PluginsHelper {
      * Returns a list of PluginConfig objects.
      * @return (List<PluginConfig>) a list of PluginConfig objects
      */
-    public List<PluginConfig> getPluginConfigs() {
-        List<PluginConfig> pluginConfigs = new ArrayList<>();
+    public Map<String, PluginConfig> getPluginConfigs() {
+        HashMap<String, PluginConfig> pluginConfigs = new HashMap<>();
+        Map<String, StepConfig> stepConfigs = new HashMap<>();
+
 
         for (String pluginName : plugins.keySet()) {
             JSONObject plugin = plugins.getJSONObject(pluginName);
             PluginConfig pluginConfig = new PluginConfig();
             pluginConfig.setName(pluginName);
-            List<StepConfig> stepConfigs = new ArrayList<>();
+
             for (String stepName : plugin.keySet()) {
                 JSONObject step = plugin.getJSONObject(stepName);
                 StepConfig stepConfig = new StepConfig();
-                stepConfig.setName(stepName.substring(0, stepName.lastIndexOf('.')));
+                String pluginStepName = pluginName + "." + stepName.substring(0, stepName.lastIndexOf('.'));
+                stepConfig.setName(pluginStepName);
+
                 stepConfig.setType(step.getString("type"));
+                stepConfig.setrunBefore(step.optBoolean("run_before"));
+                stepConfig.setRunAfter(step.optBoolean("run_after"));
                 stepConfig.setCredsPath(step.optString("creds_path"));
                 stepConfig.setTimeout(step.optInt("timeout"));
                 stepConfig.setOnTimeout(step.optString("on_timeout"));
@@ -49,22 +57,23 @@ public class PluginsHelper {
                     case "cli":
                         CliPluginHelper cliPluginStep = new CliPluginHelper(stepConfig);
                         stepConfig.setCliPluginHelper(cliPluginStep);
-                        stepConfigs.add(stepConfig);
-                        break;
+                        stepConfigs.put(pluginStepName, stepConfig);
+
+                        continue;
                     case "http":
                         stepConfig.setMethod(step.optString("method"));
                         stepConfig.setHeaders(step.optJSONObject("headers"));
                         stepConfig.setBody(step.optJSONObject("body"));
                         stepConfig.setHttpPassCode(step.optInt("http_pass_code"));
                         stepConfig.setHttpFailCode(step.optInt("http_fail_code"));
-                        stepConfigs.add(stepConfig);
-                        break;
+                        stepConfigs.put(pluginStepName, stepConfig);
+                        continue;
                     default:
-                        break;
+                        continue;
                 }
             }
             pluginConfig.setStepConfigs(stepConfigs);
-            pluginConfigs.add(pluginConfig);
+            pluginConfigs.put(pluginName, pluginConfig);
         }
         return pluginConfigs;
     }
@@ -75,7 +84,8 @@ public class PluginsHelper {
      */
     public static class PluginConfig {
         private String name;
-        private List<StepConfig> stepConfigs;
+        private Map<String, StepConfig> stepConfigs;
+
 
         public String getName() {
             return name;
@@ -85,11 +95,11 @@ public class PluginsHelper {
             this.name = name;
         }
 
-        public List<StepConfig> getStepConfigs() {
+        public Map<String, StepConfig> getStepConfigs() {
             return stepConfigs;
         }
 
-        public void setStepConfigs(List<StepConfig> stepConfigs) {
+        public void setStepConfigs(Map<String, StepConfig> stepConfigs) {
             this.stepConfigs = stepConfigs;
         }
     }
@@ -112,6 +122,24 @@ public class PluginsHelper {
         private int httpFailCode;
         private String credsPath;
         private CliPluginHelper cliPluginHelper;
+        private boolean runBefore;
+        private boolean runAfter;
+
+        public boolean isrunBefore() {
+            return runBefore;
+        }
+
+        public void setrunBefore(boolean runBefore) {
+            this.runBefore = runBefore;
+        }
+
+        public boolean isRunAfter() {
+            return runAfter;
+        }
+
+        public void setRunAfter(boolean runAfter) {
+            this.runAfter = runAfter;
+        }
 
         public CliPluginHelper getCliPluginHelper() {
             return cliPluginHelper;

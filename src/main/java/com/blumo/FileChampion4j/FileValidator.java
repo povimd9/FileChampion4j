@@ -33,6 +33,7 @@ public class FileValidator {
     
     private final JSONObject configJsonObject;
     private PluginsHelper pluginsHelper;
+    private Map<String, StepConfig> stepConfigs;
 
 
     /**
@@ -47,6 +48,11 @@ public class FileValidator {
         if (configJsonObject.has("Plugins")) {
             try {
                 pluginsHelper = new PluginsHelper(configJsonObject.getJSONObject("Plugins"));
+                if (!pluginsHelper.getPluginConfigs().isEmpty()) {
+                    for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs().values()) {
+                        stepConfigs = pluginConfig.getStepConfigs();
+                    }
+                }
             } catch (Exception e) {
                 LOGGER.severe("Error initializing plugins: " + e.getMessage());
             }
@@ -93,10 +99,18 @@ public class FileValidator {
         String logMessage;
         String fileExtension = getFileExtension(fileName);
         Extension extensionConfig;
+        String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
         String fileChecksum = calculateChecksum(originalFile);
+        
+        Path tempTargetFile = saveFileToTempDir(fileExtension, originalFile);
+        if (tempTargetFile == null) {
+            logMessage = String.format("Error saving file <%s> to temp directory", originalFilenameClean);
+            LOGGER.severe(logMessage);
+            return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
+        }
 
         // Clean the file name to replace special characters with underscores
-        String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
+        
 
         // Get the configuration for the file type category and extension
         try {
@@ -106,27 +120,26 @@ public class FileValidator {
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
         }
 
-        
-        ///////////////////consider if you want to call api/cli helpers from here or from PluginHelper/////
-        if (!pluginsHelper.getPluginConfigs().isEmpty()) {
-            for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs()) {
-                List<StepConfig> stepConfigs = pluginConfig.getStepConfigs();
-                for (StepConfig stepConfig : stepConfigs) {
-                    logMessage = String.format("Plugin: %s, %s", pluginConfig.getName(), stepConfig.getName());
-                    LOGGER.info(logMessage);
-                    if(stepConfig.getType().equals("cli")) {
-                        String stepResults = stepConfig.getCliPluginHelper().execute(originalFilenameClean, originalFile, fileChecksum);
-                        logMessage = String.format("Step: %s, Results: %s", stepConfig.getName(), stepResults);
+        if (extensionConfig.getExtensionPlugins() != null) {
+            for (int i = 0; i < extensionConfig.getExtensionPlugins().length(); i++) {
+                String extensionPlugin = extensionConfig.getExtensionPlugins().getString(i);
+                for (String step : stepConfigs.keySet()) {
+                    if (step.equals(extensionPlugin) && stepConfigs.get(extensionPlugin).isrunBefore()) {
+                        logMessage = String.format("Step: %s", stepConfigs.get(extensionPlugin).getName());
                         LOGGER.info(logMessage);
-                    } else if (stepConfig.getType().equals("http")) {
-                        logMessage = String.format("JAR: %s", stepConfig.getEndpoint());
-                        LOGGER.info(logMessage);
+                        if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
+                                String stepResults = stepConfigs.get(extensionPlugin).getCliPluginHelper().execute(tempTargetFile.toString(), originalFile, fileChecksum);
+                                logMessage = String.format("Step: %s, Results: %s", stepConfigs.get(extensionPlugin).getName(), stepResults);
+                                LOGGER.info(logMessage);
+                        } else if (stepConfigs.get(extensionPlugin).getType().equals("http")) {
+                            logMessage = String.format("JAR: %s", stepConfigs.get(extensionPlugin).getEndpoint());
+                            LOGGER.info(logMessage);
+                        }
                     }
                 }
-            }   
+            }
         }
-
-
+        
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
         LOGGER.info(logMessage);
@@ -401,7 +414,6 @@ public class FileValidator {
             LOGGER.severe(errString);
             return errString;
         }
-        runplugins!!!
         // Try to set the file owner and permissions
         FileAclHelper fileAclHelper = new FileAclHelper();
         String newFileAttributesStatus = fileAclHelper.changeFileAcl(targetFilePath, extensionConfig.getChangeOwnershipUser(), extensionConfig.getChangeOwnershipMode());
@@ -412,7 +424,6 @@ public class FileValidator {
             LOGGER.severe(newFileAttributesStatus);
             return newFileAttributesStatus;
         }
-
         // Return the full path to the saved file since no errors were encountered
         return targetFilePath.toAbsolutePath().toString();
     }
