@@ -45,11 +45,11 @@ public class PluginsHelper {
                 stepConfig.setName(pluginStepName);
 
                 stepConfig.setType(step.getString("type"));
-                stepConfig.setrunBefore(step.optBoolean("run_before"));
+                stepConfig.setRunBefore(step.optBoolean("run_before"));
                 stepConfig.setRunAfter(step.optBoolean("run_after"));
                 stepConfig.setCredsPath(step.optString("creds_path"));
                 stepConfig.setTimeout(step.optInt("timeout"));
-                stepConfig.setOnTimeout(step.optString("on_timeout"));
+                stepConfig.setOnFail(step.optString("on_timeout_or_fail"));
                 stepConfig.setEndpoint(step.optString("endpoint"));
                 stepConfig.setResponse(step.optString("response"));
 
@@ -113,7 +113,7 @@ public class PluginsHelper {
         private String type;
         private String endpoint;
         private int timeout;
-        private String onTimeout;
+        private String onFail;
         private String response;
         private String method;
         private JSONObject headers;
@@ -125,11 +125,11 @@ public class PluginsHelper {
         private boolean runBefore;
         private boolean runAfter;
 
-        public boolean isrunBefore() {
+        public boolean isRunBefore() {
             return runBefore;
         }
 
-        public void setrunBefore(boolean runBefore) {
+        public void setRunBefore(boolean runBefore) {
             this.runBefore = runBefore;
         }
 
@@ -181,12 +181,12 @@ public class PluginsHelper {
             this.timeout = timeout;
         }
 
-        public String getOnTimeout() {
-            return onTimeout;
+        public String getOnFail() {
+            return onFail;
         }
 
-        public void setOnTimeout(String onTimeout) {
-            this.onTimeout = onTimeout;
+        public void setOnFail(String onFail) {
+            this.onFail = onFail;
         }
 
         public String getResponse() {

@@ -81,7 +81,7 @@
         "run_before": true,
         "endpoint": "java -version",
         "timeout": 320,
-        "on_timeout": "fail",
+        "on_timeout_or_fail": "fail",
         "response": "openjdk"
       }
     },
@@ -91,7 +91,7 @@
         "run_before": true,
         "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
         "timeout": 320,
-        "on_timeout": "fail",
+        "on_timeout_or_fail": "fail",
         "response": "Success: ${step1.newFilePath}"
       }
     },
@@ -101,7 +101,7 @@
         "run_after": true,
         "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
         "timeout": 320,
-        "on_timeout": "fail",
+        "on_timeout_or_fail": "fail",
         "response": "Success: ${step1.newFilePath}"
       }
     }
