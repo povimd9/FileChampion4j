@@ -1,6 +1,5 @@
 package com.blumo.FileChampion4j;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -11,12 +10,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
-
 import org.json.JSONObject;
-
 import com.blumo.FileChampion4j.PluginsHelper.PluginConfig;
 import com.blumo.FileChampion4j.PluginsHelper.StepConfig;
-
 import java.security.MessageDigest;
 
 
@@ -53,23 +49,19 @@ public class FileValidator {
         if (configJsonObject.has("Plugins")) {
             try {
                 pluginsHelper = new PluginsHelper(configJsonObject.getJSONObject("Plugins"));
-                if (!pluginsHelper.getPluginConfigs().isEmpty()) {
-                    for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs().values()) {
-
-                        for (String step : pluginConfig.getStepConfigs().keySet()) {
-
-                            StepConfig stepConfig = pluginConfig.getStepConfigs().get(step);
-
-                            if (stepConfig.isRunBefore() ) {
-                                stepConfigsBefore.put(step, stepConfig);
-                            } else if (stepConfig.isRunAfter()) {
-                                stepConfigsAfter.put(step, stepConfig);
-                            }
-                        }
-                    }
-                }
+                loadPlugins();
             } catch (Exception e) {
                 LOGGER.severe("Error initializing plugins: " + e.getMessage());
+            }
+        }
+    }
+
+    private void loadPlugins() {
+        for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs().values()) {
+            for (String step : pluginConfig.getStepConfigs().keySet()) {
+                StepConfig stepConfig = pluginConfig.getStepConfigs().get(step);
+                stepConfigsBefore.put(stepConfig.isRunBefore()? step : "", stepConfig.isRunBefore()? stepConfig : null);
+                stepConfigsAfter.put(stepConfig.isRunAfter()? step : "", stepConfig.isRunAfter()? stepConfig : null);
             }
         }
     }
@@ -126,29 +118,15 @@ public class FileValidator {
             return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
         }
 
+        // Check for before plugins
         if (extensionConfig.getExtensionPlugins() != null) {
-            Path tempTargetFile = saveFileToTempDir(fileExtension, originalFile);
-            if (tempTargetFile == null) {
-                logMessage = String.format("Error saving file <%s> to temp directory", originalFilenameClean);
-                LOGGER.severe(logMessage);
-                return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
-            }
-            String executionResults = executeBeforePlugins(extensionConfig, tempTargetFile);
+            String executionResults = executeBeforePlugins(extensionConfig, fileExtension);
             if (executionResults.startsWith("Error")) {
                 logMessage = String.format("executeBeforePlugins failed for file: %s, Results: %s", originalFilenameClean, executionResults);
                 LOGGER.severe(logMessage);
                 return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
             }
-            if (Boolean.TRUE.equals(deleteTempDir(tempTargetFile.getParent() ))) {
-                logMessage = String.format("Temp directory: %s deleted successfully", tempTargetFile.getParent());
-                LOGGER.info(logMessage);
-            } else {
-                logMessage = String.format("Error deleting temp directory: %s", tempTargetFile.getParent());
-                LOGGER.severe(logMessage);
-            }
         }
-
-        
         
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
@@ -222,33 +200,18 @@ public class FileValidator {
             LOGGER.warning(responseAggregation);
         }
 
-        // Check for any plugins that are configured to run after the validations
+        // Check for after plugins
         if (extensionConfig.getExtensionPlugins() != null) {
-            Path tempTargetFile = saveFileToTempDir(fileExtension, originalFile);
-            if (tempTargetFile == null) {
+            String executionResults = executeAfterPlugins(extensionConfig, fileExtension);
+            if (executionResults.startsWith("Error")) {
                 sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
-                    .append("Error saving file to temp directory")
+                    .append("Error in executeBeforePlugins: ")
+                    .append(executionResults)
                     .append(commonLogString);
                 LOGGER.warning(responseAggregation);
-            } else {
-                String executionResults = executeAfterPlugins(extensionConfig, tempTargetFile);
-
-                if (executionResults.startsWith("Error")) {
-                    sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
-                        .append("Error in executeBeforePlugins: ")
-                        .append(executionResults)
-                        .append(commonLogString);
-                    LOGGER.warning(responseAggregation);
-                }
-            }
-            if (Boolean.FALSE.equals(deleteTempDir(tempTargetFile.getParent()))) {
-                sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
-                    .append("Error deleting temp directory: ")
-                    .append(tempTargetFile.getParent())
-                    .append(commonLogString);
             }
         }
-
+            
         // Check if file passed all defined validations, return false and reason if not.
         if (responseMsgCount > 0) {
             return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
@@ -292,15 +255,19 @@ public class FileValidator {
 
 
     /**
-     * Execute the plugins that are configured to run before the validations
+     * Execute and check results of plugins configured to run before the validations
      * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
      * @param tempTargetFile (Path) a Path object containing the path to the temporary file
      * @return String (String) a string containing the results of the plugin execution
      */
-    private String executeBeforePlugins(Extension extensionConfig, Path tempTargetFile) {
+    private String executeBeforePlugins(Extension extensionConfig, String fileExtension) {
         String responseAggregation = "";
         int responseMsgCount = 0;
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
+        Path tempTargetFile = saveFileToTempDir(fileExtension, originalFile);
+            if (tempTargetFile == null) {
+                return "Error saving file to temp directory";
+            }
 
         for (int i = 0; i < extensionConfig.getExtensionPlugins().length(); i++) {
             String extensionPlugin = extensionConfig.getExtensionPlugins().getString(i);
@@ -312,6 +279,7 @@ public class FileValidator {
                     
                     if (!stepResults.startsWith(successResults)) {
                         if (stepConfigsBefore.get(extensionPlugin).getOnFail().equals("fail")) {
+                            deleteTempDir(tempTargetFile.getParent());
                             return "Error: " + stepResults + " for step: " + stepConfigsBefore.get(extensionPlugin).getName();
                         }
                         sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
@@ -329,19 +297,24 @@ public class FileValidator {
                 }
             }
         }
+        deleteTempDir(tempTargetFile.getParent());
         return "executeBeforePlugins completed: " + sbResponseAggregation.toString();
     }
 
     /**
-     * Execute the plugins that are configured to run after the validations
+     * Execute and check results of plugins configured to run after the validations
      * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
      * @param tempTargetFile (Path) a Path object containing the path to the temporary file
      * @return String (String) a string containing the results of the plugin execution
      */
-    private String executeAfterPlugins(Extension extensionConfig, Path tempTargetFile) {
+    private String executeAfterPlugins(Extension extensionConfig, String fileExtension) {
         String responseAggregation = "";
         int responseMsgCount = 0;
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
+        Path tempTargetFile = saveFileToTempDir(fileExtension, originalFile);
+            if (tempTargetFile == null) {
+                return "Error saving file to temp directory";
+            }
 
         for (int i = 0; i < extensionConfig.getExtensionPlugins().length(); i++) {
             String extensionPlugin = extensionConfig.getExtensionPlugins().getString(i);
@@ -353,6 +326,7 @@ public class FileValidator {
                     
                     if (!stepResults.startsWith(successResults)) {
                         if (stepConfigsAfter.get(extensionPlugin).getOnFail().equals("fail")) {
+                            deleteTempDir(tempTargetFile.getParent());
                             return "Error: " + stepResults + " for step: " + stepConfigsAfter.get(extensionPlugin).getName();
                         }
                         sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
@@ -370,9 +344,17 @@ public class FileValidator {
                 }
             }
         }
-        return "executeBeforePlugins completed: " + sbResponseAggregation.toString();
+        deleteTempDir(tempTargetFile.getParent());
+        return "executeAfterPlugins completed: " + sbResponseAggregation.toString();
     }
 
+    /**
+     * Execute a single plugin step
+     * @param extensionPlugin (String) a string containing the name of the plugin step to execute
+     * @param stepConfigs (Map<String, StepConfig>) a map containing the configuration for the step to execute
+     * @param tempTargetFile (String) a string containing the path to the temporary file
+     * @return String (String) a string containing the results of the plugin execution
+     */
     private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String tempTargetFile) {
         String logMessage;
         Map<String, String> stepResultsMap = new HashMap<>();
