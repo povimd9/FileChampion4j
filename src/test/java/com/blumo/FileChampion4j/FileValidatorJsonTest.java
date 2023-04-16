@@ -20,10 +20,106 @@ import java.util.UUID;
 
 public class FileValidatorJsonTest {
     private static final String testUsername = System.getProperty("user.name");
+    private static final String testPluginCommand = System.getProperty("os.name").startsWith("Windows")?
+        "cmd /c echo Success: ${filePath} ${fileContent} ${fileChecksum}" : "echo Success: ${filePath} ${fileContent} ${fileChecksum}";
 
     /////////////////////////////////////
     // Config JSON objects for testing //
     /////////////////////////////////////
+
+    // Config JSON object for testing plugin execution with timeout
+    private static final JSONObject CONFIG_JSON_STEP_TIMEOUT = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"antivirus_scan\": {\r\n"
+    + "        \"clamav_scan.java\": [\r\n"
+    + "          \"RETURN_TYPE\",\r\n"
+    + "          \"param1\",\r\n"
+    + "          \"param2\"\r\n"
+    + "        ]},\r\n"
+    + "      \"change_ownership\": true,\r\n"
+    + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
+    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "      },\r\n"
+    + "    \"doc\": {\r\n"
+    + "      \"mime_type\": \"application/msword\",\r\n"
+    + "      \"magic_bytes\": \"D0CF11E0A1B11AE1\",\r\n"
+    + "      \"header_signatures\": \"D0CF11E0A1B11AE1\",\r\n"
+    + "      \"footer_signatures\": \"0000000000000000\",\r\n"
+    + "      \"antivirus_scan\": {\r\n"
+    + "        \"clamav_scan.java\": [\r\n"
+    + "          \"RETURN_TYPE\",\r\n"
+    + "          \"param1\",\r\n"
+    + "          \"param2\"\r\n"
+    + "        ]},\r\n"
+    + "      \"change_ownership\": true,\r\n"
+    + "      \"change_ownership_user\": \"User1\",\r\n"
+    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "    }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"run_after\":true, \"endpoint\":\""
+    + (System.getProperty("os.name").startsWith("Windows")?"cmd /c ping 127.0.0.1" : "ping 127.0.0.1")
+    + "\",\"timeout\":1,\"on_timeout_or_fail\":\"fail\",\"response\":\"None: timeout\"}}}"
+    + "  }\r\n"
+    + "}");
+
+    // Config JSON object for testing plugin execution with failure
+    private static final JSONObject CONFIG_JSON_STEP_FAILURE = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"antivirus_scan\": {\r\n"
+    + "        \"clamav_scan.java\": [\r\n"
+    + "          \"RETURN_TYPE\",\r\n"
+    + "          \"param1\",\r\n"
+    + "          \"param2\"\r\n"
+    + "        ]},\r\n"
+    + "      \"change_ownership\": true,\r\n"
+    + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
+    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "      },\r\n"
+    + "    \"doc\": {\r\n"
+    + "      \"mime_type\": \"application/msword\",\r\n"
+    + "      \"magic_bytes\": \"D0CF11E0A1B11AE1\",\r\n"
+    + "      \"header_signatures\": \"D0CF11E0A1B11AE1\",\r\n"
+    + "      \"footer_signatures\": \"0000000000000000\",\r\n"
+    + "      \"antivirus_scan\": {\r\n"
+    + "        \"clamav_scan.java\": [\r\n"
+    + "          \"RETURN_TYPE\",\r\n"
+    + "          \"param1\",\r\n"
+    + "          \"param2\"\r\n"
+    + "        ]},\r\n"
+    + "      \"change_ownership\": true,\r\n"
+    + "      \"change_ownership_user\": \"User1\",\r\n"
+    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "    }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"run_after\":true, \"endpoint\":\""
+    + (System.getProperty("os.name").startsWith("Windows")?"cmd /c echo test" : "echo test")
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
+    + "}");
 
     // Config JSON object for testing mime type
     private static final JSONObject CONFIG_JSON_MIME = new JSONObject("{\r\n"
@@ -48,7 +144,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing magic bytes
@@ -74,7 +174,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing header signatures
@@ -100,7 +204,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing header signatures
@@ -126,7 +234,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing name encoding false
@@ -152,7 +264,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing size 0
@@ -178,7 +294,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing only basic parameters
@@ -194,7 +314,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing without mime type
@@ -209,7 +333,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing without magic bytes
@@ -224,7 +352,11 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     // Config JSON object for testing without header and footer signatures
@@ -238,10 +370,24 @@ public class FileValidatorJsonTest {
     + "      }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
 
     
+    // Test step timeout
+    @Test
+    void testStepTimeout() throws Exception {
+        byte[] fileInBytes = generatePdfBytes(250000);
+        String fileName = "test.pdf";
+        FileValidator validator = new FileValidator(CONFIG_JSON_STEP_TIMEOUT);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
+        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
+    }
+
     // Test invalid mime type in json config
     @Test
     void testInValidMime() throws Exception {

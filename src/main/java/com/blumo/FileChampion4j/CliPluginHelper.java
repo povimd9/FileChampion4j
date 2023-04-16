@@ -15,8 +15,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import com.blumo.FileChampion4j.PluginsHelper.StepConfig;
+
 
 public class CliPluginHelper {
     private StepConfig singleStepConfig;
@@ -33,21 +33,6 @@ public class CliPluginHelper {
         }
     }
     private Logger logger = Logger.getLogger(CliPluginHelper.class.getName());
-    private void logInfo(String message) {
-        if (logger.isLoggable(Level.INFO)) {
-            logger.info(message);
-        }
-    }
-    private void logWarn(String message) {
-        if (logger.isLoggable(Level.WARNING)) {
-            logger.warning(message);
-        }
-    }
-    private void logSevere(String message) {
-        if (logger.isLoggable(Level.SEVERE)) {
-            logger.severe(message);
-        }
-    }
     private void logFine(String message) {
         if (logger.isLoggable(Level.FINE )) {
             logger.fine(message);
@@ -55,6 +40,10 @@ public class CliPluginHelper {
     }
     String logMessage;
 
+    /**
+     * Constructor for CliPluginHelper
+     * @param singleStepConfig
+     */
     public CliPluginHelper(StepConfig singleStepConfig) {
         this.singleStepConfig = singleStepConfig;
         this.endpoint = singleStepConfig.getEndpoint();
@@ -63,6 +52,13 @@ public class CliPluginHelper {
         logFine(singleStepConfig.getName() + " object created");
     }
     
+    /**
+     * Executes the CLI command
+     * @param filePath (String) - the path to the file
+     * @param fileContent (byte[]) - the file content
+     * @param fileCheksum (String) - the file checksum
+     * @return Map<String, Map<String, String>> - the results map
+     */
     public Map<String, Map<String, String>> execute(String filePath, byte[] fileContent, String fileCheksum) { 
         String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
@@ -90,8 +86,11 @@ public class CliPluginHelper {
         }
     }
 
-
-
+    /**
+     * Extracts the response patterns from the results
+     * @param results (String) - the results
+     * @return Map<String, String> - the response patterns map
+     */
     private Map<String, String> extractRespnsePatterns (String results) {
         Map<String, String> responsePatterns = new HashMap<>();
     
@@ -137,7 +136,12 @@ public class CliPluginHelper {
         return responsePatterns;
     }
     
-
+    /**
+     * Prepares the endpoint command by replacing the placeholders with the actual values
+     * @param filePath (String) - the path to the file
+     * @param fileContent (byte[]) - the file content
+     * @param fileCheksum (String) - the file checksum
+     */
     private void prepEndpoint(String filePath, byte[] fileContent, String fileCheksum) {
         String newEndpoint = endpoint.replace("${filePath}", filePath)
         .replace("${fileContent}", Base64.getEncoder().encodeToString(fileContent))
@@ -145,6 +149,14 @@ public class CliPluginHelper {
         endpoint = newEndpoint;
     }
 
+    /**
+     * Executes the CLI command with a timeout
+     * @param command (String) - the command to execute
+     * @return String - the results
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws NullPointerException
+     */
     private String timedProcessExecution(String command) throws IOException, InterruptedException, NullPointerException {
         ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
         logFine(String.format("Process starting: %s", command));

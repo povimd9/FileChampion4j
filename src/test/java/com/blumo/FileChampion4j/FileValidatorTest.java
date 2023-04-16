@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
@@ -32,6 +33,9 @@ public class FileValidatorTest {
     private Path tempDirectory;
     private FileValidator validator;
     private static final String testUsername = System.getProperty("user.name");
+    private static final String testPluginCommand = System.getProperty("os.name").startsWith("Windows")?
+        "cmd /c echo Success: ${filePath} ${fileContent} ${fileChecksum}" : "echo Success: ${filePath} ${fileContent} ${fileChecksum}";
+
 
     // Config JSON object for testing
     private static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
@@ -73,7 +77,11 @@ public class FileValidatorTest {
     + "    }\r\n"
     + "  }\r\n"
     + "},\r\n"
-    + "  \"Plugins\": {}\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"run_after\":true, \"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
     + "}");
     
 
@@ -147,7 +155,7 @@ public class FileValidatorTest {
         String fileName = "test.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("0934jt0-349rtj3409rj3409rj", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid with non existing fileCategory");
-        assertTrue(fileValidationResults.resultsInfo().contains("Category not found in JSON:"));
+        assertTrue(fileValidationResults.resultsInfo().contains("Error creating Extension configurations object"), "Expected 'Error creating Extension configurations object', got: " + fileValidationResults.resultsInfo());
     }
 
     // Test file extension that is not configured in config json
@@ -157,7 +165,7 @@ public class FileValidatorTest {
         String fileName = "test.txt";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid with .txt extension");
-        assertTrue(fileValidationResults.resultsInfo().contains("Extension not found in JSON:"));
+        assertTrue(fileValidationResults.resultsInfo().contains("Error creating Extension configurations object"));
     }
 
     // Test file size that is greater than the max size configured in config json
@@ -247,13 +255,12 @@ public class FileValidatorTest {
     // Calculate file checksum
     private static String calculateChecksum(byte[] fileBytes) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(fileBytes);
-            return Base64.getEncoder().encodeToString(hash);
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
+            return new BigInteger(1, hash).toString(16);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }
+    }   
 
 }

@@ -33,16 +33,6 @@ public class FileAclHelper {
         }
     }
     private static final Logger logger = Logger.getLogger(FileAclHelper.class.getName());
-    private void logInfo(String message) {
-        if (logger.isLoggable(Level.INFO)) {
-            logger.info(message);
-        }
-    }
-    private void logWarn(String message) {
-        if (logger.isLoggable(Level.WARNING)) {
-            logger.warning(message);
-        }
-    }
     private void logSevere(String message) {
         if (logger.isLoggable(Level.SEVERE)) {
             logger.severe(message);
@@ -136,7 +126,6 @@ public class FileAclHelper {
     // Check the OS and call the appropriate method to change the permissions
     private String setNewPermissions(UserPrincipal newOwner) {
         String os = System.getProperty("os.name");
-
         if (os.startsWith("Windows")) {
             return setNewPermissionsWindows(newOwner);
         } else {
