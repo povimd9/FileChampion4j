@@ -10,6 +10,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+
 import org.json.JSONObject;
 import com.blumo.FileChampion4j.PluginsHelper.PluginConfig;
 import com.blumo.FileChampion4j.PluginsHelper.StepConfig;
@@ -27,8 +30,36 @@ import java.security.MessageDigest;
 
 */
 public class FileValidator {
+    static {
+        try {
+            LogManager.getLogManager().readConfiguration(
+                FileValidator.class.getResourceAsStream("/logging.properties"));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Could not load default logging configuration: ", e);
+        }
+    }
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
-    
+    private void logInfo(String message) {
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.info(message);
+        }
+    }
+    private void logWarn(String message) {
+        if (LOGGER.isLoggable(Level.WARNING)) {
+            LOGGER.warning(message);
+        }
+    }
+    private void logSevere(String message) {
+        if (LOGGER.isLoggable(Level.SEVERE)) {
+            LOGGER.severe(message);
+        }
+    }
+    private void logFine(String message) {
+        if (LOGGER.isLoggable(Level.FINE )) {
+            LOGGER.fine(message);
+        }
+    }
+
     private final JSONObject configJsonObject;
     private PluginsHelper pluginsHelper;
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();
@@ -51,7 +82,7 @@ public class FileValidator {
                 pluginsHelper = new PluginsHelper(configJsonObject.getJSONObject("Plugins"));
                 loadPlugins();
             } catch (Exception e) {
-                LOGGER.severe("Error initializing plugins: " + e.getMessage());
+                logWarn("Error initializing plugins: " + e.getMessage());
             }
         }
     }
@@ -114,8 +145,9 @@ public class FileValidator {
         try {
             extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject.getJSONObject("Validations"));
         } catch (Exception e) {
-            LOGGER.warning(e.getMessage());
-            return new ValidationResponse(false, e.getMessage(), originalFilenameClean, null, null);
+            logMessage = String.format("Error creating Extension configurations object: %s", originalFilenameClean, e.getMessage());
+            logSevere(logMessage);
+            return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
         }
 
         // Check for before plugins
@@ -123,14 +155,14 @@ public class FileValidator {
             String executionResults = executeBeforePlugins(extensionConfig, fileExtension);
             if (executionResults.startsWith("Error")) {
                 logMessage = String.format("executeBeforePlugins failed for file: %s, Results: %s", originalFilenameClean, executionResults);
-                LOGGER.severe(logMessage);
+                logWarn(logMessage); 
                 return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
             }
         }
         
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
-        LOGGER.info(logMessage);
+        logInfo(logMessage);
      
         return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, fileChecksum, outDir));
     }
@@ -160,7 +192,7 @@ public class FileValidator {
                 .append(extensionConfig.getMaxSize()).append("KB)")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
-            LOGGER.warning(responseAggregation);
+            logWarn(responseAggregation);
             return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
         }
 
@@ -170,7 +202,7 @@ public class FileValidator {
                 .append("Invalid mime_type")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
-            LOGGER.warning(responseAggregation);
+            logWarn(responseAggregation);
         }
 
         // Check that the file contains the magic bytes
@@ -179,7 +211,7 @@ public class FileValidator {
                 .append("Invalid magic_bytes")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
-            LOGGER.warning(responseAggregation);
+            logWarn(responseAggregation);
         }
 
         // Check header signatures (optional)
@@ -188,7 +220,7 @@ public class FileValidator {
                 .append("Invalid header_signatures")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
-            LOGGER.warning(responseAggregation);
+            logWarn(responseAggregation);
         }
 
         // Check footer signatures (optional)
@@ -197,7 +229,7 @@ public class FileValidator {
                 .append("Invalid footer_signatures")
                 .append(commonLogString);
             responseAggregation = sbResponseAggregation.toString();
-            LOGGER.warning(responseAggregation);
+            logWarn(responseAggregation);
         }
 
         // Check for after plugins
@@ -208,7 +240,7 @@ public class FileValidator {
                     .append("Error in executeBeforePlugins: ")
                     .append(executionResults)
                     .append(commonLogString);
-                LOGGER.warning(responseAggregation);
+                logWarn(responseAggregation);
             }
         }
             
@@ -223,7 +255,7 @@ public class FileValidator {
             encodedFileName = String.format("%s.%s",
             Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8)),  fileExtension);
             String encodingStatus = String.format("File name: '%s' has been successfully encoded to: '%s'", originalFilenameClean, encodedFileName);
-            LOGGER.info(encodingStatus);
+            logInfo(encodingStatus);
         }
         
         String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;
@@ -244,7 +276,7 @@ public class FileValidator {
 
         // Return valid response if file passed all validations but is not meant to be saved to disk
         String validMessage = String.format("File is valid: %s", originalFilenameClean);
-        LOGGER.info(validMessage);
+        logInfo(validMessage);
         return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
     }
     
@@ -360,7 +392,7 @@ public class FileValidator {
         Map<String, String> stepResultsMap = new HashMap<>();
         String extensionPluginName = stepConfigs.get(extensionPlugin).getName();
         logMessage = String.format("Step: %s", extensionPluginName);
-        LOGGER.info(logMessage);
+        logFine(logMessage);
         
         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
             Map<String, Map<String, String>> stepResults = stepConfigs.get(extensionPlugin)
@@ -375,7 +407,7 @@ public class FileValidator {
                         originalFile = Files.readAllBytes(new File(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
                             extensionPluginName.length()) + ".filePath")).toPath());
                     } catch (IOException e) {
-                        LOGGER.severe(e.getMessage());
+                        logWarn(e.getMessage());
                     }
                 }
                 originalFile = stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
@@ -386,10 +418,9 @@ public class FileValidator {
                 fileChecksum = calculateChecksum(originalFile);
             }
             logMessage = String.format("Step: %s, Results: %s", stepConfigs.get(extensionPlugin).getName(), stepResults);
-            LOGGER.info(logMessage);
+            logFine(logMessage);
         } else if (stepConfigs.get(extensionPlugin).getType().equals("http")) {
-            logMessage = String.format("JAR: %s", stepConfigs.get(extensionPlugin).getEndpoint());
-            LOGGER.info(logMessage);
+            // TODO: Implement http plugin type
         }
         return logMessage;
     }
@@ -416,7 +447,7 @@ public class FileValidator {
             Files.write(tempFilePath, originalFile);
         } catch (Exception e) {
             String errMessage = String.format("saveFileToTempDir failed: %s", e.getMessage());
-            LOGGER.severe(errMessage);
+            logWarn(errMessage);
             return null;
         }
         return tempFilePath;
@@ -432,7 +463,7 @@ public class FileValidator {
             return true;
         } catch (Exception e) {
             String errMessage = String.format("deleteTempDir failed: %s", e.getMessage());
-            LOGGER.severe(errMessage);
+            logWarn(errMessage);
             return false;
         }
     }
@@ -448,7 +479,7 @@ public class FileValidator {
             fileMimeType = Files.probeContentType(tempFile);
             deleteTempDir(tempFile);
         } catch (Exception e) {
-            LOGGER.severe("checkMimeType failed: " + e.getMessage());
+            logWarn("checkMimeType failed: " + e.getMessage());
         }
         return fileMimeType != null && !isBlank(fileMimeType) && fileMimeType.equals(mimeType);
     }
@@ -554,7 +585,7 @@ public class FileValidator {
             Files.write(targetFilePath, fileBytes, StandardOpenOption.CREATE);
         } catch (IOException e) {
             String errString = String.format("Error: Save file to output directory failed: %s", e.getMessage());
-            LOGGER.severe(errString);
+            logSevere(errString);
             return errString;
         }
         // Try to set the file owner and permissions
@@ -563,8 +594,10 @@ public class FileValidator {
         if (newFileAttributesStatus.contains("Error:")) {
             try {
                 Files.deleteIfExists(targetFilePath);
-            } catch (IOException e) { LOGGER.severe("Error: Failed to set file owner and permissions: " + e.getMessage());}
-            LOGGER.severe(newFileAttributesStatus);
+            } catch (IOException e) { 
+                logSevere("Error: Failed to delete targetFilePath: " + e.getMessage());
+            }
+            logSevere(newFileAttributesStatus);
             return newFileAttributesStatus;
         }
         // Return the full path to the saved file since no errors were encountered

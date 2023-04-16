@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +24,35 @@ public class CliPluginHelper {
     private String endpoint;
     private String responseConfig;
 
+    static {
+        try {
+            LogManager.getLogManager().readConfiguration(
+                FileValidator.class.getResourceAsStream("/logging.properties"));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Could not load default logging configuration: ", e);
+        }
+    }
     private Logger logger = Logger.getLogger(CliPluginHelper.class.getName());
+    private void logInfo(String message) {
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(message);
+        }
+    }
+    private void logWarn(String message) {
+        if (logger.isLoggable(Level.WARNING)) {
+            logger.warning(message);
+        }
+    }
+    private void logSevere(String message) {
+        if (logger.isLoggable(Level.SEVERE)) {
+            logger.severe(message);
+        }
+    }
+    private void logFine(String message) {
+        if (logger.isLoggable(Level.FINE )) {
+            logger.fine(message);
+        }
+    }
     String logMessage;
 
     public CliPluginHelper(StepConfig singleStepConfig) {
@@ -30,7 +60,7 @@ public class CliPluginHelper {
         this.endpoint = singleStepConfig.getEndpoint();
         this.timeout = singleStepConfig.getTimeout();
         this.responseConfig = singleStepConfig.getResponse();
-        logger.info(singleStepConfig.getName() + " object created");
+        logFine(singleStepConfig.getName() + " object created");
     }
     
     public Map<String, Map<String, String>> execute(String filePath, byte[] fileContent, String fileCheksum) { 
@@ -38,11 +68,11 @@ public class CliPluginHelper {
         Map<String, Map<String, String>> responseMap = new HashMap<>();
         
         prepEndpoint(filePath, fileContent, fileCheksum);
-        logger.info(String.format("%s endpoint: %s", singleStepConfig.getName(), endpoint));
+        logFine(String.format("%s endpoint: %s", singleStepConfig.getName(), endpoint));
 
         try {
             result = timedProcessExecution(endpoint);
-            logger.info(singleStepConfig.getName() + " result: " + result);
+            logFine(singleStepConfig.getName() + " result: " + result);
         } catch (Exception e) {
             result = "Error: " + singleStepConfig.getName() + ":" + e.getMessage();
         }
@@ -76,10 +106,10 @@ public class CliPluginHelper {
             String placeholderName = placeholderMatcher.group(1);
             String placeholderValue = "";
     
-            logger.info(String.format("Placeholder name: %s, ResponseConfig: %s", placeholderName, responseConfig));
+            logFine(String.format("Placeholder name: %s, ResponseConfig: %s", placeholderName, responseConfig));
             
             String fixedPrefix = responseConfig.substring(0, responseConfig.indexOf("${"));
-            logger.info(String.format("Fixed prefix: %s", fixedPrefix));
+            logFine(String.format("Fixed prefix: %s", fixedPrefix));
     
             String fixedSuffix;
             int suffixStartIndex = responseConfig.indexOf("${") + placeholderName.length() + 3;
@@ -88,11 +118,11 @@ public class CliPluginHelper {
                 fixedSuffix = "";
             } else {
                 fixedSuffix = responseConfig.substring(suffixStartIndex);
-                logger.info(String.format("Fixed suffix: %s", fixedSuffix));
+                logFine(String.format("Fixed suffix: %s", fixedSuffix));
             }
     
             String captureGroupPattern = String.format("^%s(.*)%s$", fixedPrefix, fixedSuffix);
-            logger.info(String.format("Capture group pattern: %s", captureGroupPattern));
+            logFine(String.format("Capture group pattern: %s", captureGroupPattern));
     
             Pattern pattern = Pattern.compile(captureGroupPattern);
             Matcher matcher = pattern.matcher(results);
@@ -117,7 +147,7 @@ public class CliPluginHelper {
 
     private String timedProcessExecution(String command) throws IOException, InterruptedException, NullPointerException {
         ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
-        logger.info(String.format("Process starting: %s", command));
+        logFine(String.format("Process starting: %s", command));
 
         Process process = processBuilder.start();
         TimeUnit timeUnit = TimeUnit.SECONDS;
@@ -148,7 +178,7 @@ public class CliPluginHelper {
         bufferedReader.close();
         scanner.close();
         
-        logger.info(results);
+        logFine(results);
         return results;
     }
 }
