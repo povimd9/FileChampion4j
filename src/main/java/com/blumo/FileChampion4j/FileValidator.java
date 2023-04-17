@@ -65,6 +65,7 @@ public class FileValidator {
     private Map<String, StepConfig> stepConfigsAfter = new HashMap<>();
     private byte[] originalFile;
     private String fileChecksum;
+    private StringBuilder sharedMessage = new StringBuilder();
 
 
     /**
@@ -134,7 +135,6 @@ public class FileValidator {
         checkMethodInputs(fileCategory, originalFile, fileName);
 
         // Initialize variables
-        String logMessage;
         String fileExtension = getFileExtension(fileName);
         Extension extensionConfig;
         String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
@@ -144,31 +144,31 @@ public class FileValidator {
         try {
             extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject.getJSONObject("Validations"));
         } catch (Exception e) {
-            logMessage = String.format("Error creating Extension configurations object: %s", originalFilenameClean);
-            logSevere(logMessage);
-            return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
+            sharedMessage.replace(0, sharedMessage.length(), "Error creating Extension configurations object: ").append(originalFilenameClean);
+            logSevere(sharedMessage.toString());
+            return new ValidationResponse(false, sharedMessage.toString(), originalFilenameClean, null, null);
         }
 
         // Log the file type category being validated
-        logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
-        logInfo(logMessage);
+        sharedMessage.replace(0, sharedMessage.length(), "Validating ").append(originalFilenameClean).append(", as file type: ").append(fileCategory);
+        logInfo(sharedMessage.toString());
 
         // Check for before plugins
         if (extensionConfig.getExtensionPlugins() != null) {
             String executionResults = executeBeforePlugins(extensionConfig, fileExtension);
             if (executionResults.substring(0, 12).contains("Failed")) {
-                logMessage = String.format("executeBeforePlugins failed for file: %s, Results: %s", originalFilenameClean, executionResults);
-                logWarn(logMessage); 
-                return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
+                sharedMessage.replace(0, sharedMessage.length(), "executeBeforePlugins failed for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
+                logWarn(sharedMessage.toString());
+                return new ValidationResponse(false, sharedMessage.toString() , originalFilenameClean, null, null);
             } else if (executionResults.substring(0, 12).contains("Error")) {
-                logMessage = String.format("executeBeforePlugins error for file: %s, Results: %s", originalFilenameClean, executionResults);
-                logWarn(logMessage);
+                sharedMessage.replace(0, sharedMessage.length(), "executeBeforePlugins error for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
+                logWarn(sharedMessage.toString());
             } else {
                 logInfo(executionResults);
             }
         }  else {
-            logMessage = String.format("No before plugins to execute for file: %s", originalFilenameClean);
-            logFine(logMessage);
+            sharedMessage.replace(0, sharedMessage.length(), "No before plugins to execute for file: ").append(originalFilenameClean);
+            logFine(sharedMessage.toString());
         }
         
         return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, fileChecksum, outDir));
@@ -310,8 +310,8 @@ public class FileValidator {
         // Check if the file name should be encoded
         String encodedFileName = "";
         if (extensionConfig.isNameEncoding()) { 
-            encodedFileName = String.format("%s.%s",
-            Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8)),  fileExtension);
+            sharedMessage.replace(0, sharedMessage.length(), Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8))).append(".").append(fileExtension);
+            encodedFileName = sharedMessage.toString();
             String encodingStatus = String.format("File name: '%s' has been successfully encoded to: '%s'", originalFilenameClean, encodedFileName);
             logInfo(encodingStatus);
         }
@@ -324,16 +324,17 @@ public class FileValidator {
             savedFilePath = saveFileToOutputDir(outDir, targetFileName, originalFile, extensionConfig);
             if (savedFilePath.contains("Error:")) {
                 // Return valid file response if file failed to save to output directory
-                String validMessage = String.format("File is valid but was not saved to output directory: %s", savedFilePath);
-                return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
+                sharedMessage.replace(0, sharedMessage.length(), "File is valid but failed to save to output directory: ").append(savedFilePath);
+                return new ValidationResponse(true, sharedMessage.toString(), originalFilenameClean, originalFile, fileChecksum);
             }
             // Return valid file response if file was saved to output directory
-            String validMessage = String.format("File is valid and was saved to output directory: %s", savedFilePath);
-            return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum, savedFilePath);
+            sharedMessage.replace(0, sharedMessage.length(), "File is valid and was saved to output directory: ").append(savedFilePath);
+            return new ValidationResponse(true, sharedMessage.toString() , originalFilenameClean, originalFile, fileChecksum, savedFilePath);
         }
 
         // Return valid response if file passed all validations but is not meant to be saved to disk
-        String validMessage = String.format("File is valid: %s", originalFilenameClean);
+        sharedMessage.replace(0, sharedMessage.length(), "File is valid: ").append(originalFilenameClean);
+        String validMessage = sharedMessage.toString();
         logInfo(validMessage);
         return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
     }
@@ -360,10 +361,11 @@ public class FileValidator {
             for (String step : stepConfigsBefore.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);
-                    String successResults = String.format("Step: %s, Results: {Success:",
-                    stepConfigsBefore.get(extensionPlugin).getName());
+                    sharedMessage.replace(0, sharedMessage.length(), "Step: ")
+                        .append(stepConfigsBefore.get(extensionPlugin).getName());
+
                     String sharedString = ", Results: ";
-                    if (!stepResults.startsWith(successResults)) {
+                    if (!stepResults.startsWith(sharedMessage.toString())) {
                         if (stepConfigsBefore.get(extensionPlugin).getOnFail().equals("fail")) {
                             sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Failed for step: ")
@@ -409,10 +411,10 @@ public class FileValidator {
             for (String step : stepConfigsAfter.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);
-                    String successResults = String.format("Step: %s, Results: {Success:",
-                    stepConfigsAfter.get(extensionPlugin).getName());
+                    sharedMessage.replace(0, sharedMessage.length(), "Step: ")
+                        .append(stepConfigsAfter.get(extensionPlugin).getName());
                     String sharedString = ", Results: ";
-                    if (!stepResults.startsWith(successResults)) {
+                    if (!stepResults.startsWith(sharedMessage.toString())) {
                         if (stepConfigsAfter.get(extensionPlugin).getOnFail().equals("fail")) {
                             sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Failed for step: ")
@@ -450,11 +452,10 @@ public class FileValidator {
      * @return String (String) a string containing the results of the plugin execution
      */
     private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String fileExtension) {
-        String logMessage;
         Map<String, String> stepResultsMap = new HashMap<>();
         String extensionPluginName = stepConfigs.get(extensionPlugin).getName();
-        logMessage = String.format("Step: %s", extensionPluginName);
-        logFine(logMessage);
+        sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(extensionPluginName);
+        logFine(sharedMessage.toString());
         
         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
             Map<String, Map<String, String>> stepResults = stepConfigs.get(extensionPlugin)
@@ -479,12 +480,14 @@ public class FileValidator {
                     extensionPluginName.length()) + ".fileContent")) : originalFile;
                 fileChecksum = calculateChecksum(originalFile);
             }
-            logMessage = String.format("Step: %s, Results: %s", stepConfigs.get(extensionPlugin).getName(), stepResults);
-            logFine(logMessage);
+            sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(extensionPluginName)
+                .append(", Results: ")
+                .append(stepResultsMap);
+            logFine(sharedMessage.toString());
         } else if (stepConfigs.get(extensionPlugin).getType().equals("http")) {
             // TODO: Implement http plugin type
         }
-        return logMessage;
+        return sharedMessage.toString();
     }
 
     
@@ -508,8 +511,8 @@ public class FileValidator {
             tempFilePath = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
             Files.write(tempFilePath, originalFile);
         } catch (Exception e) {
-            String errMessage = String.format("saveFileToTempDir failed: %s", e.getMessage());
-            logWarn(errMessage);
+            sharedMessage.replace(0, sharedMessage.length(), "saveFileToTempDir failed: ").append(e.getMessage());
+            logWarn(sharedMessage.toString());
             return null;
         }
         return tempFilePath;
@@ -524,8 +527,8 @@ public class FileValidator {
             .forEach(File::delete);
             return true;
         } catch (Exception e) {
-            String errMessage = String.format("deleteTempDir failed: %s", e.getMessage());
-            logWarn(errMessage);
+            sharedMessage.replace(0, sharedMessage.length(), "deleteTempDir failed: ").append(e.getMessage());
+            logWarn(sharedMessage.toString());
             return false;
         }
     }
@@ -646,9 +649,9 @@ public class FileValidator {
         try {
             Files.write(targetFilePath, fileBytes, StandardOpenOption.CREATE);
         } catch (IOException e) {
-            String errString = String.format("Error: Save file to output directory failed: %s", e.getMessage());
-            logSevere(errString);
-            return errString;
+            sharedMessage.replace(0, sharedMessage.length(), "saveFileToOutputDir failed: ").append(e.getMessage());
+            logSevere(sharedMessage.toString());
+            return sharedMessage.toString();
         }
         // Try to set the file owner and permissions
         FileAclHelper fileAclHelper = new FileAclHelper();

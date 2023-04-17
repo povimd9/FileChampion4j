@@ -27,6 +27,7 @@ public class CliPluginHelper {
     private int timeout;
     private String endpoint;
     private String responseConfig;
+    private StringBuilder logMessage = new StringBuilder();
 
     static {
         try {
@@ -47,7 +48,6 @@ public class CliPluginHelper {
             logger.warning(message);
         }
     }
-    String logMessage;
 
     /**
      * Constructor for CliPluginHelper
@@ -58,7 +58,8 @@ public class CliPluginHelper {
         this.endpoint = singleStepConfig.getEndpoint();
         this.timeout = singleStepConfig.getTimeout();
         this.responseConfig = singleStepConfig.getResponse();
-        logFine(singleStepConfig.getName() + " object created");
+        logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(" object created");
+        logFine(logMessage.toString());
     }
     
     /**
@@ -84,7 +85,8 @@ public class CliPluginHelper {
 
         String filePath = filePathRaw.toString();
         prepEndpoint(filePath, fileContent, fileCheksum);
-        logFine(String.format("%s endpoint: %s", singleStepConfig.getName(), endpoint));
+        logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(" endpoint: ").append(endpoint);
+        logFine(logMessage.toString());
 
         try {
             result = timedProcessExecution(endpoint);
@@ -131,10 +133,15 @@ public class CliPluginHelper {
             String placeholderName = placeholderMatcher.group(1);
             String placeholderValue = "";
     
-            logFine(String.format("Placeholder name: %s, ResponseConfig: %s", placeholderName, responseConfig));
+            logMessage.replace(0, logMessage.length(), "Placeholder name: ")
+            .append(placeholderName)
+            .append(", ResponseConfig: ")
+            .append(responseConfig);
+            logFine(logMessage.toString());
             
             String fixedPrefix = responseConfig.substring(0, responseConfig.indexOf("${"));
-            logFine(String.format("Fixed prefix: %s", fixedPrefix));
+            logMessage.replace(0, logMessage.length(), "Fixed prefix: ").append(fixedPrefix);
+            logFine(logMessage.toString());
     
             String fixedSuffix;
             int suffixStartIndex = responseConfig.indexOf("${") + placeholderName.length() + 3;
@@ -143,11 +150,13 @@ public class CliPluginHelper {
                 fixedSuffix = "";
             } else {
                 fixedSuffix = responseConfig.substring(suffixStartIndex);
-                logFine(String.format("Fixed suffix: %s", fixedSuffix));
+                logMessage.replace(0, logMessage.length(), "Fixed suffix: ").append(fixedSuffix);
+                logFine(logMessage.toString());
             }
     
             String captureGroupPattern = String.format("^%s(.*)%s$", fixedPrefix, fixedSuffix);
-            logFine(String.format("Capture group pattern: %s", captureGroupPattern));
+            logMessage.replace(0, logMessage.length(), "Capture group pattern: ").append(captureGroupPattern);
+            logFine(logMessage.toString());
     
             Pattern pattern = Pattern.compile(captureGroupPattern);
             Matcher matcher = pattern.matcher(results);
@@ -185,7 +194,8 @@ public class CliPluginHelper {
      */
     private String timedProcessExecution(String command) throws IOException, InterruptedException, NullPointerException {
         ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
-        logFine(String.format("Process starting: %s", command));
+        logMessage.replace(0, logMessage.length(), "Process starting: ").append(command);
+        logFine(logMessage.toString());
 
         long timeoutCounter = System.currentTimeMillis();
         Process process = processBuilder.start();
@@ -214,9 +224,9 @@ public class CliPluginHelper {
                 errorStream.close();
                 inputStream.close();
                 scanner.close();
-                String errMessage = String.format("Error: %s failed due to timeout", command);
-                logWarn (errMessage);
-                return errMessage;
+                logMessage.replace(0, logMessage.length(), "Error: ").append("Process timeout: ").append(command);
+                logWarn(logMessage.toString());
+                return logMessage.toString();
             }
             results = scanner.hasNext() ? scanner.next() : "";
             bufferedReader.close();
@@ -225,9 +235,9 @@ public class CliPluginHelper {
             inputStream.close();
             scanner.close();
             timer.cancel();
-            String errMessage = String.format("Error: %s failed with output: %s", command, results);
-            logWarn(errMessage);
-            return errMessage;
+            logMessage.replace(0, logMessage.length(), "Error: ").append(command) .append("Process failed: ").append(results);
+            logWarn(logMessage.toString());
+            return logMessage.toString();
         }
 
         results = scanner.hasNext() ? scanner.next() : "";
@@ -251,8 +261,8 @@ public class CliPluginHelper {
             Files.write(tempFilePath, originalFile);
             return tempFilePath;
         } catch (Exception e) {
-            String errMessage = String.format("Error saveFileToTempDir failed: %s", e.getMessage());
-            logWarn(errMessage);
+            logMessage.replace(0, logMessage.length(), "Error saveFileToTempDir failed: ").append(e.getMessage());
+            logWarn(logMessage.toString());
             return null;
         }
     }
@@ -266,8 +276,8 @@ public class CliPluginHelper {
             .forEach(File::delete);
             return true;
         } catch (Exception e) {
-            String errMessage = String.format("Error deleteTempDir failed: %s", e.getMessage());
-            logWarn(errMessage);
+            logMessage.replace(0, logMessage.length(), "Error deleteTempDir failed: ").append(e.getMessage());
+            logWarn(logMessage.toString());
             return false;
         }
     }
