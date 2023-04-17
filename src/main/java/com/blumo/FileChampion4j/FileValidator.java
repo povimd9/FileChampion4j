@@ -24,9 +24,8 @@ import java.security.MessageDigest;
 
                       TODO: add filenname and checksum to loggers
 
-                      TODO: support cli and jar loading
+                      TODO: support Http plugins
 
-                      TODO: add support for validation and sanitization extensions
 
 */
 public class FileValidator {
@@ -145,25 +144,33 @@ public class FileValidator {
         try {
             extensionConfig = new Extension(fileCategory, fileExtension, configJsonObject.getJSONObject("Validations"));
         } catch (Exception e) {
-            logMessage = String.format("Error creating Extension configurations object: %s", originalFilenameClean, e.getMessage());
+            logMessage = String.format("Error creating Extension configurations object: %s", originalFilenameClean);
             logSevere(logMessage);
             return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
         }
 
-        // Check for before plugins
-        if (extensionConfig.getExtensionPlugins() != null) {
-            String executionResults = executeBeforePlugins(extensionConfig, fileExtension);
-            if (executionResults.startsWith("Error")) {
-                logMessage = String.format("executeBeforePlugins failed for file: %s, Results: %s", originalFilenameClean, executionResults);
-                logWarn(logMessage); 
-                return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
-            }
-        }
-        
         // Log the file type category being validated
         logMessage = String.format("Validating %s, as file type: %s", originalFilenameClean, fileCategory);
         logInfo(logMessage);
-     
+
+        // Check for before plugins
+        if (extensionConfig.getExtensionPlugins() != null) {
+            String executionResults = executeBeforePlugins(extensionConfig, fileExtension);
+            if (executionResults.substring(0, 12).contains("Failed")) {
+                logMessage = String.format("executeBeforePlugins failed for file: %s, Results: %s", originalFilenameClean, executionResults);
+                logWarn(logMessage); 
+                return new ValidationResponse(false, logMessage, originalFilenameClean, null, null);
+            } else if (executionResults.substring(0, 12).contains("Error")) {
+                logMessage = String.format("executeBeforePlugins error for file: %s, Results: %s", originalFilenameClean, executionResults);
+                logWarn(logMessage);
+            } else {
+                logInfo(executionResults);
+            }
+        }  else {
+            logMessage = String.format("No before plugins to execute for file: %s", originalFilenameClean);
+            logFine(logMessage);
+        }
+        
         return (doValidations(originalFilenameClean, fileExtension, extensionConfig, originalFile, fileChecksum, outDir));
     }
 
@@ -178,75 +185,126 @@ public class FileValidator {
      */
     private ValidationResponse doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String fileChecksum, String outDir) {
         String commonLogString = String.format(" for file extension: %s", fileExtension);
-        String responseAggregation = "";
-        int responseMsgCount = 0;
-        StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
+        String responseAggregationFail = "";
+        int responseMsgCountFail = 0;
+        StringBuilder sbresponseAggregationFail = new StringBuilder(responseAggregationFail);
+        String responseAggregationSuccess = "";
+        int responseMsgCountSuccess = 0;
+        StringBuilder sbresponseAggregationSuccess = new StringBuilder(responseAggregationSuccess);
 
     
         // Check that the file size is not greater than the maximum allowed size, dont continue if it is
         if (Boolean.FALSE.equals(checkFileSize(originalFile.length, extensionConfig.getMaxSize()))) {
-            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("File size (")
                 .append(originalFile.length / 1000)
                 .append("KB) exceeds maximum allowed size (")
                 .append(extensionConfig.getMaxSize()).append("KB)")
                 .append(commonLogString);
-            responseAggregation = sbResponseAggregation.toString();
-            logWarn(responseAggregation);
-            return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
+            responseAggregationFail = sbresponseAggregationFail.toString();
+            logWarn(responseAggregationFail);
+            return new ValidationResponse(false, responseAggregationFail, originalFilenameClean, originalFile, fileChecksum);
+        } else {
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("File size check passed, file size: ")
+                .append(originalFile.length / 1000)
+                .append("KB");
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logFine(responseAggregationSuccess);
         }
 
         // Check that the mime type is allowed
         if (!checkMimeType(originalFile, fileExtension,extensionConfig.getMimeType())) {
-            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid mime_type")
                 .append(commonLogString);
-            responseAggregation = sbResponseAggregation.toString();
-            logWarn(responseAggregation);
+            responseAggregationFail = sbresponseAggregationFail.toString();
+            logWarn(responseAggregationFail);
+        } else {
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("Mime type check passed, mime type: ")
+                .append(extensionConfig.getMimeType());
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logFine(responseAggregationSuccess);
         }
 
         // Check that the file contains the magic bytes
         if (extensionConfig.getMagicBytes().isEmpty() || !containsMagicBytes(originalFile, extensionConfig.getMagicBytes())) {
-            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid magic_bytes")
                 .append(commonLogString);
-            responseAggregation = sbResponseAggregation.toString();
-            logWarn(responseAggregation);
+            responseAggregationFail = sbresponseAggregationFail.toString();
+            logWarn(responseAggregationFail);
+        } else {
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("Magic bytes check passed, magic bytes: ")
+                .append(extensionConfig.getMagicBytes());
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logFine(responseAggregationSuccess);
         }
 
         // Check header signatures (optional)
         if (extensionConfig.getHeaderSignatures() != null && !containsHeaderSignatures(originalFile, extensionConfig.getHeaderSignatures())) {
-            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid header_signatures")
                 .append(commonLogString);
-            responseAggregation = sbResponseAggregation.toString();
-            logWarn(responseAggregation);
+            responseAggregationFail = sbresponseAggregationFail.toString();
+            logWarn(responseAggregationFail);
+        } else {
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("Header signatures check passed, header signatures: ")
+                .append(extensionConfig.getHeaderSignatures());
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logFine(responseAggregationSuccess);
         }
 
         // Check footer signatures (optional)
         if (extensionConfig.getFooterSignatures() != null && !containsFooterSignatures(originalFile, extensionConfig.getFooterSignatures())) {
-            sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid footer_signatures")
                 .append(commonLogString);
-            responseAggregation = sbResponseAggregation.toString();
-            logWarn(responseAggregation);
+            responseAggregationFail = sbresponseAggregationFail.toString();
+            logWarn(responseAggregationFail);
+        } else {
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("Footer signatures check passed, footer signatures: ")
+                .append(extensionConfig.getFooterSignatures());
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logFine(responseAggregationSuccess);
         }
 
         // Check for after plugins
         if (extensionConfig.getExtensionPlugins() != null) {
             String executionResults = executeAfterPlugins(extensionConfig, fileExtension);
-            if (executionResults.startsWith("Error")) {
-                sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
-                    .append("Error in executeBeforePlugins: ")
+            if (executionResults.substring(0, 12).contains("Failed")) {
+                sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
+                    .append("Error in executeAfterPlugins: ")
                     .append(executionResults)
                     .append(commonLogString);
-                logWarn(responseAggregation);
+                responseAggregationFail = sbresponseAggregationFail.toString();
+                logWarn(responseAggregationFail);
+            } else if (executionResults.substring(0, 12).contains("Error")) {
+                logWarn("Error in executeAfterPlugins: " + executionResults);
+            } else {
+                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("executeAfterPlugins executed successfully: ")
+                    .append(executionResults);
+                    responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+                    logFine(responseAggregationSuccess);
             }
+        } else {
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("No after plugins to execute");
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logFine(responseAggregationSuccess);
         }
             
         // Check if file passed all defined validations, return false and reason if not.
-        if (responseMsgCount > 0) {
-            return new ValidationResponse(false, responseAggregation, originalFilenameClean, originalFile, fileChecksum);
+        if (responseMsgCountFail > 0) {
+            logFine(responseAggregationFail);
+            return new ValidationResponse(false, responseAggregationFail, originalFilenameClean, originalFile, fileChecksum);
+        } else {
+            logInfo(responseAggregationSuccess);
         }
 
         // Check if the file name should be encoded
@@ -294,43 +352,45 @@ public class FileValidator {
      */
     private String executeBeforePlugins(Extension extensionConfig, String fileExtension) {
         String responseAggregation = "";
-        int responseMsgCount = 0;
+        char responseMsgCount = 'a';
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
-        Path tempTargetFile = saveFileToTempDir(fileExtension, originalFile);
-            if (tempTargetFile == null) {
-                return "Error saving file to temp directory";
-            }
 
         for (int i = 0; i < extensionConfig.getExtensionPlugins().length(); i++) {
             String extensionPlugin = extensionConfig.getExtensionPlugins().getString(i);
             for (String step : stepConfigsBefore.keySet()) {
                 if (step.equals(extensionPlugin)) {
-                    String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, tempTargetFile.toString());
+                    String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);
                     String successResults = String.format("Step: %s, Results: {Success:",
-                        stepConfigsBefore.get(extensionPlugin).getName());
-                    
+                    stepConfigsBefore.get(extensionPlugin).getName());
+                    String sharedString = ", Results: ";
                     if (!stepResults.startsWith(successResults)) {
                         if (stepConfigsBefore.get(extensionPlugin).getOnFail().equals("fail")) {
-                            deleteTempDir(tempTargetFile.getParent());
-                            return "Error: " + stepResults + " for step: " + stepConfigsBefore.get(extensionPlugin).getName();
+                            sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
+                            .append("Failed for step: ")
+                            .append(stepConfigsBefore.get(extensionPlugin).getName())
+                            .append(sharedString + stepResults);
+                            logFine(stepResults);        
+                            return sbResponseAggregation.toString();
                         }
-                        sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+                        sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Error for step: ")
                             .append(stepConfigsBefore.get(extensionPlugin).getName())
-                            .append(System.lineSeparator())
-                            .append(stepResults);
+                            .append(sharedString + stepResults);
+                            logFine(stepResults);
+                        ++responseMsgCount;
+                        responseAggregation = sbResponseAggregation.toString();
                     } else {
-                        sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+                        sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Success for step: ")
-                            .append(stepConfigsBefore.get(extensionPlugin).getName())
-                            .append(System.lineSeparator())
-                            .append(stepResults);
+                            .append(stepConfigsBefore.get(extensionPlugin).getName());
+                            logFine(stepResults);
+                        ++responseMsgCount;
+                        responseAggregation = sbResponseAggregation.toString();
                     }
                 }
             }
         }
-        deleteTempDir(tempTargetFile.getParent());
-        return "executeBeforePlugins completed: " + sbResponseAggregation.toString();
+        return "executeBeforePlugins completed: " + responseAggregation;
     }
 
     /**
@@ -341,43 +401,45 @@ public class FileValidator {
      */
     private String executeAfterPlugins(Extension extensionConfig, String fileExtension) {
         String responseAggregation = "";
-        int responseMsgCount = 0;
+        char responseMsgCount = 'a';
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
-        Path tempTargetFile = saveFileToTempDir(fileExtension, originalFile);
-            if (tempTargetFile == null) {
-                return "Error saving file to temp directory";
-            }
 
         for (int i = 0; i < extensionConfig.getExtensionPlugins().length(); i++) {
             String extensionPlugin = extensionConfig.getExtensionPlugins().getString(i);
             for (String step : stepConfigsAfter.keySet()) {
                 if (step.equals(extensionPlugin)) {
-                    String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, tempTargetFile.toString());
+                    String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);
                     String successResults = String.format("Step: %s, Results: {Success:",
                     stepConfigsAfter.get(extensionPlugin).getName());
-                    
+                    String sharedString = ", Results: ";
                     if (!stepResults.startsWith(successResults)) {
                         if (stepConfigsAfter.get(extensionPlugin).getOnFail().equals("fail")) {
-                            deleteTempDir(tempTargetFile.getParent());
-                            return "Error: " + stepResults + " for step: " + stepConfigsAfter.get(extensionPlugin).getName();
+                            sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
+                            .append("Failed for step: ")
+                            .append(stepConfigsBefore.get(extensionPlugin).getName())
+                            .append(sharedString + stepResults);
+                            logFine(stepResults);    
+                            return sbResponseAggregation.toString();
                         }
-                        sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+                        sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Error for step: ")
-                            .append(stepConfigsAfter.get(extensionPlugin).getName())
-                            .append(System.lineSeparator())
-                            .append(stepResults);
+                            .append(stepConfigsBefore.get(extensionPlugin).getName())
+                            .append(sharedString + stepResults);
+                            logFine(stepResults);
+                        ++responseMsgCount;
+                        responseAggregation = sbResponseAggregation.toString();
                     } else {
-                        sbResponseAggregation.append(System.lineSeparator() + ++responseMsgCount + ". ")
+                        sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Success for step: ")
-                            .append(stepConfigsAfter.get(extensionPlugin).getName())
-                            .append(System.lineSeparator())
-                            .append(stepResults);
+                            .append(stepConfigsAfter.get(extensionPlugin).getName());
+                            logFine(stepResults);
+                        ++responseMsgCount;
+                        responseAggregation = sbResponseAggregation.toString();
                     }
                 }
             }
         }
-        deleteTempDir(tempTargetFile.getParent());
-        return "executeAfterPlugins completed: " + sbResponseAggregation.toString();
+        return "executeAfterPlugins completed: " + responseAggregation;
     }
 
     /**
@@ -387,7 +449,7 @@ public class FileValidator {
      * @param tempTargetFile (String) a string containing the path to the temporary file
      * @return String (String) a string containing the results of the plugin execution
      */
-    private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String tempTargetFile) {
+    private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String fileExtension) {
         String logMessage;
         Map<String, String> stepResultsMap = new HashMap<>();
         String extensionPluginName = stepConfigs.get(extensionPlugin).getName();
@@ -397,7 +459,7 @@ public class FileValidator {
         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
             Map<String, Map<String, String>> stepResults = stepConfigs.get(extensionPlugin)
                 .getCliPluginHelper()
-                .execute(tempTargetFile, originalFile, fileChecksum);    
+                .execute(fileExtension, originalFile, fileChecksum);    
             stepResultsMap.putAll(stepResults.get(stepResults.keySet().toArray()[0]));
 
             if (!stepResultsMap.isEmpty()) {

@@ -17,7 +17,7 @@
         "change_ownership_mode": "r",
         "name_encoding": true,
         "max_size": "126000",
-        "extension_plugins": ["clean_pdf_documents1.step1"]
+        "extension_plugins": ["test_cli.step1", "clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
       },
       "doc": {
         "mime_type": "application/msword",

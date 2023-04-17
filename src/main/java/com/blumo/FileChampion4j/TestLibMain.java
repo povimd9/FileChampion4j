@@ -54,9 +54,11 @@ public class TestLibMain {
                     fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
                     fileValidationResults.getFileChecksum());
                 System.out.println(validMessage);
+                System.exit(0);
             } else {
                 // Print the results if the file is invalid
                 System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+                System.exit(0);
             }
         } catch (IOException e) {
             e.printStackTrace();

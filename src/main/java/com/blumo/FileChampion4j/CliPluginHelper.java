@@ -1,11 +1,15 @@
 package com.blumo.FileChampion4j;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.SequenceInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Base64;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -38,6 +42,11 @@ public class CliPluginHelper {
             logger.fine(message);
         }
     }
+    private void logWarn(String message) {
+        if (logger.isLoggable(Level.WARNING)) {
+            logger.warning(message);
+        }
+    }
     String logMessage;
 
     /**
@@ -59,29 +68,44 @@ public class CliPluginHelper {
      * @param fileCheksum (String) - the file checksum
      * @return Map<String, Map<String, String>> - the results map
      */
-    public Map<String, Map<String, String>> execute(String filePath, byte[] fileContent, String fileCheksum) { 
+    public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent, String fileCheksum) { 
+        String erroString = "Error: ";
         String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
-        
+        Map<String, String> responsePatterns = new HashMap<>();
+        Path filePathRaw = null;
+
+        filePathRaw = saveFileToTempDir(fileExtension, fileContent);
+        if (filePathRaw == null) {
+            responsePatterns.put(erroString, "Error: Failed to save file to temporary directory");
+            responseMap.put(erroString, responsePatterns);
+            return responseMap;
+        }
+
+        String filePath = filePathRaw.toString();
         prepEndpoint(filePath, fileContent, fileCheksum);
         logFine(String.format("%s endpoint: %s", singleStepConfig.getName(), endpoint));
 
         try {
             result = timedProcessExecution(endpoint);
             logFine(singleStepConfig.getName() + " result: " + result);
-        } catch (Exception e) {
-            result = "Error: " + singleStepConfig.getName() + ":" + e.getMessage();
+        } catch (IOException|NullPointerException|InterruptedException e) {
+            responsePatterns.put(erroString, "Error: " + e.getMessage());
         }
 
         String expectedResuls = responseConfig.substring(0, responseConfig.indexOf("${")>-1?
         responseConfig.indexOf("${")-1 : responseConfig.length());
 
         if (result.contains(expectedResuls)) {
-            Map<String, String> responsePatterns = extractRespnsePatterns(result);
-            responseMap.put(result, responsePatterns);
+            responsePatterns = extractRespnsePatterns("Success: " + result);
+            responseMap.put("Success: " + result, responsePatterns);
+            deleteTempDir(filePathRaw);
             return responseMap;
         } else {
-            responseMap.put(result, null);
+            String errMessage = String.format("Error, expected: %s, received: ", expectedResuls);
+            responsePatterns.put(errMessage, result);
+            responseMap.put(errMessage, responsePatterns);
+            deleteTempDir(filePathRaw);
             return responseMap;
         }
     }
@@ -98,7 +122,9 @@ public class CliPluginHelper {
         Pattern placeholderPattern = Pattern.compile("\\$\\{(.+?)\\}");
         Matcher placeholderMatcher = placeholderPattern.matcher(responseConfig);
         if (!placeholderMatcher.find()) {
+            responsePatterns.put(results, results);
             return responsePatterns;
+
         }
     
         do {
@@ -161,6 +187,7 @@ public class CliPluginHelper {
         ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
         logFine(String.format("Process starting: %s", command));
 
+        long timeoutCounter = System.currentTimeMillis();
         Process process = processBuilder.start();
         TimeUnit timeUnit = TimeUnit.SECONDS;
         java.util.Timer timer = new java.util.Timer();
@@ -174,23 +201,74 @@ public class CliPluginHelper {
             timeUnit.toMillis(timeout)
         );
         int exitCode = process.waitFor();
-        if (exitCode == 143 || exitCode == 1) {
-            return "Error: " + command + " timed out after " + timeout + " seconds";
-        }
-        timer.cancel();
         InputStream inputStream = process.getInputStream();
         InputStream errorStream = process.getErrorStream();
         SequenceInputStream sequenceInputStream = new SequenceInputStream(inputStream, errorStream);
-        
-        String results = "";
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(sequenceInputStream));
-
         Scanner scanner = new Scanner(bufferedReader).useDelimiter("\\A");
+        String results = "";
+        if (exitCode == 143 || exitCode == 1) {
+            if (System.currentTimeMillis() - timeoutCounter > timeout * 1000) {
+                bufferedReader.close();
+                sequenceInputStream.close();
+                errorStream.close();
+                inputStream.close();
+                scanner.close();
+                String errMessage = String.format("Error: %s failed due to timeout", command);
+                logWarn (errMessage);
+                return errMessage;
+            }
+            results = scanner.hasNext() ? scanner.next() : "";
+            bufferedReader.close();
+            sequenceInputStream.close();
+            errorStream.close();
+            inputStream.close();
+            scanner.close();
+            timer.cancel();
+            String errMessage = String.format("Error: %s failed with output: %s", command, results);
+            logWarn(errMessage);
+            return errMessage;
+        }
+
         results = scanner.hasNext() ? scanner.next() : "";
         bufferedReader.close();
+        sequenceInputStream.close();
+        errorStream.close();
+        inputStream.close();
         scanner.close();
-        
+        timer.cancel();
         logFine(results);
         return results;
+    }
+
+    // Save the file to temporary directory for analysis
+    private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
+        Path tempFilePath = null;
+        try {
+            // Create a temporary directory
+            Path tempDir = Files.createTempDirectory("tempDir");
+            tempFilePath = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
+            Files.write(tempFilePath, originalFile);
+            return tempFilePath;
+        } catch (Exception e) {
+            String errMessage = String.format("Error saveFileToTempDir failed: %s", e.getMessage());
+            logWarn(errMessage);
+            return null;
+        }
+    }
+
+    // Explicitley delete the temporary directory and file
+    private Boolean deleteTempDir(Path tempFilePath) {
+        try {
+            Files.walk(tempFilePath)
+            .sorted(Comparator.reverseOrder())
+            .map(Path::toFile)
+            .forEach(File::delete);
+            return true;
+        } catch (Exception e) {
+            String errMessage = String.format("Error deleteTempDir failed: %s", e.getMessage());
+            logWarn(errMessage);
+            return false;
+        }
     }
 }
