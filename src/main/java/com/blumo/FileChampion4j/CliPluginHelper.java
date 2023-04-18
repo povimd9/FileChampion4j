@@ -70,7 +70,7 @@ public class CliPluginHelper {
      * @return Map<String, Map<String, String>> - the results map
      */
     public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent, String fileCheksum) { 
-        String erroString = "Error: ";
+        String errString = "Error: ";
         String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
         Map<String, String> responsePatterns = new HashMap<>();
@@ -78,8 +78,8 @@ public class CliPluginHelper {
 
         filePathRaw = saveFileToTempDir(fileExtension, fileContent);
         if (filePathRaw == null) {
-            responsePatterns.put(erroString, "Error: Failed to save file to temporary directory");
-            responseMap.put(erroString, responsePatterns);
+            responsePatterns.put(errString, "Failed to save file to temporary directory");
+            responseMap.put(errString, responsePatterns);
             return responseMap;
         }
 
@@ -92,21 +92,21 @@ public class CliPluginHelper {
             result = timedProcessExecution(endpoint);
             logFine(singleStepConfig.getName() + " result: " + result);
         } catch (IOException|NullPointerException|InterruptedException e) {
-            responsePatterns.put(erroString, "Error: " + e.getMessage());
+            responsePatterns.put(errString, e.getMessage());
         }
 
         String expectedResuls = responseConfig.substring(0, responseConfig.indexOf("${")>-1?
-        responseConfig.indexOf("${")-1 : responseConfig.length());
+        responseConfig.indexOf("${") : responseConfig.length());
 
         if (result.contains(expectedResuls)) {
-            responsePatterns = extractRespnsePatterns("Success: " + result);
-            responseMap.put("Success: " + result, responsePatterns);
+            responsePatterns = extractRespnsePatterns(result);
+            responseMap.put("Success", responsePatterns);
             deleteTempDir(filePathRaw);
             return responseMap;
         } else {
             String errMessage = String.format("Error, expected: %s, received: ", expectedResuls);
             responsePatterns.put(errMessage, result);
-            responseMap.put(errMessage, responsePatterns);
+            responseMap.put(errString, responsePatterns);
             deleteTempDir(filePathRaw);
             return responseMap;
         }
@@ -139,14 +139,13 @@ public class CliPluginHelper {
             .append(responseConfig);
             logFine(logMessage.toString());
             
-            String fixedPrefix = responseConfig.substring(0, responseConfig.indexOf("${"));
+            String fixedPrefix = String.format("%s", responseConfig.substring(0, responseConfig.indexOf("${")));
             logMessage.replace(0, logMessage.length(), "Fixed prefix: ").append(fixedPrefix);
             logFine(logMessage.toString());
     
             String fixedSuffix;
             int suffixStartIndex = responseConfig.indexOf("${") + placeholderName.length() + 3;
             if (suffixStartIndex == responseConfig.length()) {
-                // Placeholder appears at the end of the responseConfig string
                 fixedSuffix = "";
             } else {
                 fixedSuffix = responseConfig.substring(suffixStartIndex);
@@ -154,7 +153,7 @@ public class CliPluginHelper {
                 logFine(logMessage.toString());
             }
     
-            String captureGroupPattern = String.format("^%s(.*)%s$", fixedPrefix, fixedSuffix);
+            String captureGroupPattern = String.format("%s(.*)%s", fixedPrefix, fixedSuffix);
             logMessage.replace(0, logMessage.length(), "Capture group pattern: ").append(captureGroupPattern);
             logFine(logMessage.toString());
     

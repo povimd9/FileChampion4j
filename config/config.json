@@ -17,7 +17,7 @@
         "change_ownership_mode": "r",
         "name_encoding": true,
         "max_size": "126000",
-        "extension_plugins": ["test_cli.step1", "clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
+        "extension_plugins": ["clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
       },
       "doc": {
         "mime_type": "application/msword",
@@ -75,24 +75,14 @@
     }
   },
   "Plugins": {
-    "test_cli": {
-      "step1.step": {
-        "type": "cli",
-        "run_before": true,
-        "endpoint": "java -version",
-        "timeout": 320,
-        "on_timeout_or_fail": "fail",
-        "response": "openjdk"
-      }
-    },
     "clean_pdf_documents1": {
       "step1.step": {
         "type": "cli",
-        "run_before": true,
+        "run_after": true,
         "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
         "timeout": 320,
         "on_timeout_or_fail": "fail",
-        "response": "Success: ${step1.newFilePath}"
+        "response": "Success: ${step1.filePath}"
       }
     },
     "clean_pdf_documents2": {
@@ -102,7 +92,7 @@
         "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
         "timeout": 320,
         "on_timeout_or_fail": "fail",
-        "response": "Success: ${step1.newFilePath}"
+        "response": "Success: ${step1.filePath}"
       }
     }
   }

@@ -34,8 +34,7 @@ public class FileValidatorTest {
     private FileValidator validator;
     private static final String testUsername = System.getProperty("user.name");
     private static final String testPluginCommand = System.getProperty("os.name").startsWith("Windows")?
-        "cmd /c echo Success: ${filePath} ${fileContent} ${fileChecksum}" : "echo Success: ${filePath} ${fileContent} ${fileChecksum}";
-
+        "cmd /c copy ${filePath} ${filePath}.new.pdf && echo Success: ${filePath}.new.pdf" : "cp ${filePath} ${filePath}.new.pdf && echo Success: ${filePath}.new.pdf";
 
     // Config JSON object for testing
     private static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
@@ -56,7 +55,8 @@ public class FileValidatorTest {
     + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
     + "      \"name_encoding\": true,\r\n"
-    + "      \"max_size\": \"4000\"\r\n"
+    + "      \"max_size\": \"4000\",\r\n"
+    +"       \"extension_plugins\": [\"clean_pdf_documents1.step1\", \"clean_pdf_documents2.step1\"]\r\n"
     + "      },\r\n"
     + "    \"doc\": {\r\n"
     + "      \"mime_type\": \"application/msword\",\r\n"
@@ -78,10 +78,13 @@ public class FileValidatorTest {
     + "  }\r\n"
     + "},\r\n"
     + "  \"Plugins\": \r\n"
-    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"run_after\":true, \"endpoint\":\""
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true, \"endpoint\":\""
     + testPluginCommand
-    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
-    + "  }\r\n"
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"pass\",\"response\":\"Success: ${step1.filePath}\"}}"
+    + ",\"clean_pdf_documents2\":{\"step1.step\":{\"type\":\"cli\",\"run_after\":true, \"endpoint\":\""
+    + testPluginCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.filePath}\"}}"
+    + "  }}\r\n"
     + "}");
     
 
@@ -124,7 +127,7 @@ public class FileValidatorTest {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());        });
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); });
         assertEquals("fileName cannot be null or empty.", exception.getMessage());
     }
     
@@ -134,7 +137,7 @@ public class FileValidatorTest {
         byte[] fileInBytes = null;
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());        });
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); });
         assertEquals("originalFile cannot be null or empty.", exception.getMessage());
     }
 
@@ -144,7 +147,7 @@ public class FileValidatorTest {
         byte[] fileInBytes = new byte[]{};
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());        });
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); });
         assertEquals("originalFile cannot be null or empty.", exception.getMessage());
     }
 
@@ -215,7 +218,7 @@ public class FileValidatorTest {
         String fileName = "test.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to non existing directory");
-        assertTrue(fileValidationResults.resultsInfo().contains("File is valid but was not saved to output directory:"), "Expected 'File is valid but was not saved to output directory', got: " + fileValidationResults.resultsInfo());
+        assertTrue(fileValidationResults.resultsInfo().contains("File is valid but failed to save to output directory:"), "Expected 'File is valid but failed to save to output directory:', got: " + fileValidationResults.resultsInfo());
     }
 
 

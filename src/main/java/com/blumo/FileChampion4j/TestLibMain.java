@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class TestLibMain {
     public static void main(String[] args) {
         // Path to the file to be validated in this simple example
-        File pdfFile = new File("samples/In/DataMining-ch1.pdf");
+        File pdfFile = new File("samples/In/test.pdf");
 
         // Path to the config.json file
         String configPath = "config/config.json";
@@ -33,10 +33,12 @@ public class TestLibMain {
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error creating FileValidator object");
+            System.exit(1);
         } catch (Exception e) {
             System.out.println("Error reading config file");
             System.exit(1);
-
         }
 
         try {

@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 
@@ -72,7 +73,7 @@ public class FileValidator {
      * This method is used to get the json configurations
      * @param configJsonObject
      */
-    public FileValidator(JSONObject configJsonObject) {
+    public FileValidator(JSONObject configJsonObject) throws IllegalArgumentException {
         if (configJsonObject == null || configJsonObject.isEmpty() || !configJsonObject.has("Validations")) {
             throw new IllegalArgumentException("Config JSON object cannot be null or empty, and must have Validations section.");
         }
@@ -81,8 +82,10 @@ public class FileValidator {
             try {
                 pluginsHelper = new PluginsHelper(configJsonObject.getJSONObject("Plugins"));
                 loadPlugins();
+                checkPluginsConfig();
             } catch (Exception e) {
                 logWarn("Error initializing plugins: " + e.getMessage());
+                throw new IllegalArgumentException("Error initializing plugins: " + e.getMessage());
             }
         }
     }
@@ -93,6 +96,26 @@ public class FileValidator {
                 StepConfig stepConfig = pluginConfig.getStepConfigs().get(step);
                 stepConfigsBefore.put(stepConfig.isRunBefore()? step : "", stepConfig.isRunBefore()? stepConfig : null);
                 stepConfigsAfter.put(stepConfig.isRunAfter()? step : "", stepConfig.isRunAfter()? stepConfig : null);
+            }
+        }
+    }
+
+    private void checkPluginsConfig() {
+        // check that all extensions defined plugins exist in maps
+        JSONObject validationsJsonObject = configJsonObject.getJSONObject("Validations");
+        for (int i = 0; i < validationsJsonObject.length(); i++) {
+            String categroyKey = validationsJsonObject.names().getString(i);
+            for (int k=0; k < validationsJsonObject.getJSONObject(categroyKey).length(); k++) {
+                String extensionKey = validationsJsonObject.getJSONObject(categroyKey).names().getString(k);
+                if (validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).has("extension_plugins")) {
+                    for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
+                        if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
+                            sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(pluginName).append(" defined in config does not exist in plugins configuration");
+                            logWarn(sharedMessage.toString());
+                            throw new IllegalArgumentException(sharedMessage.toString());
+                        }
+                    }
+                }
             }
         }
     }
@@ -156,12 +179,12 @@ public class FileValidator {
         // Check for before plugins
         if (extensionConfig.getExtensionPlugins() != null) {
             String executionResults = executeBeforePlugins(extensionConfig, fileExtension);
-            if (executionResults.substring(0, 12).contains("Failed")) {
+            if (executionResults.contains(". Failed for step:")) {
                 sharedMessage.replace(0, sharedMessage.length(), "executeBeforePlugins failed for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
                 logWarn(sharedMessage.toString());
                 return new ValidationResponse(false, sharedMessage.toString() , originalFilenameClean, null, null);
-            } else if (executionResults.substring(0, 12).contains("Error")) {
-                sharedMessage.replace(0, sharedMessage.length(), "executeBeforePlugins error for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
+            } else if (executionResults.substring(0, 12).contains(". Error for step:")) {
+                sharedMessage.replace(0, sharedMessage.length(), "Error executing Plugins defined to run before validations for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
                 logWarn(sharedMessage.toString());
             } else {
                 logInfo(executionResults);
@@ -273,17 +296,18 @@ public class FileValidator {
             logFine(responseAggregationSuccess);
         }
 
+        
         // Check for after plugins
         if (extensionConfig.getExtensionPlugins() != null) {
             String executionResults = executeAfterPlugins(extensionConfig, fileExtension);
-            if (executionResults.substring(0, 12).contains("Failed")) {
+            if (executionResults.contains(". Failed for step:")) {
                 sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                     .append("Error in executeAfterPlugins: ")
                     .append(executionResults)
                     .append(commonLogString);
                 responseAggregationFail = sbresponseAggregationFail.toString();
                 logWarn(responseAggregationFail);
-            } else if (executionResults.substring(0, 12).contains("Error")) {
+            } else if (executionResults.contains(". Error for step:")) {
                 logWarn("Error in executeAfterPlugins: " + executionResults);
             } else {
                 sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
@@ -362,10 +386,9 @@ public class FileValidator {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);
                     sharedMessage.replace(0, sharedMessage.length(), "Step: ")
-                        .append(stepConfigsBefore.get(extensionPlugin).getName());
-
+                        .append(stepConfigsBefore.get(extensionPlugin).getName()).append(" Success, Results: {Error,");
                     String sharedString = ", Results: ";
-                    if (!stepResults.startsWith(sharedMessage.toString())) {
+                    if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
                         if (stepConfigsBefore.get(extensionPlugin).getOnFail().equals("fail")) {
                             sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Failed for step: ")
@@ -412,20 +435,20 @@ public class FileValidator {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);
                     sharedMessage.replace(0, sharedMessage.length(), "Step: ")
-                        .append(stepConfigsAfter.get(extensionPlugin).getName());
+                        .append(stepConfigsAfter.get(extensionPlugin).getName()).append(" Success, Results: {Error,");
                     String sharedString = ", Results: ";
-                    if (!stepResults.startsWith(sharedMessage.toString())) {
+                    if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
                         if (stepConfigsAfter.get(extensionPlugin).getOnFail().equals("fail")) {
                             sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Failed for step: ")
-                            .append(stepConfigsBefore.get(extensionPlugin).getName())
+                            .append(stepConfigsAfter.get(extensionPlugin).getName())
                             .append(sharedString + stepResults);
                             logFine(stepResults);    
                             return sbResponseAggregation.toString();
                         }
                         sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Error for step: ")
-                            .append(stepConfigsBefore.get(extensionPlugin).getName())
+                            .append(stepConfigsAfter.get(extensionPlugin).getName())
                             .append(sharedString + stepResults);
                             logFine(stepResults);
                         ++responseMsgCount;
@@ -463,25 +486,36 @@ public class FileValidator {
                 .execute(fileExtension, originalFile, fileChecksum);    
             stepResultsMap.putAll(stepResults.get(stepResults.keySet().toArray()[0]));
 
-            if (!stepResultsMap.isEmpty()) {
-                if (stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1,
-                        extensionPluginName.length()) + ".filePath") != null) {
+            if (!stepResultsMap.isEmpty() && stepResults.containsKey("Success")) {
+                String newFilePath = stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1,
+                extensionPluginName.length()) + ".filePath");
+                String newB64Content = stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1,
+                extensionPluginName.length()) + ".fileContent");
+
+                if (!isBlank(newFilePath)) {
                     try {
                         originalFile = Files.readAllBytes(new File(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
                             extensionPluginName.length()) + ".filePath")).toPath());
+                        fileChecksum = calculateChecksum(originalFile);
                     } catch (IOException e) {
-                        logWarn(e.getMessage());
+                        sharedMessage.replace(0, sharedMessage.length(), "Error reading plugin expected file: ").append(e.getMessage());
+                        logWarn(String.format(sharedMessage.toString()));
+                        return sharedMessage.toString();
                     }
                 }
-                originalFile = stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
-                    extensionPluginName.length()) + ".fileContent") != null ? 
-                    Base64.getDecoder()
-                    .decode(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1,
-                    extensionPluginName.length()) + ".fileContent")) : originalFile;
-                fileChecksum = calculateChecksum(originalFile);
+                if (!isBlank(newB64Content)) {
+                    try {
+                        originalFile = Base64.getDecoder().decode(newB64Content);
+                    } catch (Exception e) {
+                        sharedMessage.replace(0, sharedMessage.length(), "Error decoding plugin expected file: ").append(e.getMessage());
+                        logWarn(String.format(sharedMessage.toString()));
+                        return sharedMessage.toString();
+                    }
+                    fileChecksum = calculateChecksum(originalFile);
+                }
             }
             sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(extensionPluginName)
-                .append(", Results: ")
+                .append(" Success, Results: ")
                 .append(stepResultsMap);
             logFine(sharedMessage.toString());
         } else if (stepConfigs.get(extensionPlugin).getType().equals("http")) {
@@ -511,7 +545,7 @@ public class FileValidator {
             tempFilePath = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
             Files.write(tempFilePath, originalFile);
         } catch (Exception e) {
-            sharedMessage.replace(0, sharedMessage.length(), "saveFileToTempDir failed: ").append(e.getMessage());
+            sharedMessage.replace(0, sharedMessage.length(), "Error: Saving file to temporary directory failed: ").append(e.getMessage());
             logWarn(sharedMessage.toString());
             return null;
         }
@@ -520,14 +554,13 @@ public class FileValidator {
 
     // Explicitley delete the temporary directory and file
     private Boolean deleteTempDir(Path tempFilePath) {
-        try {
-            Files.walk(tempFilePath)
-            .sorted(Comparator.reverseOrder())
+        try (Stream<Path> walk = Files.walk(tempFilePath)) {
+            walk.sorted(Comparator.reverseOrder())
             .map(Path::toFile)
             .forEach(File::delete);
             return true;
         } catch (Exception e) {
-            sharedMessage.replace(0, sharedMessage.length(), "deleteTempDir failed: ").append(e.getMessage());
+            sharedMessage.replace(0, sharedMessage.length(), "Error: Delere temporary directoy failed: ").append(e.getMessage());
             logWarn(sharedMessage.toString());
             return false;
         }
@@ -649,7 +682,7 @@ public class FileValidator {
         try {
             Files.write(targetFilePath, fileBytes, StandardOpenOption.CREATE);
         } catch (IOException e) {
-            sharedMessage.replace(0, sharedMessage.length(), "saveFileToOutputDir failed: ").append(e.getMessage());
+            sharedMessage.replace(0, sharedMessage.length(), "Error: Saving file to directory failed: ").append(e.getMessage());
             logSevere(sharedMessage.toString());
             return sharedMessage.toString();
         }
@@ -660,7 +693,7 @@ public class FileValidator {
             try {
                 Files.deleteIfExists(targetFilePath);
             } catch (IOException e) { 
-                logSevere("Error: Failed to delete targetFilePath: " + e.getMessage());
+                logSevere("Error: Failed to delete file from permissions change operation: " + e.getMessage());
             }
             logSevere(newFileAttributesStatus);
             return newFileAttributesStatus;
