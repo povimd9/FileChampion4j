@@ -1,0 +1,159 @@
+{
+  "Validations": {
+    "Documents": {
+      "pdf": {
+        "mime_type": "application/pdf",
+        "magic_bytes": "25504446",
+        "header_signatures": "25504446",
+        "footer_signatures": "2525454f46",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "126000",
+        "extension_plugins": ["plugin1.step1", "plugin2.step1", "plugin3.step1", "plugin4.step1", "plugin5.step1", "plugin6.step1", "plugin7.step1", "plugin8.step1"]
+      },
+      "doc": {
+        "mime_type": "application/msword",
+        "magic_bytes": "D0CF11E0A1B11AE1",
+        "header_signatures": "D0CF11E0A1B11AE1",
+        "footer_signatures": "0000000000000000",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+      }
+    },
+    "Images": {
+      "jpg": {
+        "mime_type": "image/jpeg",
+        "magic_bytes": "FFD8",
+        "header_signatures": "FFD8FF",
+        "footer_signatures": "FFD9",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+        },
+      "png": {
+        "mime_type": "image/png",
+        "magic_bytes": "89504E470D0A1A0A",
+        "header_signatures": "89504E470D0A1A0A0000000D49484452",
+        "footer_signatures": "49454E44AE426082",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+      }
+    }
+  },
+  "Plugins": {
+    "plugin1": {
+      "step1.step": {
+        "type": "cli",
+        "run_before": true,
+        "endpoint": "java -jar plugins/java_echo.jar Fail: ${filePath}.new.pdf",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.filePath}"
+      }
+    },
+    "plugin2": {
+      "step1.step": {
+        "type": "cli",
+        "run_before": true,
+        "endpoint": "nonexistent",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.filePath}"
+      }
+    },
+    "plugin3": {
+      "step1.step": {
+        "type": "cli",
+        "run_before": true,
+        "endpoint": "java -jar plugins/java_echo.jar Fail: ${filePath}.new.pdf test",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.filePath} test"
+      }
+    },
+    "plugin4": {
+      "step1.step": {
+        "type": "cli",
+        "run_before": true,
+        "endpoint": "java -jar plugins\\java_echo.jar Fail: MTIzNDU2IA0K",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.fileContent}"
+      }
+    },
+    "plugin5": {
+      "step1.step": {
+        "type": "cli",
+        "run_after": true,
+        "endpoint": "java -jar plugins/java_echo.jar Fail: ${filePath}.new.pdf",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.filePath}"
+      }
+    },
+    "plugin6": {
+      "step1.step": {
+        "type": "cli",
+        "run_after": true,
+        "endpoint": "nonexistent",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.filePath}"
+      }
+    },
+    "plugin7": {
+      "step1.step": {
+        "type": "cli",
+        "run_after": true,
+        "endpoint": "java -jar plugins/java_echo.jar Fail: ${filePath}.new.pdf test",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.filePath} test"
+      }
+    },
+    "plugin8": {
+      "step1.step": {
+        "type": "cli",
+        "run_after": true,
+        "endpoint": "java -jar plugins\\java_echo.jar Fail: MTIzNDU2IA0K",
+        "timeout": 320,
+        "on_timeout_or_fail": "fail",
+        "response": "Success: ${step1.fileContent}"
+      }
+    }
+  }
+}

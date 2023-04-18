@@ -101,11 +101,10 @@ public class CliPluginHelper {
         if (result.contains(expectedResuls)) {
             responsePatterns = extractRespnsePatterns(result);
             responseMap.put("Success", responsePatterns);
-            deleteTempDir(filePathRaw);
             return responseMap;
         } else {
-            String errMessage = String.format("Error, expected: %s, received: ", expectedResuls);
-            responsePatterns.put(errMessage, result);
+            logMessage.replace(0, logMessage.length(), "Error, expected: \"").append(expectedResuls).append("\", received: ");
+            responsePatterns.put(logMessage.toString(), result);
             responseMap.put(errString, responsePatterns);
             deleteTempDir(filePathRaw);
             return responseMap;

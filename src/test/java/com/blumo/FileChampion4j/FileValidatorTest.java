@@ -12,17 +12,19 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
-import java.util.Base64;
 import java.util.UUID;
+import java.util.logging.LogManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * Unit test for FileValidator class.
@@ -33,8 +35,8 @@ public class FileValidatorTest {
     private Path tempDirectory;
     private FileValidator validator;
     private static final String testUsername = System.getProperty("user.name");
-    private static final String testPluginCommand = System.getProperty("os.name").startsWith("Windows")?
-        "cmd /c copy ${filePath} ${filePath}.new.pdf && echo Success: ${filePath}.new.pdf" : "cp ${filePath} ${filePath}.new.pdf && echo Success: ${filePath}.new.pdf";
+    private static final String testCliPathPlugin = "java -jar plugins/java_echo.jar Success: ${filePath}.new.pdf";
+    private static final String testCliContentPlugin = "java -jar plugins/java_echo.jar Success: MTIzNDU2IA0K suffix";
 
     // Config JSON object for testing
     private static final JSONObject CONFIG_JSON = new JSONObject("{\r\n"
@@ -56,7 +58,7 @@ public class FileValidatorTest {
     + "      \"change_ownership_mode\": \"r\",\r\n"
     + "      \"name_encoding\": true,\r\n"
     + "      \"max_size\": \"4000\",\r\n"
-    +"       \"extension_plugins\": [\"clean_pdf_documents1.step1\", \"clean_pdf_documents2.step1\"]\r\n"
+    +"       \"extension_plugins\": [\"clean_pdf_documents1.step1\", \"clean_pdf_documents2.step1\", \"clean_pdf_documents3.step1\"]\r\n"
     + "      },\r\n"
     + "    \"doc\": {\r\n"
     + "      \"mime_type\": \"application/msword\",\r\n"
@@ -79,11 +81,14 @@ public class FileValidatorTest {
     + "},\r\n"
     + "  \"Plugins\": \r\n"
     + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true, \"endpoint\":\""
-    + testPluginCommand
+    + testCliPathPlugin
     + "\",\"timeout\":320,\"on_timeout_or_fail\":\"pass\",\"response\":\"Success: ${step1.filePath}\"}}"
     + ",\"clean_pdf_documents2\":{\"step1.step\":{\"type\":\"cli\",\"run_after\":true, \"endpoint\":\""
-    + testPluginCommand
-    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.filePath}\"}}"
+    + testCliContentPlugin
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.fileContent} suffix\"}}"
+    + ",\"clean_pdf_documents3\":{\"step1.step\":{\"type\":\"cli\",\"run_after\":true, \"endpoint\":\""
+    + testCliContentPlugin
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"\"}}"
     + "  }}\r\n"
     + "}");
     
@@ -93,6 +98,14 @@ public class FileValidatorTest {
     void setUp() throws IOException {
         tempDirectory = Files.createTempDirectory("temp");
         validator = new FileValidator(CONFIG_JSON);
+    }
+
+    @Test
+    void testDefaultLoggingConfiguration() {
+        assertDoesNotThrow(() -> {
+            Object o = FileValidator.class.getResourceAsStream("/logging.properties");
+            LogManager.getLogManager().readConfiguration((InputStream) o);
+        }, "Failed to load default logging configuration");
     }
 
     // Test empty json config object

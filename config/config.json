@@ -79,7 +79,7 @@
       "step1.step": {
         "type": "cli",
         "run_after": true,
-        "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
+        "endpoint": "java -jar plugins\\java_echo.jar Success: ${filePath}",
         "timeout": 320,
         "on_timeout_or_fail": "fail",
         "response": "Success: ${step1.filePath}"
@@ -89,10 +89,10 @@
       "step1.step": {
         "type": "cli",
         "run_after": true,
-        "endpoint": "java -jar pdfsanitizer.jar ${filePath}",
+        "endpoint": "java -jar plugins\\java_echo.jar Success: MTIzNDU2IA0K",
         "timeout": 320,
         "on_timeout_or_fail": "fail",
-        "response": "Success: ${step1.filePath}"
+        "response": "Success: ${step1.fileContent}"
       }
     }
   }

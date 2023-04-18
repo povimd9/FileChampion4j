@@ -142,7 +142,6 @@
                     <perCoreThreadCount>true</perCoreThreadCount>
                     <printSummary>true</printSummary>
                     <printFailures>true</printFailures>
-                    <argLine>-Xmx12g</argLine>
                 </configuration>
                 <executions>
                     <execution>

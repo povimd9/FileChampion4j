@@ -2,6 +2,7 @@ package com.blumo.FileChampion4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -32,10 +33,12 @@ import java.security.MessageDigest;
 public class FileValidator {
     static {
         try {
-            LogManager.getLogManager().readConfiguration(
-                FileValidator.class.getResourceAsStream("/logging.properties"));
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: ", e);
+            Object o = FileValidator.class.getResourceAsStream("/logging.properties");
+            LogManager.getLogManager().readConfiguration((InputStream) o);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Could not load default logging configuration: file not found", e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not load default logging configuration: error reading file", e);
         }
     }
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
@@ -386,7 +389,7 @@ public class FileValidator {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);
                     sharedMessage.replace(0, sharedMessage.length(), "Step: ")
-                        .append(stepConfigsBefore.get(extensionPlugin).getName()).append(" Success, Results: {Error,");
+                        .append(stepConfigsBefore.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
                     if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
                         if (stepConfigsBefore.get(extensionPlugin).getOnFail().equals("fail")) {
@@ -435,7 +438,7 @@ public class FileValidator {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);
                     sharedMessage.replace(0, sharedMessage.length(), "Step: ")
-                        .append(stepConfigsAfter.get(extensionPlugin).getName()).append(" Success, Results: {Error,");
+                        .append(stepConfigsAfter.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
                     if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
                         if (stepConfigsAfter.get(extensionPlugin).getOnFail().equals("fail")) {
@@ -494,9 +497,11 @@ public class FileValidator {
 
                 if (!isBlank(newFilePath)) {
                     try {
-                        originalFile = Files.readAllBytes(new File(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
-                            extensionPluginName.length()) + ".filePath")).toPath());
+                        Path newFile = new File(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
+                        extensionPluginName.length()) + ".filePath")).toPath();
+                        originalFile = Files.readAllBytes(newFile);
                         fileChecksum = calculateChecksum(originalFile);
+                        deleteTempDir(newFile.getParent().toAbsolutePath());
                     } catch (IOException e) {
                         sharedMessage.replace(0, sharedMessage.length(), "Error reading plugin expected file: ").append(e.getMessage());
                         logWarn(String.format(sharedMessage.toString()));
@@ -514,10 +519,17 @@ public class FileValidator {
                     fileChecksum = calculateChecksum(originalFile);
                 }
             }
-            sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(extensionPluginName)
-                .append(" Success, Results: ")
-                .append(stepResultsMap);
-            logFine(sharedMessage.toString());
+            for(Map.Entry<String, String> entry : stepResultsMap.entrySet()) {
+                String errorMsg =  entry.getValue();
+                String errorDetails = entry.getKey();
+                sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(extensionPluginName)
+                    .append(" Success, Results: ")
+                    .append(errorDetails)
+                    .append("\"")
+                    .append(errorMsg);
+                logFine(sharedMessage.toString());
+            }
+            return sharedMessage.toString();
         } else if (stepConfigs.get(extensionPlugin).getType().equals("http")) {
             // TODO: Implement http plugin type
         }
