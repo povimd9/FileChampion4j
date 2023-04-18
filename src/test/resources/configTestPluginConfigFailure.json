@@ -1,0 +1,34 @@
+{
+  "Validations": {
+    "Documents": {
+      "pdf": {
+        "mime_type": "application/pdf",
+        "magic_bytes": "25504446",
+        "header_signatures": "25504446",
+        "footer_signatures": "2525454f46",
+        "antivirus_scan": {
+          "clamav_scan.java": [
+            "RETURN_TYPE",
+            "param1",
+            "param2"
+          ]},
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "126000",
+        "extension_plugins": ["plugin1.step1"]
+      }
+    }
+  },
+  "Plugins": {
+    "plugin1": {
+      "step1.step": {
+        "type": "cli",
+        "timeout": 320,
+        "on_timeout_or_fail": "pass",
+        "response": "Success: ${step1.filePath}"
+      }
+    }
+  }
+}

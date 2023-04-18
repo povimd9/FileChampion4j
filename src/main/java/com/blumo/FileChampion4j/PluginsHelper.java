@@ -14,7 +14,7 @@ public class PluginsHelper {
 
     /**
      * Constructor
-     * @param config (JSONObject) the Json configuration data
+     * @param plugins (JSONObject) a JSONObject containing all plugins
      * @return (PluginsHelper) a PluginsHelper object
      */
     public PluginsHelper(JSONObject plugins) {
@@ -45,10 +45,10 @@ public class PluginsHelper {
                 stepConfig.setRunBefore(step.optBoolean("run_before"));
                 stepConfig.setRunAfter(step.optBoolean("run_after"));
                 stepConfig.setCredsPath(step.optString("creds_path"));
-                stepConfig.setTimeout(step.optInt("timeout"));
-                stepConfig.setOnFail(step.optString("on_timeout_or_fail"));
-                stepConfig.setEndpoint(step.optString("endpoint"));
-                stepConfig.setResponse(step.optString("response"));
+                stepConfig.setTimeout(step.getInt("timeout"));
+                stepConfig.setOnFail(step.getString("on_timeout_or_fail"));
+                stepConfig.setEndpoint(step.getString("endpoint"));
+                stepConfig.setResponse(step.getString("response"));
 
                 switch (stepConfig.getType()) {
                     case "cli":

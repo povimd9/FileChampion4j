@@ -375,7 +375,7 @@ public class FileValidator {
     /**
      * Execute and check results of plugins configured to run before the validations
      * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
-     * @param tempTargetFile (Path) a Path object containing the path to the temporary file
+     * @param fileExtension (String) the file extension of the file being validated
      * @return String (String) a string containing the results of the plugin execution
      */
     private String executeBeforePlugins(Extension extensionConfig, String fileExtension) {
@@ -424,7 +424,7 @@ public class FileValidator {
     /**
      * Execute and check results of plugins configured to run after the validations
      * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
-     * @param tempTargetFile (Path) a Path object containing the path to the temporary file
+     * @param fileExtension (String) the file extension of the file being validated
      * @return String (String) a string containing the results of the plugin execution
      */
     private String executeAfterPlugins(Extension extensionConfig, String fileExtension) {
@@ -474,7 +474,7 @@ public class FileValidator {
      * Execute a single plugin step
      * @param extensionPlugin (String) a string containing the name of the plugin step to execute
      * @param stepConfigs (Map<String, StepConfig>) a map containing the configuration for the step to execute
-     * @param tempTargetFile (String) a string containing the path to the temporary file
+     * @param fileExtension (String) the file extension of the file being validated
      * @return String (String) a string containing the results of the plugin execution
      */
     private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String fileExtension) {

@@ -4,7 +4,10 @@ package com.blumo.FileChampion4j;
 import org.json.JSONObject;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.itextpdf.text.Document;
@@ -292,7 +295,7 @@ public class FileValidatorJsonTest {
     // Test step timeout
     @Test
     void testStepTimeout() throws Exception {
-        byte[] fileInBytes = generatePdfBytes(250000);
+        byte[] fileInBytes = generatePdfBytes(25000);
         String fileName = "test.pdf";
         String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginTimeout.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
@@ -305,7 +308,7 @@ public class FileValidatorJsonTest {
     // Test step failure
     @Test
     void testStepfailure() throws Exception {
-        byte[] fileInBytes = generatePdfBytes(250000);
+        byte[] fileInBytes = generatePdfBytes(25000);
         String fileName = "test.pdf";
         String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginFailure.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
@@ -313,6 +316,26 @@ public class FileValidatorJsonTest {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
         assertTrue(fileValidationResults.resultsInfo().contains("Error"), "Expected validation response to contain fail");
+    }
+
+    // Test non existing plugin load failure
+    @Test
+    void testPluginLoadFailue() throws Exception {
+        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginLoadFailure.json").toAbsolutePath()));
+        JSONObject jsonObject = new JSONObject(jsonConfigContent);
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        assertTrue(exception.getMessage().contains("defined in config does not exist in plugins configuration"), 
+        "Expected exception to contain 'config does not exist in plugins configuration'.");
+    }
+
+    // Test missing plugin keys
+    @Test
+    void testPluginKeysFailue() throws Exception {
+        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginConfigFailure.json").toAbsolutePath()));
+        JSONObject jsonObject = new JSONObject(jsonConfigContent);
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        assertTrue(exception.getMessage().contains("Error initializing plugins: JSONObject"), 
+        "Expected exception to contain 'Error initializing plugins: JSONObject'.");
     }
 
     // Test invalid mime type in json config

@@ -64,7 +64,7 @@ public class CliPluginHelper {
     
     /**
      * Executes the CLI command
-     * @param filePath (String) - the path to the file
+     * @param fileExtension (String) - the file extension
      * @param fileContent (byte[]) - the file content
      * @param fileCheksum (String) - the file checksum
      * @return Map<String, Map<String, String>> - the results map
