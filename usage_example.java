@@ -36,7 +36,7 @@ public class Main {
         // Create a new FileValidator object with json config file
         try {
             // Read the JSON object from the config.json file
-            jsonObject = new JSONObject(Files.readString(Paths.get(filePath)));
+            jsonObject = new JSONObject(Files.readAllLines(Paths.get(filePath)));
             // Create a new FileValidator object
             validator = new FileValidator(jsonObject);
         } catch (IOException e) {

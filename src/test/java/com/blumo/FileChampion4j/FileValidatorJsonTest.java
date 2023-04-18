@@ -294,7 +294,7 @@ public class FileValidatorJsonTest {
     void testStepTimeout() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src\\test\\resources\\configTestPluginTimeout.json" )));
+        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginTimeout.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
         FileValidator validator = new FileValidator(jsonObject);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
@@ -307,7 +307,7 @@ public class FileValidatorJsonTest {
     void testStepfailure() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src\\test\\resources\\configTestPluginFailure.json" )));
+        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginFailure.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
         FileValidator validator = new FileValidator(jsonObject);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
