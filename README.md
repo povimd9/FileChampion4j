@@ -1,139 +1,181 @@
+# About FileChampion4j
+
 [![codecov](https://codecov.io/gh/povimd9/FileChampion4j/branch/master/graph/badge.svg?token=WUCKTU7ALO)](https://codecov.io/gh/povimd9/FileChampion4j)
 ![Build Status](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml/badge.svg)
 
-# FileChampion4j
-A Java class for file validation.
+Thank you for your interest in FileChampion4j, a robust, secure, and flexible file validation library for Java. Documentation can be found via javacdoc and under the project WIKI section.
 
-## PLEASE NOTE THAT THIS IS IN EARLY DEVELOPMENT AND MISSING FUNCTIONALITY, SUCH AS HELPER CLEANING METHODS AND AV SCANS.
+## Introduction
 
-### Introduction
-The FileSentry4j class is a Java class for file validation. It can be used to validate files against configured set of controls, and return machine and human readable validation results.
+FileChampion4j is a powerful and flexible Java library for validating and processing files. The library can be used to check files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, and more. The library can also execute extension plugins that are defined for the file type.
+
+### Features
+
+- Easy to understand and configure for developers, operations, and security engineers.
+- JSON-based configuration, supporting the ability to separate configurations from code.
+- Flexible to support various integrations, including client-defined controls.
+- Support for in-memory and on-disk validation.
+- Validate files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, filename cleanup/encoding, and owner/permissions of file.
+- Custom plugins execution support for extended usability.
+- Comprehensive error handling and reporting.
+
+### Benefits
+
+- Protect your system from malicious files.
+- Ensure that files are of the correct type and size.
+- Save time, effort, and risk of developing custom file validation code.
+- Allow security engineers to define required file controls without code modification.
+- Support easy auditing of controls by compliance officers and auditors.
 
 ### Releases
-Working release versions, including slim/fat JARs, can be found on 'release-* branches.
-Maven Central package will be added for distribution soon.
 
-### Intent
-The intent of this package is to provide a secure and reliable way to validate and sanitize files as bytes. The package will support a variety of file types and formats, and will be able to protect against common security risks such as file injection attacks and malicious file content.
+Working release versions, including slim/fat JARs, can be found on the `release-*` branches. A Maven Central package will be added for distribution soon.
 
-The package will support (at least):
-- Cross-platform, active LTS java runtime versions
-- Support for in-memory and on-disk validation
-- A JSON configuration file for customizing the library's behavior
-- Tool for generating validation configurations for known file types
-- The ability to define custom validation and sanitization rules
-- Comprehensive error handling and reporting
-- Performance and scalability
-- Support for multiple languages and character encodings
-- Security features such as filename cleanup, file size checking, file type checking, SHA-256 checksum verification, AV check, and custom file type cleaning
-- The ability to save validated files to a target directory with specific owner and permissions
+### Support
 
-The package should be easy to use and well-documented. It should be able to be integrated into any Java application.
+FileChampion4j is intended to support Windows/Linux platforms, running any active LTS Java runtime versions. Builds are tested and packaged for supported environments. Merges and new releases must pass security, functional, and performance tests for supported environments.
 
-The package should be secure and reliable, well maintained and continuously updated to add controls and mitigate arising risks.
+If you have any questions about FileChampion4j, please feel free to contact the project team. The project team is available to answer questions and provide support.
 
+If you found any issues or ideas, please open a relevant issue in this project.
+
+### Contributing
+
+If you would like to contribute to FileChampion4j, please feel free to fork the project on GitHub. The project team welcomes contributions of all kinds, including bug fixes, new features, and documentation improvements.
+
+### License
+
+FileChampion4j is licensed under the Apache License, Version 2.0. For more information about the license, please see the LICENSE file in the project repository.
+
+### Basic Usage
+
+The FileValidator class is initialized with a JSON configuration object. The FileValidator.validateFile() method is the main entry point for validating files. validateFile() takes 4 arguments:
+
+- Configuration category - the category defined under the "Validations" object (e.g. "Documents")
+- Target file bytes - a byte array of file content to be scanned
+- File name - the original file name associated with the target file bytes
+- Output directory - (optional) directory to which a validated file will be saved to (required for owner/permissions change)
+
+validateFile() returns a ValidationResponse object, containing:
+
+- isValid - a boolean indicating whether the file is valid or not
+- resultsInfo - a string containing additional information about the validation pass/fail status
+- fileBytes - the file bytes if the file is valid (original of new file if was modified by plugins)
+- fileChecksum: the SHA-256 checksum of the file
 
 ### Configuration
-The configuration for file categories and associated validations is 
-stored in a JSON file and should be loaded as part of initiation using configParser.
-Configurations are expected to take the following format, where file types (such as Documents) may be aggregated together.
-When validating a file, only parent key of type is required in the argument for fileType (see example below).
+
+Example configuration of validation controls and plugins. "Validations" and at least 1 child key is required for validation to work. Plugins and steps can be defined as necessary - current implementation only supports process execution, API support will come soon.
+
+- ${filePath}, and ${fileChecksum} - can be used in 'endpoint' value to inject correspanding values
+- ${fileContent} - can be used in 'endpoint' value to inject file content in base64 encoding
+- ${STEP_NAME.filePath} - can be used to extract file path content and replace original file bytes
+- ${STEP_NAME.fileContent} - can be used to extract base64 file content from base64 encoded bytes
 
 ```javascript
 {
-  "Documents": {
-    "pdf": {
-      "mime_type": "application/pdf",
-      "magic_bytes": "25504446",
-      "header_signatures": "25504446",
-      "footer_signatures": "2525454f46",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "4000"
+  "Validations": {
+    "Documents": {
+      "pdf": {
+        "mime_type": "application/pdf",
+        "magic_bytes": "25504446",
+        "header_signatures": "25504446",
+        "footer_signatures": "2525454f46",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "126000",
+        "extension_plugins": ["do_anti_virus_scan.step1", "handle_pdf_documents.step1", "handle_pdf_documents.step2"]
       },
-    "doc": {
-      "mime_type": "application/msword",
-      "magic_bytes": "D0CF11E0A1B11AE1",
-      "header_signatures": "D0CF11E0A1B11AE1",
-      "footer_signatures": "0000000000000000",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "4000"
+      "doc": {
+        "mime_type": "application/msword",
+        "magic_bytes": "D0CF11E0A1B11AE1",
+        "header_signatures": "D0CF11E0A1B11AE1",
+        "footer_signatures": "0000000000000000",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+      }
+    },
+    "Images": {
+      "jpg": {
+        "mime_type": "image/jpeg",
+        "magic_bytes": "FFD8",
+        "header_signatures": "FFD8FF",
+        "footer_signatures": "FFD9",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+        },
+      "png": {
+        "mime_type": "image/png",
+        "magic_bytes": "89504E470D0A1A0A",
+        "header_signatures": "89504E470D0A1A0A0000000D49484452",
+        "footer_signatures": "49454E44AE426082",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "4000"
+      }
     }
   },
-  "Images": {
-    "jpg": {
-      "mime_type": "image/jpeg",
-      "magic_bytes": "FFD8",
-      "header_signatures": "FFD8FF",
-      "footer_signatures": "FFD9",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "4000"
+  "Plugins": {
+    "do_anti_virus_scan": {
+      "step1.step": {
+        "type": "cli",
+        "run_before": true,
+        "endpoint": "curl -X POST -F \"file=@${filePath}\" https://avscanner:8080/scan",
+        "timeout": 320,
+        "on_timeout_or_fail": "fail",
+        "response": "Success: ${step1.filePath}"
+      }
+    },
+    "handle_pdf_documents": {
+      "step1.step": {
+        "type": "cli",
+        "run_after": true,
+        "endpoint": "remove_all_active_pdf_objects.sh ${filePath}",
+        "timeout": 320,
+        "on_timeout_or_fail": "fail",
+        "response": "Success: ${step1.filePath}"
       },
-    "png": {
-      "mime_type": "image/png",
-      "magic_bytes": "89504E470D0A1A0A",
-      "header_signatures": "89504E470D0A1A0A0000000D49484452",
-      "footer_signatures": "49454E44AE426082",
-      "antivirus_scan": {
-        "clamav_scan.java": [
-          "RETURN_TYPE",
-          "param1",
-          "param2"
-        ]},
-      "change_ownership": true,
-      "change_ownership_user": "User1",
-      "change_ownership_mode": "r",
-      "name_encoding": true,
-      "max_size": "4000"
+      "step2.step": {
+        "type": "cli",
+        "run_after": true,
+        "endpoint": "save_to_db.sh ${fileContent}",
+        "timeout": 320,
+        "on_timeout_or_fail": "fail",
+        "response": "Success: ${step1.fileContent}"
+      }
     }
   }
 }
 ```
 
-
-### Validation
-The originalFile is validated against the configured controls for the file type. The validateFileType method returns a ValidationResponse object that contains:
-
-* isValid: a boolean indicating whether the file is valid or not
-* fileBytes: the file bytes if the file is valid
-* fileChecksum: the file checksum if the file is valid
-* resultsInfo: a string containing additional information about the validation results, such as reason for failure or the name of the file if it is valid
-
 ### Example
+
 The following code shows a simple implementation example:
+
 ```java
-public static void main(String[] args) {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.json.JSONObject;
+
+public class TestLibMain {
+    public static void main(String[] args) {
         // Path to the file to be validated in this simple example
-        File pdfFile = new File("Path/to/file");
+        File pdfFile = new File("samples/In/test.pdf");
 
         // Path to the config.json file
-        String filePath = "config/config.json";
+        String configPath = "config/config.json";
 
         // Placeholders for the JSON object and the file in bytes
         JSONObject jsonObject = null;
@@ -141,22 +183,25 @@ public static void main(String[] args) {
         FileValidator validator = null;
 
         // Path to the output directory
-        String outDir = "Path/to/output/directory";
+        String outDir = "samples/Out/";
         
         // Create a new FileValidator object with json config file
         try {
             // Read the JSON object from the config.json file
-            jsonObject = new JSONObject(Files.readString(Paths.get(filePath)));
+            String jsonConfigContent = new String(Files.readAllBytes(Paths.get(configPath)));
+            jsonObject = new JSONObject(jsonConfigContent);
+            
             // Create a new FileValidator object
             validator = new FileValidator(jsonObject);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
-        } finally {
-            if (jsonObject == null || validator == null) {
-                System.out.println("Error reading config file");
-                System.exit(1);
-            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error creating FileValidator object");
+            System.exit(1);
+        } catch (Exception e) {
+            System.out.println("Error reading config file");
+            System.exit(1);
         }
 
         try {
@@ -174,13 +219,16 @@ public static void main(String[] args) {
                     fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
                     fileValidationResults.getFileChecksum());
                 System.out.println(validMessage);
+                System.exit(0);
             } else {
                 // Print the results if the file is invalid
                 System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+                System.exit(0);
             }
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
     }
+}
 ```

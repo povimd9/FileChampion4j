@@ -1,11 +1,14 @@
 package com.blumo.FileChampion4j;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -19,9 +22,27 @@ public class FileAclHelper {
     private Path targetFilePath;
     private String newPermissions;
     private String newOwnerUsername;
-    private String errMsg;
+    private StringBuilder errMsg = new StringBuilder();
 
-    private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
+    static {
+        try {
+            LogManager.getLogManager().readConfiguration(
+                FileValidator.class.getResourceAsStream("/logging.properties"));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Could not load default logging configuration: ", e);
+        }
+    }
+    private static final Logger logger = Logger.getLogger(FileAclHelper.class.getName());
+    private void logSevere(String message) {
+        if (logger.isLoggable(Level.SEVERE)) {
+            logger.severe(message);
+        }
+    }
+    private void logFine(String message) {
+        if (logger.isLoggable(Level.FINE )) {
+            logger.fine(message);
+        }
+    }
 
     /**
      * changeFileAcl is the main method of this class. It attempts to change the owner and permissions of a file.
@@ -34,8 +55,8 @@ public class FileAclHelper {
         this.targetFilePath = targetFilePath;
         this.newOwnerUsername = newOwnerUsername;
         if(!newPermissions.matches("[rwx]+")) {
-            errMsg = String.format("Error: Invalid permissions: %s", newPermissions);
-            return errMsg;
+            errMsg.replace(0, errMsg.length(), "Error: Invalid permissions:").append(newPermissions);
+            return errMsg.toString();
         }
 
 
@@ -43,8 +64,8 @@ public class FileAclHelper {
         
         UserPrincipal newOwner = getUserPrinciple(targetFilePath, newOwnerUsername);
         if (newOwner == null) {
-            errMsg = String.format("Error: Could not get user principal for %s", newOwnerUsername);
-            return errMsg;
+            errMsg.replace(0, errMsg.length(), "Error: Could not get user principal for ").append(newOwnerUsername);
+            return errMsg.toString();
         }
 
         // Try to change the owner of the file
@@ -61,7 +82,7 @@ public class FileAclHelper {
         
         // If we get here, both the owner and permissions were changed successfully
         String successMessage = String.format("Success: Changed owner and permissions of file %s", targetFilePath.toAbsolutePath());
-        LOGGER.info(successMessage);
+        logFine(successMessage);
         return successMessage;
     }
 
@@ -72,8 +93,8 @@ public class FileAclHelper {
             .getUserPrincipalLookupService()
             .lookupPrincipalByName(newOwnerUsername);
         } catch (Exception e) {
-            errMsg = String.format("Error: Exception getting user principal: %s", e.getMessage());
-            LOGGER.severe(errMsg);
+            errMsg.replace(0, errMsg.length(), "Error: Exception getting user principal: ").append(e.getMessage());
+            logSevere(errMsg.toString());
             return null;
         }
     }
@@ -83,29 +104,28 @@ public class FileAclHelper {
         try {
             // Change the owner of the file
             Files.setOwner(targetFilePath, newOwner);
-            String logMessage = String.format("Success: Changed owner of file %s to %s", targetFilePath.toAbsolutePath(), newOwnerUsername);
-            LOGGER.info(logMessage);
-            return logMessage;
+            errMsg.replace(0, errMsg.length(), "Success: Changed owner of file").append(targetFilePath.toAbsolutePath()).append(" to ").append(newOwnerUsername);
+            logFine(errMsg.toString());
+            return errMsg.toString();
         } catch (AccessDeniedException e) {
-            errMsg = String.format("Error: Access denied while changing file owner: %s", e.getMessage());
-            LOGGER.severe(errMsg);
-            return errMsg;
+            errMsg.replace(0, errMsg.length(), "Error: Access denied while changing file owner: ").append(e.getMessage());
+            logSevere(errMsg.toString());
+            return errMsg.toString();
         } catch (FileSystemException e) {
-            errMsg = String.format("Error: File system error while changing file owner: %s", e.getMessage());
-            LOGGER.severe(errMsg);
-            return errMsg;
+            errMsg.replace(0, errMsg.length(), "Error: File system error while changing file owner: ").append(e.getMessage());
+            logSevere(errMsg.toString());
+            return errMsg.toString();
         }
         catch (Exception e) {
-            errMsg = String.format("Error: while changing file owner: %s", e.getMessage());
-            LOGGER.severe(errMsg);
-            return errMsg;
+            errMsg.replace(0, errMsg.length(), "Error: Exception while changing file owner: ").append(e.getMessage());
+            logSevere(errMsg.toString());
+            return errMsg.toString();
         }
     }
 
     // Check the OS and call the appropriate method to change the permissions
     private String setNewPermissions(UserPrincipal newOwner) {
         String os = System.getProperty("os.name");
-
         if (os.startsWith("Windows")) {
             return setNewPermissionsWindows(newOwner);
         } else {
@@ -137,7 +157,7 @@ public class FileAclHelper {
             }
 
             statusMessage = String.format("Attempting to change permissions to %s", actualPermissions);
-            LOGGER.info(statusMessage);
+            logFine(statusMessage);
 
             // Create the new ACL entry
             AclEntry aclEntry = AclEntry.newBuilder()
@@ -152,13 +172,16 @@ public class FileAclHelper {
 
             // Set the new ACL
             aclView.setAcl(acl);
-            statusMessage = String.format("Success: Changed permissions of file %s to %s", targetFilePath.toAbsolutePath(), actualPermissions);
-            LOGGER.info(statusMessage);
-            return statusMessage;
+            errMsg.replace(0, errMsg.length(), "Success: Changed permissions of file").append(targetFilePath.toAbsolutePath()).append(" to ").append(actualPermissions);
+            logFine(errMsg.toString());
+            return errMsg.toString();
         } catch (Exception e) {
-            errMsg = String.format("Error: Exception setting permissions on file with ACL: %s. %s", targetFilePath.toAbsolutePath(), e.getMessage());
-            LOGGER.severe(errMsg);
-            return errMsg;
+            errMsg.replace(0, errMsg.length(), "Error: Exception setting permissions on file with ACL: ")
+                .append(targetFilePath.toAbsolutePath())
+                .append(", ")
+                .append(e.getMessage());
+            logSevere(errMsg.toString());
+            return errMsg.toString();
         }
     }
 
@@ -181,15 +204,18 @@ public class FileAclHelper {
         // Change the permissions of the file using POSIX
         try {
             statusMessage = String.format("Attempting to change permissions to %s", permissions);
-            LOGGER.info(statusMessage);
+            logFine(statusMessage);
             Files.setPosixFilePermissions(targetFilePath.toAbsolutePath(), permissions);
-            statusMessage = String.format("Success: Changed permissions of file %s to %s", targetFilePath.toAbsolutePath(), permissions);
-            LOGGER.info(statusMessage);
-            return statusMessage;
+            errMsg.replace(0, errMsg.length(), "Success: Changed permissions of file").append(targetFilePath.toAbsolutePath()).append(" to ").append(permissions);
+            logFine(errMsg.toString());
+            return errMsg.toString();
         } catch (Exception e) {
-            errMsg = String.format("Error: Exception setting permissions on file with POSIX: %s. %s", targetFilePath.toAbsolutePath(), e.getMessage());
-            LOGGER.severe(errMsg);
-            return errMsg;
+            errMsg.replace(0, errMsg.length(), "Error: Exception setting permissions on file with POSIX: ")
+                .append(targetFilePath.toAbsolutePath())
+                .append(", ")
+                .append(e.getMessage());
+            logSevere(errMsg.toString());
+            return errMsg.toString();
         }
     }
 }

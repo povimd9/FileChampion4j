@@ -21,6 +21,7 @@ public class Extension {
     private int maxSize;
     private String fileCategory;
     private String fileExtension;
+    private JSONArray extensionPlugins;
 
 
     /**
@@ -40,6 +41,10 @@ public class Extension {
         this.fileCategory = fileCategory;
         this.fileExtension = fileExtension;
         setValuesFromJson(configJsonObject);
+    }
+
+    public JSONArray getExtensionPlugins() {
+        return extensionPlugins;
     }
 
     public String getMimeType() {
@@ -98,6 +103,7 @@ public class Extension {
         }
         JSONObject extensionJson = categoryJson.optJSONObject(fileExtension);
 
+        this.extensionPlugins = extensionJson.optJSONArray("extension_plugins");
         this.mimeType = extensionJson.optString("mime_type");
         this.magicBytes = extensionJson.optString("magic_bytes");
         this.headerSignatures = extensionJson.optString("header_signatures");
