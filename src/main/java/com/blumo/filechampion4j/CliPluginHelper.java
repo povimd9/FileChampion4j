@@ -1,4 +1,4 @@
-package com.blumo.FileChampion4j;
+package com.blumo.filechampion4j;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +19,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.blumo.FileChampion4j.PluginsHelper.StepConfig;
+import com.blumo.filechampion4j.PluginsHelper.StepConfig;
 
 
 public class CliPluginHelper {

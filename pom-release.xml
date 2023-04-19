@@ -8,10 +8,10 @@
         <url>https://github.com/povimd9</url>
     </organization>
     <groupId>com.blumo</groupId>
-    <artifactId>FileChampion4j</artifactId>
+    <artifactId>filechampion4j</artifactId>
     <version>0.9.8</version>
     <packaging>jar</packaging>
-    <name>FileChampion4j</name>
+    <name>filechampion4j</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -66,7 +66,7 @@
     </dependencies>
 
     <build>
-        <finalName>FileChampion4j</finalName>
+        <finalName>filechampion4j</finalName>
         <plugins>
             <!-- Set the JAVA_HOME environment variable to the JDK home directory -->
            <plugin>
@@ -161,9 +161,9 @@
                             <Implementation-Version>${project.version}</Implementation-Version>
                             <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
                             <Built-By>povimd9</Built-By>
-                            <SCM-URL>https://github.com/povimd9/FileChampion4j</SCM-URL>
-                            <SCM-Connection>scm:git:https://github.com/povimd9/FileChampion4j</SCM-Connection>
-                            <Doc-URL>https://github.com/povimd9/FileChampion4j/wiki</Doc-URL>
+                            <SCM-URL>https://github.com/povimd9/filechampion4j</SCM-URL>
+                            <SCM-Connection>scm:git:https://github.com/povimd9/filechampion4j</SCM-Connection>
+                            <Doc-URL>https://github.com/povimd9/filechampion4j/wiki</Doc-URL>
                             <License>Apache-2.0";link="https://www.apache.org/licenses/LICENSE-2.0.txt</License>
                             <Build-Jdk-Spec>1.8</Build-Jdk-Spec>
                             <Dependencies>com.fasterxml.jackson.core:jackson-databind,org.json:json</Dependencies>
@@ -190,9 +190,9 @@
                             <Implementation-Version>${project.version}</Implementation-Version>
                             <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
                             <Built-By>povimd9</Built-By>
-                            <SCM-URL>https://github.com/povimd9/FileChampion4j</SCM-URL>
-                            <SCM-Connection>scm:git:https://github.com/povimd9/FileChampion4j</SCM-Connection>
-                            <Doc-URL>https://github.com/povimd9/FileChampion4j/wiki</Doc-URL>
+                            <SCM-URL>https://github.com/povimd9/filechampion4j</SCM-URL>
+                            <SCM-Connection>scm:git:https://github.com/povimd9/filechampion4j</SCM-Connection>
+                            <Doc-URL>https://github.com/povimd9/filechampion4j/wiki</Doc-URL>
                             <License>Apache-2.0";link="https://www.apache.org/licenses/LICENSE-2.0.txt</License>
                             <Build-Jdk-Spec>1.8</Build-Jdk-Spec>
                             <Dependencies>com.fasterxml.jackson.core:jackson-databind,org.json:json</Dependencies>

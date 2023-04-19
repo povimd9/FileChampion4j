@@ -1,4 +1,4 @@
-package com.blumo.FileChampion4j;
+package com.blumo.filechampion4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 
 /**
-    This is an example implementation of the FileChampion4j library using FileValidator.validateFile()
+    This is an example implementation of the filechampion4j library using FileValidator.validateFile()
     ValidationResponse.resultsInfo() contains the results of the validation, including:
     - the name of the file if it is valid or empty if it is invalid
     - the reason why the file is invalid if it is invalid
-    - the path + name of the file if it is valid and outputDir was set in the FileChampion4j constructor
+    - the path + name of the file if it is valid and outputDir was set in the filechampion4j constructor
     - the checksum of the file if it is valid    
 */
 

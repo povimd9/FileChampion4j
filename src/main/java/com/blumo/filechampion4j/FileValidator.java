@@ -1,4 +1,4 @@
-package com.blumo.FileChampion4j;
+package com.blumo.filechampion4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,8 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 
 import org.json.JSONObject;
-import com.blumo.FileChampion4j.PluginsHelper.PluginConfig;
-import com.blumo.FileChampion4j.PluginsHelper.StepConfig;
+import com.blumo.filechampion4j.PluginsHelper.PluginConfig;
+import com.blumo.filechampion4j.PluginsHelper.StepConfig;
 import java.security.MessageDigest;
 
 

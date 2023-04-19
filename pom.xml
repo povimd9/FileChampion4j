@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.blumo</groupId>
-    <artifactId>FileChampion4j</artifactId>
+    <artifactId>filechampion4j</artifactId>
     <version>0.9.8</version>
     <packaging>jar</packaging>
-    <name>FileChampion4j</name>
+    <name>filechampion4j</name>
 
     <properties>
         <maven.compiler.source>${java.major.version}</maven.compiler.source>
@@ -62,7 +62,7 @@
     </dependencies>
 
     <build>
-        <finalName>FileChampion4j</finalName>
+        <finalName>filechampion4j</finalName>
         <plugins>
 
         <!-- Set jdk version property -->
@@ -115,7 +115,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.blumo.FileChampion4j.FileValidator</mainClass>
+                            <mainClass>com.blumo.filechampion4j.FileValidator</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -141,7 +141,6 @@
                     <parallel>classes</parallel>
                     <perCoreThreadCount>true</perCoreThreadCount>
                     <printSummary>true</printSummary>
-                    <printFailures>true</printFailures>
                 </configuration>
                 <executions>
                     <execution>
@@ -158,7 +157,6 @@
                                 <include>**/*Test.java</include>
                             </includes>
                             <printSummary>true</printSummary>
-                            <printFailures>true</printFailures>
                         </configuration>
                     </execution>
                 </executions>
