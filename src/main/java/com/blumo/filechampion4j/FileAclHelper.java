@@ -1,4 +1,4 @@
-package com.blumo.FileChampion4j;
+package com.blumo.filechampion4j;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;

@@ -1,4 +1,4 @@
-package com.blumo.FileChampion4j;
+package com.blumo.filechampion4j;
 
 
 /**
@@ -19,7 +19,7 @@ public class ValidationResponse {
     * @param resultsInfo (String) a String containing the results of the validation
     * @param fileBytes (bytes[]) the file bytes
     * @param fileChecksum (String) the file checksum
-    * @param validFilePath (String) optional valid file path if outputDir was set in the FileChampion4j constructor
+    * @param validFilePath (String) optional valid file path if outputDir was set in the filechampion4j constructor
     * @return ValidationResponse (ValidationResponse) object with FileValidator.validateFile() results
     */
     public ValidationResponse(boolean isValid, String resultsInfo, String cleanFileName, byte[] fileBytes, String fileChecksum, String... validFilePath) {

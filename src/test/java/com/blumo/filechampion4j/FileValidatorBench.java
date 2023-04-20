@@ -1,5 +1,4 @@
-package com.blumo.FileChampion4j;
-
+package com.blumo.filechampion4j;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
@@ -26,9 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Unit test for FileValidator class.
  */
 
-public class FileValidatorLargeFilesBench {
+public class FileValidatorBench {
 
-    public int batchSize = 20;
+    public int batchSize = 100;
     public FileValidator validator;
     public File[] testFiles;
     public ArrayList<byte[]> fileByteArrayList;
@@ -99,7 +98,7 @@ public class FileValidatorLargeFilesBench {
             fileNamesArray = new String[batchSize + warmupRepeats + 1];
 
             for (int i=0; i < batchSize + warmupRepeats + 1; i++ ) {
-                fileByteArrayList.add(generatePdfBytes(1000000));
+                fileByteArrayList.add(generatePdfBytes(300000));
                 fileNamesArray[i] = UUID.randomUUID().toString() + ".pdf";
             }
 
