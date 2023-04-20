@@ -60,8 +60,8 @@ jobs:
           git config --global user.email "povimd9@users.noreply.github.com"
           git checkout -b "release-$LATEST_VER"
           git add target/dependency-list.txt
-          git add target/FileChampion4j.jar
-          git add target/FileChampion4j-jar-with-dependencies.jar
+          git add target/filechampion4j.jar
+          git add target/filechampion4j-jar-with-dependencies.jar
           git commit -m "Add new package dist JARs"
           git push -f --set-upstream origin "release-$LATEST_VER"
 
