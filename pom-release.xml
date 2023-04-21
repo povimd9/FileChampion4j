@@ -159,7 +159,7 @@
                             <Doc-URL>https://github.com/povimd9/filechampion4j/wiki</Doc-URL>
                             <License>Apache-2.0";link="https://www.apache.org/licenses/LICENSE-2.0.txt</License>
                             <Build-Jdk-Spec>1.8</Build-Jdk-Spec>
-                            <Dependencies>com.fasterxml.jackson.core:jackson-databind,org.json:json</Dependencies>
+                            <Dependencies>org.json:json</Dependencies>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -188,7 +188,7 @@
                             <Doc-URL>https://github.com/povimd9/filechampion4j/wiki</Doc-URL>
                             <License>Apache-2.0";link="https://www.apache.org/licenses/LICENSE-2.0.txt</License>
                             <Build-Jdk-Spec>1.8</Build-Jdk-Spec>
-                            <Dependencies>com.fasterxml.jackson.core:jackson-databind,org.json:json</Dependencies>
+                            <Dependencies>org.json:json</Dependencies>
                         </manifestEntries>
                     </archive>
                 </configuration>
