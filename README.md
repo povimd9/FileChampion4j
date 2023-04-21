@@ -9,6 +9,8 @@ Thank you for your interest in FileChampion4j, a robust, secure, and flexible fi
 
 FileChampion4j is a powerful and flexible Java library for validating and processing files. The library can be used to check files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, and more. The library can also execute extension plugins that are defined for the file type.
 
+**See [FileChampion4j Wiki](https://github.com/povimd9/FileChampion4j/wiki) for detailed instructions on configurations and usage.**
+
 ### Features
 
 - Easy to understand and configure for developers, operations, and security engineers.
