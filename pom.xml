@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.blumo</groupId>
+    <groupId>dev.filechampion</groupId>
     <artifactId>filechampion4j</artifactId>
     <version>0.9.8</version>
     <packaging>jar</packaging>
@@ -115,7 +115,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.blumo.filechampion4j.FileValidator</mainClass>
+                            <mainClass>dev.filechampion.filechampion4j.FileValidator</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

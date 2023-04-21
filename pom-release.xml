@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <organization>
-        <name>povimd9</name>
+        <name>filechampion.dev</name>
         <url>https://github.com/povimd9</url>
     </organization>
-    <groupId>com.blumo</groupId>
+    <groupId>dev.filechampion</groupId>
     <artifactId>filechampion4j</artifactId>
     <version>0.9.8</version>
     <packaging>jar</packaging>

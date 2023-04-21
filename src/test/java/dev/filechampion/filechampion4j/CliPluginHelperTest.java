@@ -1,4 +1,4 @@
-package com.blumo.filechampion4j;
+package dev.filechampion.filechampion4j;
 
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

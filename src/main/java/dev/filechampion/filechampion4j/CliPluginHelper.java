@@ -1,4 +1,4 @@
-package com.blumo.filechampion4j;
+package dev.filechampion.filechampion4j;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,15 +19,17 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.blumo.filechampion4j.PluginsHelper.StepConfig;
+import java.util.stream.Stream;
+
+import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 
 
 public class CliPluginHelper {
-    private StepConfig singleStepConfig;
-    private int timeout;
+    private final StepConfig singleStepConfig;
+    private final int timeout;
     private String endpoint;
-    private String responseConfig;
-    private StringBuilder logMessage = new StringBuilder();
+    private final String responseConfig;
+    private final StringBuilder logMessage = new StringBuilder();
 
     static {
         try {
@@ -37,7 +39,7 @@ public class CliPluginHelper {
             throw new IllegalArgumentException("Could not load default logging configuration: ", e);
         }
     }
-    private Logger logger = Logger.getLogger(CliPluginHelper.class.getName());
+    private final Logger logger = Logger.getLogger(CliPluginHelper.class.getName());
     private void logFine(String message) {
         if (logger.isLoggable(Level.FINE )) {
             logger.fine(message);
@@ -51,7 +53,7 @@ public class CliPluginHelper {
 
     /**
      * Constructor for CliPluginHelper
-     * @param singleStepConfig
+     * @param singleStepConfig (StepConfig) - the step configuration
      */
     public CliPluginHelper(StepConfig singleStepConfig) {
         this.singleStepConfig = singleStepConfig;
@@ -66,15 +68,15 @@ public class CliPluginHelper {
      * Executes the CLI command
      * @param fileExtension (String) - the file extension
      * @param fileContent (byte[]) - the file content
-     * @param fileCheksum (String) - the file checksum
+     * @param fileChecksum (String) - the file checksum
      * @return Map<String, Map<String, String>> - the results map
      */
-    public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent, String fileCheksum) { 
+    public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent, String fileChecksum) { 
         String errString = "Error: ";
         String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
         Map<String, String> responsePatterns = new HashMap<>();
-        Path filePathRaw = null;
+        Path filePathRaw;
 
         filePathRaw = saveFileToTempDir(fileExtension, fileContent);
         if (filePathRaw == null) {
@@ -84,7 +86,7 @@ public class CliPluginHelper {
         }
 
         String filePath = filePathRaw.toString();
-        prepEndpoint(filePath, fileContent, fileCheksum);
+        prepEndpoint(filePath, fileContent, fileChecksum);
         logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(" endpoint: ").append(endpoint);
         logFine(logMessage.toString());
 
@@ -95,15 +97,16 @@ public class CliPluginHelper {
             responsePatterns.put(errString, e.getMessage());
         }
 
-        String expectedResuls = responseConfig.substring(0, responseConfig.indexOf("${")>-1?
+        String expectedResults = responseConfig.substring(0, responseConfig.indexOf("${")>-1?
         responseConfig.indexOf("${") : responseConfig.length());
 
-        if (result.contains(expectedResuls)) {
-            responsePatterns = extractRespnsePatterns(result);
+        if (result.contains(expectedResults)) {
+            responsePatterns = extractResponsePatterns(result);
             responseMap.put("Success", responsePatterns);
             return responseMap;
         } else {
-            logMessage.replace(0, logMessage.length(), "Error, expected: \"").append(expectedResuls).append("\", received: ");
+            logMessage.replace(0, logMessage.length(), "Error, expected: \"")
+                    .append(expectedResults).append("\", received: ");
             responsePatterns.put(logMessage.toString(), result);
             responseMap.put(errString, responsePatterns);
             deleteTempDir(filePathRaw);
@@ -116,7 +119,7 @@ public class CliPluginHelper {
      * @param results (String) - the results
      * @return Map<String, String> - the response patterns map
      */
-    private Map<String, String> extractRespnsePatterns (String results) {
+    private Map<String, String> extractResponsePatterns (String results) {
         Map<String, String> responsePatterns = new HashMap<>();
     
         // Extract the placeholder name from the response pattern
@@ -130,7 +133,7 @@ public class CliPluginHelper {
     
         do {
             String placeholderName = placeholderMatcher.group(1);
-            String placeholderValue = "";
+            String placeholderValue;
     
             logMessage.replace(0, logMessage.length(), "Placeholder name: ")
             .append(placeholderName)
@@ -173,12 +176,12 @@ public class CliPluginHelper {
      * Prepares the endpoint command by replacing the placeholders with the actual values
      * @param filePath (String) - the path to the file
      * @param fileContent (byte[]) - the file content
-     * @param fileCheksum (String) - the file checksum
+     * @param fileChecksum (String) - the file checksum
      */
-    private void prepEndpoint(String filePath, byte[] fileContent, String fileCheksum) {
+    private void prepEndpoint(String filePath, byte[] fileContent, String fileChecksum) {
         String newEndpoint = endpoint.replace("${filePath}", filePath)
         .replace("${fileContent}", Base64.getEncoder().encodeToString(fileContent))
-        .replace("${fileCheksum}", fileCheksum);
+        .replace("${fileChecksum}", fileChecksum);
         endpoint = newEndpoint;
     }
 
@@ -214,7 +217,7 @@ public class CliPluginHelper {
         SequenceInputStream sequenceInputStream = new SequenceInputStream(inputStream, errorStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(sequenceInputStream));
         Scanner scanner = new Scanner(bufferedReader).useDelimiter("\\A");
-        String results = "";
+        String results;
         if (exitCode == 143 || exitCode == 1) {
             if (System.currentTimeMillis() - timeoutCounter > timeout * 1000) {
                 bufferedReader.close();
@@ -251,7 +254,7 @@ public class CliPluginHelper {
 
     // Save the file to temporary directory for analysis
     private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
-        Path tempFilePath = null;
+        Path tempFilePath;
         try {
             // Create a temporary directory
             Path tempDir = Files.createTempDirectory("tempDir");
@@ -265,13 +268,12 @@ public class CliPluginHelper {
         }
     }
 
-    // Explicitley delete the temporary directory and file
+    // Explicitly delete the temporary directory and file
     private Boolean deleteTempDir(Path tempFilePath) {
-        try {
-            Files.walk(tempFilePath)
-            .sorted(Comparator.reverseOrder())
-            .map(Path::toFile)
-            .forEach(File::delete);
+        try (Stream<Path> walk = Files.walk(tempFilePath)) {
+            walk.sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
             return true;
         } catch (Exception e) {
             logMessage.replace(0, logMessage.length(), "Error deleteTempDir failed: ").append(e.getMessage());

@@ -1,4 +1,4 @@
-package com.blumo.filechampion4j;
+package dev.filechampion.filechampion4j;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
