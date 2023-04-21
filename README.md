@@ -168,8 +168,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.json.JSONObject;
+import dev.filechampion.filechampion4j.FileValidator;
+import dev.filechampion.filechampion4j.ValidationResponse;
 
-public class TestLibMain {
+public class Main {
     public static void main(String[] args) {
         // Path to the file to be validated in this simple example
         File pdfFile = new File("samples/In/test.pdf");
@@ -184,13 +186,13 @@ public class TestLibMain {
 
         // Path to the output directory
         String outDir = "samples/Out/";
-        
+
         // Create a new FileValidator object with json config file
         try {
             // Read the JSON object from the config.json file
             String jsonConfigContent = new String(Files.readAllBytes(Paths.get(configPath)));
             jsonObject = new JSONObject(jsonConfigContent);
-            
+
             // Create a new FileValidator object
             validator = new FileValidator(jsonObject);
         } catch (IOException e) {
@@ -214,10 +216,10 @@ public class TestLibMain {
             // Check if the file is valid
             if (fileValidationResults.isValid()) {
                 // Print the results if the file is valid
-                String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s", 
-                    fileValidationResults.resultsInfo(),
-                    fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
-                    fileValidationResults.getFileChecksum());
+                String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s",
+                        fileValidationResults.resultsInfo(),
+                        fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
+                        fileValidationResults.getFileChecksum());
                 System.out.println(validMessage);
                 System.exit(0);
             } else {
