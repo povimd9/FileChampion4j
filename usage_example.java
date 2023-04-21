@@ -1,10 +1,10 @@
-package com.blumo.filechampion4j;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.json.JSONObject;
+import dev.filechampion.filechampion4j.FileValidator;
+import dev.filechampion.filechampion4j.ValidationResponse;
 
 
 /**
@@ -20,10 +20,10 @@ import org.json.JSONObject;
 public class Main {
     public static void main(String[] args) {
         // Path to the file to be validated in this simple example
-        File pdfFile = new File("samples/In/DataMining-ch1.pdf");
+        File pdfFile = new File("samples/In/test.pdf");
 
         // Path to the config.json file
-        String filePath = "config/config.json";
+        String configPath = "config/config.json";
 
         // Placeholders for the JSON object and the file in bytes
         JSONObject jsonObject = null;
@@ -32,20 +32,24 @@ public class Main {
 
         // Path to the output directory
         String outDir = "samples/Out/";
-        
+
         // Create a new FileValidator object with json config file
         try {
             // Read the JSON object from the config.json file
-            jsonObject = new JSONObject(Files.readAllLines(Paths.get(filePath)));
+            String jsonConfigContent = new String(Files.readAllBytes(Paths.get(configPath)));
+            jsonObject = new JSONObject(jsonConfigContent);
+
             // Create a new FileValidator object
             validator = new FileValidator(jsonObject);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error creating FileValidator object");
+            System.exit(1);
         } catch (Exception e) {
             System.out.println("Error reading config file");
             System.exit(1);
-
         }
 
         try {
@@ -58,14 +62,16 @@ public class Main {
             // Check if the file is valid
             if (fileValidationResults.isValid()) {
                 // Print the results if the file is valid
-                String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s", 
-                    fileValidationResults.resultsInfo(),
-                    fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
-                    fileValidationResults.getFileChecksum());
+                String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s",
+                        fileValidationResults.resultsInfo(),
+                        fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
+                        fileValidationResults.getFileChecksum());
                 System.out.println(validMessage);
+                System.exit(0);
             } else {
                 // Print the results if the file is invalid
                 System.out.println(pdfFile.getName() + " is not a valid document file  because " + fileValidationResults.resultsInfo());
+                System.exit(0);
             }
         } catch (IOException e) {
             e.printStackTrace();
