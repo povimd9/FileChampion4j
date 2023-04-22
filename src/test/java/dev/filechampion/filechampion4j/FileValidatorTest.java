@@ -100,16 +100,16 @@ public class FileValidatorTest {
     @Test
     void testEmptyConfigJsonObject() {
         JSONObject jsonObject = new JSONObject();
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
-        assertEquals("Config JSON object cannot be null or empty, and must have Validations section.", exception.getMessage());
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject), "Config JSON object cannot be null or empty, and must have Validations section.");
+        assertEquals("Config JSON object cannot be null or empty, and must have Validations section.", exception.getMessage(), "Expected exception message to be 'Config JSON object cannot be null or empty, and must have Validations section.'");
     }
 
     // Test null json config object
     @Test
     void testNullConfigJsonObject() {
         JSONObject jsonObject = null;
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
-        assertEquals("Config JSON object cannot be null or empty, and must have Validations section.", exception.getMessage());
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject), "Config JSON object cannot be null or empty, and must have Validations section.");
+        assertEquals("Config JSON object cannot be null or empty, and must have Validations section.", exception.getMessage(), "Expected exception message to be 'Config JSON object cannot be null or empty, and must have Validations section.'");
     }
 
     // Test empty fileCategory
@@ -118,8 +118,8 @@ public class FileValidatorTest {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-        validator.validateFile("", fileInBytes, fileName, tempDirectory.toString()));
-    assertEquals("fileCategory cannot be null or empty.", exception.getMessage());
+        validator.validateFile("", fileInBytes, fileName, tempDirectory.toString()), "fileCategory cannot be null or empty.");
+    assertEquals("fileCategory cannot be null or empty.", exception.getMessage(), "Expected exception message to be 'fileCategory cannot be null or empty.'");
     }
     
     // Test empty fileName
@@ -128,8 +128,8 @@ public class FileValidatorTest {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); });
-        assertEquals("fileName cannot be null or empty.", exception.getMessage());
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); }, "fileName cannot be null or empty.");
+        assertEquals("fileName cannot be null or empty.", exception.getMessage(), "Expected exception message to be 'fileName cannot be null or empty.'");
     }
     
     // Test originalFile Bytes is null
@@ -138,8 +138,8 @@ public class FileValidatorTest {
         byte[] fileInBytes = null;
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); });
-        assertEquals("originalFile cannot be null or empty.", exception.getMessage());
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); }, "originalFile cannot be null or empty.");
+        assertEquals("originalFile cannot be null or empty.", exception.getMessage(), "Expected exception message to be 'originalFile cannot be null or empty.'");
     }
 
     // Test originalFile Bytes is empty
@@ -148,8 +148,8 @@ public class FileValidatorTest {
         byte[] fileInBytes = new byte[]{};
         String fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); });
-        assertEquals("originalFile cannot be null or empty.", exception.getMessage());
+        validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()); }, "originalFile cannot be null or empty.");
+        assertEquals("originalFile cannot be null or empty.", exception.getMessage(), "Expected exception message to be 'originalFile cannot be null or empty.'");
     }
 
     // Test none existing fileCategory '0934jt0-349rtj3409rj3409rj'
@@ -169,7 +169,7 @@ public class FileValidatorTest {
         String fileName = "test.txt";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid with .txt extension");
-        assertTrue(fileValidationResults.resultsInfo().contains("Error creating Extension configurations object"));
+        assertTrue(fileValidationResults.resultsInfo().contains("Error creating Extension configurations object"), "Expected 'Error creating Extension configurations object', got: " + fileValidationResults.resultsInfo());
     }
 
     // Test file size that is greater than the max size configured in config json
@@ -179,7 +179,7 @@ public class FileValidatorTest {
         String fileName = "largeFile.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid for file size:" + fileInBytes.length);
-        assertTrue(fileValidationResults.resultsInfo().contains("exceeds maximum allowed size"));
+        assertTrue(fileValidationResults.resultsInfo().contains("exceeds maximum allowed size"), "Expected 'exceeds maximum allowed size', got: " + fileValidationResults.resultsInfo());
     }
 
     // Test valid inputs including valid pdf file with storage

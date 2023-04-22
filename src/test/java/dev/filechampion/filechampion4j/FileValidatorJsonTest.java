@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -287,7 +286,7 @@ public class FileValidatorJsonTest {
     void testPluginLoadFailue() throws Exception {
         String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginLoadFailure.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject), "Expected exception to be thrown");
         assertTrue(exception.getMessage().contains("defined in config does not exist in plugins configuration"), 
         "Expected exception to contain 'config does not exist in plugins configuration'.");
     }
@@ -297,7 +296,7 @@ public class FileValidatorJsonTest {
     void testPluginKeysFailue() throws Exception {
         String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginConfigFailure.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject), "Expected exception to be thrown");
         assertTrue(exception.getMessage().contains("Error initializing plugins: JSONObject"), 
         "Expected exception to contain 'Error initializing plugins: JSONObject'.");
     }
