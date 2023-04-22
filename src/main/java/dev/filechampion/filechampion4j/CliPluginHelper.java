@@ -27,6 +27,7 @@ import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 public class CliPluginHelper {
     private final StepConfig singleStepConfig;
     private final int timeout;
+    private static final String ERRST_STRING = "Error: ";
     private String endpoint;
     private final String responseConfig;
     private final StringBuilder logMessage = new StringBuilder();
@@ -39,15 +40,15 @@ public class CliPluginHelper {
             throw new IllegalArgumentException("Could not load default logging configuration: ", e);
         }
     }
-    private final Logger logger = Logger.getLogger(CliPluginHelper.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CliPluginHelper.class.getName());
     private void logFine(String message) {
-        if (logger.isLoggable(Level.FINE )) {
-            logger.fine(message);
+        if (LOGGER.isLoggable(Level.FINE )) {
+            LOGGER.fine(message);
         }
     }
     private void logWarn(String message) {
-        if (logger.isLoggable(Level.WARNING)) {
-            logger.warning(message);
+        if (LOGGER.isLoggable(Level.WARNING)) {
+            LOGGER.warning(message);
         }
     }
 
@@ -72,16 +73,15 @@ public class CliPluginHelper {
      * @return Map<String, Map<String, String>> - the results map
      */
     public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent, String fileChecksum) { 
-        String errString = "Error: ";
-        String result = "";
+    String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
         Map<String, String> responsePatterns = new HashMap<>();
         Path filePathRaw;
 
         filePathRaw = saveFileToTempDir(fileExtension, fileContent);
         if (filePathRaw == null) {
-            responsePatterns.put(errString, "Failed to save file to temporary directory");
-            responseMap.put(errString, responsePatterns);
+            responsePatterns.put(ERRST_STRING, "Failed to save file to temporary directory");
+            responseMap.put(ERRST_STRING, responsePatterns);
             return responseMap;
         }
 
@@ -94,7 +94,8 @@ public class CliPluginHelper {
             result = timedProcessExecution(endpoint);
             logFine(singleStepConfig.getName() + " result: " + result);
         } catch (IOException|NullPointerException|InterruptedException e) {
-            responsePatterns.put(errString, e.getMessage());
+            Thread.currentThread().interrupt();
+            responsePatterns.put(ERRST_STRING, e.getMessage());
         }
 
         String expectedResults = responseConfig.substring(0, responseConfig.indexOf("${")>-1?
@@ -108,7 +109,7 @@ public class CliPluginHelper {
             logMessage.replace(0, logMessage.length(), "Error, expected: \"")
                     .append(expectedResults).append("\", received: ");
             responsePatterns.put(logMessage.toString(), result);
-            responseMap.put(errString, responsePatterns);
+            responseMap.put(ERRST_STRING, responsePatterns);
             deleteTempDir(filePathRaw);
             return responseMap;
         }
@@ -194,7 +195,7 @@ public class CliPluginHelper {
      * @throws NullPointerException
      */
     private String timedProcessExecution(String command) throws IOException, InterruptedException, NullPointerException {
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\p{Zs}+"));
         logMessage.replace(0, logMessage.length(), "Process starting: ").append(command);
         logFine(logMessage.toString());
 
@@ -216,7 +217,8 @@ public class CliPluginHelper {
         InputStream errorStream = process.getErrorStream();
         SequenceInputStream sequenceInputStream = new SequenceInputStream(inputStream, errorStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(sequenceInputStream));
-        Scanner scanner = new Scanner(bufferedReader).useDelimiter("\\A");
+        try(Scanner scanner = new Scanner(bufferedReader).useDelimiter("\\A")){
+        
         String results;
         if (exitCode == 143 || exitCode == 1) {
             if (System.currentTimeMillis() - timeoutCounter > timeout * 1000) {
@@ -224,8 +226,7 @@ public class CliPluginHelper {
                 sequenceInputStream.close();
                 errorStream.close();
                 inputStream.close();
-                scanner.close();
-                logMessage.replace(0, logMessage.length(), "Error: ").append("Process timeout: ").append(command);
+                logMessage.replace(0, logMessage.length(), ERRST_STRING).append("Process timeout: ").append(command);
                 logWarn(logMessage.toString());
                 return logMessage.toString();
             }
@@ -234,9 +235,8 @@ public class CliPluginHelper {
             sequenceInputStream.close();
             errorStream.close();
             inputStream.close();
-            scanner.close();
             timer.cancel();
-            logMessage.replace(0, logMessage.length(), "Error: ").append(command) .append("Process failed: ").append(results);
+            logMessage.replace(0, logMessage.length(), ERRST_STRING).append(command) .append("Process failed: ").append(results);
             logWarn(logMessage.toString());
             return logMessage.toString();
         }
@@ -246,10 +246,10 @@ public class CliPluginHelper {
         sequenceInputStream.close();
         errorStream.close();
         inputStream.close();
-        scanner.close();
         timer.cancel();
         logFine(results);
         return results;
+    }
     }
 
     // Save the file to temporary directory for analysis

@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,12 +43,6 @@ public class FileValidatorJsonTest {
     + "      \"magic_bytes\": \"25504446\",\r\n"
     + "      \"header_signatures\": \"25504446\",\r\n"
     + "      \"footer_signatures\": \"2525454f46\",\r\n"
-    + "      \"antivirus_scan\": {\r\n"
-    + "        \"clamav_scan.java\": [\r\n"
-    + "          \"RETURN_TYPE\",\r\n"
-    + "          \"param1\",\r\n"
-    + "          \"param2\"\r\n"
-    + "        ]},\r\n"
     + "      \"change_ownership\": true,\r\n"
     + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
@@ -74,12 +67,6 @@ public class FileValidatorJsonTest {
     + "      \"magic_bytes\": \"99999999999999999999\",\r\n"
     + "      \"header_signatures\": \"25504446\",\r\n"
     + "      \"footer_signatures\": \"2525454f46\",\r\n"
-    + "      \"antivirus_scan\": {\r\n"
-    + "        \"clamav_scan.java\": [\r\n"
-    + "          \"RETURN_TYPE\",\r\n"
-    + "          \"param1\",\r\n"
-    + "          \"param2\"\r\n"
-    + "        ]},\r\n"
     + "      \"change_ownership\": true,\r\n"
     + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
@@ -104,12 +91,6 @@ public class FileValidatorJsonTest {
     + "      \"magic_bytes\": \"25504446\",\r\n"
     + "      \"header_signatures\": \"99999999999999\",\r\n"
     + "      \"footer_signatures\": \"2525454f46\",\r\n"
-    + "      \"antivirus_scan\": {\r\n"
-    + "        \"clamav_scan.java\": [\r\n"
-    + "          \"RETURN_TYPE\",\r\n"
-    + "          \"param1\",\r\n"
-    + "          \"param2\"\r\n"
-    + "        ]},\r\n"
     + "      \"change_ownership\": true,\r\n"
     + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
@@ -134,12 +115,6 @@ public class FileValidatorJsonTest {
     + "      \"magic_bytes\": \"25504446\",\r\n"
     + "      \"header_signatures\": \"25504446\",\r\n"
     + "      \"footer_signatures\": \"99999999999999999\",\r\n"
-    + "      \"antivirus_scan\": {\r\n"
-    + "        \"clamav_scan.java\": [\r\n"
-    + "          \"RETURN_TYPE\",\r\n"
-    + "          \"param1\",\r\n"
-    + "          \"param2\"\r\n"
-    + "        ]},\r\n"
     + "      \"change_ownership\": true,\r\n"
     + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
@@ -164,12 +139,6 @@ public class FileValidatorJsonTest {
     + "      \"magic_bytes\": \"25504446\",\r\n"
     + "      \"header_signatures\": \"25504446\",\r\n"
     + "      \"footer_signatures\": \"2525454f46\",\r\n"
-    + "      \"antivirus_scan\": {\r\n"
-    + "        \"clamav_scan.java\": [\r\n"
-    + "          \"RETURN_TYPE\",\r\n"
-    + "          \"param1\",\r\n"
-    + "          \"param2\"\r\n"
-    + "        ]},\r\n"
     + "      \"change_ownership\": true,\r\n"
     + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
@@ -194,12 +163,6 @@ public class FileValidatorJsonTest {
     + "      \"magic_bytes\": \"25504446\",\r\n"
     + "      \"header_signatures\": \"25504446\",\r\n"
     + "      \"footer_signatures\": \"2525454f46\",\r\n"
-    + "      \"antivirus_scan\": {\r\n"
-    + "        \"clamav_scan.java\": [\r\n"
-    + "          \"RETURN_TYPE\",\r\n"
-    + "          \"param1\",\r\n"
-    + "          \"param2\"\r\n"
-    + "        ]},\r\n"
     + "      \"change_ownership\": true,\r\n"
     + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
@@ -323,7 +286,7 @@ public class FileValidatorJsonTest {
     void testPluginLoadFailue() throws Exception {
         String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginLoadFailure.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject), "Expected exception to be thrown");
         assertTrue(exception.getMessage().contains("defined in config does not exist in plugins configuration"), 
         "Expected exception to contain 'config does not exist in plugins configuration'.");
     }
@@ -333,7 +296,7 @@ public class FileValidatorJsonTest {
     void testPluginKeysFailue() throws Exception {
         String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginConfigFailure.json").toAbsolutePath()));
         JSONObject jsonObject = new JSONObject(jsonConfigContent);
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(jsonObject), "Expected exception to be thrown");
         assertTrue(exception.getMessage().contains("Error initializing plugins: JSONObject"), 
         "Expected exception to contain 'Error initializing plugins: JSONObject'.");
     }

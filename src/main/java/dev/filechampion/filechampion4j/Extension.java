@@ -13,7 +13,6 @@ public class Extension {
     private String magicBytes;
     private String headerSignatures;
     private String footerSignatures;
-    private JSONArray antivirusScanJson;
     private boolean changeOwnership;
     private String changeOwnershipUser;
     private String changeOwnershipMode;
@@ -63,10 +62,6 @@ public class Extension {
         return footerSignatures;
     }
 
-    public JSONArray getAntivirusScanJson() {
-        return antivirusScanJson;
-    }
-
     public boolean isChangeOwnership() {
         return changeOwnership;
     }
@@ -108,7 +103,6 @@ public class Extension {
         this.magicBytes = extensionJson.optString("magic_bytes");
         this.headerSignatures = extensionJson.optString("header_signatures");
         this.footerSignatures = extensionJson.optString("footer_signatures");
-        this.antivirusScanJson = extensionJson.optJSONArray("antivirus_scan");
         this.changeOwnership = extensionJson.optBoolean("change_ownership");
         this.changeOwnershipUser = extensionJson.optString("change_ownership_user");
         this.changeOwnershipMode = extensionJson.optString("change_ownership_mode");

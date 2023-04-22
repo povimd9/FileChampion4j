@@ -1,13 +1,15 @@
 package dev.filechampion.filechampion4j;
 
 import org.json.JSONObject;
-import org.json.JSONArray;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Unit test for Extension class.
- * TODO: Add AV scan config loading tests
  */
 
  public class ExtensionTest {
@@ -17,25 +19,25 @@ import org.junit.jupiter.api.Test;
 
     @Test
     void testConstructorWithNullArguments() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new Extension(null, null, null);
-        });
+        }, "Expected IllegalArgumentException to be thrown when all arguments are null");
     }
 
     @Test
     void testConstructorWithEmptyFileCategory() {
         JSONObject configJsonObject = new JSONObject();
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new Extension("", FILE_EXTENSION, configJsonObject);
-        });
+        }, "Expected IllegalArgumentException to be thrown when file category is empty");
     }
 
     @Test
     void testConstructorWithInvalidFileCategory() {
         JSONObject configJsonObject = new JSONObject();
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new Extension("InvalidCategory", FILE_EXTENSION, configJsonObject);
-        });
+        }, "Expected IllegalArgumentException to be thrown when file category is invalid");
     }
 
     @Test
@@ -43,9 +45,9 @@ import org.junit.jupiter.api.Test;
         JSONObject configJsonObject = new JSONObject();
         JSONObject categoryJson = new JSONObject();
         configJsonObject.put(FILE_CATEGORY, categoryJson);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             new Extension(FILE_CATEGORY, "InvalidExtension", configJsonObject);
-        });
+        }, "Expected IllegalArgumentException to be thrown when file extension is invalid");
     }
 
     @Test
@@ -57,7 +59,6 @@ import org.junit.jupiter.api.Test;
         extensionJson.put("magic_bytes", "25 50 44 46");
         extensionJson.put("header_signatures", "255,216,255");
         extensionJson.put("footer_signatures", "37,80,68,70");
-        extensionJson.put("antivirus_scan", new JSONArray("[\"ClamAV\", \"Sophos\"]"));
         extensionJson.put("change_ownership", true);
         extensionJson.put("change_ownership_user", "myuser");
         extensionJson.put("change_ownership_mode", "rwxrwxrwx");
@@ -66,15 +67,14 @@ import org.junit.jupiter.api.Test;
         categoryJson.put(FILE_EXTENSION, extensionJson);
         configJsonObject.put(FILE_CATEGORY, categoryJson);
         Extension extension = new Extension(FILE_CATEGORY, FILE_EXTENSION, configJsonObject);
-        Assertions.assertEquals("application/pdf", extension.getMimeType());
-        Assertions.assertEquals("25 50 44 46", extension.getMagicBytes());
-        Assertions.assertEquals("255,216,255", extension.getHeaderSignatures());
-        Assertions.assertEquals("37,80,68,70", extension.getFooterSignatures());
-        Assertions.assertEquals(2, extension.getAntivirusScanJson().length());
-        Assertions.assertTrue(extension.isChangeOwnership());
-        Assertions.assertEquals("myuser", extension.getChangeOwnershipUser());
-        Assertions.assertEquals("rwxrwxrwx", extension.getChangeOwnershipMode());
-        Assertions.assertFalse(extension.isNameEncoding());
-        Assertions.assertEquals(10485760, extension.getMaxSize());
+        assertEquals("application/pdf", extension.getMimeType(), "Expected mime type to be application/pdf");
+        assertEquals("25 50 44 46", extension.getMagicBytes(), "Expected magic bytes to be 25 50 44 46");
+        assertEquals("255,216,255", extension.getHeaderSignatures(), "Expected header signatures to be 255,216,255");
+        assertEquals("37,80,68,70", extension.getFooterSignatures(), "Expected footer signatures to be 37,80,68,70");
+        assertTrue(extension.isChangeOwnership(), "Expected change ownership to be true");
+        assertEquals("myuser", extension.getChangeOwnershipUser(), "Expected change ownership user to be myuser");
+        assertEquals("rwxrwxrwx", extension.getChangeOwnershipMode(), "Expected change ownership mode to be rwxrwxrwx");
+        assertFalse(extension.isNameEncoding(), "Expected name encoding to be false");
+        assertEquals(10485760, extension.getMaxSize(), "Expected max size to be 10485760");
     }
 }

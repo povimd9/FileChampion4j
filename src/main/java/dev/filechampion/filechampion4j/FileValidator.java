@@ -22,14 +22,12 @@ import java.security.MessageDigest;
 
 
 /**
- * This class is used to validate untrusted files
-
-                      TODO: add filenname and checksum to loggers
-
-                      TODO: support Http plugins
-
-
-*/
+ * This class is used to validate files
+ * @author filechampion
+ * @version 0.9.8.1
+ * @see <a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a>
+ * TODO: add extension config loading at init
+ */
 public class FileValidator {
     static {
         try {
@@ -70,6 +68,7 @@ public class FileValidator {
     private byte[] originalFile;
     private String fileChecksum;
     private StringBuilder sharedMessage = new StringBuilder();
+    private static final String SHARED_STEP_MESSAGE = "Step: ";
 
 
     /**
@@ -111,14 +110,18 @@ public class FileValidator {
             for (int k=0; k < validationsJsonObject.getJSONObject(categroyKey).length(); k++) {
                 String extensionKey = validationsJsonObject.getJSONObject(categroyKey).names().getString(k);
                 if (validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).has("extension_plugins")) {
-                    for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
-                        if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
-                            sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(pluginName).append(" defined in config does not exist in plugins configuration");
-                            logWarn(sharedMessage.toString());
-                            throw new IllegalArgumentException(sharedMessage.toString());
-                        }
-                    }
+                    checkPluginsExist(validationsJsonObject, categroyKey, extensionKey);
                 }
+            }
+        }
+    }
+
+    private void checkPluginsExist(JSONObject validationsJsonObject, String categroyKey, String extensionKey){
+        for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
+            if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
+                sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE).append(pluginName).append(" defined in config does not exist in plugins configuration");
+                logWarn(sharedMessage.toString());
+                throw new IllegalArgumentException(sharedMessage.toString());
             }
         }
     }
@@ -163,7 +166,7 @@ public class FileValidator {
         // Initialize variables
         String fileExtension = getFileExtension(fileName);
         Extension extensionConfig;
-        String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
+        String originalFilenameClean = fileName.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}.]", "_");
         fileChecksum = calculateChecksum(originalFile);
         
         // Get the configuration for the file type category and extension
@@ -388,7 +391,7 @@ public class FileValidator {
             for (String step : stepConfigsBefore.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);
-                    sharedMessage.replace(0, sharedMessage.length(), "Step: ")
+                    sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE)
                         .append(stepConfigsBefore.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
                     if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
@@ -437,7 +440,7 @@ public class FileValidator {
             for (String step : stepConfigsAfter.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);
-                    sharedMessage.replace(0, sharedMessage.length(), "Step: ")
+                    sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE)
                         .append(stepConfigsAfter.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
                     if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
@@ -480,7 +483,7 @@ public class FileValidator {
     private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String fileExtension) {
         Map<String, String> stepResultsMap = new HashMap<>();
         String extensionPluginName = stepConfigs.get(extensionPlugin).getName();
-        sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(extensionPluginName);
+        sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE).append(extensionPluginName);
         logFine(sharedMessage.toString());
         
         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
@@ -522,7 +525,7 @@ public class FileValidator {
             for(Map.Entry<String, String> entry : stepResultsMap.entrySet()) {
                 String errorMsg =  entry.getValue();
                 String errorDetails = entry.getKey();
-                sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(extensionPluginName)
+                sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE).append(extensionPluginName)
                     .append(" Success, Results: ")
                     .append(errorDetails)
                     .append("\"")
@@ -608,7 +611,7 @@ public class FileValidator {
         if (originalFileBytes.length == 0 || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
             return false;
         }
-        magicBytesPattern = magicBytesPattern.replaceAll("\\s", "");
+        magicBytesPattern = magicBytesPattern.replaceAll("\\p{Zs}", "");
         if (magicBytesPattern.length() % 2 != 0) {
             magicBytesPattern = "0" + magicBytesPattern;
         }
@@ -636,7 +639,7 @@ public class FileValidator {
         if (isBlank(headerSignaturesPattern)) {
             return true;
         }
-        String hexPattern = headerSignaturesPattern.replaceAll("\\s", "");
+        String hexPattern = headerSignaturesPattern.replaceAll("\\p{Zs}", "");
         if (hexPattern.length() % 2 != 0) {
             hexPattern = "0" + hexPattern;
         }
@@ -657,7 +660,7 @@ public class FileValidator {
         if (isBlank(footerSignaturesPattern)) {
             return true;
         }
-        String hexPattern = footerSignaturesPattern.replaceAll("\\s", "");
+        String hexPattern = footerSignaturesPattern.replaceAll("\\p{Zs}", "");
         if (hexPattern.length() % 2 != 0) {
             hexPattern = "0" + hexPattern;
         }
@@ -699,8 +702,8 @@ public class FileValidator {
             return sharedMessage.toString();
         }
         // Try to set the file owner and permissions
-        FileAclHelper fileAclHelper = new FileAclHelper();
-        String newFileAttributesStatus = fileAclHelper.changeFileAcl(targetFilePath, extensionConfig.getChangeOwnershipUser(), extensionConfig.getChangeOwnershipMode());
+        FileAclHelper fileAclHelper = new FileAclHelper(targetFilePath, extensionConfig.getChangeOwnershipUser(), extensionConfig.getChangeOwnershipMode());
+        String newFileAttributesStatus = fileAclHelper.changeFileAcl();
         if (newFileAttributesStatus.contains("Error:")) {
             try {
                 Files.deleteIfExists(targetFilePath);

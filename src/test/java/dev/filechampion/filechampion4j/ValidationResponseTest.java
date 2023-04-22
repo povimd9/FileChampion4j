@@ -22,12 +22,12 @@ public class ValidationResponseTest {
         ValidationResponse response = new ValidationResponse(isValid, resultsInfo, cleanFileName, fileBytes, fileChecksum, validFilePath);
 
         // Check that the response fields match the input parameters
-        Assertions.assertTrue(response.isValid());
-        Assertions.assertEquals(resultsInfo, response.resultsInfo());
-        Assertions.assertEquals(cleanFileName, response.getCleanFileName());
-        Assertions.assertArrayEquals(fileBytes, response.getFileBytes());
-        Assertions.assertEquals(fileChecksum, response.getFileChecksum());
-        Assertions.assertArrayEquals(validFilePath, response.getValidFilePath());
+        Assertions.assertTrue(response.isValid(), "Expected isValid to be true");
+        Assertions.assertEquals(resultsInfo, response.resultsInfo(), "Expected resultsInfo to match input parameter");
+        Assertions.assertEquals(cleanFileName, response.getCleanFileName(), "Expected cleanFileName to match input parameter");
+        Assertions.assertArrayEquals(fileBytes, response.getFileBytes(), "Expected fileBytes to match input parameter");
+        Assertions.assertEquals(fileChecksum, response.getFileChecksum(), "Expected fileChecksum to match input parameter");
+        Assertions.assertArrayEquals(validFilePath, response.getValidFilePath(), "Expected validFilePath to match input parameter");
     }
 }
 

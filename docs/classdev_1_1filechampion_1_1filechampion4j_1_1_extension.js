@@ -1,0 +1,27 @@
+var classdev_1_1filechampion_1_1filechampion4j_1_1_extension =
+[
+    [ "Extension", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a283ecefce448a262eed607ef6ee5857a", null ],
+    [ "getChangeOwnershipMode", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a84ccc1ed5b10cf94987bb7a28757a417", null ],
+    [ "getChangeOwnershipUser", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a9345e902c7e0a97db4b373220b5fb83a", null ],
+    [ "getExtensionPlugins", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a280bd1a1334d78e0a898524a2f8b000d", null ],
+    [ "getFooterSignatures", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a2a3214d34b9e225fc5d344413955affa", null ],
+    [ "getHeaderSignatures", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a2c42c83175eec07cab9c934d0adcce58", null ],
+    [ "getMagicBytes", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#aabab7c822972827e18bd71489f217f0f", null ],
+    [ "getMaxSize", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a24aab53ff45fe3f337f92d7a6804a122", null ],
+    [ "getMimeType", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a0ca5177df2e29cdc0eff69343983e5c8", null ],
+    [ "isChangeOwnership", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a89d624ae974ff58f1845b03ab38d25b4", null ],
+    [ "isNameEncoding", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a5073918a440378a38a22983daea7fe39", null ],
+    [ "setValuesFromJson", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a010f67173b75f208dba39c4b0453d23c", null ],
+    [ "changeOwnership", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#ab020e568c17fd6e63ed545154f47d12f", null ],
+    [ "changeOwnershipMode", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a14533111ef3cf1dc312813cb905c8ec3", null ],
+    [ "changeOwnershipUser", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#acf4d578dbe5334c1324b2eaff9b0ba56", null ],
+    [ "extensionPlugins", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a1b92d311880c5b8ce15da9098c07cb2a", null ],
+    [ "fileCategory", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a91a67aacd6e84267662c997282983958", null ],
+    [ "fileExtension", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#abcfa1d73f67c80f546f8a41c77e19560", null ],
+    [ "footerSignatures", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#aa991047191260d0602507e2eba7becf1", null ],
+    [ "headerSignatures", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a91650f20c5b9493ac3c0f02e28639480", null ],
+    [ "magicBytes", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a174344a54078f5eb903e6c9324e8716a", null ],
+    [ "maxSize", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a240ee781f3a7a924d246ec69708c67bc", null ],
+    [ "mimeType", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#ab79f38934d34d6a5daf4f6e2988c982c", null ],
+    [ "nameEncoding", "classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a2ad399a046783e1658141d6a5639ceca", null ]
+];
