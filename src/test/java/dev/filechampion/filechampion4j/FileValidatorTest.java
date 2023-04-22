@@ -186,7 +186,7 @@ public class FileValidatorTest {
     @Test
     void testValidInputsStore() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
-        String fileName = "test.pdf";
+        String fileName = "test&test.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
