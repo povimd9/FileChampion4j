@@ -110,18 +110,21 @@ public class FileValidator {
             for (int k=0; k < validationsJsonObject.getJSONObject(categroyKey).length(); k++) {
                 String extensionKey = validationsJsonObject.getJSONObject(categroyKey).names().getString(k);
                 if (validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).has("extension_plugins")) {
-                    for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
-                        if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
-                            sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(pluginName).append(" defined in config does not exist in plugins configuration");
-                            logWarn(sharedMessage.toString());
-                            throw new IllegalArgumentException(sharedMessage.toString());
-                        }
-                    }
+                    checkPluginsExist(validationsJsonObject, categroyKey, extensionKey);
                 }
             }
         }
     }
-    
+
+    private void checkPluginsExist(JSONObject validationsJsonObject, String categroyKey, String extensionKey){
+        for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
+            if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
+                sharedMessage.replace(0, sharedMessage.length(), "Step: ").append(pluginName).append(" defined in config does not exist in plugins configuration");
+                logWarn(sharedMessage.toString());
+                throw new IllegalArgumentException(sharedMessage.toString());
+            }
+        }
+    }
 
     /**
      * This method is used to check that method inputs are not null or empty
