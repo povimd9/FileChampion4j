@@ -575,7 +575,7 @@ public class FileValidator {
             .forEach(File::delete);
             return true;
         } catch (Exception e) {
-            sharedMessage.replace(0, sharedMessage.length(), "Error: Delere temporary directoy failed: ").append(e.getMessage());
+            sharedMessage.replace(0, sharedMessage.length(), "Error: Delete temporary directoy failed: ").append(e.getMessage());
             logWarn(sharedMessage.toString());
             return false;
         }

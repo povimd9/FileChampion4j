@@ -281,6 +281,19 @@ public class FileValidatorJsonTest {
         assertTrue(fileValidationResults.resultsInfo().contains("Error"), "Expected validation response to contain fail");
     }
 
+    // Test step failure before validations
+    @Test
+    void testStepfailureBefore() throws Exception {
+        byte[] fileInBytes = generatePdfBytes(25000);
+        String fileName = "test.pdf";
+        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestPluginFailureBefore.json").toAbsolutePath()));
+        JSONObject jsonObject = new JSONObject(jsonConfigContent);
+        FileValidator validator = new FileValidator(jsonObject);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
+        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
+        assertTrue(fileValidationResults.resultsInfo().contains("Error"), "Expected validation response to contain fail");
+    }
+
     // Test non existing plugin load failure
     @Test
     void testPluginLoadFailue() throws Exception {
