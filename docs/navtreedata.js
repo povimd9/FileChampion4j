@@ -25,39 +25,6 @@
 var NAVTREE =
 [
   [ "filechampion4j", "index.html", [
-    [ "Contributor Covenant Code of Conduct", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html", [
-      [ "Our Pledge", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md1", null ],
-      [ "Our Standards", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md2", null ],
-      [ "Enforcement Responsibilities", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md3", null ],
-      [ "Scope", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md4", null ],
-      [ "Enforcement", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md5", null ],
-      [ "Enforcement Guidelines", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md6", [
-        [ "1. Correction", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md7", null ],
-        [ "2. Warning", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md8", null ],
-        [ "3. Temporary Ban", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md10", null ],
-        [ "4. Permanent Ban", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md11", null ]
-      ] ],
-      [ "Attribution", "md__c_o_d_e__o_f__c_o_n_d_u_c_t.html#autotoc_md12", null ]
-    ] ],
-    [ "README", "md_config__r_e_a_d_m_e.html", null ],
-    [ "About FileChampion4j", "md__r_e_a_d_m_e.html", [
-      [ "Introduction", "md__r_e_a_d_m_e.html#autotoc_md16", [
-        [ "Features", "md__r_e_a_d_m_e.html#autotoc_md17", null ],
-        [ "Benefits", "md__r_e_a_d_m_e.html#autotoc_md18", null ],
-        [ "Releases", "md__r_e_a_d_m_e.html#autotoc_md19", null ],
-        [ "Support", "md__r_e_a_d_m_e.html#autotoc_md20", null ],
-        [ "Contributing", "md__r_e_a_d_m_e.html#autotoc_md21", null ],
-        [ "License", "md__r_e_a_d_m_e.html#autotoc_md22", null ],
-        [ "Basic Usage", "md__r_e_a_d_m_e.html#autotoc_md23", null ],
-        [ "Configuration", "md__r_e_a_d_m_e.html#autotoc_md24", null ],
-        [ "Example", "md__r_e_a_d_m_e.html#autotoc_md25", null ]
-      ] ]
-    ] ],
-    [ "REQUIREMENTS", "md__r_e_q_u_i_r_e_m_e_n_t_s.html", null ],
-    [ "Security Policy", "md__s_e_c_u_r_i_t_y.html", [
-      [ "Supported Versions", "md__s_e_c_u_r_i_t_y.html#autotoc_md14", null ],
-      [ "Reporting a Vulnerability", "md__s_e_c_u_r_i_t_y.html#autotoc_md15", null ]
-    ] ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", null ]
     ] ],

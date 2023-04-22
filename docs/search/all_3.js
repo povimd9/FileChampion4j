@@ -14,11 +14,9 @@ var searchData=
   ['clipluginhelper_11',['cliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a8b27cbf3ee67e426dc163e1e1915be13',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]],
   ['clipluginhelper_12',['CliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html',1,'dev::filechampion::filechampion4j']]],
   ['clipluginhelper_2ejava_13',['CliPluginHelper.java',['../_cli_plugin_helper_8java.html',1,'']]],
-  ['code_5fof_5fconduct_2emd_14',['CODE_OF_CONDUCT.md',['../_c_o_d_e___o_f___c_o_n_d_u_c_t_8md.html',1,'']]],
-  ['configjsonobject_15',['configJsonObject',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a10dae43a3de7168c83cc4aa0b145e0ef',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['containsfootersignatures_16',['containsFooterSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a8f4cb0774223f82e2cf72558b6edd114',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['containsheadersignatures_17',['containsHeaderSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9cb61c4724f0d3542eedec7d0f6b2943',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['containsmagicbytes_18',['containsMagicBytes',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9659dd19b95c61f1b52cfab5ebc5a6b0',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['contributor_20covenant_20code_20of_20conduct_19',['Contributor Covenant Code of Conduct',['../md__c_o_d_e__o_f__c_o_n_d_u_c_t.html',1,'']]],
-  ['credspath_20',['credsPath',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a7186e7b8f090b4168ce58c811e0e27bd',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]]
+  ['configjsonobject_14',['configJsonObject',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a10dae43a3de7168c83cc4aa0b145e0ef',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['containsfootersignatures_15',['containsFooterSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a8f4cb0774223f82e2cf72558b6edd114',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['containsheadersignatures_16',['containsHeaderSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9cb61c4724f0d3542eedec7d0f6b2943',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['containsmagicbytes_17',['containsMagicBytes',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9659dd19b95c61f1b52cfab5ebc5a6b0',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['credspath_18',['credsPath',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a7186e7b8f090b4168ce58c811e0e27bd',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]]
 ];
