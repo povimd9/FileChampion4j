@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__extension_test_8java" xml:lang="en-US">
+<title>C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/ExtensionTest.java File Reference</title>
+<indexterm><primary>C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/ExtensionTest.java</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test">dev.filechampion.filechampion4j.ExtensionTest</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Packages    </title>
+        <itemizedlist>
+            <listitem><para>package <link linkend="_namespacedev_1_1filechampion_1_1filechampion4j">dev.filechampion.filechampion4j</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

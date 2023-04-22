@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_10fa5fc6c454c65c17b609dbbb128f23" xml:lang="en-US">
+<title>src/main/java/dev/filechampion Directory Reference</title>
+<indexterm><primary>src/main/java/dev/filechampion Directory Reference</primary></indexterm>
+Directory dependency graph for filechampion:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="dir_10fa5fc6c454c65c17b609dbbb128f23_dep.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Directories    </title>
+        <itemizedlist>
+            <listitem><para>directory <link linkend="_dir_9d47008dd5efcdf2510d30f85b1bec5d">filechampion4j</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

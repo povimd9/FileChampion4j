@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_63be8f52d97a8962cf11adae6a25999b" xml:lang="en-US">
+<title>C:/Users/User1/git/FileChampion4j/src/main/java/dev/filechampion/filechampion4j Directory Reference</title>
+<indexterm><primary>C:/Users/User1/git/FileChampion4j/src/main/java/dev/filechampion/filechampion4j Directory Reference</primary></indexterm>
+<simplesect>
+    <title>Files    </title>
+        <itemizedlist>
+            <listitem><para>file <link linkend="__cli_plugin_helper_8java">CliPluginHelper.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__extension_8java">Extension.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_acl_helper_8java">FileAclHelper.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_validator_8java">FileValidator.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__plugins_helper_8java">PluginsHelper.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__validation_response_8java">ValidationResponse.java</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

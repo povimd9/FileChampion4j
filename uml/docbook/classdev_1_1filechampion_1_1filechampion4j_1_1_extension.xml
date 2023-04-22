@@ -1,0 +1,616 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension" xml:lang="en-US">
+<title>dev.filechampion.filechampion4j.Extension Class Reference</title>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary></indexterm>
+Collaboration diagram for dev.filechampion.filechampion4j.Extension:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a283ecefce448a262eed607ef6ee5857a">Extension</link> (String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>, String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560">fileExtension</link>, JSONObject configJsonObject)</para>
+</listitem>
+            <listitem><para>JSONArray <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a280bd1a1334d78e0a898524a2f8b000d">getExtensionPlugins</link> ()</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a0ca5177df2e29cdc0eff69343983e5c8">getMimeType</link> ()</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1aabab7c822972827e18bd71489f217f0f">getMagicBytes</link> ()</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2c42c83175eec07cab9c934d0adcce58">getHeaderSignatures</link> ()</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2a3214d34b9e225fc5d344413955affa">getFooterSignatures</link> ()</para>
+</listitem>
+            <listitem><para>JSONArray <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a4c947bd0f914325a94e10993fb678e4d">getAntivirusScanJson</link> ()</para>
+</listitem>
+            <listitem><para>boolean <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a89d624ae974ff58f1845b03ab38d25b4">isChangeOwnership</link> ()</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a9345e902c7e0a97db4b373220b5fb83a">getChangeOwnershipUser</link> ()</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a84ccc1ed5b10cf94987bb7a28757a417">getChangeOwnershipMode</link> ()</para>
+</listitem>
+            <listitem><para>boolean <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a5073918a440378a38a22983daea7fe39">isNameEncoding</link> ()</para>
+</listitem>
+            <listitem><para>int <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a24aab53ff45fe3f337f92d7a6804a122">getMaxSize</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a010f67173b75f208dba39c4b0453d23c">setValuesFromJson</link> (JSONObject configJsonObject)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1ab79f38934d34d6a5daf4f6e2988c982c">mimeType</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a174344a54078f5eb903e6c9324e8716a">magicBytes</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91650f20c5b9493ac3c0f02e28639480">headerSignatures</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1aa991047191260d0602507e2eba7becf1">footerSignatures</link></para>
+</listitem>
+            <listitem><para>JSONArray <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1afc11687cd00bd189cf18af0c78516efd">antivirusScanJson</link></para>
+</listitem>
+            <listitem><para>boolean <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1ab020e568c17fd6e63ed545154f47d12f">changeOwnership</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1acf4d578dbe5334c1324b2eaff9b0ba56">changeOwnershipUser</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a14533111ef3cf1dc312813cb905c8ec3">changeOwnershipMode</link></para>
+</listitem>
+            <listitem><para>boolean <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2ad399a046783e1658141d6a5639ceca">nameEncoding</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a240ee781f3a7a924d246ec69708c67bc">maxSize</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560">fileExtension</link></para>
+</listitem>
+            <listitem><para>JSONArray <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a1b92d311880c5b8ce15da9098c07cb2a">extensionPlugins</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>This class is used to fetch the Json configuration data for a single file extension. The Json configuration data is then used to create an Extension object. </para>
+<para>
+Definition at line <link linkend="__extension_8java_source_1l00011">11</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a283ecefce448a262eed607ef6ee5857a"/><section>
+    <title>Extension()</title>
+<indexterm><primary>Extension</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>Extension</secondary></indexterm>
+<para><computeroutput>dev.filechampion.filechampion4j.Extension.Extension (String fileCategory, String fileExtension, JSONObject configJsonObject)</computeroutput></para>
+<para>Constructor 
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>fileCategory</entry><entry>
+<para>(String) the file category (e.g. &quot;Documents&quot;) </para>
+</entry>
+                            </row>
+                            <row>
+<entry>fileExtension</entry><entry>
+<para>(String) the file extension (e.g. &quot;pdf&quot;) </para>
+</entry>
+                            </row>
+                            <row>
+<entry>configJsonObject</entry><entry>
+<para>(JSONObject) the Json configuration data </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>(Extension) an Extension object </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Exceptions</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>IllegalArgumentException</entry><entry>
+<para>(IllegalArgumentException) if the file category or file extension is not found in the Json configuration data </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__extension_8java_source_1l00035">35</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00035 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00036 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>&#32;==&#32;<emphasis role="keyword">null</emphasis>&#32;||&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>.trim().isEmpty())&#32;{
+00037 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;excMsg&#32;=&#32;String.format(<emphasis role="stringliteral">&quot;Invalid&#32;argument(s)&#32;provided:&#32;fileCategory=%s,&#32;fileExtension=%s,&#32;json=%s&quot;</emphasis>,&#32;
+00038 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560">fileExtension</link>,&#32;configJsonObject);
+00039 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">throw</emphasis>&#32;<emphasis role="keyword">new</emphasis>&#32;IllegalArgumentException(excMsg);
+00040 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00041 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.fileCategory&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>;
+00042 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.fileExtension&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560">fileExtension</link>;
+00043 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a010f67173b75f208dba39c4b0453d23c">setValuesFromJson</link>(configJsonObject);
+00044 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00022">dev.filechampion.filechampion4j.Extension.fileCategory</link>, <link linkend="__extension_8java_source_1l00023">dev.filechampion.filechampion4j.Extension.fileExtension</link>, and <link linkend="__extension_8java_source_1l00095">dev.filechampion.filechampion4j.Extension.setValuesFromJson()</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a283ecefce448a262eed607ef6ee5857a_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a4c947bd0f914325a94e10993fb678e4d"/><section>
+    <title>getAntivirusScanJson()</title>
+<indexterm><primary>getAntivirusScanJson</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getAntivirusScanJson</secondary></indexterm>
+<para><computeroutput>JSONArray dev.filechampion.filechampion4j.Extension.getAntivirusScanJson ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00066">66</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00066 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00067 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1afc11687cd00bd189cf18af0c78516efd">antivirusScanJson</link>;
+00068 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00016">dev.filechampion.filechampion4j.Extension.antivirusScanJson</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a84ccc1ed5b10cf94987bb7a28757a417"/><section>
+    <title>getChangeOwnershipMode()</title>
+<indexterm><primary>getChangeOwnershipMode</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getChangeOwnershipMode</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.getChangeOwnershipMode ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00078">78</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00078 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00079 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a14533111ef3cf1dc312813cb905c8ec3">changeOwnershipMode</link>;
+00080 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00019">dev.filechampion.filechampion4j.Extension.changeOwnershipMode</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00692">dev.filechampion.filechampion4j.FileValidator.saveFileToOutputDir()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a84ccc1ed5b10cf94987bb7a28757a417_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a9345e902c7e0a97db4b373220b5fb83a"/><section>
+    <title>getChangeOwnershipUser()</title>
+<indexterm><primary>getChangeOwnershipUser</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getChangeOwnershipUser</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.getChangeOwnershipUser ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00074">74</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00074 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00075 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1acf4d578dbe5334c1324b2eaff9b0ba56">changeOwnershipUser</link>;
+00076 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00018">dev.filechampion.filechampion4j.Extension.changeOwnershipUser</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00692">dev.filechampion.filechampion4j.FileValidator.saveFileToOutputDir()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a9345e902c7e0a97db4b373220b5fb83a_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a280bd1a1334d78e0a898524a2f8b000d"/><section>
+    <title>getExtensionPlugins()</title>
+<indexterm><primary>getExtensionPlugins</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getExtensionPlugins</secondary></indexterm>
+<para><computeroutput>JSONArray dev.filechampion.filechampion4j.Extension.getExtensionPlugins ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00046">46</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00047 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a1b92d311880c5b8ce15da9098c07cb2a">extensionPlugins</link>;
+00048 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00024">dev.filechampion.filechampion4j.Extension.extensionPlugins</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00212">dev.filechampion.filechampion4j.FileValidator.doValidations()</link>, <link linkend="__file_validator_8java_source_1l00430">dev.filechampion.filechampion4j.FileValidator.executeAfterPlugins()</link>, <link linkend="__file_validator_8java_source_1l00381">dev.filechampion.filechampion4j.FileValidator.executeBeforePlugins()</link>, and <link linkend="__file_validator_8java_source_1l00155">dev.filechampion.filechampion4j.FileValidator.validateFile()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a280bd1a1334d78e0a898524a2f8b000d_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2a3214d34b9e225fc5d344413955affa"/><section>
+    <title>getFooterSignatures()</title>
+<indexterm><primary>getFooterSignatures</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getFooterSignatures</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.getFooterSignatures ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00062">62</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00062 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00063 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1aa991047191260d0602507e2eba7becf1">footerSignatures</link>;
+00064 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00015">dev.filechampion.filechampion4j.Extension.footerSignatures</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00212">dev.filechampion.filechampion4j.FileValidator.doValidations()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a2a3214d34b9e225fc5d344413955affa_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2c42c83175eec07cab9c934d0adcce58"/><section>
+    <title>getHeaderSignatures()</title>
+<indexterm><primary>getHeaderSignatures</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getHeaderSignatures</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.getHeaderSignatures ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00058">58</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00058 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00059 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91650f20c5b9493ac3c0f02e28639480">headerSignatures</link>;
+00060 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00014">dev.filechampion.filechampion4j.Extension.headerSignatures</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00212">dev.filechampion.filechampion4j.FileValidator.doValidations()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a2c42c83175eec07cab9c934d0adcce58_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1aabab7c822972827e18bd71489f217f0f"/><section>
+    <title>getMagicBytes()</title>
+<indexterm><primary>getMagicBytes</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getMagicBytes</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.getMagicBytes ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00054">54</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00054 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00055 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a174344a54078f5eb903e6c9324e8716a">magicBytes</link>;
+00056 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00013">dev.filechampion.filechampion4j.Extension.magicBytes</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00212">dev.filechampion.filechampion4j.FileValidator.doValidations()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_aabab7c822972827e18bd71489f217f0f_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a24aab53ff45fe3f337f92d7a6804a122"/><section>
+    <title>getMaxSize()</title>
+<indexterm><primary>getMaxSize</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getMaxSize</secondary></indexterm>
+<para><computeroutput>int dev.filechampion.filechampion4j.Extension.getMaxSize ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00086">86</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00086 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00087 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a240ee781f3a7a924d246ec69708c67bc">maxSize</link>;
+00088 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00021">dev.filechampion.filechampion4j.Extension.maxSize</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00212">dev.filechampion.filechampion4j.FileValidator.doValidations()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a24aab53ff45fe3f337f92d7a6804a122_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a0ca5177df2e29cdc0eff69343983e5c8"/><section>
+    <title>getMimeType()</title>
+<indexterm><primary>getMimeType</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>getMimeType</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.getMimeType ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00050">50</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00050 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00051 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1ab79f38934d34d6a5daf4f6e2988c982c">mimeType</link>;
+00052 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00012">dev.filechampion.filechampion4j.Extension.mimeType</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00212">dev.filechampion.filechampion4j.FileValidator.doValidations()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a0ca5177df2e29cdc0eff69343983e5c8_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a89d624ae974ff58f1845b03ab38d25b4"/><section>
+    <title>isChangeOwnership()</title>
+<indexterm><primary>isChangeOwnership</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>isChangeOwnership</secondary></indexterm>
+<para><computeroutput>boolean dev.filechampion.filechampion4j.Extension.isChangeOwnership ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00070">70</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00070 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00071 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1ab020e568c17fd6e63ed545154f47d12f">changeOwnership</link>;
+00072 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00017">dev.filechampion.filechampion4j.Extension.changeOwnership</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a5073918a440378a38a22983daea7fe39"/><section>
+    <title>isNameEncoding()</title>
+<indexterm><primary>isNameEncoding</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>isNameEncoding</secondary></indexterm>
+<para><computeroutput>boolean dev.filechampion.filechampion4j.Extension.isNameEncoding ( )</computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00082">82</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00082 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00083 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2ad399a046783e1658141d6a5639ceca">nameEncoding</link>;
+00084 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00020">dev.filechampion.filechampion4j.Extension.nameEncoding</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00212">dev.filechampion.filechampion4j.FileValidator.doValidations()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a5073918a440378a38a22983daea7fe39_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a010f67173b75f208dba39c4b0453d23c"/><section>
+    <title>setValuesFromJson()</title>
+<indexterm><primary>setValuesFromJson</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>setValuesFromJson</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.Extension.setValuesFromJson (JSONObject configJsonObject)<computeroutput>[private]</computeroutput></computeroutput></para>
+<para>This method is used to set the values of the Extension object from the Json configuration data. 
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>configJsonObject</entry><entry>
+<para>(JSONObject) the Json configuration data </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                
+                <formalpara>
+                    <title>
+Exceptions</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>IllegalArgumentException</entry><entry>
+<para>if the file category or file extension is not found in the Json configuration data </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__extension_8java_source_1l00095">95</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<programlisting linenumbering="unnumbered">00095 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00096 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!configJsonObject.has(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>))&#32;{
+00097 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">throw</emphasis>&#32;<emphasis role="keyword">new</emphasis>&#32;IllegalArgumentException(<emphasis role="stringliteral">&quot;Category&#32;not&#32;found&#32;in&#32;JSON:&#32;&quot;</emphasis>&#32;+&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>);
+00098 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00099 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;categoryJson&#32;=&#32;configJsonObject.optJSONObject(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958">fileCategory</link>);
+00100 
+00101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!categoryJson.has(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560">fileExtension</link>))&#32;{
+00102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">throw</emphasis>&#32;<emphasis role="keyword">new</emphasis>&#32;IllegalArgumentException(<emphasis role="stringliteral">&quot;Extension&#32;not&#32;found&#32;in&#32;JSON:&#32;&quot;</emphasis>&#32;+&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560">fileExtension</link>);
+00103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;extensionJson&#32;=&#32;categoryJson.optJSONObject(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560">fileExtension</link>);
+00105 
+00106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.extensionPlugins&#32;=&#32;extensionJson.optJSONArray(<emphasis role="stringliteral">&quot;extension_plugins&quot;</emphasis>);
+00107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.mimeType&#32;=&#32;extensionJson.optString(<emphasis role="stringliteral">&quot;mime_type&quot;</emphasis>);
+00108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.magicBytes&#32;=&#32;extensionJson.optString(<emphasis role="stringliteral">&quot;magic_bytes&quot;</emphasis>);
+00109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.headerSignatures&#32;=&#32;extensionJson.optString(<emphasis role="stringliteral">&quot;header_signatures&quot;</emphasis>);
+00110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.footerSignatures&#32;=&#32;extensionJson.optString(<emphasis role="stringliteral">&quot;footer_signatures&quot;</emphasis>);
+00111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.antivirusScanJson&#32;=&#32;extensionJson.optJSONArray(<emphasis role="stringliteral">&quot;antivirus_scan&quot;</emphasis>);
+00112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.changeOwnership&#32;=&#32;extensionJson.optBoolean(<emphasis role="stringliteral">&quot;change_ownership&quot;</emphasis>);
+00113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.changeOwnershipUser&#32;=&#32;extensionJson.optString(<emphasis role="stringliteral">&quot;change_ownership_user&quot;</emphasis>);
+00114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.changeOwnershipMode&#32;=&#32;extensionJson.optString(<emphasis role="stringliteral">&quot;change_ownership_mode&quot;</emphasis>);
+00115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.nameEncoding&#32;=&#32;extensionJson.optBoolean(<emphasis role="stringliteral">&quot;name_encoding&quot;</emphasis>);
+00116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.maxSize&#32;=&#32;extensionJson.optInt(<emphasis role="stringliteral">&quot;max_size&quot;</emphasis>);
+00117 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__extension_8java_source_1l00022">dev.filechampion.filechampion4j.Extension.fileCategory</link>, and <link linkend="__extension_8java_source_1l00023">dev.filechampion.filechampion4j.Extension.fileExtension</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00035">dev.filechampion.filechampion4j.Extension.Extension()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_a010f67173b75f208dba39c4b0453d23c_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+</section>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1afc11687cd00bd189cf18af0c78516efd"/><section>
+    <title>antivirusScanJson</title>
+<indexterm><primary>antivirusScanJson</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>antivirusScanJson</secondary></indexterm>
+<para><computeroutput>JSONArray dev.filechampion.filechampion4j.Extension.antivirusScanJson<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00016">16</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00066">dev.filechampion.filechampion4j.Extension.getAntivirusScanJson()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1ab020e568c17fd6e63ed545154f47d12f"/><section>
+    <title>changeOwnership</title>
+<indexterm><primary>changeOwnership</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>changeOwnership</secondary></indexterm>
+<para><computeroutput>boolean dev.filechampion.filechampion4j.Extension.changeOwnership<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00017">17</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00070">dev.filechampion.filechampion4j.Extension.isChangeOwnership()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a14533111ef3cf1dc312813cb905c8ec3"/><section>
+    <title>changeOwnershipMode</title>
+<indexterm><primary>changeOwnershipMode</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>changeOwnershipMode</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.changeOwnershipMode<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00019">19</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00078">dev.filechampion.filechampion4j.Extension.getChangeOwnershipMode()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1acf4d578dbe5334c1324b2eaff9b0ba56"/><section>
+    <title>changeOwnershipUser</title>
+<indexterm><primary>changeOwnershipUser</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>changeOwnershipUser</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.changeOwnershipUser<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00018">18</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00074">dev.filechampion.filechampion4j.Extension.getChangeOwnershipUser()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a1b92d311880c5b8ce15da9098c07cb2a"/><section>
+    <title>extensionPlugins</title>
+<indexterm><primary>extensionPlugins</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>extensionPlugins</secondary></indexterm>
+<para><computeroutput>JSONArray dev.filechampion.filechampion4j.Extension.extensionPlugins<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00024">24</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00046">dev.filechampion.filechampion4j.Extension.getExtensionPlugins()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91a67aacd6e84267662c997282983958"/><section>
+    <title>fileCategory</title>
+<indexterm><primary>fileCategory</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>fileCategory</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.fileCategory<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00022">22</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00035">dev.filechampion.filechampion4j.Extension.Extension()</link>, and <link linkend="__extension_8java_source_1l00095">dev.filechampion.filechampion4j.Extension.setValuesFromJson()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1abcfa1d73f67c80f546f8a41c77e19560"/><section>
+    <title>fileExtension</title>
+<indexterm><primary>fileExtension</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>fileExtension</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.fileExtension<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00023">23</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00035">dev.filechampion.filechampion4j.Extension.Extension()</link>, and <link linkend="__extension_8java_source_1l00095">dev.filechampion.filechampion4j.Extension.setValuesFromJson()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1aa991047191260d0602507e2eba7becf1"/><section>
+    <title>footerSignatures</title>
+<indexterm><primary>footerSignatures</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>footerSignatures</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.footerSignatures<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00015">15</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00062">dev.filechampion.filechampion4j.Extension.getFooterSignatures()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a91650f20c5b9493ac3c0f02e28639480"/><section>
+    <title>headerSignatures</title>
+<indexterm><primary>headerSignatures</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>headerSignatures</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.headerSignatures<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00014">14</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00058">dev.filechampion.filechampion4j.Extension.getHeaderSignatures()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a174344a54078f5eb903e6c9324e8716a"/><section>
+    <title>magicBytes</title>
+<indexterm><primary>magicBytes</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>magicBytes</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.magicBytes<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00013">13</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00054">dev.filechampion.filechampion4j.Extension.getMagicBytes()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a240ee781f3a7a924d246ec69708c67bc"/><section>
+    <title>maxSize</title>
+<indexterm><primary>maxSize</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>maxSize</secondary></indexterm>
+<para><computeroutput>int dev.filechampion.filechampion4j.Extension.maxSize<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00021">21</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00086">dev.filechampion.filechampion4j.Extension.getMaxSize()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1ab79f38934d34d6a5daf4f6e2988c982c"/><section>
+    <title>mimeType</title>
+<indexterm><primary>mimeType</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>mimeType</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.Extension.mimeType<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00012">12</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00050">dev.filechampion.filechampion4j.Extension.getMimeType()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2ad399a046783e1658141d6a5639ceca"/><section>
+    <title>nameEncoding</title>
+<indexterm><primary>nameEncoding</primary><secondary>dev.filechampion.filechampion4j.Extension</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.Extension</primary><secondary>nameEncoding</secondary></indexterm>
+<para><computeroutput>boolean dev.filechampion.filechampion4j.Extension.nameEncoding<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_8java_source_1l00020">20</link> of file <link linkend="__extension_8java_source">Extension.java</link>.</para>
+<para>
+Referenced by <link linkend="__extension_8java_source_1l00082">dev.filechampion.filechampion4j.Extension.isNameEncoding()</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+src/main/java/dev/filechampion/filechampion4j/<link linkend="__extension_8java">Extension.java</link></section>
+</section>

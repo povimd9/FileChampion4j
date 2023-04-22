@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_fd3f6763802dee1ad875f6c80eac0bda" xml:lang="en-US">
+<title>src/main/java Directory Reference</title>
+<indexterm><primary>src/main/java Directory Reference</primary></indexterm>
+Directory dependency graph for java:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="dir_fd3f6763802dee1ad875f6c80eac0bda_dep.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Directories    </title>
+        <itemizedlist>
+            <listitem><para>directory <link linkend="_dir_973c3febab65bbb5d343c36e6e21f179">dev</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

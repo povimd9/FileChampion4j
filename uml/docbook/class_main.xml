@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_main" xml:lang="en-US">
+<title>Main Class Reference</title>
+<indexterm><primary>Main</primary></indexterm>
+Collaboration diagram for Main:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="class_main__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Static Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>static void <link linkend="_class_main_1a8a5d0f827edddff706cc0e6740d0579a">main</link> (String[] args)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>This is an example implementation of the filechampion4j library using FileValidator.validateFile() ValidationResponse.resultsInfo() contains the results of the validation, including:<itemizedlist>
+<listitem>
+<para>the name of the file if it is valid or empty if it is invalid</para>
+</listitem><listitem>
+<para>the reason why the file is invalid if it is invalid</para>
+</listitem><listitem>
+<para>the path + name of the file if it is valid and outputDir was set in the filechampion4j constructor</para>
+</listitem><listitem>
+<para>the checksum of the file if it is valid <?linebreak?> </para>
+</listitem></itemizedlist>
+</para>
+<para>
+Definition at line <link linkend="_usage__example_8java_source_1l00020">20</link> of file <link linkend="_usage__example_8java_source">usage_example.java</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_main_1a8a5d0f827edddff706cc0e6740d0579a"/><section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>Main</secondary></indexterm>
+<indexterm><primary>Main</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>static void Main.main (String[] args)<computeroutput>[static]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="_usage__example_8java_source_1l00021">21</link> of file <link linkend="_usage__example_8java_source">usage_example.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="class_main_a8a5d0f827edddff706cc0e6740d0579a_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+C:/Users/User1/git/FileChampion4j/<link linkend="_usage__example_8java">usage_example.java</link></section>
+</section>

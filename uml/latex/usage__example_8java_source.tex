@@ -1,0 +1,76 @@
+\hypertarget{usage__example_8java_source}{}\doxysection{C\+:/\+Users/\+User1/git/\+File\+Champion4j/usage\+\_\+example.java}
+\mbox{\hyperlink{usage__example_8java}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00001}00001\ \textcolor{keyword}{import}\ java.io.File;}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00002}00002\ \textcolor{keyword}{import}\ java.io.IOException;}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00003}00003\ \textcolor{keyword}{import}\ java.nio.file.Files;}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00004}00004\ \textcolor{keyword}{import}\ java.nio.file.Paths;}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00005}00005\ \textcolor{keyword}{import}\ org.json.JSONObject;}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00006}00006\ \textcolor{keyword}{import}\ dev.filechampion.filechampion4j.FileValidator;}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00007}00007\ \textcolor{keyword}{import}\ dev.filechampion.filechampion4j.ValidationResponse;}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00020}\mbox{\hyperlink{class_main}{00020}}\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_main}{Main}}\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00021}\mbox{\hyperlink{class_main_a8a5d0f827edddff706cc0e6740d0579a}{00021}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_main_a8a5d0f827edddff706cc0e6740d0579a}{main}}(String[]\ args)\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ to\ the\ file\ to\ be\ validated\ in\ this\ simple\ example}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00023}00023\ \ \ \ \ \ \ \ \ File\ pdfFile\ =\ \textcolor{keyword}{new}\ File(\textcolor{stringliteral}{"{}samples/In/test.pdf"{}});}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ to\ the\ config.json\ file}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00026}00026\ \ \ \ \ \ \ \ \ String\ configPath\ =\ \textcolor{stringliteral}{"{}config/config.json"{}};}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Placeholders\ for\ the\ JSON\ object\ and\ the\ file\ in\ bytes}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00029}00029\ \ \ \ \ \ \ \ \ JSONObject\ jsonObject\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator}{FileValidator}}\ validator\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ to\ the\ output\ directory}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00034}00034\ \ \ \ \ \ \ \ \ String\ outDir\ =\ \textcolor{stringliteral}{"{}samples/Out/"{}};}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ a\ new\ FileValidator\ object\ with\ json\ config\ file}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Read\ the\ JSON\ object\ from\ the\ config.json\ file}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ String\ jsonConfigContent\ =\ \textcolor{keyword}{new}\ String(Files.readAllBytes(Paths.get(configPath)));}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ jsonObject\ =\ \textcolor{keyword}{new}\ JSONObject(jsonConfigContent);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ a\ new\ FileValidator\ object}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ validator\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator}{FileValidator}}(jsonObject);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00044}00044\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (IOException\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ e.printStackTrace();}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00047}00047\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (IllegalArgumentException\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Error\ creating\ FileValidator\ object"{}});}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00050}00050\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (Exception\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Error\ reading\ config\ file"{}});}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00053}00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Read\ the\ file\ to\ be\ validated\ into\ a\ byte\ array}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ fileInBytes\ =\ Files.readAllBytes(pdfFile.toPath());}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Validate\ the\ file}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ pdfFile.getName(),outDir);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ file\ is\ valid}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fileValidationResults.isValid())\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ the\ results\ if\ the\ file\ is\ valid}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String\ validMessage\ =\ String.format(\textcolor{stringliteral}{"{}\%s\ is\ a\ valid\ document\ file.\%n\ New\ file:\ \%s,\ Checksum:\ \%s"{}},}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileValidationResults.resultsInfo(),}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileValidationResults.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_afdb86dded713542042d03230acd6887d}{getValidFilePath}}().length\ ==\ 0\ ?\ \textcolor{stringliteral}{"{}"{}}\ :\ fileValidationResults.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_afdb86dded713542042d03230acd6887d}{getValidFilePath}}()[0],}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileValidationResults.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_afa36e6b68270728848136cb7c62c3103}{getFileChecksum}}());}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(validMessage);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(0);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ the\ results\ if\ the\ file\ is\ invalid}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(pdfFile.getName()\ +\ \textcolor{stringliteral}{"{}\ is\ not\ a\ valid\ document\ file\ \ because\ "{}}\ +\ fileValidationResults.resultsInfo());}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(0);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00076}00076\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (IOException\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ e.printStackTrace();}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00079}00079\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00080}00080\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{usage__example_8java_source_l00081}00081\ \}}
+
+\end{DoxyCode}

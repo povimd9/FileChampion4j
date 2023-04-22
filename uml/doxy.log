@@ -1,0 +1,8 @@
+C:/Users/User1/git/FileChampion4j/config/README.md:2: warning: Invalid list item found
+C:/Users/User1/git/FileChampion4j/src/main/java/dev/filechampion/filechampion4j/Extension.java:28: warning: found documented return type for dev.filechampion.filechampion4j.Extension.Extension that does not return anything
+C:/Users/User1/git/FileChampion4j/src/main/java/dev/filechampion/filechampion4j/PluginsHelper.java:16: warning: found documented return type for dev.filechampion.filechampion4j.PluginsHelper.PluginsHelper that does not return anything
+C:/Users/User1/git/FileChampion4j/src/main/java/dev/filechampion/filechampion4j/ValidationResponse.java:17: warning: The following parameter of dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse(boolean isValid, String resultsInfo, String cleanFileName, byte[] fileBytes, String fileChecksum, String... validFilePath) is not documented:
+  parameter 'cleanFileName'
+C:/Users/User1/git/FileChampion4j/src/main/java/dev/filechampion/filechampion4j/FileValidator.java:204: warning: The following parameter of dev.filechampion.filechampion4j.FileValidator.doValidations(String originalFilenameClean, String fileExtension, Extension extensionConfig, byte[] originalFile, String fileChecksum, String outDir) is not documented:
+  parameter 'fileChecksum'
+C:/Users/User1/git/FileChampion4j/src/main/java/dev/filechampion/filechampion4j/ValidationResponse.java:17: warning: found documented return type for dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse that does not return anything

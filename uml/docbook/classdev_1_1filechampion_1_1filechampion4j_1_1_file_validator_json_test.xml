@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test" xml:lang="en-US">
+<title>dev.filechampion.filechampion4j.FileValidatorJsonTest Class Reference</title>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary></indexterm>
+Collaboration diagram for dev.filechampion.filechampion4j.FileValidatorJsonTest:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Package Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1ae70ade4da3ae3ce3b4acedd7e4217780">testStepTimeout</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1addff6ff1e3e393d22f709686c73bd614">testStepfailure</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1accaab272204ff05cadb3e832529015bc">testPluginLoadFailue</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a089caaeee5e74f23e462658b47c41aae">testPluginKeysFailue</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1aef4bfeca1724cb089dddc1add792316c">testInValidMime</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1abe58b7ca037bdd69d1fd1c19f81dcb20">testInValidMagic</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1abed39eeda356b1c735b926c2323d7f74">testInValidMagicHeader</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a05e2ebb12fa09039cc6ccb3313f80863">testInValidMagicFooter</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1ad79b137d847adfd3ac5177acba2f8ddd">testJsonEncodeFalse</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a2f41f8bc235120ec4ccd56f02a4daadb">testSizeZero</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1ae8737ee01062722b1417a6b70f4df2bb">testBasicConfig</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a4611b33e92d7b90d8df69148bdbf18e2">testNoMime</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1af4cb1128d0c4987bd701ac0d8a58c2d8">testNoMagic</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a15e46d7300ef2f1dcc80de240f25f8aa">testNoSigs</link> ()  throws Exception </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+<para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00026">26</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1ae8737ee01062722b1417a6b70f4df2bb"/><section>
+    <title>testBasicConfig()</title>
+<indexterm><primary>testBasicConfig</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testBasicConfig</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testBasicConfig ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00402">402</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_ae8737ee01062722b1417a6b70f4df2bb_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1abe58b7ca037bdd69d1fd1c19f81dcb20"/><section>
+    <title>testInValidMagic()</title>
+<indexterm><primary>testInValidMagic</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testInValidMagic</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testInValidMagic ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00353">353</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_abe58b7ca037bdd69d1fd1c19f81dcb20_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a05e2ebb12fa09039cc6ccb3313f80863"/><section>
+    <title>testInValidMagicFooter()</title>
+<indexterm><primary>testInValidMagicFooter</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testInValidMagicFooter</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testInValidMagicFooter ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00373">373</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_a05e2ebb12fa09039cc6ccb3313f80863_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1abed39eeda356b1c735b926c2323d7f74"/><section>
+    <title>testInValidMagicHeader()</title>
+<indexterm><primary>testInValidMagicHeader</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testInValidMagicHeader</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testInValidMagicHeader ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00363">363</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_abed39eeda356b1c735b926c2323d7f74_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1aef4bfeca1724cb089dddc1add792316c"/><section>
+    <title>testInValidMime()</title>
+<indexterm><primary>testInValidMime</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testInValidMime</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testInValidMime ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00343">343</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_aef4bfeca1724cb089dddc1add792316c_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1ad79b137d847adfd3ac5177acba2f8ddd"/><section>
+    <title>testJsonEncodeFalse()</title>
+<indexterm><primary>testJsonEncodeFalse</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testJsonEncodeFalse</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testJsonEncodeFalse ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00382">382</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_ad79b137d847adfd3ac5177acba2f8ddd_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1af4cb1128d0c4987bd701ac0d8a58c2d8"/><section>
+    <title>testNoMagic()</title>
+<indexterm><primary>testNoMagic</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testNoMagic</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testNoMagic ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00422">422</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_af4cb1128d0c4987bd701ac0d8a58c2d8_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a4611b33e92d7b90d8df69148bdbf18e2"/><section>
+    <title>testNoMime()</title>
+<indexterm><primary>testNoMime</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testNoMime</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testNoMime ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00412">412</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_a4611b33e92d7b90d8df69148bdbf18e2_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a15e46d7300ef2f1dcc80de240f25f8aa"/><section>
+    <title>testNoSigs()</title>
+<indexterm><primary>testNoSigs</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testNoSigs</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testNoSigs ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00432">432</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_a15e46d7300ef2f1dcc80de240f25f8aa_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a089caaeee5e74f23e462658b47c41aae"/><section>
+    <title>testPluginKeysFailue()</title>
+<indexterm><primary>testPluginKeysFailue</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testPluginKeysFailue</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testPluginKeysFailue ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00333">333</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1accaab272204ff05cadb3e832529015bc"/><section>
+    <title>testPluginLoadFailue()</title>
+<indexterm><primary>testPluginLoadFailue</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testPluginLoadFailue</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testPluginLoadFailue ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00323">323</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1a2f41f8bc235120ec4ccd56f02a4daadb"/><section>
+    <title>testSizeZero()</title>
+<indexterm><primary>testSizeZero</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testSizeZero</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testSizeZero ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00392">392</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_a2f41f8bc235120ec4ccd56f02a4daadb_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1addff6ff1e3e393d22f709686c73bd614"/><section>
+    <title>testStepfailure()</title>
+<indexterm><primary>testStepfailure</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testStepfailure</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testStepfailure ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00310">310</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_addff6ff1e3e393d22f709686c73bd614_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_1ae70ade4da3ae3ce3b4acedd7e4217780"/><section>
+    <title>testStepTimeout()</title>
+<indexterm><primary>testStepTimeout</primary><secondary>dev.filechampion.filechampion4j.FileValidatorJsonTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorJsonTest</primary><secondary>testStepTimeout</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorJsonTest.testStepTimeout ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_json_test_8java_source_1l00297">297</link> of file <link linkend="__file_validator_json_test_8java_source">FileValidatorJsonTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test_ae70ade4da3ae3ce3b4acedd7e4217780_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/<link linkend="__file_validator_json_test_8java">FileValidatorJsonTest.java</link></section>
+</section>

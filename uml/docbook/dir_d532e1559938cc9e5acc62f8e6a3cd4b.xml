@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_d532e1559938cc9e5acc62f8e6a3cd4b" xml:lang="en-US">
+<title>C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j Directory Reference</title>
+<indexterm><primary>C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j Directory Reference</primary></indexterm>
+<simplesect>
+    <title>Files    </title>
+        <itemizedlist>
+            <listitem><para>file <link linkend="__cli_plugin_helper_test_8java">CliPluginHelperTest.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__extension_test_8java">ExtensionTest.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_acl_helper_test_8java">FileAclHelperTest.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_validator_bench_8java">FileValidatorBench.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_validator_json_test_8java">FileValidatorJsonTest.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_validator_large_files_bench_8java">FileValidatorLargeFilesBench.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_validator_test_8java">FileValidatorTest.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__validation_response_test_8java">ValidationResponseTest.java</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

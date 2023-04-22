@@ -1,0 +1,226 @@
+\href{https://codecov.io/gh/povimd9/FileChampion4j}{\texttt{ }} 
+
+Thank you for your interest in File\+Champion4j, a robust, secure, and flexible file validation library for Java. Documentation can be found via javacdoc and under the project WIKI section.\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md13}{}\doxysection{Introduction}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md13}
+File\+Champion4j is a powerful and flexible Java library for validating and processing files. The library can be used to check files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, and more. The library can also execute extension plugins that are defined for the file type.
+
+{\bfseries{See \href{https://github.com/povimd9/FileChampion4j/wiki}{\texttt{ File\+Champion4j Wiki}} for detailed instructions on configurations and usage.}}\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md14}{}\doxysubsection{Features}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md14}
+
+\begin{DoxyItemize}
+\item Easy to understand and configure for developers, operations, and security engineers.
+\item JSON-\/based configuration, supporting the ability to separate configurations from code.
+\item Flexible to support various integrations, including client-\/defined controls.
+\item Support for in-\/memory and on-\/disk validation.
+\item Validate files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, filename cleanup/encoding, and owner/permissions of file.
+\item Custom plugins execution support for extended usability.
+\item Comprehensive error handling and reporting.
+\end{DoxyItemize}\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{Benefits}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md15}
+
+\begin{DoxyItemize}
+\item Protect your system from malicious files.
+\item Ensure that files are of the correct type and size.
+\item Save time, effort, and risk of developing custom file validation code.
+\item Allow security engineers to define required file controls without code modification.
+\item Support easy auditing of controls by compliance officers and auditors.
+\end{DoxyItemize}\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md16}{}\doxysubsection{Releases}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md16}
+Working release versions, including slim/fat JARs, can be found on the {\ttfamily release-\/$\ast$} branches. A Maven Central package will be added for distribution soon.\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md17}{}\doxysubsection{Support}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md17}
+File\+Champion4j is intended to support Windows/\+Linux platforms, running any active LTS Java runtime versions. Builds are tested and packaged for supported environments. Merges and new releases must pass security, functional, and performance tests for supported environments.
+
+If you have any questions about File\+Champion4j, please feel free to contact the project team. The project team is available to answer questions and provide support.
+
+If you found any issues or ideas, please open a relevant issue in this project.\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md18}{}\doxysubsection{Contributing}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md18}
+If you would like to contribute to File\+Champion4j, please feel free to fork the project on Git\+Hub. The project team welcomes contributions of all kinds, including bug fixes, new features, and documentation improvements.\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md19}{}\doxysubsection{License}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md19}
+File\+Champion4j is licensed under the Apache License, Version 2.\+0. For more information about the license, please see the LICENSE file in the project repository.\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md20}{}\doxysubsection{Basic Usage}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md20}
+The File\+Validator class is initialized with a JSON configuration object. The File\+Validator.\+validate\+File() method is the main entry point for validating files. validate\+File() takes 4 arguments\+:
+
+
+\begin{DoxyItemize}
+\item Configuration category -\/ the category defined under the \char`\"{}\+Validations\char`\"{} object (e.\+g. \char`\"{}\+Documents\char`\"{})
+\item Target file bytes -\/ a byte array of file content to be scanned
+\item File name -\/ the original file name associated with the target file bytes
+\item Output directory -\/ (optional) directory to which a validated file will be saved to (required for owner/permissions change)
+\end{DoxyItemize}
+
+validate\+File() returns a Validation\+Response object, containing\+:
+
+
+\begin{DoxyItemize}
+\item is\+Valid -\/ a boolean indicating whether the file is valid or not
+\item results\+Info -\/ a string containing additional information about the validation pass/fail status
+\item file\+Bytes -\/ the file bytes if the file is valid (original of new file if was modified by plugins)
+\item file\+Checksum\+: the SHA-\/256 checksum of the file
+\end{DoxyItemize}\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md21}{}\doxysubsection{Configuration}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md21}
+Example configuration of validation controls and plugins. \char`\"{}\+Validations\char`\"{} and at least 1 child key is required for validation to work. Plugins and steps can be defined as necessary -\/ current implementation only supports process execution, API support will come soon.
+
+
+\begin{DoxyItemize}
+\item \$\{file\+Path\}, and \$\{file\+Checksum\} -\/ can be used in \textquotesingle{}endpoint\textquotesingle{} value to inject correspanding values
+\item \$\{file\+Content\} -\/ can be used in \textquotesingle{}endpoint\textquotesingle{} value to inject file content in base64 encoding
+\item \$\{STEP\+\_\+\+NAME.\+file\+Path\} -\/ can be used to extract file path content and replace original file bytes
+\item \$\{STEP\+\_\+\+NAME.\+file\+Content\} -\/ can be used to extract base64 file content from base64 encoded bytes
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ "{}Validations"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ "{}Documents"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ "{}pdf"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}mime\_type"{}:\ "{}application/pdf"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}magic\_bytes"{}:\ "{}25504446"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}header\_signatures"{}:\ "{}25504446"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}footer\_signatures"{}:\ "{}2525454f46"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_user"{}:\ "{}User1"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_mode"{}:\ "{}r"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}name\_encoding"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}max\_size"{}:\ "{}126000"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}extension\_plugins"{}:\ ["{}do\_anti\_virus\_scan.step1"{},\ "{}handle\_pdf\_documents.step1"{},\ "{}handle\_pdf\_documents.step2"{}]}
+\DoxyCodeLine{\ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ "{}doc"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}mime\_type"{}:\ "{}application/msword"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}magic\_bytes"{}:\ "{}D0CF11E0A1B11AE1"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}header\_signatures"{}:\ "{}D0CF11E0A1B11AE1"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}footer\_signatures"{}:\ "{}0000000000000000"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_user"{}:\ "{}User1"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_mode"{}:\ "{}r"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}name\_encoding"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}max\_size"{}:\ "{}4000"{}}
+\DoxyCodeLine{\ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ "{}Images"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ "{}jpg"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}mime\_type"{}:\ "{}image/jpeg"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}magic\_bytes"{}:\ "{}FFD8"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}header\_signatures"{}:\ "{}FFD8FF"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}footer\_signatures"{}:\ "{}FFD9"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_user"{}:\ "{}User1"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_mode"{}:\ "{}r"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}name\_encoding"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}max\_size"{}:\ "{}4000"{}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ "{}png"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}mime\_type"{}:\ "{}image/png"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}magic\_bytes"{}:\ "{}89504E470D0A1A0A"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}header\_signatures"{}:\ "{}89504E470D0A1A0A0000000D49484452"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}footer\_signatures"{}:\ "{}49454E44AE426082"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_user"{}:\ "{}User1"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}change\_ownership\_mode"{}:\ "{}r"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}name\_encoding"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}max\_size"{}:\ "{}4000"{}}
+\DoxyCodeLine{\ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \},}
+\DoxyCodeLine{\ \ "{}Plugins"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ "{}do\_anti\_virus\_scan"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ "{}step1.step"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}type"{}:\ "{}cli"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}run\_before"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}endpoint"{}:\ "{}curl\ -\/X\ POST\ -\/F\ \(\backslash\)"{}file=@\$\{filePath\}\(\backslash\)"{}\ https://avscanner:8080/scan"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}timeout"{}:\ 320,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}on\_timeout\_or\_fail"{}:\ "{}fail"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}response"{}:\ "{}Success:\ \$\{step1.filePath\}"{}}
+\DoxyCodeLine{\ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ "{}handle\_pdf\_documents"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ "{}step1.step"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}type"{}:\ "{}cli"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}run\_after"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}endpoint"{}:\ "{}remove\_all\_active\_pdf\_objects.sh\ \$\{filePath\}"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}timeout"{}:\ 320,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}on\_timeout\_or\_fail"{}:\ "{}fail"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}response"{}:\ "{}Success:\ \$\{step1.filePath\}"{}}
+\DoxyCodeLine{\ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ "{}step2.step"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}type"{}:\ "{}cli"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}run\_after"{}:\ true,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}endpoint"{}:\ "{}save\_to\_db.sh\ \$\{fileContent\}"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}timeout"{}:\ 320,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}on\_timeout\_or\_fail"{}:\ "{}fail"{},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ "{}response"{}:\ "{}Success:\ \$\{step1.fileContent\}"{}}
+\DoxyCodeLine{\ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md22}{}\doxysubsection{Example}\label{md__c___users__user1_git__file_champion4j__r_e_a_d_m_e_autotoc_md22}
+The following code shows a simple implementation example\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ java.io.File;}
+\DoxyCodeLine{\textcolor{keyword}{import}\ java.io.IOException;}
+\DoxyCodeLine{\textcolor{keyword}{import}\ java.nio.file.Files;}
+\DoxyCodeLine{\textcolor{keyword}{import}\ java.nio.file.Paths;}
+\DoxyCodeLine{\textcolor{keyword}{import}\ org.json.JSONObject;}
+\DoxyCodeLine{\textcolor{keyword}{import}\ dev.filechampion.filechampion4j.FileValidator;}
+\DoxyCodeLine{\textcolor{keyword}{import}\ dev.filechampion.filechampion4j.ValidationResponse;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{public}\ \textcolor{keyword}{class\ }Main\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ main(String[]\ args)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ to\ the\ file\ to\ be\ validated\ in\ this\ simple\ example}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ File\ pdfFile\ =\ \textcolor{keyword}{new}\ File(\textcolor{stringliteral}{"{}samples/In/test.pdf"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ to\ the\ config.json\ file}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ String\ configPath\ =\ \textcolor{stringliteral}{"{}config/config.json"{}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Placeholders\ for\ the\ JSON\ object\ and\ the\ file\ in\ bytes}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ JSONObject\ jsonObject\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ FileValidator\ validator\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ to\ the\ output\ directory}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ String\ outDir\ =\ \textcolor{stringliteral}{"{}samples/Out/"{}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ a\ new\ FileValidator\ object\ with\ json\ config\ file}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Read\ the\ JSON\ object\ from\ the\ config.json\ file}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ String\ jsonConfigContent\ =\ \textcolor{keyword}{new}\ String(Files.readAllBytes(Paths.get(configPath)));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ jsonObject\ =\ \textcolor{keyword}{new}\ JSONObject(jsonConfigContent);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ a\ new\ FileValidator\ object}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ validator\ =\ \textcolor{keyword}{new}\ FileValidator(jsonObject);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (IOException\ e)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ e.printStackTrace();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (IllegalArgumentException\ e)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Error\ creating\ FileValidator\ object"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (Exception\ e)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ System.out.println(\textcolor{stringliteral}{"{}Error\ reading\ config\ file"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Read\ the\ file\ to\ be\ validated\ into\ a\ byte\ array}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ fileInBytes\ =\ Files.readAllBytes(pdfFile.toPath());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Validate\ the\ file}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ValidationResponse\ fileValidationResults\ =\ validator.validateFile(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ pdfFile.getName(),outDir);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ file\ is\ valid}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fileValidationResults.isValid())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ the\ results\ if\ the\ file\ is\ valid}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String\ validMessage\ =\ String.format(\textcolor{stringliteral}{"{}\%s\ is\ a\ valid\ document\ file.\%n\ New\ file:\ \%s,\ Checksum:\ \%s"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileValidationResults.resultsInfo(),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileValidationResults.getValidFilePath().length\ ==\ 0\ ?\ \textcolor{stringliteral}{"{}"{}}\ :\ fileValidationResults.getValidFilePath()[0],}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fileValidationResults.getFileChecksum());}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(validMessage);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(0);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ the\ results\ if\ the\ file\ is\ invalid}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.out.println(pdfFile.getName()\ +\ \textcolor{stringliteral}{"{}\ is\ not\ a\ valid\ document\ file\ \ because\ "{}}\ +\ fileValidationResults.resultsInfo());}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ System.exit(0);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (IOException\ e)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ e.printStackTrace();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ System.exit(1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 

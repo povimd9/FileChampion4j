@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test" xml:lang="en-US">
+<title>dev.filechampion.filechampion4j.ExtensionTest Class Reference</title>
+<indexterm><primary>dev.filechampion.filechampion4j.ExtensionTest</primary></indexterm>
+Collaboration diagram for dev.filechampion.filechampion4j.ExtensionTest:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Package Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a66856f190716354ae6f235c16e8058fc">testConstructorWithNullArguments</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a58e46ba97d0eac66bd494e679fe706a4">testConstructorWithEmptyFileCategory</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1aed77dff8c53cbed353208e8b0c3a96c8">testConstructorWithInvalidFileCategory</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a3c85cbd0079d4c8357ff65008ac3b9c3">testConstructorWithInvalidFileExtension</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a83b953e5e5662ca67788ff7c3ff3f117">testGettersWithValidValues</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Unit test for Extension class. TODO: Add AV scan config loading tests </para>
+<para>
+Definition at line <link linkend="__extension_test_8java_source_1l00013">13</link> of file <link linkend="__extension_test_8java_source">ExtensionTest.java</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a58e46ba97d0eac66bd494e679fe706a4"/><section>
+    <title>testConstructorWithEmptyFileCategory()</title>
+<indexterm><primary>testConstructorWithEmptyFileCategory</primary><secondary>dev.filechampion.filechampion4j.ExtensionTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.ExtensionTest</primary><secondary>testConstructorWithEmptyFileCategory</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.ExtensionTest.testConstructorWithEmptyFileCategory ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_test_8java_source_1l00026">26</link> of file <link linkend="__extension_test_8java_source">ExtensionTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1aed77dff8c53cbed353208e8b0c3a96c8"/><section>
+    <title>testConstructorWithInvalidFileCategory()</title>
+<indexterm><primary>testConstructorWithInvalidFileCategory</primary><secondary>dev.filechampion.filechampion4j.ExtensionTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.ExtensionTest</primary><secondary>testConstructorWithInvalidFileCategory</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.ExtensionTest.testConstructorWithInvalidFileCategory ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_test_8java_source_1l00034">34</link> of file <link linkend="__extension_test_8java_source">ExtensionTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a3c85cbd0079d4c8357ff65008ac3b9c3"/><section>
+    <title>testConstructorWithInvalidFileExtension()</title>
+<indexterm><primary>testConstructorWithInvalidFileExtension</primary><secondary>dev.filechampion.filechampion4j.ExtensionTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.ExtensionTest</primary><secondary>testConstructorWithInvalidFileExtension</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.ExtensionTest.testConstructorWithInvalidFileExtension ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_test_8java_source_1l00042">42</link> of file <link linkend="__extension_test_8java_source">ExtensionTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a66856f190716354ae6f235c16e8058fc"/><section>
+    <title>testConstructorWithNullArguments()</title>
+<indexterm><primary>testConstructorWithNullArguments</primary><secondary>dev.filechampion.filechampion4j.ExtensionTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.ExtensionTest</primary><secondary>testConstructorWithNullArguments</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.ExtensionTest.testConstructorWithNullArguments ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_test_8java_source_1l00019">19</link> of file <link linkend="__extension_test_8java_source">ExtensionTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a83b953e5e5662ca67788ff7c3ff3f117"/><section>
+    <title>testGettersWithValidValues()</title>
+<indexterm><primary>testGettersWithValidValues</primary><secondary>dev.filechampion.filechampion4j.ExtensionTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.ExtensionTest</primary><secondary>testGettersWithValidValues</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.ExtensionTest.testGettersWithValidValues ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__extension_test_8java_source_1l00052">52</link> of file <link linkend="__extension_test_8java_source">ExtensionTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_a83b953e5e5662ca67788ff7c3ff3f117_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/<link linkend="__extension_test_8java">ExtensionTest.java</link></section>
+</section>

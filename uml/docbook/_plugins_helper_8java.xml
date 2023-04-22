@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__plugins_helper_8java" xml:lang="en-US">
+<title>src/main/java/dev/filechampion/filechampion4j/PluginsHelper.java File Reference</title>
+<indexterm><primary>src/main/java/dev/filechampion/filechampion4j/PluginsHelper.java</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper">dev.filechampion.filechampion4j.PluginsHelper</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_plugin_config">dev.filechampion.filechampion4j.PluginsHelper.PluginConfig</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config">dev.filechampion.filechampion4j.PluginsHelper.StepConfig</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Packages    </title>
+        <itemizedlist>
+            <listitem><para>package <link linkend="_namespacedev_1_1filechampion_1_1filechampion4j">dev.filechampion.filechampion4j</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

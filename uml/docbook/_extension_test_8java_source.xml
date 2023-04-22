@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__extension_test_8java_source" xml:lang="en-US">
+<title>ExtensionTest.java</title>
+<indexterm><primary>C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/ExtensionTest.java</primary></indexterm>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="__extension_test_8java_source_1l00001"/>00001 <emphasis role="keyword">package&#32;</emphasis>dev.filechampion.filechampion4j;
+<anchor xml:id="__extension_test_8java_source_1l00002"/>00002 
+<anchor xml:id="__extension_test_8java_source_1l00003"/>00003 <emphasis role="keyword">import</emphasis>&#32;org.json.JSONObject;
+<anchor xml:id="__extension_test_8java_source_1l00004"/>00004 <emphasis role="keyword">import</emphasis>&#32;org.json.JSONArray;
+<anchor xml:id="__extension_test_8java_source_1l00005"/>00005 <emphasis role="keyword">import</emphasis>&#32;org.junit.jupiter.api.Assertions;
+<anchor xml:id="__extension_test_8java_source_1l00006"/>00006 <emphasis role="keyword">import</emphasis>&#32;org.junit.jupiter.api.Test;
+<anchor xml:id="__extension_test_8java_source_1l00007"/>00007 
+<anchor xml:id="__extension_test_8java_source_1l00013"/><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test">00013</link> &#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">class&#32;</emphasis><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test">ExtensionTest</link>&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00014"/>00014 
+<anchor xml:id="__extension_test_8java_source_1l00015"/>00015 &#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keyword">final</emphasis>&#32;String&#32;FILE_CATEGORY&#32;=&#32;<emphasis role="stringliteral">&quot;Documents&quot;</emphasis>;
+<anchor xml:id="__extension_test_8java_source_1l00016"/>00016 &#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keyword">final</emphasis>&#32;String&#32;FILE_EXTENSION&#32;=&#32;<emphasis role="stringliteral">&quot;pdf&quot;</emphasis>;
+<anchor xml:id="__extension_test_8java_source_1l00017"/>00017 
+<anchor xml:id="__extension_test_8java_source_1l00018"/>00018 &#32;&#32;&#32;&#32;@Test
+<anchor xml:id="__extension_test_8java_source_1l00019"/><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a66856f190716354ae6f235c16e8058fc">00019</link> &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a66856f190716354ae6f235c16e8058fc">testConstructorWithNullArguments</link>()&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00020"/>00020 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertThrows(IllegalArgumentException.class,&#32;()&#32;-&gt;&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00021"/>00021 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;new&#32;Extension(null,&#32;null,&#32;null);
+<anchor xml:id="__extension_test_8java_source_1l00022"/>00022 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;});
+<anchor xml:id="__extension_test_8java_source_1l00023"/>00023 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__extension_test_8java_source_1l00024"/>00024 
+<anchor xml:id="__extension_test_8java_source_1l00025"/>00025 &#32;&#32;&#32;&#32;@Test
+<anchor xml:id="__extension_test_8java_source_1l00026"/><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a58e46ba97d0eac66bd494e679fe706a4">00026</link> &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a58e46ba97d0eac66bd494e679fe706a4">testConstructorWithEmptyFileCategory</link>()&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00027"/>00027 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;configJsonObject&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject();
+<anchor xml:id="__extension_test_8java_source_1l00028"/>00028 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertThrows(IllegalArgumentException.class,&#32;()&#32;-&gt;&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00029"/>00029 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;new&#32;Extension(<emphasis role="stringliteral">&quot;&quot;</emphasis>,&#32;FILE_EXTENSION,&#32;configJsonObject);
+<anchor xml:id="__extension_test_8java_source_1l00030"/>00030 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;});
+<anchor xml:id="__extension_test_8java_source_1l00031"/>00031 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__extension_test_8java_source_1l00032"/>00032 
+<anchor xml:id="__extension_test_8java_source_1l00033"/>00033 &#32;&#32;&#32;&#32;@Test
+<anchor xml:id="__extension_test_8java_source_1l00034"/><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1aed77dff8c53cbed353208e8b0c3a96c8">00034</link> &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1aed77dff8c53cbed353208e8b0c3a96c8">testConstructorWithInvalidFileCategory</link>()&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00035"/>00035 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;configJsonObject&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject();
+<anchor xml:id="__extension_test_8java_source_1l00036"/>00036 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertThrows(IllegalArgumentException.class,&#32;()&#32;-&gt;&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00037"/>00037 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;new&#32;Extension(<emphasis role="stringliteral">&quot;InvalidCategory&quot;</emphasis>,&#32;FILE_EXTENSION,&#32;configJsonObject);
+<anchor xml:id="__extension_test_8java_source_1l00038"/>00038 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;});
+<anchor xml:id="__extension_test_8java_source_1l00039"/>00039 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__extension_test_8java_source_1l00040"/>00040 
+<anchor xml:id="__extension_test_8java_source_1l00041"/>00041 &#32;&#32;&#32;&#32;@Test
+<anchor xml:id="__extension_test_8java_source_1l00042"/><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a3c85cbd0079d4c8357ff65008ac3b9c3">00042</link> &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a3c85cbd0079d4c8357ff65008ac3b9c3">testConstructorWithInvalidFileExtension</link>()&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00043"/>00043 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;configJsonObject&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject();
+<anchor xml:id="__extension_test_8java_source_1l00044"/>00044 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;categoryJson&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject();
+<anchor xml:id="__extension_test_8java_source_1l00045"/>00045 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;configJsonObject.put(FILE_CATEGORY,&#32;categoryJson);
+<anchor xml:id="__extension_test_8java_source_1l00046"/>00046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertThrows(IllegalArgumentException.class,&#32;()&#32;-&gt;&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00047"/>00047 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;new&#32;Extension(FILE_CATEGORY,&#32;<emphasis role="stringliteral">&quot;InvalidExtension&quot;</emphasis>,&#32;configJsonObject);
+<anchor xml:id="__extension_test_8java_source_1l00048"/>00048 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;});
+<anchor xml:id="__extension_test_8java_source_1l00049"/>00049 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__extension_test_8java_source_1l00050"/>00050 
+<anchor xml:id="__extension_test_8java_source_1l00051"/>00051 &#32;&#32;&#32;&#32;@Test
+<anchor xml:id="__extension_test_8java_source_1l00052"/><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a83b953e5e5662ca67788ff7c3ff3f117">00052</link> &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_test_1a83b953e5e5662ca67788ff7c3ff3f117">testGettersWithValidValues</link>()&#32;{
+<anchor xml:id="__extension_test_8java_source_1l00053"/>00053 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;configJsonObject&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject();
+<anchor xml:id="__extension_test_8java_source_1l00054"/>00054 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;categoryJson&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject();
+<anchor xml:id="__extension_test_8java_source_1l00055"/>00055 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;extensionJson&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject();
+<anchor xml:id="__extension_test_8java_source_1l00056"/>00056 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;mime_type&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;application/pdf&quot;</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00057"/>00057 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;magic_bytes&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;25&#32;50&#32;44&#32;46&quot;</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00058"/>00058 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;header_signatures&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;255,216,255&quot;</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00059"/>00059 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;footer_signatures&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;37,80,68,70&quot;</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00060"/>00060 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;antivirus_scan&quot;</emphasis>,&#32;<emphasis role="keyword">new</emphasis>&#32;JSONArray(<emphasis role="stringliteral">&quot;[\&quot;ClamAV\&quot;,&#32;\&quot;Sophos\&quot;]&quot;</emphasis>));
+<anchor xml:id="__extension_test_8java_source_1l00061"/>00061 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;change_ownership&quot;</emphasis>,&#32;<emphasis role="keyword">true</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00062"/>00062 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;change_ownership_user&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;myuser&quot;</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00063"/>00063 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;change_ownership_mode&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;rwxrwxrwx&quot;</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00064"/>00064 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;name_encoding&quot;</emphasis>,&#32;<emphasis role="keyword">false</emphasis>);
+<anchor xml:id="__extension_test_8java_source_1l00065"/>00065 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionJson.put(<emphasis role="stringliteral">&quot;max_size&quot;</emphasis>,&#32;10485760);
+<anchor xml:id="__extension_test_8java_source_1l00066"/>00066 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;categoryJson.put(FILE_EXTENSION,&#32;extensionJson);
+<anchor xml:id="__extension_test_8java_source_1l00067"/>00067 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;configJsonObject.put(FILE_CATEGORY,&#32;categoryJson);
+<anchor xml:id="__extension_test_8java_source_1l00068"/>00068 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension">Extension</link>&#32;extension&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension">Extension</link>(FILE_CATEGORY,&#32;FILE_EXTENSION,&#32;configJsonObject);
+<anchor xml:id="__extension_test_8java_source_1l00069"/>00069 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(<emphasis role="stringliteral">&quot;application/pdf&quot;</emphasis>,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a0ca5177df2e29cdc0eff69343983e5c8">getMimeType</link>());
+<anchor xml:id="__extension_test_8java_source_1l00070"/>00070 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(<emphasis role="stringliteral">&quot;25&#32;50&#32;44&#32;46&quot;</emphasis>,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1aabab7c822972827e18bd71489f217f0f">getMagicBytes</link>());
+<anchor xml:id="__extension_test_8java_source_1l00071"/>00071 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(<emphasis role="stringliteral">&quot;255,216,255&quot;</emphasis>,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2c42c83175eec07cab9c934d0adcce58">getHeaderSignatures</link>());
+<anchor xml:id="__extension_test_8java_source_1l00072"/>00072 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(<emphasis role="stringliteral">&quot;37,80,68,70&quot;</emphasis>,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a2a3214d34b9e225fc5d344413955affa">getFooterSignatures</link>());
+<anchor xml:id="__extension_test_8java_source_1l00073"/>00073 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(2,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a4c947bd0f914325a94e10993fb678e4d">getAntivirusScanJson</link>().length());
+<anchor xml:id="__extension_test_8java_source_1l00074"/>00074 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertTrue(extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a89d624ae974ff58f1845b03ab38d25b4">isChangeOwnership</link>());
+<anchor xml:id="__extension_test_8java_source_1l00075"/>00075 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(<emphasis role="stringliteral">&quot;myuser&quot;</emphasis>,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a9345e902c7e0a97db4b373220b5fb83a">getChangeOwnershipUser</link>());
+<anchor xml:id="__extension_test_8java_source_1l00076"/>00076 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(<emphasis role="stringliteral">&quot;rwxrwxrwx&quot;</emphasis>,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a84ccc1ed5b10cf94987bb7a28757a417">getChangeOwnershipMode</link>());
+<anchor xml:id="__extension_test_8java_source_1l00077"/>00077 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertFalse(extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a5073918a440378a38a22983daea7fe39">isNameEncoding</link>());
+<anchor xml:id="__extension_test_8java_source_1l00078"/>00078 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Assertions.assertEquals(10485760,&#32;extension.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_extension_1a24aab53ff45fe3f337f92d7a6804a122">getMaxSize</link>());
+<anchor xml:id="__extension_test_8java_source_1l00079"/>00079 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__extension_test_8java_source_1l00080"/>00080 }
+</programlisting></section>

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md__s_e_c_u_r_i_t_y" xml:lang="en-US">
+<section xml:id="_md__s_e_c_u_r_i_t_y_1autotoc_md14">
+<title>Supported Versions</title>
+
+<para>This project will support 2 Major versions (i.e. n-2).</para>
+
+<para><informaltable frame="all">
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<thead>
+      <row  class='markdownTableHead'>
+<entry>
+<para>Version   </para>
+</entry><entry>
+<para>Supported    </para>
+</entry></row>
+</thead><tbody>
+      <row  class='markdownTableRowOdd'>
+<entry>
+<para>0.9.x   </para>
+</entry><entry>
+<para>:white_check_mark:   </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+</section>
+<section xml:id="_md__s_e_c_u_r_i_t_y_1autotoc_md15">
+<title>Reporting a Vulnerability</title>
+
+<para>Security related findings should be reported under the repo Security Issues. Findings Risk scores will follow CVSS 3.x standard of scoring. Confirmed findings will be mitigated/remediated by risk level, within the respectful timeline listed below:</para>
+
+<para><informaltable frame="all">
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<thead>
+      <row  class='markdownTableHead'>
+<entry>
+<para>Risk   </para>
+</entry><entry>
+<para>Days    </para>
+</entry></row>
+</thead><tbody>
+      <row  class='markdownTableRowOdd'>
+<entry>
+<para>Critical   </para>
+</entry><entry>
+<para>7    </para>
+</entry></row>
+      <row  class='markdownTableRowEven'>
+<entry>
+<para>High   </para>
+</entry><entry>
+<para>30    </para>
+</entry></row>
+      <row  class='markdownTableRowOdd'>
+<entry>
+<para>Medium   </para>
+</entry><entry>
+<para>60    </para>
+</entry></row>
+      <row  class='markdownTableRowEven'>
+<entry>
+<para>Low   </para>
+</entry><entry>
+<para>*   </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+
+<para>**Low findings fixes are discretionary* </para>
+</section>
+</section>

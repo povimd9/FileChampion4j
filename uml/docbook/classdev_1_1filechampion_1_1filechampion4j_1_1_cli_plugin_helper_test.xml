@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper_test" xml:lang="en-US">
+<title>dev.filechampion.filechampion4j.CliPluginHelperTest Class Reference</title>
+<indexterm><primary>dev.filechampion.filechampion4j.CliPluginHelperTest</primary></indexterm>
+Collaboration diagram for dev.filechampion.filechampion4j.CliPluginHelperTest:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper_test__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Package Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper_test_1acac2a34cf08835fe8ffd22ee1f1f3bf7">testIOException</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+<para>
+Definition at line <link linkend="__cli_plugin_helper_test_8java_source_1l00009">9</link> of file <link linkend="__cli_plugin_helper_test_8java_source">CliPluginHelperTest.java</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper_test_1acac2a34cf08835fe8ffd22ee1f1f3bf7"/><section>
+    <title>testIOException()</title>
+<indexterm><primary>testIOException</primary><secondary>dev.filechampion.filechampion4j.CliPluginHelperTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.CliPluginHelperTest</primary><secondary>testIOException</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.CliPluginHelperTest.testIOException ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__cli_plugin_helper_test_8java_source_1l00012">12</link> of file <link linkend="__cli_plugin_helper_test_8java_source">CliPluginHelperTest.java</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/<link linkend="__cli_plugin_helper_test_8java">CliPluginHelperTest.java</link></section>
+</section>

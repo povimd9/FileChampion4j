@@ -1,0 +1,27 @@
+<map id="dev.filechampion.filechampion4j.FileValidator.validateFile" name="dev.filechampion.filechampion4j.FileValidator.validateFile">
+<area shape="rect" id="node1" title=" " alt="" coords="340,757,547,797"/>
+<area shape="rect" id="node2" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_bench.html#a9640512d223e26894951477146a817f1" title=" " alt="" coords="45,5,252,45"/>
+<area shape="rect" id="node3" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_large_files_bench.html#a5825a7073dce0c3a17cc4b3aaf191644" title=" " alt="" coords="34,69,263,109"/>
+<area shape="rect" id="node4" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#ae8737ee01062722b1417a6b70f4df2bb" title=" " alt="" coords="28,133,269,173"/>
+<area shape="rect" id="node5" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#aafe4b22d7bf43eda1d880ca10df66899" title=" " alt="" coords="23,197,274,237"/>
+<area shape="rect" id="node6" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#a6e9b25c615380aec9611a063c7614c56" title=" " alt="" coords="27,261,270,301"/>
+<area shape="rect" id="node7" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#a1c50dc29d1e022d54ef08c57e4809d22" title=" " alt="" coords="39,326,258,381"/>
+<area shape="rect" id="node8" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#a154c22f0a5a6b796f196a8ab6c487212" title=" " alt="" coords="39,405,258,445"/>
+<area shape="rect" id="node9" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#a040aea36c591131fb63e1966fd4f9594" title=" " alt="" coords="29,469,268,509"/>
+<area shape="rect" id="node10" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#abe58b7ca037bdd69d1fd1c19f81dcb20" title=" " alt="" coords="25,533,272,573"/>
+<area shape="rect" id="node11" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#a05e2ebb12fa09039cc6ccb3313f80863" title=" " alt="" coords="7,597,290,637"/>
+<area shape="rect" id="node12" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#abed39eeda356b1c735b926c2323d7f74" title=" " alt="" coords="5,661,292,701"/>
+<area shape="rect" id="node13" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#aef4bfeca1724cb089dddc1add792316c" title=" " alt="" coords="27,725,270,765"/>
+<area shape="rect" id="node14" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#ad79b137d847adfd3ac5177acba2f8ddd" title=" " alt="" coords="11,789,286,829"/>
+<area shape="rect" id="node15" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#af4cb1128d0c4987bd701ac0d8a58c2d8" title=" " alt="" coords="37,853,260,893"/>
+<area shape="rect" id="node16" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#a4611b33e92d7b90d8df69148bdbf18e2" title=" " alt="" coords="39,917,259,957"/>
+<area shape="rect" id="node17" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#a15e46d7300ef2f1dcc80de240f25f8aa" title=" " alt="" coords="41,981,256,1021"/>
+<area shape="rect" id="node18" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#aec7f73f24f206cc5b94c6b208c4b0cdd" title=" " alt="" coords="20,1046,277,1101"/>
+<area shape="rect" id="node19" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#a2f41f8bc235120ec4ccd56f02a4daadb" title=" " alt="" coords="37,1125,260,1165"/>
+<area shape="rect" id="node20" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#addff6ff1e3e393d22f709686c73bd614" title=" " alt="" coords="32,1189,265,1229"/>
+<area shape="rect" id="node21" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_json_test.html#ae70ade4da3ae3ce3b4acedd7e4217780" title=" " alt="" coords="26,1253,271,1293"/>
+<area shape="rect" id="node22" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_bench.html#a836933434a476de40497a3887ddda217" title=" " alt="" coords="38,1317,259,1357"/>
+<area shape="rect" id="node23" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_large_files_bench.html#a5540737404495fa536a4292af3691dcd" title=" " alt="" coords="8,1381,289,1421"/>
+<area shape="rect" id="node24" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#aaaae265bcd6240cb03b672a0b185d984" title=" " alt="" coords="44,1445,253,1485"/>
+<area shape="rect" id="node25" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test.html#a45f6f37d4e60ebc840cfff30a44dce6d" title=" " alt="" coords="29,1509,269,1549"/>
+</map>

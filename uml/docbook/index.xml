@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_index" xml:lang="en-US">
+    <info>
+    <title>filechampion4j</title>
+    </info>
+<chapter>
+    <title>Namespace Documentation</title>
+<xi:include href="namespacedev_1_1filechampion_1_1filechampion4j.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<chapter>
+    <title>Class Documentation</title>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_extension.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_plugin_config.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<chapter>
+    <title>File Documentation</title>
+    <xi:include href="_c_o_d_e___o_f___c_o_n_d_u_c_t_8md.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="config_2_r_e_a_d_m_e_8md.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_r_e_a_d_m_e_8md.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_r_e_q_u_i_r_e_m_e_n_t_s_8md.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_s_e_c_u_r_i_t_y_8md.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_cli_plugin_helper_8java.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_cli_plugin_helper_8java_source.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_extension_8java.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_extension_8java_source.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_file_acl_helper_8java.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_file_acl_helper_8java_source.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_file_validator_8java.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_file_validator_8java_source.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_plugins_helper_8java.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_plugins_helper_8java_source.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_validation_response_8java.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="_validation_response_8java_source.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<index/>
+</book>

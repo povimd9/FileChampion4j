@@ -1,0 +1,549 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper" xml:lang="en-US">
+<title>dev.filechampion.filechampion4j.FileAclHelper Class Reference</title>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary></indexterm>
+Collaboration diagram for dev.filechampion.filechampion4j.FileAclHelper:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ad658260458dfa78c890ca27b06c3e4fa">changeFileAcl</link> (Path <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>, String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link>, String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Package Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a8c3901a314517640f90445c7ad350274">[static initializer]</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea">logSevere</link> (String message)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756">logFine</link> (String message)</para>
+</listitem>
+            <listitem><para>UserPrincipal <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac1fb96739e62ad91d1f833908dc99442">getUserPrinciple</link> (Path <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>, String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link>)</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a89a35f8379b106dcf38650384560ce9f">setNewOwner</link> (UserPrincipal newOwner)</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a00c73219098ca931f6dbfba1f45555ae">setNewPermissions</link> (UserPrincipal newOwner)</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a5c4d050d4ddf432b45ffe49b48b20735">setNewPermissionsWindows</link> (UserPrincipal newOwner)</para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a957cd8f062521037c11e5d15d3785906">setNewPermissionsUnix</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>Path <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link></para>
+</listitem>
+            <listitem><para>String <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link></para>
+</listitem>
+            <listitem><para>StringBuilder <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link> = new StringBuilder()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Static Private Attributes    </title>
+        <itemizedlist>
+            <listitem><para>static final Logger <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ae965f0c2ee3bb6de1d6295834b348e11">logger</link> = Logger.getLogger(FileAclHelper.class.getName())</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>This class is used to change the owner and permissions of a file. Set Owner uses java.nio.file.Files.setOwner for cross-platform support. Set Permissions attempts to identify the Operating System, using java.nio.file.attribute.AclFileAttributeView for Windows, and java.nio.file.attribute.PosixFileAttributeView for any other. </para>
+<para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00021">21</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a8c3901a314517640f90445c7ad350274"/><section>
+    <title>[static initializer]()</title>
+<indexterm><primary>[static initializer]</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>[static initializer]</secondary></indexterm>
+<para><computeroutput>dev.filechampion.filechampion4j.FileAclHelper.[static initializer]<computeroutput>[static]</computeroutput>, <computeroutput>[package]</computeroutput></computeroutput></para></section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ad658260458dfa78c890ca27b06c3e4fa"/><section>
+    <title>changeFileAcl()</title>
+<indexterm><primary>changeFileAcl</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>changeFileAcl</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl (Path targetFilePath, String newOwnerUsername, String newPermissions)</computeroutput></para>
+<para>changeFileAcl is the main method of this class. It attempts to change the owner and permissions of a file. 
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>targetFilePath</entry><entry>
+<para>(Path) the path of the file to change </para>
+</entry>
+                            </row>
+                            <row>
+<entry>newOwnerUsername</entry><entry>
+<para>(String) the new owner of the file </para>
+</entry>
+                            </row>
+                            <row>
+<entry>newPermissions</entry><entry>
+<para>(String the new permissions of the file (e.g. &quot;rwx&quot;) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>(String) a String containing the result of the operation </para>
+</formalpara>
+</para>
+<para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00054">54</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00054 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00055 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.targetFilePath&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>;
+00056 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.newOwnerUsername&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link>;
+00057 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(!<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>.matches(<emphasis role="stringliteral">&quot;[rwx]+&quot;</emphasis>))&#32;{
+00058 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;Invalid&#32;permissions:&quot;</emphasis>).append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>);
+00059 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00060 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00061 
+00062 
+00063 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.newPermissions&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>;
+00064 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+00065 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;UserPrincipal&#32;newOwner&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac1fb96739e62ad91d1f833908dc99442">getUserPrinciple</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link>);
+00066 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(newOwner&#32;==&#32;<emphasis role="keyword">null</emphasis>)&#32;{
+00067 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;Could&#32;not&#32;get&#32;user&#32;principal&#32;for&#32;&quot;</emphasis>).append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link>);
+00068 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00069 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00070 
+00071 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Try&#32;to&#32;change&#32;the&#32;owner&#32;of&#32;the&#32;file</emphasis>
+00072 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;newOwnerChangeResults&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a89a35f8379b106dcf38650384560ce9f">setNewOwner</link>(newOwner);
+00073 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(newOwnerChangeResults.contains(<emphasis role="stringliteral">&quot;Error&quot;</emphasis>))&#32;{
+00074 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;newOwnerChangeResults;
+00075 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00076 
+00077 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Try&#32;to&#32;change&#32;the&#32;permissions&#32;of&#32;the&#32;file</emphasis>
+00078 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;newPermissionsChangeResults&#32;=&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a00c73219098ca931f6dbfba1f45555ae">setNewPermissions</link>(newOwner);
+00079 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(newPermissionsChangeResults.contains(<emphasis role="stringliteral">&quot;Error&quot;</emphasis>))&#32;{
+00080 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;newPermissionsChangeResults;
+00081 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00082 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+00083 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;If&#32;we&#32;get&#32;here,&#32;both&#32;the&#32;owner&#32;and&#32;permissions&#32;were&#32;changed&#32;successfully</emphasis>
+00084 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;successMessage&#32;=&#32;String.format(<emphasis role="stringliteral">&quot;Success:&#32;Changed&#32;owner&#32;and&#32;permissions&#32;of&#32;file&#32;%s&quot;</emphasis>,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.toAbsolutePath());
+00085 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756">logFine</link>(successMessage);
+00086 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;successMessage;
+00087 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</link>, <link linkend="__file_acl_helper_8java_source_1l00090">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</link>, <link linkend="__file_acl_helper_8java_source_1l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</link>, <link linkend="__file_acl_helper_8java_source_1l00024">dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername</link>, <link linkend="__file_acl_helper_8java_source_1l00023">dev.filechampion.filechampion4j.FileAclHelper.newPermissions</link>, <link linkend="__file_acl_helper_8java_source_1l00103">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</link>, <link linkend="__file_acl_helper_8java_source_1l00127">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissions()</link>, and <link linkend="__file_acl_helper_8java_source_1l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</link>.</para>
+<para>
+Referenced by <link linkend="__file_validator_8java_source_1l00692">dev.filechampion.filechampion4j.FileValidator.saveFileToOutputDir()</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ad658260458dfa78c890ca27b06c3e4fa_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ad658260458dfa78c890ca27b06c3e4fa_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac1fb96739e62ad91d1f833908dc99442"/><section>
+    <title>getUserPrinciple()</title>
+<indexterm><primary>getUserPrinciple</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>getUserPrinciple</secondary></indexterm>
+<para><computeroutput>UserPrincipal dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple (Path targetFilePath, String newOwnerUsername)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00090">90</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00090 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00091 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">try</emphasis>&#32;{
+00092 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.getFileSystem()
+00093 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.getUserPrincipalLookupService()
+00094 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.lookupPrincipalByName(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link>);
+00095 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(Exception&#32;e)&#32;{
+00096 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;Exception&#32;getting&#32;user&#32;principal:&#32;&quot;</emphasis>).append(e.getMessage());
+00097 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea">logSevere</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00098 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">null</emphasis>;
+00099 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00100 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</link>, <link linkend="__file_acl_helper_8java_source_1l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</link>, <link linkend="__file_acl_helper_8java_source_1l00024">dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername</link>, and <link linkend="__file_acl_helper_8java_source_1l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756"/><section>
+    <title>logFine()</title>
+<indexterm><primary>logFine</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>logFine</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileAclHelper.logFine (String message)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00041">41</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00041 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00042 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ae965f0c2ee3bb6de1d6295834b348e11">logger</link>.isLoggable(Level.FINE&#32;))&#32;{
+00043 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ae965f0c2ee3bb6de1d6295834b348e11">logger</link>.fine(message);
+00044 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00045 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00035">dev.filechampion.filechampion4j.FileAclHelper.logger</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>, <link linkend="__file_acl_helper_8java_source_1l00103">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</link>, <link linkend="__file_acl_helper_8java_source_1l00189">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</link>, and <link linkend="__file_acl_helper_8java_source_1l00137">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a73d0b85c677037db5ab4865e005bc756_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea"/><section>
+    <title>logSevere()</title>
+<indexterm><primary>logSevere</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>logSevere</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileAclHelper.logSevere (String message)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00036">36</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00036 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00037 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ae965f0c2ee3bb6de1d6295834b348e11">logger</link>.isLoggable(Level.SEVERE))&#32;{
+00038 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ae965f0c2ee3bb6de1d6295834b348e11">logger</link>.severe(message);
+00039 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00040 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00035">dev.filechampion.filechampion4j.FileAclHelper.logger</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00090">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</link>, <link linkend="__file_acl_helper_8java_source_1l00103">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</link>, <link linkend="__file_acl_helper_8java_source_1l00189">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</link>, and <link linkend="__file_acl_helper_8java_source_1l00137">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</link>.</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ab6fd281a6c09486bf16d2eea3a0ea1ea_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a89a35f8379b106dcf38650384560ce9f"/><section>
+    <title>setNewOwner()</title>
+<indexterm><primary>setNewOwner</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>setNewOwner</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.FileAclHelper.setNewOwner (UserPrincipal newOwner)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00103">103</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">try</emphasis>&#32;{
+00105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Change&#32;the&#32;owner&#32;of&#32;the&#32;file</emphasis>
+00106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Files.setOwner(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>,&#32;newOwner);
+00107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Success:&#32;Changed&#32;owner&#32;of&#32;file&quot;</emphasis>).append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.toAbsolutePath()).append(<emphasis role="stringliteral">&quot;&#32;to&#32;&quot;</emphasis>).append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa">newOwnerUsername</link>);
+00108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756">logFine</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(AccessDeniedException&#32;e)&#32;{
+00111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;Access&#32;denied&#32;while&#32;changing&#32;file&#32;owner:&#32;&quot;</emphasis>).append(e.getMessage());
+00112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea">logSevere</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(FileSystemException&#32;e)&#32;{
+00115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;File&#32;system&#32;error&#32;while&#32;changing&#32;file&#32;owner:&#32;&quot;</emphasis>).append(e.getMessage());
+00116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea">logSevere</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(Exception&#32;e)&#32;{
+00120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;Exception&#32;while&#32;changing&#32;file&#32;owner:&#32;&quot;</emphasis>).append(e.getMessage());
+00121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea">logSevere</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00124 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</link>, <link linkend="__file_acl_helper_8java_source_1l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</link>, <link linkend="__file_acl_helper_8java_source_1l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</link>, <link linkend="__file_acl_helper_8java_source_1l00024">dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername</link>, and <link linkend="__file_acl_helper_8java_source_1l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a00c73219098ca931f6dbfba1f45555ae"/><section>
+    <title>setNewPermissions()</title>
+<indexterm><primary>setNewPermissions</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>setNewPermissions</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.FileAclHelper.setNewPermissions (UserPrincipal newOwner)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00127">127</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;os&#32;=&#32;System.getProperty(<emphasis role="stringliteral">&quot;os.name&quot;</emphasis>);
+00129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(os.startsWith(<emphasis role="stringliteral">&quot;Windows&quot;</emphasis>))&#32;{
+00130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a5c4d050d4ddf432b45ffe49b48b20735">setNewPermissionsWindows</link>(newOwner);
+00131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+00132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a957cd8f062521037c11e5d15d3785906">setNewPermissionsUnix</link>();
+00133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00134 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00189">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</link>, and <link linkend="__file_acl_helper_8java_source_1l00137">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a957cd8f062521037c11e5d15d3785906"/><section>
+    <title>setNewPermissionsUnix()</title>
+<indexterm><primary>setNewPermissionsUnix</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>setNewPermissionsUnix</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix ( )<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00189">189</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;statusMessage;
+00191 
+00192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Build&#32;the&#32;new&#32;permissions</emphasis>
+00193 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Set&lt;PosixFilePermission&gt;&#32;permissions&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;HashSet&lt;&gt;();
+00194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>.contains(<emphasis role="stringliteral">&quot;r&quot;</emphasis>))&#32;{
+00195 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;permissions.add(PosixFilePermission.OWNER_READ);
+00196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>.contains(<emphasis role="stringliteral">&quot;w&quot;</emphasis>))&#32;{
+00198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;permissions.add(PosixFilePermission.OWNER_WRITE);
+00199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>.contains(<emphasis role="stringliteral">&quot;x&quot;</emphasis>))&#32;{
+00201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;permissions.add(PosixFilePermission.OWNER_EXECUTE);
+00202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00203 
+00204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Change&#32;the&#32;permissions&#32;of&#32;the&#32;file&#32;using&#32;POSIX</emphasis>
+00205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">try</emphasis>&#32;{
+00206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;statusMessage&#32;=&#32;String.format(<emphasis role="stringliteral">&quot;Attempting&#32;to&#32;change&#32;permissions&#32;to&#32;%s&quot;</emphasis>,&#32;permissions);
+00207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756">logFine</link>(statusMessage);
+00208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Files.setPosixFilePermissions(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.toAbsolutePath(),&#32;permissions);
+00209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Success:&#32;Changed&#32;permissions&#32;of&#32;file&quot;</emphasis>).append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.toAbsolutePath()).append(<emphasis role="stringliteral">&quot;&#32;to&#32;&quot;</emphasis>).append(permissions);
+00210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756">logFine</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(Exception&#32;e)&#32;{
+00213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;Exception&#32;setting&#32;permissions&#32;on&#32;file&#32;with&#32;POSIX:&#32;&quot;</emphasis>)
+00214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.toAbsolutePath())
+00215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.append(<emphasis role="stringliteral">&quot;,&#32;&quot;</emphasis>)
+00216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.append(e.getMessage());
+00217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea">logSevere</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00220 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</link>, <link linkend="__file_acl_helper_8java_source_1l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</link>, <link linkend="__file_acl_helper_8java_source_1l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</link>, <link linkend="__file_acl_helper_8java_source_1l00023">dev.filechampion.filechampion4j.FileAclHelper.newPermissions</link>, and <link linkend="__file_acl_helper_8java_source_1l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00127">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissions()</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a5c4d050d4ddf432b45ffe49b48b20735"/><section>
+    <title>setNewPermissionsWindows()</title>
+<indexterm><primary>setNewPermissionsWindows</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>setNewPermissionsWindows</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows (UserPrincipal newOwner)<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00137">137</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<programlisting linenumbering="unnumbered">00137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+00138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">try</emphasis>&#32;{
+00139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;statusMessage;
+00140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Change&#32;the&#32;permissions&#32;of&#32;the&#32;file&#32;using&#32;ACLs</emphasis>
+00141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AclFileAttributeView&#32;aclView&#32;=&#32;Files.getFileAttributeView(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>,&#32;AclFileAttributeView.class);
+00142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AclEntryPermission&#32;readPermission&#32;=&#32;AclEntryPermission.READ_DATA;
+00143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AclEntryPermission&#32;writePermission&#32;=&#32;AclEntryPermission.WRITE_DATA;
+00144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AclEntryPermission&#32;executePermission&#32;=&#32;AclEntryPermission.EXECUTE;
+00145 
+00146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AclEntryType&#32;allow&#32;=&#32;AclEntryType.ALLOW;
+00147 
+00148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;EnumSet&lt;AclEntryPermission&gt;&#32;actualPermissions&#32;=&#32;EnumSet.noneOf(AclEntryPermission.class);
+00149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>.contains(<emphasis role="stringliteral">&quot;r&quot;</emphasis>))&#32;{
+00150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;actualPermissions.add(readPermission);
+00151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>.contains(<emphasis role="stringliteral">&quot;w&quot;</emphasis>))&#32;{
+00153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;actualPermissions.add(writePermission);
+00154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91">newPermissions</link>.contains(<emphasis role="stringliteral">&quot;x&quot;</emphasis>))&#32;{
+00156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;actualPermissions.add(executePermission);
+00157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00158 
+00159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;statusMessage&#32;=&#32;String.format(<emphasis role="stringliteral">&quot;Attempting&#32;to&#32;change&#32;permissions&#32;to&#32;%s&quot;</emphasis>,&#32;actualPermissions);
+00160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756">logFine</link>(statusMessage);
+00161 
+00162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Create&#32;the&#32;new&#32;ACL&#32;entry</emphasis>
+00163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AclEntry&#32;aclEntry&#32;=&#32;AclEntry.newBuilder()
+00164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.setType(allow)
+00165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.setPrincipal(newOwner)
+00166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.setPermissions(actualPermissions)
+00167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.build();
+00168 
+00169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Get&#32;the&#32;existing&#32;ACL&#32;and&#32;add&#32;the&#32;new&#32;ACL&#32;entries</emphasis>
+00170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;List&lt;AclEntry&gt;&#32;acl&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;ArrayList&lt;&gt;();
+00171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;acl.add(aclEntry);
+00172 
+00173 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;new&#32;ACL</emphasis>
+00174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;aclView.setAcl(acl);
+00175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Success:&#32;Changed&#32;permissions&#32;of&#32;file&quot;</emphasis>).append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.toAbsolutePath()).append(<emphasis role="stringliteral">&quot;&#32;to&#32;&quot;</emphasis>).append(actualPermissions);
+00176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a73d0b85c677037db5ab4865e005bc756">logFine</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(Exception&#32;e)&#32;{
+00179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.replace(0,&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.length(),&#32;<emphasis role="stringliteral">&quot;Error:&#32;Exception&#32;setting&#32;permissions&#32;on&#32;file&#32;with&#32;ACL:&#32;&quot;</emphasis>)
+00180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.append(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d">targetFilePath</link>.toAbsolutePath())
+00181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.append(<emphasis role="stringliteral">&quot;,&#32;&quot;</emphasis>)
+00182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;.append(e.getMessage());
+00183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ab6fd281a6c09486bf16d2eea3a0ea1ea">logSevere</link>(<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString());
+00184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122">errMsg</link>.toString();
+00185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+00186 &#32;&#32;&#32;&#32;}
+</programlisting><para>
+References <link linkend="__file_acl_helper_8java_source_1l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</link>, <link linkend="__file_acl_helper_8java_source_1l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</link>, <link linkend="__file_acl_helper_8java_source_1l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</link>, <link linkend="__file_acl_helper_8java_source_1l00023">dev.filechampion.filechampion4j.FileAclHelper.newPermissions</link>, and <link linkend="__file_acl_helper_8java_source_1l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00127">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissions()</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+</section>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ac10e36660079aa3e244680e4d7e8b122"/><section>
+    <title>errMsg</title>
+<indexterm><primary>errMsg</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>errMsg</secondary></indexterm>
+<para><computeroutput>StringBuilder dev.filechampion.filechampion4j.FileAclHelper.errMsg = new StringBuilder()<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00025">25</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>, <link linkend="__file_acl_helper_8java_source_1l00090">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</link>, <link linkend="__file_acl_helper_8java_source_1l00103">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</link>, <link linkend="__file_acl_helper_8java_source_1l00189">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</link>, and <link linkend="__file_acl_helper_8java_source_1l00137">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1ae965f0c2ee3bb6de1d6295834b348e11"/><section>
+    <title>logger</title>
+<indexterm><primary>logger</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>logger</secondary></indexterm>
+<para><computeroutput>final Logger dev.filechampion.filechampion4j.FileAclHelper.logger = Logger.getLogger(FileAclHelper.class.getName())<computeroutput>[static]</computeroutput>, <computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00035">35</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</link>, and <link linkend="__file_acl_helper_8java_source_1l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a4ade74fbb151df12435680b294e49efa"/><section>
+    <title>newOwnerUsername</title>
+<indexterm><primary>newOwnerUsername</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>newOwnerUsername</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00024">24</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>, <link linkend="__file_acl_helper_8java_source_1l00090">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</link>, and <link linkend="__file_acl_helper_8java_source_1l00103">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1a9936927b77fd27ebf9066197be945c91"/><section>
+    <title>newPermissions</title>
+<indexterm><primary>newPermissions</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>newPermissions</secondary></indexterm>
+<para><computeroutput>String dev.filechampion.filechampion4j.FileAclHelper.newPermissions<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00023">23</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>, <link linkend="__file_acl_helper_8java_source_1l00189">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</link>, and <link linkend="__file_acl_helper_8java_source_1l00137">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_1af1c70601f615144cdabfd5d25c1e470d"/><section>
+    <title>targetFilePath</title>
+<indexterm><primary>targetFilePath</primary><secondary>dev.filechampion.filechampion4j.FileAclHelper</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileAclHelper</primary><secondary>targetFilePath</secondary></indexterm>
+<para><computeroutput>Path dev.filechampion.filechampion4j.FileAclHelper.targetFilePath<computeroutput>[private]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_acl_helper_8java_source_1l00022">22</link> of file <link linkend="__file_acl_helper_8java_source">FileAclHelper.java</link>.</para>
+<para>
+Referenced by <link linkend="__file_acl_helper_8java_source_1l00054">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</link>, <link linkend="__file_acl_helper_8java_source_1l00090">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</link>, <link linkend="__file_acl_helper_8java_source_1l00103">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</link>, <link linkend="__file_acl_helper_8java_source_1l00189">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</link>, and <link linkend="__file_acl_helper_8java_source_1l00137">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+src/main/java/dev/filechampion/filechampion4j/<link linkend="__file_acl_helper_8java">FileAclHelper.java</link></section>
+</section>

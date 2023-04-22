@@ -1,0 +1,284 @@
+\hypertarget{_file_validator_test_8java_source}{}\doxysection{File\+Validator\+Test.\+java}
+\label{_file_validator_test_8java_source}\index{C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/FileValidatorTest.java@{C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/FileValidatorTest.java}}
+\mbox{\hyperlink{_file_validator_test_8java}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00001}00001\ \textcolor{keyword}{package\ }dev.filechampion.filechampion4j;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00004}00004\ \textcolor{keyword}{import}\ org.json.JSONObject;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00005}00005\ \textcolor{keyword}{import}\ org.junit.jupiter.api.BeforeEach;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00006}00006\ \textcolor{keyword}{import}\ org.junit.jupiter.api.Test;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00008}00008\ \textcolor{keyword}{import}\ com.itextpdf.text.Document;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00009}00009\ \textcolor{keyword}{import}\ com.itextpdf.text.PageSize;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00010}00010\ \textcolor{keyword}{import}\ com.itextpdf.text.Paragraph;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00011}00011\ \textcolor{keyword}{import}\ com.itextpdf.text.pdf.PdfWriter;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00013}00013\ \textcolor{keyword}{import}\ java.io.ByteArrayOutputStream;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00014}00014\ \textcolor{keyword}{import}\ java.io.IOException;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00015}00015\ \textcolor{keyword}{import}\ java.io.InputStream;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00016}00016\ \textcolor{keyword}{import}\ java.math.BigInteger;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00017}00017\ \textcolor{keyword}{import}\ java.nio.file.Files;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00018}00018\ \textcolor{keyword}{import}\ java.nio.file.Path;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00019}00019\ \textcolor{keyword}{import}\ java.security.MessageDigest;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00020}00020\ \textcolor{keyword}{import}\ java.util.UUID;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00021}00021\ \textcolor{keyword}{import}\ java.util.logging.LogManager;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00023}00023\ \textcolor{keyword}{import}\ \textcolor{keyword}{static}\ org.junit.jupiter.api.Assertions.assertEquals;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00024}00024\ \textcolor{keyword}{import}\ \textcolor{keyword}{static}\ org.junit.jupiter.api.Assertions.assertFalse;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00025}00025\ \textcolor{keyword}{import}\ \textcolor{keyword}{static}\ org.junit.jupiter.api.Assertions.assertThrows;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00026}00026\ \textcolor{keyword}{import}\ \textcolor{keyword}{static}\ org.junit.jupiter.api.Assertions.assertTrue;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00027}00027\ \textcolor{keyword}{import}\ \textcolor{keyword}{static}\ org.junit.jupiter.api.Assertions.assertDoesNotThrow;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00033}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test}{00033}}\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test}{FileValidatorTest}}\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00034}00034\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00035}00035\ \ \ \ \ \textcolor{keyword}{private}\ Path\ tempDirectory;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00036}00036\ \ \ \ \ \textcolor{keyword}{private}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator}{FileValidator}}\ validator;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00037}00037\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{static}\ \textcolor{keyword}{final}\ String\ testUsername\ =\ System.getProperty(\textcolor{stringliteral}{"{}user.name"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{static}\ \textcolor{keyword}{final}\ String\ testCliPathPlugin\ =\ \textcolor{stringliteral}{"{}java\ -\/jar\ plugins/java\_echo.jar\ Success:\ \$\{filePath\}.new.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00039}00039\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{static}\ \textcolor{keyword}{final}\ String\ testCliContentPlugin\ =\ \textcolor{stringliteral}{"{}java\ -\/jar\ plugins/java\_echo.jar\ Success:\ MTIzNDU2IA0K\ suffix"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//\ Config\ JSON\ object\ for\ testing}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00042}00042\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{static}\ \textcolor{keyword}{final}\ JSONObject\ CONFIG\_JSON\ =\ \textcolor{keyword}{new}\ JSONObject(\textcolor{stringliteral}{"{}\{\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00043}00043\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \(\backslash\)"{}Validations\(\backslash\)"{}:\ \{\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00044}00044\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \(\backslash\)"{}Documents\(\backslash\)"{}:\ \{\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00045}00045\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \(\backslash\)"{}pdf\(\backslash\)"{}:\ \{\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00046}00046\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}mime\_type\(\backslash\)"{}:\ \(\backslash\)"{}application/pdf\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00047}00047\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}magic\_bytes\(\backslash\)"{}:\ \(\backslash\)"{}25504446\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00048}00048\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}header\_signatures\(\backslash\)"{}:\ \(\backslash\)"{}25504446\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00049}00049\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}footer\_signatures\(\backslash\)"{}:\ \(\backslash\)"{}2525454f46\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00050}00050\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}antivirus\_scan\(\backslash\)"{}:\ \{\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00051}00051\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \(\backslash\)"{}clamav\_scan.java\(\backslash\)"{}:\ [\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00052}00052\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)"{}RETURN\_TYPE\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00053}00053\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)"{}param1\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00054}00054\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)"{}param2\(\backslash\)"{}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00055}00055\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ ]\},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00056}00056\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}change\_ownership\(\backslash\)"{}:\ true,\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00057}00057\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}change\_ownership\_user\(\backslash\)"{}:\ \(\backslash\)"{}"{}}\ +\ testUsername\ +\ \textcolor{stringliteral}{"{}\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00058}00058\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}change\_ownership\_mode\(\backslash\)"{}:\ \(\backslash\)"{}r\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00059}00059\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}name\_encoding\(\backslash\)"{}:\ true,\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00060}00060\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}max\_size\(\backslash\)"{}:\ \(\backslash\)"{}4000\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00061}00061\ \ \ \ \ +\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \(\backslash\)"{}extension\_plugins\(\backslash\)"{}:\ [\(\backslash\)"{}clean\_pdf\_documents1.step1\(\backslash\)"{},\ \(\backslash\)"{}clean\_pdf\_documents2.step1\(\backslash\)"{},\ \(\backslash\)"{}clean\_pdf\_documents3.step1\(\backslash\)"{}]\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00062}00062\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00063}00063\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \(\backslash\)"{}doc\(\backslash\)"{}:\ \{\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00064}00064\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}mime\_type\(\backslash\)"{}:\ \(\backslash\)"{}application/msword\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00065}00065\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}magic\_bytes\(\backslash\)"{}:\ \(\backslash\)"{}D0CF11E0A1B11AE1\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00066}00066\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}header\_signatures\(\backslash\)"{}:\ \(\backslash\)"{}D0CF11E0A1B11AE1\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00067}00067\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}footer\_signatures\(\backslash\)"{}:\ \(\backslash\)"{}0000000000000000\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00068}00068\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}antivirus\_scan\(\backslash\)"{}:\ \{\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00069}00069\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \(\backslash\)"{}clamav\_scan.java\(\backslash\)"{}:\ [\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00070}00070\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)"{}RETURN\_TYPE\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00071}00071\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)"{}param1\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00072}00072\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \(\backslash\)"{}param2\(\backslash\)"{}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00073}00073\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ ]\},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00074}00074\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}change\_ownership\(\backslash\)"{}:\ true,\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00075}00075\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}change\_ownership\_user\(\backslash\)"{}:\ \(\backslash\)"{}User1\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00076}00076\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}change\_ownership\_mode\(\backslash\)"{}:\ \(\backslash\)"{}r\(\backslash\)"{},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00077}00077\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}name\_encoding\(\backslash\)"{}:\ true,\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00078}00078\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \(\backslash\)"{}max\_size\(\backslash\)"{}:\ \(\backslash\)"{}4000\(\backslash\)"{}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00079}00079\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \ \ \}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00080}00080\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00081}00081\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\},\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00082}00082\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \(\backslash\)"{}Plugins\(\backslash\)"{}:\ \(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00083}00083\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\{\(\backslash\)"{}clean\_pdf\_documents1\(\backslash\)"{}:\{\(\backslash\)"{}step1.step\(\backslash\)"{}:\{\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}cli\(\backslash\)"{},\(\backslash\)"{}run\_before\(\backslash\)"{}:true,\ \(\backslash\)"{}endpoint\(\backslash\)"{}:\(\backslash\)"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00084}00084\ \ \ \ \ +\ testCliPathPlugin}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00085}00085\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\(\backslash\)"{},\(\backslash\)"{}timeout\(\backslash\)"{}:320,\(\backslash\)"{}on\_timeout\_or\_fail\(\backslash\)"{}:\(\backslash\)"{}pass\(\backslash\)"{},\(\backslash\)"{}response\(\backslash\)"{}:\(\backslash\)"{}Success:\ \$\{step1.filePath\}\(\backslash\)"{}\}\}"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00086}00086\ \ \ \ \ +\ \textcolor{stringliteral}{"{},\(\backslash\)"{}clean\_pdf\_documents2\(\backslash\)"{}:\{\(\backslash\)"{}step1.step\(\backslash\)"{}:\{\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}cli\(\backslash\)"{},\(\backslash\)"{}run\_after\(\backslash\)"{}:true,\ \(\backslash\)"{}endpoint\(\backslash\)"{}:\(\backslash\)"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00087}00087\ \ \ \ \ +\ testCliContentPlugin}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00088}00088\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\(\backslash\)"{},\(\backslash\)"{}timeout\(\backslash\)"{}:320,\(\backslash\)"{}on\_timeout\_or\_fail\(\backslash\)"{}:\(\backslash\)"{}fail\(\backslash\)"{},\(\backslash\)"{}response\(\backslash\)"{}:\(\backslash\)"{}Success:\ \$\{step1.fileContent\}\ suffix\(\backslash\)"{}\}\}"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00089}00089\ \ \ \ \ +\ \textcolor{stringliteral}{"{},\(\backslash\)"{}clean\_pdf\_documents3\(\backslash\)"{}:\{\(\backslash\)"{}step1.step\(\backslash\)"{}:\{\(\backslash\)"{}type\(\backslash\)"{}:\(\backslash\)"{}cli\(\backslash\)"{},\(\backslash\)"{}run\_after\(\backslash\)"{}:true,\ \(\backslash\)"{}endpoint\(\backslash\)"{}:\(\backslash\)"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00090}00090\ \ \ \ \ +\ testCliContentPlugin}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00091}00091\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\(\backslash\)"{},\(\backslash\)"{}timeout\(\backslash\)"{}:320,\(\backslash\)"{}on\_timeout\_or\_fail\(\backslash\)"{}:\(\backslash\)"{}fail\(\backslash\)"{},\(\backslash\)"{}response\(\backslash\)"{}:\(\backslash\)"{}\(\backslash\)"{}\}\}"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00092}00092\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\ \ \}\}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00093}00093\ \ \ \ \ +\ \textcolor{stringliteral}{"{}\}"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00094}00094\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00096}00096\ \ \ \ \ \textcolor{comment}{//\ Setup\ temp\ directory\ and\ FileValidator\ instance}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00097}00097\ \ \ \ \ @BeforeEach}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00098}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a1417d7ec8baf0e43f92bfbccf87b631b}{00098}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a1417d7ec8baf0e43f92bfbccf87b631b}{setUp}}()\ throws\ IOException\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00099}00099\ \ \ \ \ \ \ \ \ tempDirectory\ =\ Files.createTempDirectory(\textcolor{stringliteral}{"{}temp"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00100}00100\ \ \ \ \ \ \ \ \ validator\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator}{FileValidator}}(CONFIG\_JSON);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00101}00101\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00103}00103\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00104}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a8f6ee89e4b8c949540cbb9379d460ae7}{00104}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a8f6ee89e4b8c949540cbb9379d460ae7}{testDefaultLoggingConfiguration}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00105}00105\ \ \ \ \ \ \ \ \ assertDoesNotThrow(()\ -\/>\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ Object\ o\ =\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator}{FileValidator}}.class.getResourceAsStream(\textcolor{stringliteral}{"{}/logging.properties"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ LogManager.getLogManager().readConfiguration((InputStream)\ o);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00108}00108\ \ \ \ \ \ \ \ \ \},\ \textcolor{stringliteral}{"{}Failed\ to\ load\ default\ logging\ configuration"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00109}00109\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00111}00111\ \ \ \ \ \textcolor{comment}{//\ Test\ empty\ json\ config\ object}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00112}00112\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00113}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_ac5e6be723a61ae3f63b045e48da96407}{00113}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_ac5e6be723a61ae3f63b045e48da96407}{testEmptyConfigJsonObject}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00114}00114\ \ \ \ \ \ \ \ \ JSONObject\ jsonObject\ =\ \textcolor{keyword}{new}\ JSONObject();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00115}00115\ \ \ \ \ \ \ \ \ Throwable\ exception\ =\ assertThrows(IllegalArgumentException.class,\ ()\ -\/>\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator}{FileValidator}}(jsonObject));}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00116}00116\ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Config\ JSON\ object\ cannot\ be\ null\ or\ empty,\ and\ must\ have\ Validations\ section."{}},\ exception.getMessage());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00117}00117\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00119}00119\ \ \ \ \ \textcolor{comment}{//\ Test\ null\ json\ config\ object}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00120}00120\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00121}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a1213ad6f72534fd47c2023069815a512}{00121}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a1213ad6f72534fd47c2023069815a512}{testNullConfigJsonObject}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00122}00122\ \ \ \ \ \ \ \ \ JSONObject\ jsonObject\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00123}00123\ \ \ \ \ \ \ \ \ Throwable\ exception\ =\ assertThrows(IllegalArgumentException.class,\ ()\ -\/>\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator}{FileValidator}}(jsonObject));}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00124}00124\ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}Config\ JSON\ object\ cannot\ be\ null\ or\ empty,\ and\ must\ have\ Validations\ section."{}},\ exception.getMessage());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00125}00125\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00127}00127\ \ \ \ \ \textcolor{comment}{//\ Test\ empty\ fileCategory}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00128}00128\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00129}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aafe4b22d7bf43eda1d880ca10df66899}{00129}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aafe4b22d7bf43eda1d880ca10df66899}{testBlankFileCategory}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{stringliteral}{"{}1234"{}}.getBytes();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00131}00131\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00132}00132\ \ \ \ \ \ \ \ \ Throwable\ exception\ =\ assertThrows(IllegalArgumentException.class,\ ()\ -\/>}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00133}00133\ \ \ \ \ \ \ \ \ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString()));}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00134}00134\ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}fileCategory\ cannot\ be\ null\ or\ empty."{}},\ exception.getMessage());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00135}00135\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00136}00136\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00137}00137\ \ \ \ \ \textcolor{comment}{//\ Test\ empty\ fileName}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00138}00138\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00139}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a8d2cce9b057a5170bdbf37eafcb7fb41}{00139}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a8d2cce9b057a5170bdbf37eafcb7fb41}{testBlankFileName}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{stringliteral}{"{}1234"{}}.getBytes();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00141}00141\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00142}00142\ \ \ \ \ \ \ \ \ Throwable\ exception\ =\ assertThrows(IllegalArgumentException.class,\ ()\ -\/>\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00143}00143\ \ \ \ \ \ \ \ \ validator.validateFile(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());\ \});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00144}00144\ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}fileName\ cannot\ be\ null\ or\ empty."{}},\ exception.getMessage());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00145}00145\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00146}00146\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00147}00147\ \ \ \ \ \textcolor{comment}{//\ Test\ originalFile\ Bytes\ is\ null}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00148}00148\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00149}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a8618f15932dcd90e9f86e79d42d8475f}{00149}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a8618f15932dcd90e9f86e79d42d8475f}{testNullOriginalFile}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00151}00151\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00152}00152\ \ \ \ \ \ \ \ \ Throwable\ exception\ =\ assertThrows(IllegalArgumentException.class,\ ()\ -\/>\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00153}00153\ \ \ \ \ \ \ \ \ validator.validateFile(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());\ \});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00154}00154\ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}originalFile\ cannot\ be\ null\ or\ empty."{}},\ exception.getMessage());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00155}00155\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00157}00157\ \ \ \ \ \textcolor{comment}{//\ Test\ originalFile\ Bytes\ is\ empty}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00158}00158\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00159}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a272e17e0dce67f9f10adf4798e80be7d}{00159}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a272e17e0dce67f9f10adf4798e80be7d}{testEmptyOriginalFile}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00160}00160\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{byte}[]\{\};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00161}00161\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00162}00162\ \ \ \ \ \ \ \ \ Throwable\ exception\ =\ assertThrows(IllegalArgumentException.class,\ ()\ -\/>\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00163}00163\ \ \ \ \ \ \ \ \ validator.validateFile(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());\ \});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00164}00164\ \ \ \ \ \ \ \ \ assertEquals(\textcolor{stringliteral}{"{}originalFile\ cannot\ be\ null\ or\ empty."{}},\ exception.getMessage());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00165}00165\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00167}00167\ \ \ \ \ \textcolor{comment}{//\ Test\ none\ existing\ fileCategory\ '0934jt0-\/349rtj3409rj3409rj'}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00168}00168\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00169}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a1c50dc29d1e022d54ef08c57e4809d22}{00169}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a1c50dc29d1e022d54ef08c57e4809d22}{testFileCategoryNotConfigured}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00170}00170\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{stringliteral}{"{}1234"{}}.getBytes();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00171}00171\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00172}00172\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}0934jt0-\/349rtj3409rj3409rj"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00173}00173\ \ \ \ \ \ \ \ \ assertFalse(fileValidationResults.isValid(),\ \textcolor{stringliteral}{"{}Expected\ validation\ response\ to\ be\ invalid\ with\ non\ existing\ fileCategory"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00174}00174\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.resultsInfo().contains(\textcolor{stringliteral}{"{}Error\ creating\ Extension\ configurations\ object"{}}),\ \textcolor{stringliteral}{"{}Expected\ 'Error\ creating\ Extension\ configurations\ object',\ got:\ "{}}\ +\ fileValidationResults.resultsInfo());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00175}00175\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00177}00177\ \ \ \ \ \textcolor{comment}{//\ Test\ file\ extension\ that\ is\ not\ configured\ in\ config\ json}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00178}00178\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00179}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a040aea36c591131fb63e1966fd4f9594}{00179}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a040aea36c591131fb63e1966fd4f9594}{testInvalidExtension}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{stringliteral}{"{}1234"{}}.getBytes();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00181}00181\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.txt"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00182}00182\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00183}00183\ \ \ \ \ \ \ \ \ assertFalse(fileValidationResults.isValid(),\ \textcolor{stringliteral}{"{}Expected\ validation\ response\ to\ be\ invalid\ with\ .txt\ extension"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00184}00184\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.resultsInfo().contains(\textcolor{stringliteral}{"{}Error\ creating\ Extension\ configurations\ object"{}}));}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00185}00185\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00187}00187\ \ \ \ \ \textcolor{comment}{//\ Test\ file\ size\ that\ is\ greater\ than\ the\ max\ size\ configured\ in\ config\ json}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00188}00188\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00189}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a154c22f0a5a6b796f196a8ab6c487212}{00189}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a154c22f0a5a6b796f196a8ab6c487212}{testFileTooLarge}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ generatePdfBytes(5000000);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00191}00191\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}largeFile.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00192}00192\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00193}00193\ \ \ \ \ \ \ \ \ assertFalse(fileValidationResults.isValid(),\ \textcolor{stringliteral}{"{}Expected\ validation\ response\ to\ be\ invalid\ for\ file\ size:"{}}\ +\ fileInBytes.length);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00194}00194\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.resultsInfo().contains(\textcolor{stringliteral}{"{}exceeds\ maximum\ allowed\ size"{}}));}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00195}00195\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00197}00197\ \ \ \ \ \textcolor{comment}{//\ Test\ valid\ inputs\ including\ valid\ pdf\ file\ with\ storage}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00198}00198\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00199}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a45f6f37d4e60ebc840cfff30a44dce6d}{00199}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a45f6f37d4e60ebc840cfff30a44dce6d}{testValidInputsStore}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ generatePdfBytes(250000);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00201}00201\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00202}00202\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00203}00203\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.isValid(),\ \textcolor{stringliteral}{"{}Expected\ validation\ response\ to\ be\ valid"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00204}00204\ \ \ \ \ \ \ \ \ assertEquals(calculateChecksum(fileInBytes),\ fileValidationResults.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_afa36e6b68270728848136cb7c62c3103}{getFileChecksum}}(),\ \textcolor{stringliteral}{"{}Expected\ checksums\ to\ match"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00205}00205\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00207}00207\ \ \ \ \ \textcolor{comment}{//\ Test\ valid\ inputs\ including\ valid\ pdf\ file\ without\ storage}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00208}00208\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00209}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aaaae265bcd6240cb03b672a0b185d984}{00209}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aaaae265bcd6240cb03b672a0b185d984}{testValidInputs}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00210}00210\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ generatePdfBytes(250000);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00211}00211\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00212}00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00213}00213\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.isValid(),\ \textcolor{stringliteral}{"{}Expected\ validation\ response\ to\ be\ valid"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00214}00214\ \ \ \ \ \ \ \ \ assertEquals(calculateChecksum(fileInBytes),\ fileValidationResults.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_afa36e6b68270728848136cb7c62c3103}{getFileChecksum}}(),\ \textcolor{stringliteral}{"{}Expected\ checksums\ to\ match"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00215}00215\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00216}00216\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00217}00217\ \ \ \ \ \textcolor{comment}{//\ Test\ file\ with\ content\ mismatching\ its\ extension\ inclufing\ magic\ bytes,\ header\ and\ footer,\ validations}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00218}00218\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00219}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a6e9b25c615380aec9611a063c7614c56}{00219}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a6e9b25c615380aec9611a063c7614c56}{testContenMismatch}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00220}00220\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ \textcolor{stringliteral}{"{}This\ is\ not\ a\ pdf\ file"{}}.getBytes();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00221}00221\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}notReal.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00222}00222\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ tempDirectory.toString());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00223}00223\ \ \ \ \ \ \ \ \ assertFalse(fileValidationResults.isValid(),\ \textcolor{stringliteral}{"{}Expected\ validation\ response\ to\ be\ invalid\ when\ content\ does\ not\ match\ extension"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00224}00224\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.resultsInfo().contains(\textcolor{stringliteral}{"{}Invalid\ magic\_bytes\ for\ file\ extension:"{}}),\ \textcolor{stringliteral}{"{}Expected\ 'Invalid\ magic\_bytes',\ got:\ "{}}\ +\ fileValidationResults.resultsInfo());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00225}00225\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00227}00227\ \ \ \ \ \textcolor{comment}{//\ Test\ saving\ to\ non\ existing\ directory}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00228}00228\ \ \ \ \ @Test}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00229}\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aec7f73f24f206cc5b94c6b208c4b0cdd}{00229}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aec7f73f24f206cc5b94c6b208c4b0cdd}{testSaveToNonExistingDirectory}}()\ throws\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ fileInBytes\ =\ generatePdfBytes(250000);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00231}00231\ \ \ \ \ \ \ \ \ String\ fileName\ =\ \textcolor{stringliteral}{"{}test.pdf"{}};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00232}00232\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response}{ValidationResponse}}\ fileValidationResults\ =\ validator.\mbox{\hyperlink{classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_a0c42ecd30b213d35bf114d84e7b40f9f}{validateFile}}(\textcolor{stringliteral}{"{}Documents"{}},\ fileInBytes,\ fileName,\ \textcolor{stringliteral}{"{}nonExistingDirectory-\/9384rhj934f8h3498h/3hd923d8h"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00233}00233\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.isValid(),\ \textcolor{stringliteral}{"{}Expected\ validation\ response\ to\ be\ valid\ when\ saving\ to\ non\ existing\ directory"{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00234}00234\ \ \ \ \ \ \ \ \ assertTrue(fileValidationResults.resultsInfo().contains(\textcolor{stringliteral}{"{}File\ is\ valid\ but\ failed\ to\ save\ to\ output\ directory:"{}}),\ \textcolor{stringliteral}{"{}Expected\ 'File\ is\ valid\ but\ failed\ to\ save\ to\ output\ directory:',\ got:\ "{}}\ +\ fileValidationResults.resultsInfo());}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00235}00235\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00239}00239\ \ \ \ \ \textcolor{comment}{//\ Helper\ methods}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00241}00241\ \ \ \ \ \textcolor{comment}{//\ Generate\ a\ pdf\ file\ with\ a\ given\ size\ in\ bytes}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00242}00242\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{byte}[]\ generatePdfBytes(\textcolor{keywordtype}{int}\ sizeInBytes)\ \textcolor{keywordflow}{throws}\ Exception\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00243}00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sizeInBytes\ <=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{keyword}{new}\ IllegalArgumentException(\textcolor{stringliteral}{"{}Size\ in\ Bytes\ must\ be\ a\ positive\ value."{}});}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00245}00245\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00247}00247\ \ \ \ \ \ \ \ \ ByteArrayOutputStream\ baos\ =\ \textcolor{keyword}{new}\ ByteArrayOutputStream();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00248}00248\ \ \ \ \ \ \ \ \ Document\ document\ =\ \textcolor{keyword}{new}\ Document(PageSize.A4);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00249}00249\ \ \ \ \ \ \ \ \ PdfWriter\ writer\ =\ PdfWriter.getInstance(document,\ baos);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00250}00250\ \ \ \ \ \ \ \ \ writer.setFullCompression();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00251}00251\ \ \ \ \ \ \ \ \ writer.setCompressionLevel(0);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00252}00252\ \ \ \ \ \ \ \ \ document.open();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00253}00253\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00254}00254\ \ \ \ \ \ \ \ \ String\ content\ =\ UUID.randomUUID().toString()\ +\ UUID.randomUUID().toString();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00255}00255\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ contentLength\ =\ content.getBytes().length;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00256}00256\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00257}00257\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (baos.size()\ <\ sizeInBytes)\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iterations\ =\ (sizeInBytes\ -\/\ baos.size())\ /\ contentLength;}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ iterations;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ document.add(\textcolor{keyword}{new}\ Paragraph(content));}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ writer.flush();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00263}00263\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00264}00264\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00265}00265\ \ \ \ \ \ \ \ \ document.close();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00266}00266\ \ \ \ \ \ \ \ \ writer.close();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00267}00267\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ baos.toByteArray();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00269}00269\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00271}00271\ \ \ \ \ \textcolor{comment}{//\ Calculate\ file\ checksum}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00272}00272\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{static}\ String\ calculateChecksum(\textcolor{keywordtype}{byte}[]\ fileBytes)\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00273}00273\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}[]\ hash\ =\ MessageDigest.getInstance(\textcolor{stringliteral}{"{}SHA-\/256"{}}).digest(fileBytes);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ BigInteger(1,\ hash).toString(16);}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00276}00276\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (Exception\ e)\ \{}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ e.printStackTrace();}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00279}00279\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00280}00280\ \ \ \ \ \}\ \ \ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{_file_validator_test_8java_source_l00282}00282\ \}}
+
+\end{DoxyCode}

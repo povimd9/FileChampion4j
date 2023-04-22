@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_usage__example_8java_source" xml:lang="en-US">
+<title>C:/Users/User1/git/FileChampion4j/usage_example.java</title>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="_usage__example_8java_source_1l00001"/>00001 <emphasis role="keyword">import</emphasis>&#32;java.io.File;
+<anchor xml:id="_usage__example_8java_source_1l00002"/>00002 <emphasis role="keyword">import</emphasis>&#32;java.io.IOException;
+<anchor xml:id="_usage__example_8java_source_1l00003"/>00003 <emphasis role="keyword">import</emphasis>&#32;java.nio.file.Files;
+<anchor xml:id="_usage__example_8java_source_1l00004"/>00004 <emphasis role="keyword">import</emphasis>&#32;java.nio.file.Paths;
+<anchor xml:id="_usage__example_8java_source_1l00005"/>00005 <emphasis role="keyword">import</emphasis>&#32;org.json.JSONObject;
+<anchor xml:id="_usage__example_8java_source_1l00006"/>00006 <emphasis role="keyword">import</emphasis>&#32;dev.filechampion.filechampion4j.FileValidator;
+<anchor xml:id="_usage__example_8java_source_1l00007"/>00007 <emphasis role="keyword">import</emphasis>&#32;dev.filechampion.filechampion4j.ValidationResponse;
+<anchor xml:id="_usage__example_8java_source_1l00008"/>00008 
+<anchor xml:id="_usage__example_8java_source_1l00009"/>00009 
+<anchor xml:id="_usage__example_8java_source_1l00020"/><link linkend="_class_main">00020</link> <emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">class&#32;</emphasis><link linkend="_class_main">Main</link>&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00021"/><link linkend="_class_main_1a8a5d0f827edddff706cc0e6740d0579a">00021</link> &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_class_main_1a8a5d0f827edddff706cc0e6740d0579a">main</link>(String[]&#32;args)&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00022"/>00022 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Path&#32;to&#32;the&#32;file&#32;to&#32;be&#32;validated&#32;in&#32;this&#32;simple&#32;example</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00023"/>00023 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;File&#32;pdfFile&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;File(<emphasis role="stringliteral">&quot;samples/In/test.pdf&quot;</emphasis>);
+<anchor xml:id="_usage__example_8java_source_1l00024"/>00024 
+<anchor xml:id="_usage__example_8java_source_1l00025"/>00025 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Path&#32;to&#32;the&#32;config.json&#32;file</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00026"/>00026 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;configPath&#32;=&#32;<emphasis role="stringliteral">&quot;config/config.json&quot;</emphasis>;
+<anchor xml:id="_usage__example_8java_source_1l00027"/>00027 
+<anchor xml:id="_usage__example_8java_source_1l00028"/>00028 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Placeholders&#32;for&#32;the&#32;JSON&#32;object&#32;and&#32;the&#32;file&#32;in&#32;bytes</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00029"/>00029 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;JSONObject&#32;jsonObject&#32;=&#32;<emphasis role="keyword">null</emphasis>;
+<anchor xml:id="_usage__example_8java_source_1l00030"/>00030 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>[]&#32;fileInBytes&#32;=&#32;<emphasis role="keyword">null</emphasis>;
+<anchor xml:id="_usage__example_8java_source_1l00031"/>00031 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator">FileValidator</link>&#32;validator&#32;=&#32;<emphasis role="keyword">null</emphasis>;
+<anchor xml:id="_usage__example_8java_source_1l00032"/>00032 
+<anchor xml:id="_usage__example_8java_source_1l00033"/>00033 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Path&#32;to&#32;the&#32;output&#32;directory</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00034"/>00034 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;outDir&#32;=&#32;<emphasis role="stringliteral">&quot;samples/Out/&quot;</emphasis>;
+<anchor xml:id="_usage__example_8java_source_1l00035"/>00035 
+<anchor xml:id="_usage__example_8java_source_1l00036"/>00036 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Create&#32;a&#32;new&#32;FileValidator&#32;object&#32;with&#32;json&#32;config&#32;file</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00037"/>00037 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">try</emphasis>&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00038"/>00038 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Read&#32;the&#32;JSON&#32;object&#32;from&#32;the&#32;config.json&#32;file</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00039"/>00039 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;jsonConfigContent&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;String(Files.readAllBytes(Paths.get(configPath)));
+<anchor xml:id="_usage__example_8java_source_1l00040"/>00040 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;jsonObject&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;JSONObject(jsonConfigContent);
+<anchor xml:id="_usage__example_8java_source_1l00041"/>00041 
+<anchor xml:id="_usage__example_8java_source_1l00042"/>00042 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Create&#32;a&#32;new&#32;FileValidator&#32;object</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00043"/>00043 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;validator&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator">FileValidator</link>(jsonObject);
+<anchor xml:id="_usage__example_8java_source_1l00044"/>00044 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(IOException&#32;e)&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00045"/>00045 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;e.printStackTrace();
+<anchor xml:id="_usage__example_8java_source_1l00046"/>00046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.exit(1);
+<anchor xml:id="_usage__example_8java_source_1l00047"/>00047 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(IllegalArgumentException&#32;e)&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00048"/>00048 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.out.println(<emphasis role="stringliteral">&quot;Error&#32;creating&#32;FileValidator&#32;object&quot;</emphasis>);
+<anchor xml:id="_usage__example_8java_source_1l00049"/>00049 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.exit(1);
+<anchor xml:id="_usage__example_8java_source_1l00050"/>00050 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(Exception&#32;e)&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00051"/>00051 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.out.println(<emphasis role="stringliteral">&quot;Error&#32;reading&#32;config&#32;file&quot;</emphasis>);
+<anchor xml:id="_usage__example_8java_source_1l00052"/>00052 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.exit(1);
+<anchor xml:id="_usage__example_8java_source_1l00053"/>00053 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="_usage__example_8java_source_1l00054"/>00054 
+<anchor xml:id="_usage__example_8java_source_1l00055"/>00055 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">try</emphasis>&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00056"/>00056 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Read&#32;the&#32;file&#32;to&#32;be&#32;validated&#32;into&#32;a&#32;byte&#32;array</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00057"/>00057 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fileInBytes&#32;=&#32;Files.readAllBytes(pdfFile.toPath());
+<anchor xml:id="_usage__example_8java_source_1l00058"/>00058 
+<anchor xml:id="_usage__example_8java_source_1l00059"/>00059 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Validate&#32;the&#32;file</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00060"/>00060 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response">ValidationResponse</link>&#32;fileValidationResults&#32;=&#32;validator.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_1a0c42ecd30b213d35bf114d84e7b40f9f">validateFile</link>(<emphasis role="stringliteral">&quot;Documents&quot;</emphasis>,&#32;fileInBytes,&#32;pdfFile.getName(),outDir);
+<anchor xml:id="_usage__example_8java_source_1l00061"/>00061 
+<anchor xml:id="_usage__example_8java_source_1l00062"/>00062 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Check&#32;if&#32;the&#32;file&#32;is&#32;valid</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00063"/>00063 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fileValidationResults.isValid())&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00064"/>00064 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Print&#32;the&#32;results&#32;if&#32;the&#32;file&#32;is&#32;valid</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00065"/>00065 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;validMessage&#32;=&#32;String.format(<emphasis role="stringliteral">&quot;%s&#32;is&#32;a&#32;valid&#32;document&#32;file.%n&#32;New&#32;file:&#32;%s,&#32;Checksum:&#32;%s&quot;</emphasis>,
+<anchor xml:id="_usage__example_8java_source_1l00066"/>00066 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fileValidationResults.resultsInfo(),
+<anchor xml:id="_usage__example_8java_source_1l00067"/>00067 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fileValidationResults.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_1afdb86dded713542042d03230acd6887d">getValidFilePath</link>().length&#32;==&#32;0&#32;?&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>&#32;:&#32;fileValidationResults.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_1afdb86dded713542042d03230acd6887d">getValidFilePath</link>()[0],
+<anchor xml:id="_usage__example_8java_source_1l00068"/>00068 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fileValidationResults.<link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_1afa36e6b68270728848136cb7c62c3103">getFileChecksum</link>());
+<anchor xml:id="_usage__example_8java_source_1l00069"/>00069 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.out.println(validMessage);
+<anchor xml:id="_usage__example_8java_source_1l00070"/>00070 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.exit(0);
+<anchor xml:id="_usage__example_8java_source_1l00071"/>00071 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00072"/>00072 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Print&#32;the&#32;results&#32;if&#32;the&#32;file&#32;is&#32;invalid</emphasis>
+<anchor xml:id="_usage__example_8java_source_1l00073"/>00073 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.out.println(pdfFile.getName()&#32;+&#32;<emphasis role="stringliteral">&quot;&#32;is&#32;not&#32;a&#32;valid&#32;document&#32;file&#32;&#32;because&#32;&quot;</emphasis>&#32;+&#32;fileValidationResults.resultsInfo());
+<anchor xml:id="_usage__example_8java_source_1l00074"/>00074 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.exit(0);
+<anchor xml:id="_usage__example_8java_source_1l00075"/>00075 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="_usage__example_8java_source_1l00076"/>00076 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">catch</emphasis>&#32;(IOException&#32;e)&#32;{
+<anchor xml:id="_usage__example_8java_source_1l00077"/>00077 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;e.printStackTrace();
+<anchor xml:id="_usage__example_8java_source_1l00078"/>00078 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;System.exit(1);
+<anchor xml:id="_usage__example_8java_source_1l00079"/>00079 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="_usage__example_8java_source_1l00080"/>00080 &#32;&#32;&#32;&#32;}
+<anchor xml:id="_usage__example_8java_source_1l00081"/>00081 }
+</programlisting></section>

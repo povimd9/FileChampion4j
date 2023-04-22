@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_9d47008dd5efcdf2510d30f85b1bec5d" xml:lang="en-US">
+<title>src/main/java/dev/filechampion/filechampion4j Directory Reference</title>
+<indexterm><primary>src/main/java/dev/filechampion/filechampion4j Directory Reference</primary></indexterm>
+Directory dependency graph for filechampion4j:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="dir_9d47008dd5efcdf2510d30f85b1bec5d_dep.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Files    </title>
+        <itemizedlist>
+            <listitem><para>file <link linkend="__cli_plugin_helper_8java">CliPluginHelper.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__extension_8java">Extension.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_acl_helper_8java">FileAclHelper.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__file_validator_8java">FileValidator.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__plugins_helper_8java">PluginsHelper.java</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__validation_response_8java">ValidationResponse.java</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

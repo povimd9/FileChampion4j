@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test" xml:lang="en-US">
+<title>dev.filechampion.filechampion4j.FileValidatorTest Class Reference</title>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary></indexterm>
+Collaboration diagram for dev.filechampion.filechampion4j.FileValidatorTest:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Package Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a1417d7ec8baf0e43f92bfbccf87b631b">setUp</link> ()  throws IOException </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a8f6ee89e4b8c949540cbb9379d460ae7">testDefaultLoggingConfiguration</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1ac5e6be723a61ae3f63b045e48da96407">testEmptyConfigJsonObject</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a1213ad6f72534fd47c2023069815a512">testNullConfigJsonObject</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1aafe4b22d7bf43eda1d880ca10df66899">testBlankFileCategory</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a8d2cce9b057a5170bdbf37eafcb7fb41">testBlankFileName</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a8618f15932dcd90e9f86e79d42d8475f">testNullOriginalFile</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a272e17e0dce67f9f10adf4798e80be7d">testEmptyOriginalFile</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a1c50dc29d1e022d54ef08c57e4809d22">testFileCategoryNotConfigured</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a040aea36c591131fb63e1966fd4f9594">testInvalidExtension</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a154c22f0a5a6b796f196a8ab6c487212">testFileTooLarge</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a45f6f37d4e60ebc840cfff30a44dce6d">testValidInputsStore</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1aaaae265bcd6240cb03b672a0b185d984">testValidInputs</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a6e9b25c615380aec9611a063c7614c56">testContenMismatch</link> ()  throws Exception </para>
+</listitem>
+            <listitem><para>void <link linkend="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1aec7f73f24f206cc5b94c6b208c4b0cdd">testSaveToNonExistingDirectory</link> ()  throws Exception </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Unit test for FileValidator class. </para>
+<para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00033">33</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a1417d7ec8baf0e43f92bfbccf87b631b"/><section>
+    <title>setUp()</title>
+<indexterm><primary>setUp</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>setUp</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.setUp ( ) throws IOException<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00098">98</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1aafe4b22d7bf43eda1d880ca10df66899"/><section>
+    <title>testBlankFileCategory()</title>
+<indexterm><primary>testBlankFileCategory</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testBlankFileCategory</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testBlankFileCategory ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00129">129</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aafe4b22d7bf43eda1d880ca10df66899_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a8d2cce9b057a5170bdbf37eafcb7fb41"/><section>
+    <title>testBlankFileName()</title>
+<indexterm><primary>testBlankFileName</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testBlankFileName</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testBlankFileName ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00139">139</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a6e9b25c615380aec9611a063c7614c56"/><section>
+    <title>testContenMismatch()</title>
+<indexterm><primary>testContenMismatch</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testContenMismatch</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testContenMismatch ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00219">219</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a6e9b25c615380aec9611a063c7614c56_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a8f6ee89e4b8c949540cbb9379d460ae7"/><section>
+    <title>testDefaultLoggingConfiguration()</title>
+<indexterm><primary>testDefaultLoggingConfiguration</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testDefaultLoggingConfiguration</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testDefaultLoggingConfiguration ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00104">104</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1ac5e6be723a61ae3f63b045e48da96407"/><section>
+    <title>testEmptyConfigJsonObject()</title>
+<indexterm><primary>testEmptyConfigJsonObject</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testEmptyConfigJsonObject</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testEmptyConfigJsonObject ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00113">113</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a272e17e0dce67f9f10adf4798e80be7d"/><section>
+    <title>testEmptyOriginalFile()</title>
+<indexterm><primary>testEmptyOriginalFile</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testEmptyOriginalFile</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testEmptyOriginalFile ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00159">159</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a1c50dc29d1e022d54ef08c57e4809d22"/><section>
+    <title>testFileCategoryNotConfigured()</title>
+<indexterm><primary>testFileCategoryNotConfigured</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testFileCategoryNotConfigured</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testFileCategoryNotConfigured ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00169">169</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a1c50dc29d1e022d54ef08c57e4809d22_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a154c22f0a5a6b796f196a8ab6c487212"/><section>
+    <title>testFileTooLarge()</title>
+<indexterm><primary>testFileTooLarge</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testFileTooLarge</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testFileTooLarge ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00189">189</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a154c22f0a5a6b796f196a8ab6c487212_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a040aea36c591131fb63e1966fd4f9594"/><section>
+    <title>testInvalidExtension()</title>
+<indexterm><primary>testInvalidExtension</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testInvalidExtension</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testInvalidExtension ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00179">179</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a040aea36c591131fb63e1966fd4f9594_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a1213ad6f72534fd47c2023069815a512"/><section>
+    <title>testNullConfigJsonObject()</title>
+<indexterm><primary>testNullConfigJsonObject</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testNullConfigJsonObject</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testNullConfigJsonObject ( )<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00121">121</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a8618f15932dcd90e9f86e79d42d8475f"/><section>
+    <title>testNullOriginalFile()</title>
+<indexterm><primary>testNullOriginalFile</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testNullOriginalFile</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testNullOriginalFile ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00149">149</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1aec7f73f24f206cc5b94c6b208c4b0cdd"/><section>
+    <title>testSaveToNonExistingDirectory()</title>
+<indexterm><primary>testSaveToNonExistingDirectory</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testSaveToNonExistingDirectory</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testSaveToNonExistingDirectory ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00229">229</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aec7f73f24f206cc5b94c6b208c4b0cdd_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1aaaae265bcd6240cb03b672a0b185d984"/><section>
+    <title>testValidInputs()</title>
+<indexterm><primary>testValidInputs</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testValidInputs</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testValidInputs ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00209">209</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_aaaae265bcd6240cb03b672a0b185d984_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_1a45f6f37d4e60ebc840cfff30a44dce6d"/><section>
+    <title>testValidInputsStore()</title>
+<indexterm><primary>testValidInputsStore</primary><secondary>dev.filechampion.filechampion4j.FileValidatorTest</secondary></indexterm>
+<indexterm><primary>dev.filechampion.filechampion4j.FileValidatorTest</primary><secondary>testValidInputsStore</secondary></indexterm>
+<para><computeroutput>void dev.filechampion.filechampion4j.FileValidatorTest.testValidInputsStore ( ) throws Exception<computeroutput>[package]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__file_validator_test_8java_source_1l00199">199</link> of file <link linkend="__file_validator_test_8java_source">FileValidatorTest.java</link>.</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator_test_a45f6f37d4e60ebc840cfff30a44dce6d_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+C:/Users/User1/git/FileChampion4j/src/test/java/dev/filechampion/filechampion4j/<link linkend="__file_validator_test_8java">FileValidatorTest.java</link></section>
+</section>
