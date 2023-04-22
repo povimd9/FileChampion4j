@@ -3,6 +3,7 @@ package dev.filechampion.filechampion4j;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -39,13 +40,13 @@ public class FileAclHelperTest {
     @ValueSource(strings = {"r", "w", "x", "rw", "rwx"})
     void testChangeFileAclWrite(String newPermissions) throws Exception {
         String newOwnerUsername = System.getProperty("user.name");
-        FileAclHelper aclHelper = new FileAclHelper();
+        FileAclHelper aclHelper = new FileAclHelper(tempFilePath, newOwnerUsername, newPermissions);
 
         // Change the ACL of the temporary file
-        String result = aclHelper.changeFileAcl(tempFilePath, newOwnerUsername, newPermissions);
+        String result = aclHelper.changeFileAcl();
 
         // Check that the result is success
-        assertTrue(result.startsWith("Success"));
+        assertTrue(result.startsWith("Success"), "Expected result to start with 'Success' but got: " + result);
 
         // Check that the new owner is correct
         assertTrue(checkOwner(tempFilePath, newOwnerUsername), "Expected owner to be " + newOwnerUsername + " but was " + Files.getOwner(tempFilePath));
@@ -58,7 +59,7 @@ public class FileAclHelperTest {
         } else {
             actualPermissions = getPosixFilePermissions(tempFilePath);
         }
-        assertEquals(newPermissions, actualPermissions);
+        assertEquals(newPermissions, actualPermissions, "Expected permissions to be " + newPermissions + " but was " + actualPermissions);
     }
 
     // Test non existing permissions
@@ -66,24 +67,19 @@ public class FileAclHelperTest {
     void testChangeFileAclNonExistingPermissions() throws Exception {
         String newPermissions = "invalid-permissions";
         String newOwnerUsername = System.getProperty("user.name");
-        FileAclHelper aclHelper = new FileAclHelper();
-
-        // Change the ACL of the temporary file
-        String result = aclHelper.changeFileAcl(tempFilePath, newOwnerUsername, newPermissions);
-
-        // Check that the result is success
-        String expectedErrMsg = "Error: Invalid permissions";
-        assertTrue(result.startsWith(expectedErrMsg), String.format("%s %s' but got: %s", sharedMessages, expectedErrMsg, result));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new FileAclHelper(tempFilePath, newOwnerUsername, newPermissions);
+        }, "Expected IllegalArgumentException to be thrown");
     }
 
     // Check getUserPrinciple failure
     @Test
     void testGetUserPrincipleFailure() throws Exception {
         String newPermissions = "rwx";
-        FileAclHelper aclHelper = new FileAclHelper();
+        FileAclHelper aclHelper = new FileAclHelper(tempFilePath, "invalid-user-394f84398fn3948dfn239048d023d", newPermissions);
 
         // Change the ACL of the temporary file
-        String result = aclHelper.changeFileAcl(tempFilePath, "invalid-user-394f84398fn3948dfn239048d023d", newPermissions);
+        String result = aclHelper.changeFileAcl();
 
         // Check that the result is success
         String expectedErrMsg = "Error: Could not get user principal";
@@ -95,26 +91,26 @@ public class FileAclHelperTest {
     void testAccessDeniedFailure() throws Exception {
         if (System.getProperty("os.name").startsWith("Windows")) {
             String newPermissions = "r";
-            FileAclHelper aclHelper = new FileAclHelper();
-            aclHelper.changeFileAcl(tempFilePath, System.getProperty("user.name"), newPermissions);
-            String result = aclHelper.changeFileAcl(tempFilePath, System.getProperty("user.name"), "rwx");
-
+            FileAclHelper aclHelper = new FileAclHelper(tempFilePath, System.getProperty("user.name"), newPermissions);
+            aclHelper.changeFileAcl();
+            FileAclHelper newAclHelper = new FileAclHelper(tempFilePath, System.getProperty("user.name"), "rwx");
+            String result = newAclHelper.changeFileAcl();
             String expectedErrMsg = "Error: Access denied";
             assertTrue(result.startsWith(expectedErrMsg), String.format("%s %s' but got: %s", sharedMessages, expectedErrMsg, result));
-        } else { assertTrue(true);}
+        } else { assertTrue(true, "not reproducable on non-windows");}
     }
 
     // Check file system failure
     @Test
     void testFileSystemFailure() throws Exception {
         String newPermissions = "r";
-        FileAclHelper aclHelper = new FileAclHelper();
         String newOwnerUsername = System.getProperty("user.name");
-
+        FileAclHelper aclHelper = new FileAclHelper(tempFilePath, newOwnerUsername, newPermissions);
         // Change the ACL of the temporary file
-        aclHelper.changeFileAcl(tempFilePath, newOwnerUsername, newPermissions);
+        aclHelper.changeFileAcl();
 
-        String result = aclHelper.changeFileAcl(Paths.get("C:\\invalid\\path\\to\\file.txt"), newOwnerUsername, "rwx");
+        FileAclHelper newAclHelper = new FileAclHelper(Paths.get("C:\\invalid\\path\\to\\file.txt"), newOwnerUsername, "rwx");
+        String result = newAclHelper.changeFileAcl();
 
         // Check that the result is success
         String expectedErrMsg = "Error: File system error";

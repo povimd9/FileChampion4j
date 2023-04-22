@@ -702,8 +702,8 @@ public class FileValidator {
             return sharedMessage.toString();
         }
         // Try to set the file owner and permissions
-        FileAclHelper fileAclHelper = new FileAclHelper();
-        String newFileAttributesStatus = fileAclHelper.changeFileAcl(targetFilePath, extensionConfig.getChangeOwnershipUser(), extensionConfig.getChangeOwnershipMode());
+        FileAclHelper fileAclHelper = new FileAclHelper(targetFilePath, extensionConfig.getChangeOwnershipUser(), extensionConfig.getChangeOwnershipMode());
+        String newFileAttributesStatus = fileAclHelper.changeFileAcl();
         if (newFileAttributesStatus.contains("Error:")) {
             try {
                 Files.deleteIfExists(targetFilePath);

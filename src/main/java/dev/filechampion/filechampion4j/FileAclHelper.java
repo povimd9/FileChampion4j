@@ -32,17 +32,31 @@ public class FileAclHelper {
             throw new IllegalArgumentException("Could not load default logging configuration: ", e);
         }
     }
-    private static final Logger logger = Logger.getLogger(FileAclHelper.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
     private void logSevere(String message) {
-        if (logger.isLoggable(Level.SEVERE)) {
-            logger.severe(message);
+        if (LOGGER.isLoggable(Level.SEVERE)) {
+            LOGGER.severe(message);
         }
     }
     private void logFine(String message) {
-        if (logger.isLoggable(Level.FINE )) {
-            logger.fine(message);
+        if (LOGGER.isLoggable(Level.FINE )) {
+            LOGGER.fine(message);
         }
     }
+
+    /**
+     * Class constructor
+     */
+    public FileAclHelper(Path targetFilePath, String newOwnerUsername, String newPermissions) throws IllegalArgumentException {
+        this.targetFilePath = targetFilePath;
+        this.newOwnerUsername = newOwnerUsername;
+        if (!newPermissions.matches("[rwx]+")) {
+            errMsg.replace(0, errMsg.length(), "Error: Invalid permissions:").append(newPermissions);
+            throw new IllegalArgumentException(errMsg.toString());
+        }
+        this.newPermissions = newPermissions;
+    }
+
 
     /**
      * changeFileAcl is the main method of this class. It attempts to change the owner and permissions of a file.
@@ -51,17 +65,11 @@ public class FileAclHelper {
     * @param newPermissions (String the new permissions of the file (e.g. "rwx")
     * @return (String) a String containing the result of the operation
     */
-    public String changeFileAcl(Path targetFilePath, String newOwnerUsername, String newPermissions) {
-        this.targetFilePath = targetFilePath;
-        this.newOwnerUsername = newOwnerUsername;
+    public String changeFileAcl() {
         if(!newPermissions.matches("[rwx]+")) {
             errMsg.replace(0, errMsg.length(), "Error: Invalid permissions:").append(newPermissions);
             return errMsg.toString();
         }
-
-
-        this.newPermissions = newPermissions;
-        
         UserPrincipal newOwner = getUserPrinciple(targetFilePath, newOwnerUsername);
         if (newOwner == null) {
             errMsg.replace(0, errMsg.length(), "Error: Could not get user principal for ").append(newOwnerUsername);
