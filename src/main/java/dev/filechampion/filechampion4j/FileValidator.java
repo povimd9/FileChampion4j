@@ -22,14 +22,12 @@ import java.security.MessageDigest;
 
 
 /**
- * This class is used to validate untrusted files
-
-                      TODO: add filenname and checksum to loggers
-
-                      TODO: support Http plugins
-
-
-*/
+ * This class is used to validate files
+ * @author filechampion
+ * @version 0.9.8
+ * @since 0.9.8
+ * @see <a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a>
+ */
 public class FileValidator {
     static {
         try {

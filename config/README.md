@@ -2,7 +2,6 @@
  - "mime_type" specifies the expected MIME type for the file.
  - "magic_bytes" specifies the expected magic bytes that indicate the file type.
  - "header_signatures" and "footer_signatures" specify the expected header and footer signatures that can be used to validate the file type.
- - "antivirus_scan" specifies the antivirus scan implementation that can be used to scan the file for malware.
  - "change_ownership" specifies whether ownership of the file should be changed after it is validated.
  - "change_ownership_user" specifies the user that will be set as the owner of the file.
  - "change_ownership_group" specifies the group that will be set as the owner of the file.

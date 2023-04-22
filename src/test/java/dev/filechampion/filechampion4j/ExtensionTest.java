@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for Extension class.
- * TODO: Add AV scan config loading tests
  */
 
  public class ExtensionTest {
@@ -57,7 +56,6 @@ import org.junit.jupiter.api.Test;
         extensionJson.put("magic_bytes", "25 50 44 46");
         extensionJson.put("header_signatures", "255,216,255");
         extensionJson.put("footer_signatures", "37,80,68,70");
-        extensionJson.put("antivirus_scan", new JSONArray("[\"ClamAV\", \"Sophos\"]"));
         extensionJson.put("change_ownership", true);
         extensionJson.put("change_ownership_user", "myuser");
         extensionJson.put("change_ownership_mode", "rwxrwxrwx");
@@ -70,7 +68,6 @@ import org.junit.jupiter.api.Test;
         Assertions.assertEquals("25 50 44 46", extension.getMagicBytes());
         Assertions.assertEquals("255,216,255", extension.getHeaderSignatures());
         Assertions.assertEquals("37,80,68,70", extension.getFooterSignatures());
-        Assertions.assertEquals(2, extension.getAntivirusScanJson().length());
         Assertions.assertTrue(extension.isChangeOwnership());
         Assertions.assertEquals("myuser", extension.getChangeOwnershipUser());
         Assertions.assertEquals("rwxrwxrwx", extension.getChangeOwnershipMode());

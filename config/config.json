@@ -6,12 +6,6 @@
         "magic_bytes": "25504446",
         "header_signatures": "25504446",
         "footer_signatures": "2525454f46",
-        "antivirus_scan": {
-          "clamav_scan.java": [
-            "RETURN_TYPE",
-            "param1",
-            "param2"
-          ]},
         "change_ownership": true,
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
@@ -24,12 +18,6 @@
         "magic_bytes": "D0CF11E0A1B11AE1",
         "header_signatures": "D0CF11E0A1B11AE1",
         "footer_signatures": "0000000000000000",
-        "antivirus_scan": {
-          "clamav_scan.java": [
-            "RETURN_TYPE",
-            "param1",
-            "param2"
-          ]},
         "change_ownership": true,
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
@@ -43,12 +31,6 @@
         "magic_bytes": "FFD8",
         "header_signatures": "FFD8FF",
         "footer_signatures": "FFD9",
-        "antivirus_scan": {
-          "clamav_scan.java": [
-            "RETURN_TYPE",
-            "param1",
-            "param2"
-          ]},
         "change_ownership": true,
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
@@ -60,12 +42,6 @@
         "magic_bytes": "89504E470D0A1A0A",
         "header_signatures": "89504E470D0A1A0A0000000D49484452",
         "footer_signatures": "49454E44AE426082",
-        "antivirus_scan": {
-          "clamav_scan.java": [
-            "RETURN_TYPE",
-            "param1",
-            "param2"
-          ]},
         "change_ownership": true,
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
