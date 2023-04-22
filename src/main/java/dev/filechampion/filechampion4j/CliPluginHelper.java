@@ -94,6 +94,7 @@ public class CliPluginHelper {
             result = timedProcessExecution(endpoint);
             logFine(singleStepConfig.getName() + " result: " + result);
         } catch (IOException|NullPointerException|InterruptedException e) {
+            Thread.currentThread().interrupt();
             responsePatterns.put(errString, e.getMessage());
         }
 
@@ -194,7 +195,7 @@ public class CliPluginHelper {
      * @throws NullPointerException
      */
     private String timedProcessExecution(String command) throws IOException, InterruptedException, NullPointerException {
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\s+"));
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split("\\p{Zs}+"));
         logMessage.replace(0, logMessage.length(), "Process starting: ").append(command);
         logFine(logMessage.toString());
 

@@ -24,9 +24,10 @@ import java.security.MessageDigest;
 /**
  * This class is used to validate files
  * @author filechampion
- * @version 0.9.8
+ * @version 0.9.8.1
  * @since 0.9.8
  * @see <a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a>
+ * TODO: add extension config loading at init
  */
 public class FileValidator {
     static {
@@ -120,6 +121,7 @@ public class FileValidator {
             }
         }
     }
+    
 
     /**
      * This method is used to check that method inputs are not null or empty
@@ -161,7 +163,7 @@ public class FileValidator {
         // Initialize variables
         String fileExtension = getFileExtension(fileName);
         Extension extensionConfig;
-        String originalFilenameClean = fileName.replaceAll("[^a-zA-Z0-9.]", "_");
+        String originalFilenameClean = fileName.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}.]", "_");
         fileChecksum = calculateChecksum(originalFile);
         
         // Get the configuration for the file type category and extension
@@ -606,7 +608,7 @@ public class FileValidator {
         if (originalFileBytes.length == 0 || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
             return false;
         }
-        magicBytesPattern = magicBytesPattern.replaceAll("\\s", "");
+        magicBytesPattern = magicBytesPattern.replaceAll("\\p{Zs}", "");
         if (magicBytesPattern.length() % 2 != 0) {
             magicBytesPattern = "0" + magicBytesPattern;
         }
@@ -634,7 +636,7 @@ public class FileValidator {
         if (isBlank(headerSignaturesPattern)) {
             return true;
         }
-        String hexPattern = headerSignaturesPattern.replaceAll("\\s", "");
+        String hexPattern = headerSignaturesPattern.replaceAll("\\p{Zs}", "");
         if (hexPattern.length() % 2 != 0) {
             hexPattern = "0" + hexPattern;
         }
@@ -655,7 +657,7 @@ public class FileValidator {
         if (isBlank(footerSignaturesPattern)) {
             return true;
         }
-        String hexPattern = footerSignaturesPattern.replaceAll("\\s", "");
+        String hexPattern = footerSignaturesPattern.replaceAll("\\p{Zs}", "");
         if (hexPattern.length() % 2 != 0) {
             hexPattern = "0" + hexPattern;
         }
