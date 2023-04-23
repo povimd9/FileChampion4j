@@ -157,19 +157,19 @@ public class FileValidatorTest {
     void testFileCategoryNotConfigured() throws Exception {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "test.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile("0934jt0-349rtj3409rj3409rj", fileInBytes, fileName, tempDirectory.toString());
-        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid with non existing fileCategory");
-        assertTrue(fileValidationResults.resultsInfo().contains("Error creating Extension configurations object"), "Expected 'Error creating Extension configurations object', got: " + fileValidationResults.resultsInfo());
+        String fileCategory = "0934jt0-349rtj3409rj3409rj";
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> validator.validateFile(fileCategory, fileInBytes, fileName, tempDirectory.toString()), "category " + fileCategory +" not found");
+        assertEquals("category 0934jt0-349rtj3409rj3409rj not found", exception.getMessage(), "Expected exception message to be 'category 0934jt0-349rtj3409rj3409rj not found'");
     }
 
-    // Test file extension that is not configured in config json
+    // Test file extension that is not configured in config json extension txt not found
     @Test
     void testInvalidExtension() throws Exception {
         byte[] fileInBytes = "1234".getBytes();
         String fileName = "test.txt";
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
-        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid with .txt extension");
-        assertTrue(fileValidationResults.resultsInfo().contains("Error creating Extension configurations object"), "Expected 'Error creating Extension configurations object', got: " + fileValidationResults.resultsInfo());
+        String extensionText = "txt";
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString()), "extension " + extensionText + " not found");
+        assertEquals("extension " + extensionText + " not found", exception.getMessage(), "Expected exception message to be 'extension " + extensionText + " not found'");
     }
 
     // Test file size that is greater than the max size configured in config json
