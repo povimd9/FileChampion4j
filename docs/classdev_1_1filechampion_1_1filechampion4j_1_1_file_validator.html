@@ -35,7 +35,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img width="200" height="150" alt="Logo" src="FileChamp_cut.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.1</span>
+   <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.2</span>
    </div>
    <div id="projectbrief">File validation library for Java</div>
   </td>
@@ -213,7 +213,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is used to validate files </p><dl class="section author"><dt>Author</dt><dd>filechampion </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>0.9.8.1 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.9.8.2 </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a> TODO: add extension config loading at init </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_file_validator_8java_source.html#l00031">31</a> of file <a class="el" href="_file_validator_8java_source.html">FileValidator.java</a>.</p>
@@ -997,7 +997,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  575</span>            .forEach(File::delete);</div>
 <div class="line"><span class="lineno">  576</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><span class="lineno">  577</span>        } <span class="keywordflow">catch</span> (Exception e) {</div>
-<div class="line"><span class="lineno">  578</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a54c7ac27bb53f7af429f344d806cb0fb">sharedMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a54c7ac27bb53f7af429f344d806cb0fb">sharedMessage</a>.length(), <span class="stringliteral">&quot;Error: Delere temporary directoy failed: &quot;</span>).append(e.getMessage());</div>
+<div class="line"><span class="lineno">  578</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a54c7ac27bb53f7af429f344d806cb0fb">sharedMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a54c7ac27bb53f7af429f344d806cb0fb">sharedMessage</a>.length(), <span class="stringliteral">&quot;Error: Delete temporary directoy failed: &quot;</span>).append(e.getMessage());</div>
 <div class="line"><span class="lineno">  579</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af46946cfe82bbc2234cf895bd8f4ef80">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a54c7ac27bb53f7af429f344d806cb0fb">sharedMessage</a>.toString());</div>
 <div class="line"><span class="lineno">  580</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><span class="lineno">  581</span>        }</div>
@@ -2660,7 +2660,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>dev</b></li><li class="navelem"><b>filechampion</b></li><li class="navelem"><a class="el" href="namespacedev_1_1filechampion_1_1filechampion4j.html">filechampion4j</a></li><li class="navelem"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html">FileValidator</a></li>
-    <li class="footer">Generated on Sat Apr 22 2023 16:48:17 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Sat Apr 22 2023 20:00:06 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>
