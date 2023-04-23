@@ -3,11 +3,7 @@ package dev.filechampion.filechampion4j;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 /**
  * Unit test for Extensions class.
@@ -24,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
                 .put("magic_bytes", "25504446")));
 
         Extensions extensions = new Extensions(jsonObject);
-        assertEquals("application/pdf", extensions.getValidationValue("Documents", "pdf", "mime_type"));
-        assertEquals("25504446", extensions.getValidationValue("Documents", "pdf", "magic_bytes"));
+        assertEquals("application/pdf", extensions.getValidationValue("Documents", "pdf", "mime_type"), "expected mime_type value");
+        assertEquals("25504446", extensions.getValidationValue("Documents", "pdf", "magic_bytes"), "expected magic_bytes value");
     }
 
     @Test
@@ -53,8 +49,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
                 .put("magic_bytes", "25504446")));
 
         Extensions extensions = new Extensions(jsonObject);
-        assertEquals("application/pdf", extensions.getValidationValue("Documents", "pdf", "mime_type"));
-        assertEquals("25504446", extensions.getValidationValue("Documents", "pdf", "magic_bytes"));
+        assertEquals("application/pdf", extensions.getValidationValue("Documents", "pdf", "mime_type"), "expected mime_type value");
+        assertEquals("25504446", extensions.getValidationValue("Documents", "pdf", "magic_bytes"), "expected magic_bytes value");
 
         assertThrows(IllegalArgumentException.class, () -> 
             extensions.getValidationValue(null, "pdf", "mime_type"), "expected IllegalArgumentException for null category");

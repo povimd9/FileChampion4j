@@ -14,8 +14,6 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 import dev.filechampion.filechampion4j.PluginsHelper.PluginConfig;
 import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
@@ -222,7 +220,6 @@ public class FileValidator {
         int responseMsgCountSuccess = 0;
         StringBuilder sbresponseAggregationSuccess = new StringBuilder(responseAggregationSuccess);
 
-    
         int maxSize = Integer.parseInt((String) extensions.getValidationValue(fileCategory, fileExtension, "max_size"));
         // Check that the file size is not greater than the maximum allowed size, dont continue if it is
         if (Boolean.FALSE.equals(checkFileSize(originalFile.length,maxSize ))) {

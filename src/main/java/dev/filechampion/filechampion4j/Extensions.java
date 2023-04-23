@@ -2,9 +2,7 @@ package dev.filechampion.filechampion4j;
 
 
 import java.io.InputStream;
-import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -60,6 +58,7 @@ public class Extensions {
      * @throws IllegalArgumentException if any of the json objects is invalid
      */
     public Extensions(JSONObject jsonObject) {
+
         categoriesMap = new HashMap<>();
         extensionsMap = new HashMap<>();
         validationsMap = new HashMap<>();
@@ -77,7 +76,13 @@ public class Extensions {
         if( categoriesMap.isEmpty()) {
             throw new IllegalArgumentException("Validations must contain categories objects");
         }
-        
+        mapConfiguredExtensions();
+    }
+
+    /**
+     * Load extensions from json object into extensionsMap
+     */
+    private void mapConfiguredExtensions(){
         for (Map.Entry<String, Object> extensionEntry : categoriesMap.entrySet().iterator().next().getValue().entrySet()) {
             String extension = extensionEntry.getKey();
             extensionsMap.put(extensionEntry.getKey(), (HashMap) extensionEntry.getValue());
@@ -85,12 +90,18 @@ public class Extensions {
                 .append(extensionEntry.getValue().toString());
             logFine(sbLogMessage.toString());
         }
-
         if (extensionsMap.entrySet().iterator().next().getValue().entrySet().isEmpty()) {
             sbLogMessage.replace(0, sbLogMessage.length(), "At least one validation must be configured");
             logWarn(sbLogMessage.toString());
             throw new IllegalArgumentException(sbLogMessage.toString());
         }
+        mapExtensionValidations();
+    }
+
+    /**
+     * Load extension validations into validationsMap
+     */
+    private void mapExtensionValidations () {
         for (Map.Entry<String, Object> validationEntry : extensionsMap.entrySet().iterator().next().getValue().entrySet() ) {
             String validation = validationEntry.getKey();
             Object value = validationEntry.getValue();
@@ -121,6 +132,7 @@ public class Extensions {
             .append(validationsMap.size()).append(" validations");
         logFine(sbLogMessage.toString());
         logInfo("Loaded Validations Configurtion");
+
     }
 
     /**

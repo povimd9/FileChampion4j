@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['headers_0',['headers',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#ab46e3d40fc51aa707602670521394c67',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]],
-  ['headersignatures_1',['headerSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extension.html#a91650f20c5b9493ac3c0f02e28639480',1,'dev::filechampion::filechampion4j::Extension']]],
-  ['httpfailcode_2',['httpFailCode',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#aafce176618187e9ba0d7357e5f7f8b8a',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]],
-  ['httppasscode_3',['httpPassCode',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a2b8e3b854f8e7dbfac379d410c9bc177',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]]
+  ['filebytes_0',['fileBytes',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8',1,'dev::filechampion::filechampion4j::ValidationResponse']]],
+  ['filechecksum_1',['fileChecksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a5fccb109f3098fd3fdcf6b33e53d6769',1,'dev.filechampion.filechampion4j.FileValidator.fileChecksum()'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93',1,'dev.filechampion.filechampion4j.ValidationResponse.fileChecksum()']]]
 ];
