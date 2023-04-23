@@ -254,6 +254,21 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
+    // Config JSON object for testing without any validations
+    private static final JSONObject CONFIG_JSON_NOVALS = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginSuccessCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
+    + "}");
+
     
     // Test step timeout
     @Test
@@ -411,6 +426,16 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(CONFIG_JSON_NOSIGS);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
+    }
+
+    // Test no validation values for extension
+    @Test
+    void testNoVals() throws Exception {
+        //byte[] fileInBytes = generatePdfBytes(250000);
+        //String fileName = "test.pdf";
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(CONFIG_JSON_NOVALS), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("At least one validation must be configured"), 
+        "Expected exception to contain 'At least one validation must be configured'.");
     }
 
     // Helper methods
