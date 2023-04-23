@@ -51,6 +51,10 @@ public class Extensions {
     private static final List<String> allowedKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
         "footer_signatures", "change_ownership", "change_ownership_user", "change_ownership_mode",
         "name_encoding", "max_size", "extension_plugins");
+    private static final List<String> stringKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
+    "footer_signatures", "change_ownership_user", "change_ownership_mode",
+    "max_size", "extension_plugins");
+    private static final List<String> boolKeyValues = Arrays.asList("change_ownership", "name_encoding");
 
     /**
      * Constructor for Extensions class
@@ -106,18 +110,17 @@ public class Extensions {
             String validation = validationEntry.getKey();
             Object value = validationEntry.getValue();
             if (allowedKeyValues.contains(validation)) {
-                if (value instanceof String) {
-                    validationsMap.put(validation, (String) value);
-                } else if (value instanceof Integer) {
-                    validationsMap.put(validation, (Integer) value);
+                if (value instanceof String || value instanceof Integer) {
+                    setString(validation, value);
                 } else if (value instanceof Boolean) {
-                    validationsMap.put(validation, (Boolean) value);
+                    setBoolean(validation, value);
                 } else if (value instanceof ArrayList ) {
-                    validationsMap.put(validation, ((ArrayList) value));
+                    setArrayList(validation, value);
                 } else {
-                    sbLogMessage.replace(0, sbLogMessage.length(), "Unsupported value type: ")
-                        .append(value.getClass().getName());
-                    logWarn(sbLogMessage.toString());
+                    sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+                            .append(value.getClass().getName())
+                            .append(" for key: ")
+                            .append(validation);
                     throw new IllegalArgumentException(sbLogMessage.toString());
                 }
             } else {
@@ -133,6 +136,60 @@ public class Extensions {
         logFine(sbLogMessage.toString());
         logInfo("Loaded Validations Configurtion");
 
+    }
+
+    /**
+     * Sets the value of String validation key
+     * @param validation (String) - The validation key
+     * @param value (Object) - The value of the validation key
+     */
+    private void setString (String validation, Object value) {
+        if (stringKeyValues.contains(validation)) {
+            validationsMap.put(validation, value.toString());
+        } else {
+            sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+                .append(value.getClass().getName())
+                .append(" for key: ")
+                .append(validation);
+            logWarn(sbLogMessage.toString());
+            throw new IllegalArgumentException(sbLogMessage.toString());
+        }
+    }
+
+    /**
+     * Sets the value of Boolean validation key
+     * @param validation (String) - The validation key
+     * @param value (Object) - The value of the validation key
+     */
+    private void setBoolean (String validation, Object value) {
+        if (boolKeyValues.contains(validation)) {
+            validationsMap.put(validation, (Boolean) value);
+        } else {
+            sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+                .append(value.getClass().getName())
+                .append(" for key: ")
+                .append(validation);
+            logWarn(sbLogMessage.toString());
+            throw new IllegalArgumentException(sbLogMessage.toString());
+        }
+    }
+
+    /**
+     * Sets the value of ArrayList validation key
+     * @param validation (String) - The validation key
+     * @param value (Object) - The value of the validation key
+     */
+    private void setArrayList (String validation, Object value) {
+        if (validation.equals("extension_plugins")) {
+            validationsMap.put(validation, (ArrayList) value);
+        } else {
+            sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+                .append(value.getClass().getName())
+                .append(" for key: ")
+                .append(validation);
+            logWarn(sbLogMessage.toString());
+            throw new IllegalArgumentException(sbLogMessage.toString());
+        }
     }
 
     /**

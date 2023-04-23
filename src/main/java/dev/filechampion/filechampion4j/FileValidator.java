@@ -220,8 +220,13 @@ public class FileValidator {
         int responseMsgCountSuccess = 0;
         StringBuilder sbresponseAggregationSuccess = new StringBuilder(responseAggregationSuccess);
 
-        int maxSize = Integer.parseInt((String) extensions.getValidationValue(fileCategory, fileExtension, "max_size") != null ? (String) extensions.getValidationValue(fileCategory, fileExtension, "max_size") : "-1");
         // Check that the file size is not greater than the maximum allowed size, dont continue if it is
+        int maxSize;
+        try {
+            maxSize = Integer.parseInt(extensions.getValidationValue(fileCategory, fileExtension, "max_size") != null ? extensions.getValidationValue(fileCategory, fileExtension, "max_size").toString() : "-1");
+        } catch (NumberFormatException e) {
+            maxSize = -1;
+        }
         if (maxSize > -1 && Boolean.FALSE.equals(checkFileSize(originalFile.length, maxSize))) {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("File size (")

@@ -198,6 +198,107 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
+    // Config JSON object for testing only basic parameters
+    private static final JSONObject CONFIG_JSON_INT_SIZE = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"max_size\": 4000\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginSuccessCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
+    + "}");
+
+    // Config JSON object for testing unsupported objecy type
+    private static final JSONObject CONFIG_JSON_LONG_MAGIC = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": 255044469999999999999999999999999999999999999999999999999999999999999999999999999999,\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"max_size\": 4000\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginSuccessCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
+    + "}");
+
+    // Config JSON object for testing boolean parameter in string argument
+    private static final JSONObject CONFIG_JSON_BOOL_IN_STRING = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": true,\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"max_size\": false\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginSuccessCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
+    + "}");
+
+    // Config JSON object for testing string parameter in boolean argument
+    private static final JSONObject CONFIG_JSON_STRING_IN_BOOL = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"max_size\": 4000,\r\n"
+    + "      \"name_encoding\": \"test\"\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginSuccessCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
+    + "}");
+
+    // Config JSON object for testing array parameter in string argument
+    private static final JSONObject CONFIG_JSON_ARRAY_IN_STRING = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": [\"clean_pdf_documents1.step1\", \"clean_pdf_documents2.step1\", \"clean_pdf_documents3.step1\"],\r\n"
+    + "      \"max_size\": 4000\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "},\r\n"
+    + "  \"Plugins\": \r\n"
+    + "{\"clean_pdf_documents1\":{\"step1.step\":{\"type\":\"cli\",\"run_before\":true,\"endpoint\":\""
+    + testPluginSuccessCommand
+    + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.newFilePath}\"}}}"
+    + "  }\r\n"
+    + "}");
+
     // Config JSON object for testing without mime type
     private static final JSONObject CONFIG_JSON_NOMIME = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
@@ -329,6 +430,38 @@ public class FileValidatorJsonTest {
         "Expected exception to contain 'Error initializing plugins: JSONObject'.");
     }
 
+    // Test invalid value type in validations config
+    @Test
+    void testLongMimeValue() throws Exception {
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(CONFIG_JSON_LONG_MAGIC), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("Unsupported value type"), 
+        "Expected exception to contain 'Unsupported value type'.");
+    }
+
+    // Test boolean value in string
+    @Test
+    void testBoolInString() throws Exception {
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(CONFIG_JSON_BOOL_IN_STRING), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("Error initializing extensions: Unsupported value type:"), 
+        "Expected exception to contain 'Error initializing extensions: Unsupported value type:'.");
+    }
+
+    // Test string value in boolean
+    @Test
+    void testStringInBool() throws Exception {
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(CONFIG_JSON_STRING_IN_BOOL), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("Error initializing extensions: Unsupported value type:"), 
+        "Expected exception to contain 'Error initializing extensions: Unsupported value type:'.");
+    }
+
+    // Test array value in string
+    @Test
+    void testArrayInString() throws Exception {
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(CONFIG_JSON_ARRAY_IN_STRING), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("Error initializing extensions: Unsupported value type:"), 
+        "Expected exception to contain 'Error initializing extensions: Unsupported value type:'.");
+    }
+
     // Test invalid mime type in json config
     @Test
     void testInValidMime() throws Exception {
@@ -398,6 +531,15 @@ public class FileValidatorJsonTest {
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
 
+    @Test
+    void testIntSizeValue() throws Exception {
+        byte[] fileInBytes = generatePdfBytes(250000);
+        String fileName = "test.pdf";
+        FileValidator validator = new FileValidator(CONFIG_JSON_INT_SIZE);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
+    }
+    
     // Test no mime type in json config
     @Test
     void testNoMime() throws Exception {
