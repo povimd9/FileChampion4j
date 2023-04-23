@@ -35,7 +35,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img width="200" height="150" alt="Logo" src="FileChamp_cut.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.1</span>
+   <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.2</span>
    </div>
    <div id="projectbrief">File validation library for Java</div>
   </td>
@@ -196,18 +196,25 @@ Static Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Class constructor </p>
+<p>Class constructor </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetFilePath</td><td>(Path) the path of the file to change </td></tr>
+    <tr><td class="paramname">newOwnerUsername</td><td>(String) the new owner of the file </td></tr>
+    <tr><td class="paramname">newPermissions</td><td>(String the new permissions of the file (e.g. "rwx") </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_acl_helper_8java_source.html#l00050">50</a> of file <a class="el" href="_file_acl_helper_8java_source.html">FileAclHelper.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>                                                                                                                              {</div>
-<div class="line"><span class="lineno">   51</span>        this.targetFilePath = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#af1c70601f615144cdabfd5d25c1e470d">targetFilePath</a>;</div>
-<div class="line"><span class="lineno">   52</span>        this.newOwnerUsername = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a4ade74fbb151df12435680b294e49efa">newOwnerUsername</a>;</div>
-<div class="line"><span class="lineno">   53</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a9936927b77fd27ebf9066197be945c91">newPermissions</a>.matches(<span class="stringliteral">&quot;[rwx]+&quot;</span>)) {</div>
-<div class="line"><span class="lineno">   54</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac10e36660079aa3e244680e4d7e8b122">errMsg</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac10e36660079aa3e244680e4d7e8b122">errMsg</a>.length(), <span class="stringliteral">&quot;Error: Invalid permissions:&quot;</span>).append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a9936927b77fd27ebf9066197be945c91">newPermissions</a>);</div>
-<div class="line"><span class="lineno">   55</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac10e36660079aa3e244680e4d7e8b122">errMsg</a>.toString());</div>
-<div class="line"><span class="lineno">   56</span>        }</div>
-<div class="line"><span class="lineno">   57</span>        this.newPermissions = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a9936927b77fd27ebf9066197be945c91">newPermissions</a>;</div>
-<div class="line"><span class="lineno">   58</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_file_acl_helper_8java_source.html#l00053">53</a> of file <a class="el" href="_file_acl_helper_8java_source.html">FileAclHelper.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>                                                                                                                              {</div>
+<div class="line"><span class="lineno">   54</span>        this.targetFilePath = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#af1c70601f615144cdabfd5d25c1e470d">targetFilePath</a>;</div>
+<div class="line"><span class="lineno">   55</span>        this.newOwnerUsername = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a4ade74fbb151df12435680b294e49efa">newOwnerUsername</a>;</div>
+<div class="line"><span class="lineno">   56</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a9936927b77fd27ebf9066197be945c91">newPermissions</a>.matches(<span class="stringliteral">&quot;[rwx]+&quot;</span>)) {</div>
+<div class="line"><span class="lineno">   57</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac10e36660079aa3e244680e4d7e8b122">errMsg</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac10e36660079aa3e244680e4d7e8b122">errMsg</a>.length(), <span class="stringliteral">&quot;Error: Invalid permissions:&quot;</span>).append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a9936927b77fd27ebf9066197be945c91">newPermissions</a>);</div>
+<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac10e36660079aa3e244680e4d7e8b122">errMsg</a>.toString());</div>
+<div class="line"><span class="lineno">   59</span>        }</div>
+<div class="line"><span class="lineno">   60</span>        this.newPermissions = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a9936927b77fd27ebf9066197be945c91">newPermissions</a>;</div>
+<div class="line"><span class="lineno">   61</span>    }</div>
 <div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_html_a4ade74fbb151df12435680b294e49efa"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a4ade74fbb151df12435680b294e49efa">dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername</a></div><div class="ttdeci">String newOwnerUsername</div><div class="ttdef"><b>Definition:</b> <a href="_file_acl_helper_8java_source.html#l00024">FileAclHelper.java:24</a></div></div>
 <div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_html_a9936927b77fd27ebf9066197be945c91"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a9936927b77fd27ebf9066197be945c91">dev.filechampion.filechampion4j.FileAclHelper.newPermissions</a></div><div class="ttdeci">String newPermissions</div><div class="ttdef"><b>Definition:</b> <a href="_file_acl_helper_8java_source.html#l00023">FileAclHelper.java:23</a></div></div>
 <div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_html_ac10e36660079aa3e244680e4d7e8b122"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac10e36660079aa3e244680e4d7e8b122">dev.filechampion.filechampion4j.FileAclHelper.errMsg</a></div><div class="ttdeci">StringBuilder errMsg</div><div class="ttdef"><b>Definition:</b> <a href="_file_acl_helper_8java_source.html#l00025">FileAclHelper.java:25</a></div></div>
@@ -232,15 +239,7 @@ Static Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>changeFileAcl is the main method of this class. It attempts to change the owner and permissions of a file. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">targetFilePath</td><td>(Path) the path of the file to change </td></tr>
-    <tr><td class="paramname">newOwnerUsername</td><td>(String) the new owner of the file </td></tr>
-    <tr><td class="paramname">newPermissions</td><td>(String the new permissions of the file (e.g. "rwx") </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>(String) a String containing the result of the operation </dd></dl>
+<p>changeFileAcl is the main method of this class. It attempts to change the owner and permissions of a file. </p><dl class="section return"><dt>Returns</dt><dd>(String) a String containing the result of the operation </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_file_acl_helper_8java_source.html#l00068">68</a> of file <a class="el" href="_file_acl_helper_8java_source.html">FileAclHelper.java</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   68</span>                                  {</div>
@@ -847,7 +846,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_file_acl_helper_8java_source.html#l00025">25</a> of file <a class="el" href="_file_acl_helper_8java_source.html">FileAclHelper.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00050">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00053">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
 
 </div>
 </div>
@@ -899,7 +898,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_file_acl_helper_8java_source.html#l00024">24</a> of file <a class="el" href="_file_acl_helper_8java_source.html">FileAclHelper.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00050">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00053">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>.</p>
 
 </div>
 </div>
@@ -925,7 +924,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_file_acl_helper_8java_source.html#l00023">23</a> of file <a class="el" href="_file_acl_helper_8java_source.html">FileAclHelper.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00050">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00053">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
 
 </div>
 </div>
@@ -951,7 +950,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_file_acl_helper_8java_source.html#l00022">22</a> of file <a class="el" href="_file_acl_helper_8java_source.html">FileAclHelper.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00050">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00053">dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
 
 </div>
 </div>
@@ -964,7 +963,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>dev</b></li><li class="navelem"><b>filechampion</b></li><li class="navelem"><a class="el" href="namespacedev_1_1filechampion_1_1filechampion4j.html">filechampion4j</a></li><li class="navelem"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html">FileAclHelper</a></li>
-    <li class="footer">Generated on Sat Apr 22 2023 16:48:17 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Sat Apr 22 2023 20:00:05 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>
