@@ -59,6 +59,7 @@ jobs:
           git config --global user.name "povimd9"
           git config --global user.email "povimd9@users.noreply.github.com"
           git checkout -b "preview-$PREVIEW_VERSION"
+          git add docs/
           git add target/dependency-list.txt
           git add target/filechampion4j.jar
           git add target/filechampion4j-jar-with-dependencies.jar
