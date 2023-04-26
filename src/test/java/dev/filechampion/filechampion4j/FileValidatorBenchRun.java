@@ -21,7 +21,7 @@ import org.junit.platform.engine.discovery.ClassNameFilter;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 
 
-class FileValidatorBenchTest {
+class FileValidatorBenchRun {
     private static final String benchOutputFile = "benchmarks/benchResults.txt";
     private static final String PACKAGE_NAME = "dev.filechampion.filechampion4j";
     private static final String CLASS_NAME_PATTERN = ".*Bench";
