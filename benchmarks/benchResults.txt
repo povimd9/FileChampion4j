@@ -1,0 +1,42 @@
+--------------- 2023-04-25T22:48:44.687 ---------------
+Magic Throughput Bench, 432.942542 ci
+Magic Average Time Bench, 0.001885 ms
+Magic Sample Bench, 0.001865 ms
+Magic Single Shot Bench, 0.002258 ms
+Mime Throughput Bench, 100.035119 ci
+Mime Average Time Bench, 0.009499 ms
+Mime Sample Bench, 0.009688 ms
+Mime Single Shot Bench, 0.009836 ms
+Sig Throughput Bench, 532.444771 ci
+Sig Average Time Bench, 0.001979 ms
+Sig Sample Bench, 0.001827 ms
+Sig Single Shot Bench, 0.002267 ms
+-------------------------------------------------------
+--------------- 2023-04-25T23:01:00.331 ---------------
+Magic Throughput Bench, 425.713794 ci
+Magic Average Time Bench, 0.002569 ms
+Magic Sample Bench, 0.002391 ms
+Magic Single Shot Bench, 0.002365 ms
+Mime Throughput Bench, 78.515505 ci
+Mime Average Time Bench, 0.013261 ms
+Mime Sample Bench, 0.012100 ms
+Mime Single Shot Bench, 0.011985 ms
+Sig Throughput Bench, 407.957155 ci
+Sig Average Time Bench, 0.002274 ms
+Sig Sample Bench, 0.002431 ms
+Sig Single Shot Bench, 0.002365 ms
+-------------------------------------------------------
+--------------- 2023-04-25T23:10:59.366 ---------------
+Magic Throughput Bench, 427.942245 ci
+Magic Average Time Bench, 0.002422 ms
+Magic Sample Bench, 0.002365 ms
+Magic Single Shot Bench, 0.002254 ms
+Mime Throughput Bench, 105.971825 ci
+Mime Average Time Bench, 0.009859 ms
+Mime Sample Bench, 0.009864 ms
+Mime Single Shot Bench, 0.010278 ms
+Sig Throughput Bench, 444.666840 ci
+Sig Average Time Bench, 0.002232 ms
+Sig Sample Bench, 0.002124 ms
+Sig Single Shot Bench, 0.002286 ms
+-------------------------------------------------------
