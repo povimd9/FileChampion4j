@@ -22,15 +22,16 @@ import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.EnumSet;
 import java.util.Set;
 
-
+/**
+ * Unit tests for FileAclHelper
+ */
 public class FileAclHelperTest {
-
     private Path tempFilePath;
     private String sharedMessages = "Expected error message to start with '";
 
+    // Create a temporary file
     @BeforeEach
     void setUp() throws Exception {
-        // Create a temporary file
         tempFilePath = Files.createTempFile("test-file", ".txt");
 
     }
@@ -174,6 +175,4 @@ public class FileAclHelperTest {
         UserPrincipal actualOwner = Files.getOwner(path);
         return expectedOwner.equals(actualOwner);
     }
-
-
 }

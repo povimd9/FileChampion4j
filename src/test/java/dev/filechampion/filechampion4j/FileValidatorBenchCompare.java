@@ -11,10 +11,16 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * Unit test for FileValidator class.
+ */
 public class FileValidatorBenchCompare {
     private static final double MAX_DIFFERENCE_FROM_PREV = 5;
     private static final String benchOutputFile = "benchmarks/benchResults.txt";
     
+    /**
+     * Check if the last result in the benchResults.txt file is not worse than the previous results by more than MAX_DIFFERENCE_FROM_PREV
+     */
     @Test
     void checkPreviousBenchResults() {
         String[] resultsBlocs = new String[2];
@@ -55,6 +61,7 @@ public class FileValidatorBenchCompare {
         }
     }
 
+    // Load the results from the benchResults.txt file into a HashMap
     private static HashMap<String, Double> loadMap(String[] resultslines) {
         HashMap<String, Double> previousResults = new HashMap<>();
         for (String line : resultslines) {
@@ -67,11 +74,10 @@ public class FileValidatorBenchCompare {
         return previousResults;
     }
 
+    // Compare the current result with the previous result and return a string with the result
     private static String compareResultLines (String testName, double currentResult, double previousResult, boolean higherIsBetter) {
-
         double maxPercentDiff = previousResult / 100 * MAX_DIFFERENCE_FROM_PREV;
         double diff = currentResult - previousResult;
-        
         if (higherIsBetter) {
             if (currentResult < previousResult) {
                 if (diff*-1 > maxPercentDiff) {

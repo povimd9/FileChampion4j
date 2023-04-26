@@ -21,11 +21,20 @@ import org.junit.platform.engine.discovery.ClassNameFilter;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 
 
+/**
+ * Execute all benchmarks in the package dev.filechampion.filechampion4j
+ */
 class FileValidatorBenchRun {
     private static final String benchOutputFile = "benchmarks/benchResults.txt";
     private static final String PACKAGE_NAME = "dev.filechampion.filechampion4j";
     private static final String CLASS_NAME_PATTERN = ".*Bench";
 
+    /**
+     * Create a new file for the results of the benchmarks if it does not exist
+     * Add a header and footer to the file
+     * Execute all benchmarks in the package dev.filechampion.filechampion4j
+     * Fail if any test fails
+     */
     @Test
     void benchFileChampion() {
         String beforeContentToAppend = "--------------- " + java.time.LocalDateTime.now() + " ---------------"+ System.lineSeparator();

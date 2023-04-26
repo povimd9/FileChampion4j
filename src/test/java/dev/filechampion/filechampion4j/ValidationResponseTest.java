@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class ValidationResponseTest {
 
+    // Test the constructor and getters
     @Test
     void testValidationResponse() {
         boolean isValid = true;

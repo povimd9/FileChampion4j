@@ -34,7 +34,9 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * Benchmark test for 'validateFile' method in 'FileValidator' class.
+ */
 @Warmup(iterations = 10, time = 10, timeUnit =  TimeUnit.MILLISECONDS)
 @Measurement(iterations = 5, time = 40, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
@@ -147,8 +149,8 @@ public class FileValidatorMagicBench {
         }
     }*/
     
+    // Benchmark test for 'validateFile' method with only magic bytes validation
     @Benchmark
-    // Test valid inputs including valid pdf file without storage
     public void benchValidMagic() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName);
     }

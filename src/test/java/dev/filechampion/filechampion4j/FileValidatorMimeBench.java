@@ -35,6 +35,9 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 
 
+/**
+ * Benchmark test for 'validateFile' method in 'FileValidator' class.
+ */
 @Warmup(iterations = 10, time = 10, timeUnit =  TimeUnit.MILLISECONDS)
 @Measurement(iterations = 5, time = 40, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
@@ -146,8 +149,8 @@ public class FileValidatorMimeBench {
         }
     }*/
     
+    // Benchmark test for 'validateFile' method with only mime validation
     @Benchmark
-    // Test valid inputs including valid pdf file without storage
     public void benchValidMime() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName);
     }

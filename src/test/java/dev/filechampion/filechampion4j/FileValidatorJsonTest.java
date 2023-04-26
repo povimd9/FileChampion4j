@@ -9,10 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AbstractThrowableAssert;
-
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -22,10 +18,8 @@ import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
-import java.util.logging.ConsoleHandler;
+
 import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
@@ -33,7 +27,9 @@ import java.util.logging.StreamHandler;
 
 
 
-
+/**
+ * Test FileValidator class.
+ */
 public class FileValidatorJsonTest {
     private static final String testUsername = System.getProperty("user.name");
     private static final String testPluginSuccessCommand = System.getProperty("os.name").startsWith("Windows")?
@@ -118,7 +114,7 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
-    // Config JSON object for testing header signatures
+    // Config JSON object for testing footer signatures
     private static final JSONObject CONFIG_JSON_FOOTER = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -190,7 +186,7 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
-    // Config JSON object for testing only basic parameters
+    // Config JSON object for testing only basic parameters with size as string
     private static final JSONObject CONFIG_JSON_BASIC = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -210,7 +206,7 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
-    // Config JSON object for testing only basic parameters
+    // Config JSON object for testing only basic parameters with size as integer
     private static final JSONObject CONFIG_JSON_INT_SIZE = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -514,6 +510,7 @@ public class FileValidatorJsonTest {
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
 
+    // Test encode set to false in json config
     @Test
     void testJsonEncodeFalse() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
@@ -533,7 +530,7 @@ public class FileValidatorJsonTest {
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
 
-    // Test only basic parameters in json config
+    // Test only basic parameters in json config with size as string
     @Test
     void testBasicConfig() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
@@ -543,6 +540,7 @@ public class FileValidatorJsonTest {
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
 
+    // Test only basic parameters in json config with size as integer
     @Test
     void testIntSizeValue() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
@@ -617,17 +615,14 @@ public class FileValidatorJsonTest {
         if (sizeInBytes <= 0) {
             throw new IllegalArgumentException("Size in Bytes must be a positive value.");
         }
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4);
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         writer.setFullCompression();
         writer.setCompressionLevel(0);
         document.open();
-    
         String content = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         int contentLength = content.getBytes().length;
-    
         while (baos.size() < sizeInBytes) {
             int iterations = (sizeInBytes - baos.size()) / contentLength;
             for (int i = 0; i < iterations; i++) {
@@ -635,11 +630,8 @@ public class FileValidatorJsonTest {
             }
             writer.flush();
         }
-    
         document.close();
         writer.close();
-    
         return baos.toByteArray();
     }
-
 }
