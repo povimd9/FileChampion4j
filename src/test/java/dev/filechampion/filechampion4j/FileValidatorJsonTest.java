@@ -19,9 +19,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 
 
 
+
+/**
+ * Test FileValidator class.
+ */
 public class FileValidatorJsonTest {
     private static final String testUsername = System.getProperty("user.name");
     private static final String testPluginSuccessCommand = System.getProperty("os.name").startsWith("Windows")?
@@ -106,7 +114,7 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
-    // Config JSON object for testing header signatures
+    // Config JSON object for testing footer signatures
     private static final JSONObject CONFIG_JSON_FOOTER = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -178,7 +186,7 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
-    // Config JSON object for testing only basic parameters
+    // Config JSON object for testing only basic parameters with size as string
     private static final JSONObject CONFIG_JSON_BASIC = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -198,7 +206,7 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
-    // Config JSON object for testing only basic parameters
+    // Config JSON object for testing only basic parameters with size as integer
     private static final JSONObject CONFIG_JSON_INT_SIZE = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -502,6 +510,7 @@ public class FileValidatorJsonTest {
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
 
+    // Test encode set to false in json config
     @Test
     void testJsonEncodeFalse() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
@@ -521,7 +530,7 @@ public class FileValidatorJsonTest {
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
 
-    // Test only basic parameters in json config
+    // Test only basic parameters in json config with size as string
     @Test
     void testBasicConfig() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
@@ -531,6 +540,7 @@ public class FileValidatorJsonTest {
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
 
+    // Test only basic parameters in json config with size as integer
     @Test
     void testIntSizeValue() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
@@ -546,8 +556,17 @@ public class FileValidatorJsonTest {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
         FileValidator validator = new FileValidator(CONFIG_JSON_NOMIME);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Logger logger = Logger.getLogger(FileValidator.class.getName());
+        logger.setLevel(Level.ALL);
+        StreamHandler handler = new StreamHandler(outputStream, new SimpleFormatter());
+        logger.addHandler(handler);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
-        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
+        handler.flush(); 
+        String loggerOutput = outputStream.toString();
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertTrue(loggerOutput.contains("Mime type check passed, mime type: null"), "Expected validation response to contain 'Mime type check passed, mime type: null'.");
+        logger.removeHandler(handler);
     }
 
     // Test no magic bytes in json config
@@ -556,8 +575,17 @@ public class FileValidatorJsonTest {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
         FileValidator validator = new FileValidator(CONFIG_JSON_NOMAGIC);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Logger logger = Logger.getLogger(FileValidator.class.getName());
+        logger.setLevel(Level.ALL);
+        StreamHandler handler = new StreamHandler(outputStream, new SimpleFormatter());
+        logger.addHandler(handler);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
-        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
+        handler.flush(); 
+        String loggerOutput = outputStream.toString();
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertTrue(loggerOutput.contains("Magic bytes check passed, magic bytes: null"), "Expected validation response to contain 'Mime type check passed, mime type: null'.");
+        logger.removeHandler(handler);
     }
 
     // Test no header and footer signatures in json config
@@ -587,17 +615,14 @@ public class FileValidatorJsonTest {
         if (sizeInBytes <= 0) {
             throw new IllegalArgumentException("Size in Bytes must be a positive value.");
         }
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4);
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         writer.setFullCompression();
         writer.setCompressionLevel(0);
         document.open();
-    
         String content = UUID.randomUUID().toString() + UUID.randomUUID().toString();
         int contentLength = content.getBytes().length;
-    
         while (baos.size() < sizeInBytes) {
             int iterations = (sizeInBytes - baos.size()) / contentLength;
             for (int i = 0; i < iterations; i++) {
@@ -605,11 +630,8 @@ public class FileValidatorJsonTest {
             }
             writer.flush();
         }
-    
         document.close();
         writer.close();
-    
         return baos.toByteArray();
     }
-
 }

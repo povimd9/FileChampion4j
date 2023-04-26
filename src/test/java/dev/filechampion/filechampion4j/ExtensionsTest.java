@@ -8,9 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Unit test for Extensions class.
  */
+public class ExtensionsTest {
 
- public class ExtensionsTest {
-
+    /**
+     * Test the constructor and getValidationValue method.
+     */
     @Test
     public void testConstructor() {
         JSONObject jsonObject = new JSONObject();
@@ -24,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         assertEquals("25504446", extensions.getValidationValue("Documents", "pdf", "magic_bytes"), "expected magic_bytes value");
     }
 
+    /**
+     * Test the constructor with invalid arguments.
+     */
     @Test
     public void testInvalidConstructor() {
         JSONObject jsonObject = new JSONObject();
@@ -40,6 +45,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
                     .put("illegal_key", "application/pdf")))), "expected IllegalArgumentException for undefined key");
     }
 
+    /**
+     * Test the getValidationValue method with invalid arguments.
+     */
     @Test
     public void testGetValidationValue() {
         JSONObject jsonObject = new JSONObject();

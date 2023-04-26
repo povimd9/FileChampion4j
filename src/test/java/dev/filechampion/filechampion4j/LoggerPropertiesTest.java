@@ -6,7 +6,7 @@ import java.util.logging.LogManager;
 import org.junit.jupiter.api.Test;
 
 
-public class CliPluginHelperTest {
+public class LoggerPropertiesTest {
     // Test logger IOException
     @Test
     void testIOException() {
