@@ -117,10 +117,10 @@ public class FileValidatorMimeBench {
         }
     }
 
-    private ByteArrayOutputStream outputStream;
-    private StreamHandler handler;
+    //private ByteArrayOutputStream outputStream;
+    //private StreamHandler handler;
     @Setup(org.openjdk.jmh.annotations.Level.Iteration)
-    public void setUp(BenchmarkParams params) throws IOException {
+    public void benchSetUp() throws IOException {
         /*outputStream = new ByteArrayOutputStream();
         Logger logger = Logger.getLogger(FileValidator.class.getName());
         logger.setLevel(java.util.logging.Level.SEVERE);
