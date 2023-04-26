@@ -249,7 +249,7 @@ public class FileValidator {
 
         // Check that the mime type is allowed
         String mimeType = (String) extensions.getValidationValue(fileCategory, fileExtension, "mime_type");
-        if (!checkMimeType(originalFile, fileExtension, mimeType)) {
+        if (!isBlank(mimeType) && !checkMimeType(originalFile, fileExtension, mimeType)) {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid mime_type")
                 .append(commonLogString);
@@ -264,8 +264,8 @@ public class FileValidator {
         }
 
         // Check that the file contains the magic bytes
-        String magicBytes = extensions.getValidationValue(fileCategory, fileExtension, "magic_bytes") != null ? (String) extensions.getValidationValue(fileCategory, fileExtension, "magic_bytes") : "";
-        if (magicBytes.isEmpty() || !containsMagicBytes(originalFile, magicBytes)) {
+        String magicBytes = (String) extensions.getValidationValue(fileCategory, fileExtension, "magic_bytes");
+        if (!isBlank(magicBytes) && !containsMagicBytes(originalFile, magicBytes)) {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid magic_bytes")
                 .append(commonLogString);
@@ -281,7 +281,7 @@ public class FileValidator {
 
         // Check header signatures (optional)
         String headerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, "header_signatures");
-        if (headerSignatures != null && !containsHeaderSignatures(originalFile, headerSignatures)) {
+        if (!isBlank(headerSignatures) && !containsHeaderSignatures(originalFile, headerSignatures)) {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid header_signatures")
                 .append(commonLogString);
@@ -297,7 +297,7 @@ public class FileValidator {
 
         // Check footer signatures (optional)
         String footerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, "footer_signatures");
-        if (footerSignatures != null && !containsFooterSignatures(originalFile, footerSignatures)) {
+        if (!isBlank(footerSignatures) && !containsFooterSignatures(originalFile, footerSignatures)) {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid footer_signatures")
                 .append(commonLogString);
@@ -361,7 +361,7 @@ public class FileValidator {
 
         // Check if the file should be saved to output directory
         String savedFilePath;
-        if (!outDir.isEmpty()) {
+        if (!isBlank(outDir)) {
             savedFilePath = saveFileToOutputDir(fileCategory, fileExtension, outDir, targetFileName, originalFile);
             if (savedFilePath.contains("Error:")) {
                 // Return valid file response if file failed to save to output directory
