@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 
-public class FileValidatorBenchCompareTest {
+public class FileValidatorBenchCompare {
     private static final double MAX_DIFFERENCE_FROM_PREV = 5;
     private static final String benchOutputFile = "benchmarks/benchResults.txt";
     
