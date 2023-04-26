@@ -204,10 +204,11 @@ public class FileValidator {
 
     /**
      * If file category was found in the config, this method is used to validate the file
+     * @param fileCategory (String) a string containing the file type category to validate the file against
      * @param originalFilenameClean (String) a string containing the cleaned file name
      * @param fileExtension (String) a string containing the file extension
-     * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
      * @param originalFile (byte[]) a byte array containing the file bytes of the file to be validated
+     * @param fileChecksum (String) a string containing the checksum of the file to be validated
      * @param outDir (String) a string containing the path to the output directory for validated files
      * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
      */
@@ -388,7 +389,7 @@ public class FileValidator {
 
     /**
      * Execute and check results of plugins configured to run before the validations
-     * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
+     * @param fileCategory (String) the file category of the file being validated
      * @param fileExtension (String) the file extension of the file being validated
      * @return String (String) a string containing the results of the plugin execution
      */
@@ -439,7 +440,7 @@ public class FileValidator {
 
     /**
      * Execute and check results of plugins configured to run after the validations
-     * @param extensionConfig (Extension) an Extension object containing the configuration for the file type category and extension
+     * @param fileCategory (String) the file category of the file being validated
      * @param fileExtension (String) the file extension of the file being validated
      * @return String (String) a string containing the results of the plugin execution
      */
