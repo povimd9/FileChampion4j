@@ -9,6 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.AbstractThrowableAssert;
+
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -18,6 +22,14 @@ import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
+
 
 
 
@@ -546,8 +558,17 @@ public class FileValidatorJsonTest {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
         FileValidator validator = new FileValidator(CONFIG_JSON_NOMIME);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Logger logger = Logger.getLogger(FileValidator.class.getName());
+        logger.setLevel(Level.ALL);
+        StreamHandler handler = new StreamHandler(outputStream, new SimpleFormatter());
+        logger.addHandler(handler);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
-        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
+        handler.flush(); 
+        String loggerOutput = outputStream.toString();
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertTrue(loggerOutput.contains("Mime type check passed, mime type: null"), "Expected validation response to contain 'Mime type check passed, mime type: null'.");
+        logger.removeHandler(handler);
     }
 
     // Test no magic bytes in json config
@@ -556,8 +577,17 @@ public class FileValidatorJsonTest {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
         FileValidator validator = new FileValidator(CONFIG_JSON_NOMAGIC);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Logger logger = Logger.getLogger(FileValidator.class.getName());
+        logger.setLevel(Level.ALL);
+        StreamHandler handler = new StreamHandler(outputStream, new SimpleFormatter());
+        logger.addHandler(handler);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
-        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
+        handler.flush(); 
+        String loggerOutput = outputStream.toString();
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertTrue(loggerOutput.contains("Magic bytes check passed, magic bytes: null"), "Expected validation response to contain 'Mime type check passed, mime type: null'.");
+        logger.removeHandler(handler);
     }
 
     // Test no header and footer signatures in json config
