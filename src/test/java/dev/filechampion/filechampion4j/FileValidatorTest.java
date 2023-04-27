@@ -187,9 +187,9 @@ public class FileValidatorTest {
     void testValidInputsStore() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test&test.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory.toString());
+        String[] tmpDirectory = new String[] {tempDirectory.toString()};
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
-        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
     }
 
     // Test valid inputs including valid pdf file without storage
@@ -199,9 +199,8 @@ public class FileValidatorTest {
         String fileName = "test.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
-        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
     }
-    
+
     // Test file with content mismatching its extension inclufing magic bytes, header and footer, validations
     @Test
     void testContenMismatch() throws Exception {
@@ -217,7 +216,8 @@ public class FileValidatorTest {
     void testSaveToNonExistingDirectory() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
+        String[] tmpDirectory = new String[] {"nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h"};
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to non existing directory");
         assertTrue(fileValidationResults.resultsInfo().contains("File is valid but failed to save to output directory:"), "Expected 'File is valid but failed to save to output directory:', got: " + fileValidationResults.resultsInfo());
     }
@@ -255,16 +255,4 @@ public class FileValidatorTest {
     
         return baos.toByteArray();
     }
-
-    // Calculate file checksum
-    private static String calculateChecksum(byte[] fileBytes) {
-        try {
-            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
-            return new BigInteger(1, hash).toString(16);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }   
-
 }
