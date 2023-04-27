@@ -60,13 +60,13 @@ public class FileValidator {
         }
     }
 
-    private final JSONObject configJsonObject;
+    private JSONObject configJsonObject;
     private PluginsHelper pluginsHelper;
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();
     private Map<String, StepConfig> stepConfigsAfter = new HashMap<>();
     private Extensions extensions;
     private StringBuilder sharedMessage = new StringBuilder();
-    private static final String SHARED_STEP_MESSAGE = "Step: ";
+    private String sharedStepMessage = "Step: ";
 
 
 
@@ -126,7 +126,7 @@ public class FileValidator {
     private void checkPluginsExist(JSONObject validationsJsonObject, String categroyKey, String extensionKey){
         for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
             if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
-                sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE).append(pluginName).append(" defined in config does not exist in plugins configuration");
+                sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(pluginName).append(" defined in config does not exist in plugins configuration");
                 logWarn(sharedMessage.toString());
                 throw new IllegalArgumentException(sharedMessage.toString());
             }
@@ -561,7 +561,7 @@ public class FileValidator {
             for (String step : stepConfigsBefore.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);
-                    sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE)
+                    sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage)
                         .append(stepConfigsBefore.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
                     if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
@@ -611,7 +611,7 @@ public class FileValidator {
             for (String step : stepConfigsAfter.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);
-                    sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE)
+                    sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage)
                         .append(stepConfigsAfter.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
                     if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
@@ -654,7 +654,7 @@ public class FileValidator {
     private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String fileExtension) {
         Map<String, String> stepResultsMap = new HashMap<>();
         String extensionPluginName = stepConfigs.get(extensionPlugin).getName();
-        sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE).append(extensionPluginName);
+        sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(extensionPluginName);
         logFine(sharedMessage.toString());
         
         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
@@ -696,7 +696,7 @@ public class FileValidator {
             for(Map.Entry<String, String> entry : stepResultsMap.entrySet()) {
                 String errorMsg =  entry.getValue();
                 String errorDetails = entry.getKey();
-                sharedMessage.replace(0, sharedMessage.length(), SHARED_STEP_MESSAGE).append(extensionPluginName)
+                sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(extensionPluginName)
                     .append(" Success, Results: ")
                     .append(errorDetails)
                     .append("\"")
@@ -712,7 +712,7 @@ public class FileValidator {
 
     
     // String.isBlank() is only available in Java 11
-    public static boolean isBlank(String str) {
+    private boolean isBlank(String str) {
         return str == null || str.trim().isEmpty();
     }
     
@@ -854,7 +854,7 @@ public class FileValidator {
     }
 
     // Calculate file checksum
-    private static String calculateChecksum(byte[] fileBytes) {
+    private String calculateChecksum(byte[] fileBytes) {
         try {
             byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
             return new BigInteger(1, hash).toString(16);
