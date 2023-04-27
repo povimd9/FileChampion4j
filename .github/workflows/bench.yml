@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - feature-*
+      - Feature-*
 
 jobs:
   compare_results:
