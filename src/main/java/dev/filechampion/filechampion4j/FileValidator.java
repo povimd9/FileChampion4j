@@ -157,7 +157,7 @@ public class FileValidator {
     private byte[] originalFile;
     private String fileChecksum;
     private String mimeString;
-    private String outDir;
+    private Path outDir;
     private String fileExtension;
     private String commonFileError = "Error reading file: ";
 
@@ -166,34 +166,33 @@ public class FileValidator {
      * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
      * @param originalFile (byte[]) - The file to be validated as a byte array.
      * @param fileName (String) - The original name of the file to be validated.
-     * @param outputDir (String) - The directory to save the file to if it passes validations.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
      * @return (ValidationResponse) - The results of the validations.
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
-    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String... outputDir) {
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir) {
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
-        this.outDir = outputDir.length > 0 ? outputDir[0] : "";
+        this.outDir = outputDir;
         return validateFileMain();
     }
-
 
     /**
      * This method is used to validate the file in target path, save the file to the output directory if passed validations, and return the results.
      * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
-     * @param filePath (String) - The target file path to be validated as a String.
+     * @param filePath (Path) - The target file path to be validated as a String.
      * @param fileName (String) - The original name of the file to be validated.
-     * @param outputDir (String) - The directory to save the file to if it passes validations.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
      * @return (ValidationResponse) - The results of the validations.
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
-    public ValidationResponse validateFile(String fileCategory, String filePath, String fileName, String outputDir) {
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir) {
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.outDir = outputDir;
         try {
-            Path path = Paths.get(filePath);
+            Path path = filePath;
             originalFile = Files.readAllBytes(path);
         } catch (IOException e) {
             logWarn(commonFileError + e.getMessage());
@@ -201,7 +200,6 @@ public class FileValidator {
         }
         return validateFileMain();
     }
-
 
     /**
      * This method is used to validate the file as file bytes, and return the results.
@@ -221,16 +219,16 @@ public class FileValidator {
     /**
      * This method is used to validate the file in target path, and return the results.
      * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
-     * @param filePath (String) - The target file path to be validated as a String.
+     * @param filePath (Path) - The target file path to be validated as a String.
      * @param fileName (String) - The original name of the file to be validated.
      * @return (ValidationResponse) - The results of the validations.
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
-    public ValidationResponse validateFile(String fileCategory, String filePath, String fileName) {
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName) {
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         try {
-            Path path = Paths.get(filePath);
+            Path path = filePath;
             originalFile = Files.readAllBytes(path);
         } catch (IOException e) {
             logWarn(commonFileError + e.getMessage());
@@ -262,11 +260,11 @@ public class FileValidator {
      * @param originalFile (byte[]) - The file to be validated as a byte array.
      * @param fileName (String) - The original name of the file to be validated.
      * @param mimeString (String) - The mime type of the file to be validated.
-     * @param outputDir (String) - The directory to save the file to if it passes validations.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
      * @return (ValidationResponse) - The results of the validations.
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
-    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String mimeString, String outputDir) {
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir,  String mimeString) {
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
@@ -468,7 +466,7 @@ public class FileValidator {
 
         // Check if the file should be saved to output directory
         String savedFilePath;
-        if (!isBlank(outDir)) {
+        if (outDir != null && !isBlank(outDir.toString())) {
             savedFilePath = saveFileToOutputDir(fileCategory, fileExtension, outDir, targetFileName, originalFile);
             if (savedFilePath.contains("Error:")) {
                 // Return valid file response if file failed to save to output directory
@@ -815,8 +813,8 @@ public class FileValidator {
     }
 
     // save the file to the output directory with appropriate owner and permissions
-    private String saveFileToOutputDir(String fileCategory, String fileExtension, String outDir, String fileName, byte[] fileBytes) {
-        Path targetFilePath = Paths.get(outDir, fileName);
+    private String saveFileToOutputDir(String fileCategory, String fileExtension, Path outDir, String fileName, byte[] fileBytes) {
+        Path targetFilePath = Paths.get(outDir.toString(), fileName);
         try {
             Files.write(targetFilePath, fileBytes, StandardOpenOption.CREATE);
         } catch (IOException e) {

@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.UUID;
 import java.util.logging.LogManager;
@@ -187,8 +188,7 @@ public class FileValidatorTest {
     void testValidInputsStore() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test&test.pdf";
-        String[] tmpDirectory = new String[] {tempDirectory.toString()};
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempDirectory);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
     }
 
@@ -216,7 +216,7 @@ public class FileValidatorTest {
     void testSaveToNonExistingDirectory() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        String[] tmpDirectory = new String[] {"nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h"};
+        Path tmpDirectory = Paths.get("nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to non existing directory");
         assertTrue(fileValidationResults.resultsInfo().contains("File is valid but failed to save to output directory:"), "Expected 'File is valid but failed to save to output directory:', got: " + fileValidationResults.resultsInfo());
