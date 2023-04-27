@@ -65,8 +65,6 @@ public class FileValidator {
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();
     private Map<String, StepConfig> stepConfigsAfter = new HashMap<>();
     private Extensions extensions;
-    private byte[] originalFile;
-    private String fileChecksum;
     private StringBuilder sharedMessage = new StringBuilder();
     private static final String SHARED_STEP_MESSAGE = "Step: ";
 
@@ -152,30 +150,140 @@ public class FileValidator {
             throw new IllegalArgumentException("originalFile cannot be null or empty.");
         }
         this.originalFile = originalFile;
-        this.fileChecksum = "";
     }
     
+    private String fileCategory;
+    private String fileName;
+    private byte[] originalFile;
+    private String fileChecksum;
+    private String mimeString;
+    private String outDir;
+    private String fileExtension;
+    private String commonFileError = "Error reading file: ";
+
     /**
-     * This method is the main entry point for validating files, initializing the validation process and variables
-     * @param fileCategory (String) a string containing the file type category to validate the file against
-     * @param originalFile (byte[]) a byte array containing the file bytes of the file to be validated
-     * @param fileName (String) a string containing the name of the file to be validated
-     * @param outputDir (String) an optional string containing path to the output directory for validated files [optional]
-     * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
-     * @throws IllegalArgumentException (IllegalArgumentException) if any of the input parameters are null or empty
+     * This method is used to validate the file as file bytes, save the file to the output directory if passed validations, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (String) - The directory to save the file to if it passes validations.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
-    public ValidationResponse validateFile(String fileCategory, byte[] originalFile,
-            String fileName, String... outputDir) {
-        // Get the output directory if provided
-        String outDir = outputDir.length > 0 ? outputDir[0] : "";
-        
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String... outputDir) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.originalFile = originalFile;
+        this.outDir = outputDir.length > 0 ? outputDir[0] : "";
+        return validateFileMain();
+    }
+
+
+    /**
+     * This method is used to validate the file in target path, save the file to the output directory if passed validations, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (String) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (String) - The directory to save the file to if it passes validations.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, String filePath, String fileName, String outputDir) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.outDir = outputDir;
+        try {
+            Path path = Paths.get(filePath);
+            originalFile = Files.readAllBytes(path);
+        } catch (IOException e) {
+            logWarn(commonFileError + e.getMessage());
+            throw new IllegalArgumentException(commonFileError + e.getMessage());
+        }
+        return validateFileMain();
+    }
+
+
+    /**
+     * This method is used to validate the file as file bytes, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile,String fileName) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.originalFile = originalFile;
+        return validateFileMain();
+    }
+
+    /**
+     * This method is used to validate the file in target path, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (String) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, String filePath, String fileName) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        try {
+            Path path = Paths.get(filePath);
+            originalFile = Files.readAllBytes(path);
+        } catch (IOException e) {
+            logWarn(commonFileError + e.getMessage());
+            throw new IllegalArgumentException(commonFileError + e.getMessage());
+        }
+        return validateFileMain();
+    }
+
+    /**
+     * This method is used to validate the file as file bytes, with existing mime type, typically present in web related file uploads.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String mimeString) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.originalFile = originalFile;
+        this.mimeString = mimeString;
+        return validateFileMain();
+    }
+
+    /**
+     * This method is used to validate the file with existing mime type, typically present in web related file uploads, and save the file to the output directory if passed validations.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @param outputDir (String) - The directory to save the file to if it passes validations.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String mimeString, String outputDir) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.originalFile = originalFile;
+        this.mimeString = mimeString;
+        this.outDir = outputDir;
+        return validateFileMain();
+    }
+
+    // This method is used to start the validation process
+    private ValidationResponse validateFileMain() {
         // Check that the input parameters are not null or empty
         checkMethodInputs(fileCategory, originalFile, fileName);
 
         // Initialize variables
-        String fileExtension = getFileExtension(fileName);
+        fileExtension = getFileExtension(fileName);
         String originalFilenameClean = fileName.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}.]", "_");
-        fileChecksum = calculateChecksum(originalFile);
+        fileChecksum = isBlank(fileChecksum)? calculateChecksum(originalFile) : fileChecksum;
 
         // Log the file type category being validated
         sharedMessage.replace(0, sharedMessage.length(), "Validating ").append(originalFilenameClean).append(", as file type: ").append(fileCategory);
@@ -199,7 +307,7 @@ public class FileValidator {
             logInfo(sharedMessage.toString());
         }
         
-        return (doValidations(fileCategory, originalFilenameClean, fileExtension, originalFile, fileChecksum, outDir));
+        return (doValidations(originalFilenameClean));
     }
 
     /**
@@ -212,7 +320,7 @@ public class FileValidator {
      * @param outDir (String) a string containing the path to the output directory for validated files
      * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
      */
-    private ValidationResponse doValidations(String fileCategory, String originalFilenameClean, String fileExtension, byte[] originalFile, String fileChecksum, String outDir) {
+    private ValidationResponse doValidations(String originalFilenameClean) {
         String commonLogString = String.format(" for file extension: %s", fileExtension);
         String responseAggregationFail = "";
         int responseMsgCountFail = 0;
@@ -314,7 +422,6 @@ public class FileValidator {
 
         
         // Check for after plugins
-
         if (extensions.getValidationValue(fileCategory, fileExtension, "extension_plugins") != null) {
             String executionResults = executeAfterPlugins(fileCategory, fileExtension);
             if (executionResults.contains(". Failed for step:")) {
@@ -357,7 +464,6 @@ public class FileValidator {
             String encodingStatus = String.format("File name: '%s' has been successfully encoded to: '%s'", originalFilenameClean, encodedFileName);
             logInfo(encodingStatus);
         }
-        
         String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;
 
         // Check if the file should be saved to output directory
@@ -598,16 +704,18 @@ public class FileValidator {
 
     // Get the file mime type from the file bytes and checks if it matches allowed mime types
     private boolean checkMimeType(byte[] originalFileBytes, String fileExtension, String mimeType) {
-        String fileMimeType = "";
-        Path tempFile = saveFileToTempDir(fileExtension, originalFileBytes);
-        if (tempFile == null) {
-            return false;
-        }
-        try {
-            fileMimeType = Files.probeContentType(tempFile);
-            deleteTempDir(tempFile);
-        } catch (Exception e) {
-            logWarn("checkMimeType failed: " + e.getMessage());
+        String fileMimeType = isBlank(mimeString) ? "" : mimeString;
+        if (isBlank(fileMimeType)) {
+            Path tempFile = saveFileToTempDir(fileExtension, originalFileBytes);
+            if (tempFile == null) {
+                return false;
+            }
+            try {
+                fileMimeType = Files.probeContentType(tempFile);
+                deleteTempDir(tempFile);
+            } catch (Exception e) {
+                logWarn("checkMimeType failed: " + e.getMessage());
+            }
         }
         return fileMimeType != null && !isBlank(fileMimeType) && fileMimeType.equals(mimeType);
     }
@@ -704,7 +812,7 @@ public class FileValidator {
             e.printStackTrace();
             return null;
         }
-    }   
+    }
 
     // save the file to the output directory with appropriate owner and permissions
     private String saveFileToOutputDir(String fileCategory, String fileExtension, String outDir, String fileName, byte[] fileBytes) {
