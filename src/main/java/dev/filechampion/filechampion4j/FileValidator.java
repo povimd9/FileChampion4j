@@ -25,7 +25,7 @@ import java.security.MessageDigest;
  * @author filechampion
  * @version 0.9.8.2
  * @see <a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a>
- * TODO: add extension config loading at init
+ * TODO: update javadocs and wiki
  */
 public class FileValidator {
     static {
