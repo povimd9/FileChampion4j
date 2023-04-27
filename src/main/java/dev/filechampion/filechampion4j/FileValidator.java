@@ -255,12 +255,13 @@ public class FileValidator {
     }
 
     /**
-     * This method is used to validate the file with existing mime type, typically present in web related file uploads, and save the file to the output directory if passed validations.
+     * This method is used to validate the file bytes with existing mime type, typically present in web related file uploads, 
+     * and save the file to the output directory if passed validations.
      * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
      * @param originalFile (byte[]) - The file to be validated as a byte array.
      * @param fileName (String) - The original name of the file to be validated.
-     * @param mimeString (String) - The mime type of the file to be validated.
      * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @param mimeString (String) - The mime type of the file to be validated.
      * @return (ValidationResponse) - The results of the validations.
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
@@ -272,6 +273,57 @@ public class FileValidator {
         this.outDir = outputDir;
         return validateFileMain();
     }
+
+    /**
+     * This method is used to validate the file path with existing mime type, typically present in web related file uploads, 
+     * and save the file to the output directory if passed validations.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir,  String mimeString) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.mimeString = mimeString;
+        this.outDir = outputDir;
+        try {
+            Path path = filePath;
+            originalFile = Files.readAllBytes(path);
+        } catch (IOException e) {
+            logWarn(commonFileError + e.getMessage());
+            throw new IllegalArgumentException(commonFileError + e.getMessage());
+        }
+        return validateFileMain();
+    }
+
+    /**
+     * This method is used to validate the file path with existing mime type, typically present in web related file uploads.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName,  String mimeString) {
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.mimeString = mimeString;
+        try {
+            Path path = filePath;
+            originalFile = Files.readAllBytes(path);
+        } catch (IOException e) {
+            logWarn(commonFileError + e.getMessage());
+            throw new IllegalArgumentException(commonFileError + e.getMessage());
+        }
+        return validateFileMain();
+    }
+
+    
 
     // This method is used to start the validation process
     private ValidationResponse validateFileMain() {
