@@ -48,13 +48,13 @@ public class Extensions {
     private Map<String, Map<String, Object>> extensionsMap;
     private Map<String, Object> validationsMap;
     private Map<String, Object> validationCache = new HashMap<>();
-    private static final List<String> allowedKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
+    private List<String> allowedKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
         "footer_signatures", "change_ownership", "change_ownership_user", "change_ownership_mode",
         "name_encoding", "max_size", "extension_plugins");
-    private static final List<String> stringKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
+    private List<String> stringKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
     "footer_signatures", "change_ownership_user", "change_ownership_mode",
     "max_size", "extension_plugins");
-    private static final List<String> boolKeyValues = Arrays.asList("change_ownership", "name_encoding");
+    private List<String> boolKeyValues = Arrays.asList("change_ownership", "name_encoding");
 
     /**
      * Constructor for Extensions class
