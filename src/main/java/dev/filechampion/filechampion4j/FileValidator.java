@@ -39,27 +39,6 @@ public class FileValidator {
         }
     }
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
-    private void logInfo(String message) {
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.info(message);
-        }
-    }
-    private void logWarn(String message) {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.warning(message);
-        }
-    }
-    private void logSevere(String message) {
-        if (LOGGER.isLoggable(Level.SEVERE)) {
-            LOGGER.severe(message);
-        }
-    }
-    private void logFine(String message) {
-        if (LOGGER.isLoggable(Level.FINE )) {
-            LOGGER.fine(message);
-        }
-    }
-
     private JSONObject configJsonObject;
     private PluginsHelper pluginsHelper;
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();
@@ -67,8 +46,14 @@ public class FileValidator {
     private Extensions extensions;
     private StringBuilder sharedMessage = new StringBuilder();
     private String sharedStepMessage = "Step: ";
-
-
+    private String fileCategory;
+    private String fileName;
+    private byte[] originalFile;
+    private String fileChecksum;
+    private String mimeString;
+    private Path outDir;
+    private String fileExtension;
+    private String commonFileError = "Error reading file: ";
 
     /**
      * This method is used to initiate the class with relevant json configurations
@@ -98,68 +83,6 @@ public class FileValidator {
             }
         }
     }
-
-    private void loadPlugins() {
-        for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs().values()) {
-            for (String step : pluginConfig.getStepConfigs().keySet()) {
-                StepConfig stepConfig = pluginConfig.getStepConfigs().get(step);
-                stepConfigsBefore.put(stepConfig.isRunBefore()? step : "", stepConfig.isRunBefore()? stepConfig : null);
-                stepConfigsAfter.put(stepConfig.isRunAfter()? step : "", stepConfig.isRunAfter()? stepConfig : null);
-            }
-        }
-    }
-
-    private void checkPluginsConfig() {
-        // check that all extensions defined plugins exist in maps
-        JSONObject validationsJsonObject = configJsonObject.getJSONObject("Validations");
-        for (int i = 0; i < validationsJsonObject.length(); i++) {
-            String categroyKey = validationsJsonObject.names().getString(i);
-            for (int k=0; k < validationsJsonObject.getJSONObject(categroyKey).length(); k++) {
-                String extensionKey = validationsJsonObject.getJSONObject(categroyKey).names().getString(k);
-                if (validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).has("extension_plugins")) {
-                    checkPluginsExist(validationsJsonObject, categroyKey, extensionKey);
-                }
-            }
-        }
-    }
-
-    private void checkPluginsExist(JSONObject validationsJsonObject, String categroyKey, String extensionKey){
-        for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
-            if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
-                sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(pluginName).append(" defined in config does not exist in plugins configuration");
-                logWarn(sharedMessage.toString());
-                throw new IllegalArgumentException(sharedMessage.toString());
-            }
-        }
-    }
-
-    /**
-     * This method is used to check that method inputs are not null or empty
-     * @param fileCategory
-     * @param originalFile
-     * @param fileName
-     */
-    private void checkMethodInputs( String fileCategory, byte[] originalFile, String fileName) {
-        if (isBlank(fileCategory)) {
-            throw new IllegalArgumentException("fileCategory cannot be null or empty.");
-        }
-        if (isBlank(fileName)) {
-            throw new IllegalArgumentException("fileName cannot be null or empty.");
-        }
-        if (originalFile == null || originalFile.length == 0) {
-            throw new IllegalArgumentException("originalFile cannot be null or empty.");
-        }
-        this.originalFile = originalFile;
-    }
-    
-    private String fileCategory;
-    private String fileName;
-    private byte[] originalFile;
-    private String fileChecksum;
-    private String mimeString;
-    private Path outDir;
-    private String fileExtension;
-    private String commonFileError = "Error reading file: ";
 
     /**
      * This method is used to validate the file as file bytes, save the file to the output directory if passed validations, and return the results.
@@ -323,9 +246,11 @@ public class FileValidator {
         return validateFileMain();
     }
 
-    
-
-    // This method is used to start the validation process
+    /**
+     * This method is the internal entry point for the file validation process.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
     private ValidationResponse validateFileMain() {
         // Check that the input parameters are not null or empty
         checkMethodInputs(fileCategory, originalFile, fileName);
@@ -361,14 +286,10 @@ public class FileValidator {
     }
 
     /**
-     * If file category was found in the config, this method is used to validate the file
-     * @param fileCategory (String) a string containing the file type category to validate the file against
+     * Following initial validations and before plugins, this method is used to execute the validations for the file.
      * @param originalFilenameClean (String) a string containing the cleaned file name
-     * @param fileExtension (String) a string containing the file extension
-     * @param originalFile (byte[]) a byte array containing the file bytes of the file to be validated
-     * @param fileChecksum (String) a string containing the checksum of the file to be validated
-     * @param outDir (String) a string containing the path to the output directory for validated files
      * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     private ValidationResponse doValidations(String originalFilenameClean) {
         String commonLogString = String.format(" for file extension: %s", fileExtension);
@@ -542,6 +463,110 @@ public class FileValidator {
     // Helper methods //
     ////////////////////
 
+    /**
+     * LOGGER.info wrapper
+     * @param message (String) - message to log
+     */
+    private void logInfo(String message) {
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.info(message);
+        }
+    }
+
+    /**
+     * LOGGER.warning wrapper
+     * @param message (String) - message to log
+     */
+    private void logWarn(String message) {
+        if (LOGGER.isLoggable(Level.WARNING)) {
+            LOGGER.warning(message);
+        }
+    }
+
+    /**
+     * LOGGER.severe wrapper
+     * @param message (String) - message to log
+     */
+    private void logSevere(String message) {
+        if (LOGGER.isLoggable(Level.SEVERE)) {
+            LOGGER.severe(message);
+        }
+    }
+
+    /**
+     * LOGGER.fine wrapper
+     * @param message (String) - message to log
+     */
+    private void logFine(String message) {
+        if (LOGGER.isLoggable(Level.FINE )) {
+            LOGGER.fine(message);
+        }
+    }
+
+    /**
+     * Method to load the plugins objects into maps
+     */
+    private void loadPlugins() {
+        for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs().values()) {
+            for (String step : pluginConfig.getStepConfigs().keySet()) {
+                StepConfig stepConfig = pluginConfig.getStepConfigs().get(step);
+                stepConfigsBefore.put(stepConfig.isRunBefore()? step : "", stepConfig.isRunBefore()? stepConfig : null);
+                stepConfigsAfter.put(stepConfig.isRunAfter()? step : "", stepConfig.isRunAfter()? stepConfig : null);
+            }
+        }
+    }
+
+    /**
+     * Method to check that all extensions defined in config exist in plugins configuration from Validation.json
+     */
+    private void checkPluginsConfig() {
+        // check that all extensions defined plugins exist in maps
+        JSONObject validationsJsonObject = configJsonObject.getJSONObject("Validations");
+        for (int i = 0; i < validationsJsonObject.length(); i++) {
+            String categroyKey = validationsJsonObject.names().getString(i);
+            for (int k=0; k < validationsJsonObject.getJSONObject(categroyKey).length(); k++) {
+                String extensionKey = validationsJsonObject.getJSONObject(categroyKey).names().getString(k);
+                if (validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).has("extension_plugins")) {
+                    checkPluginsExist(validationsJsonObject, categroyKey, extensionKey);
+                }
+            }
+        }
+    }
+
+    /**
+     * Method to check that each extension defined in config exist in plugins configuration
+     * @param validationsJsonObject (JSONObject) - the validations.json object
+     * @param categroyKey (String) - the category key
+     * @param extensionKey (String) - the extension key
+     */
+    private void checkPluginsExist(JSONObject validationsJsonObject, String categroyKey, String extensionKey){
+        for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
+            if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
+                sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(pluginName).append(" defined in config does not exist in plugins configuration");
+                logWarn(sharedMessage.toString());
+                throw new IllegalArgumentException(sharedMessage.toString());
+            }
+        }
+    }
+
+    /**
+     * This method is used to check that method inputs are not null or empty
+     * @param fileCategory (String) the file category of the file being validated
+     * @param originalFile (byte[]) the file being validated
+     * @param fileName (String) the file name of the file being validated
+     */
+    private void checkMethodInputs( String fileCategory, byte[] originalFile, String fileName) {
+        if (isBlank(fileCategory)) {
+            throw new IllegalArgumentException("fileCategory cannot be null or empty.");
+        }
+        if (isBlank(fileName)) {
+            throw new IllegalArgumentException("fileName cannot be null or empty.");
+        }
+        if (originalFile == null || originalFile.length == 0) {
+            throw new IllegalArgumentException("originalFile cannot be null or empty.");
+        }
+        this.originalFile = originalFile;
+    }
 
     /**
      * Execute and check results of plugins configured to run before the validations
@@ -711,18 +736,31 @@ public class FileValidator {
     }
 
     
-    // String.isBlank() is only available in Java 11
+    /**
+     * isBlank wrapper method for support of Java 8
+     * @param str
+     * @return
+     */
     private boolean isBlank(String str) {
         return str == null || str.trim().isEmpty();
     }
     
-
-    // Check if file size does not exceed the maximum allowed size
+    /**
+     * Compare file size to the maximum allowed size
+     * @param originalFileSize (int) the size of the file being validated
+     * @param extensionMaxSize (int) the maximum allowed size of the file being validated
+     * @return Boolean (Boolean) true if the file size is less than or equal to the maximum allowed size, false otherwise
+     */
     private Boolean checkFileSize(int originalFileSize, int extensionMaxSize) {
         return (extensionMaxSize == 0) || (originalFileSize / 1000) <= extensionMaxSize;
     }
 
-    // Save the file to temporary directory for analysis
+    /**
+     * Helper method to save the file to a temporary directory
+     * @param fileExtension (String) the file extension of the file being validated
+     * @param originalFile (byte[]) the file bytes of the file being validated
+     * @return Path (Path) the path to the temporary file
+     */
     private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
         Path tempFilePath = null;
         try {
@@ -738,7 +776,11 @@ public class FileValidator {
         return tempFilePath;
     }
 
-    // Explicitley delete the temporary directory and file
+    /**
+     * Helper method to delete the temporary directory
+     * @param tempFilePath (Path) the path to the temporary file
+     * @return Boolean (Boolean) true if the temporary directory was deleted successfully, false otherwise
+     */
     private Boolean deleteTempDir(Path tempFilePath) {
         try (Stream<Path> walk = Files.walk(tempFilePath)) {
             walk.sorted(Comparator.reverseOrder())
@@ -752,7 +794,13 @@ public class FileValidator {
         }
     }
 
-    // Get the file mime type from the file bytes and checks if it matches allowed mime types
+    /**
+     * Compare the file MIME type to the expected MIME type
+     * @param originalFileBytes (byte[]) the file bytes of the file being validated
+     * @param fileExtension (String) the file extension of the file being validated
+     * @param mimeType (String) the expected MIME type of the file being validated
+     * @return Boolean (Boolean) true if the file MIME type matches the expected MIME type, false otherwise
+     */
     private boolean checkMimeType(byte[] originalFileBytes, String fileExtension, String mimeType) {
         String fileMimeType = isBlank(mimeString) ? "" : mimeString;
         if (isBlank(fileMimeType)) {
@@ -770,7 +818,11 @@ public class FileValidator {
         return fileMimeType != null && !isBlank(fileMimeType) && fileMimeType.equals(mimeType);
     }
     
-    // Get the file extension from the file name
+    /**
+     * Parse the file extension from the file name
+     * @param fileName (String) the name of the file being validated
+     * @return String (String) the file extension of the file being validated
+     */
     private String getFileExtension(String fileName) {
         int dotIndex = fileName.lastIndexOf('.');
         if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
@@ -779,7 +831,12 @@ public class FileValidator {
         return fileName.substring(dotIndex + 1);
     }
 
-    // Check if the file contains the magic bytes
+    /**
+     * Check if the file contains the expected magic bytes
+     * @param originalFileBytes (byte[]) the file bytes of the file being validated
+     * @param magicBytesPattern (String) the expected magic bytes of the file being validated
+     * @return Boolean (Boolean) true if the file contains the expected magic bytes, false otherwise
+     */
     private boolean containsMagicBytes(byte[] originalFileBytes, String magicBytesPattern) {
         if (originalFileBytes.length == 0 || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
             return false;
@@ -807,7 +864,12 @@ public class FileValidator {
         return false;
     }
 
-    // Check if the file contains the header signatures
+    /**
+     * Check if the file contains the expected header signatures
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @param headerSignaturesPattern (String) the expected header signatures of the file being validated
+     * @return Boolean (Boolean) true if the file contains the expected header signatures, false otherwise
+     */
     private boolean containsHeaderSignatures(byte[] fileBytes, String headerSignaturesPattern) {
         if (isBlank(headerSignaturesPattern)) {
             return true;
@@ -828,7 +890,12 @@ public class FileValidator {
         return true;
     }
 
-    // Check if the file contains the footer signatures
+    /**
+     * Check if the file contains the expected footer signatures
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @param footerSignaturesPattern (String) the expected footer signatures of the file being validated
+     * @return Boolean (Boolean) true if the file contains the expected footer signatures, false otherwise
+     */
     private boolean containsFooterSignatures(byte[] fileBytes, String footerSignaturesPattern) {
         if (isBlank(footerSignaturesPattern)) {
             return true;
@@ -853,7 +920,11 @@ public class FileValidator {
         return true;
     }
 
-    // Calculate file checksum
+    /**
+     * Calculate the checksum of the file
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @return String (String) the SHA-256 checksum of the file
+     */
     private String calculateChecksum(byte[] fileBytes) {
         try {
             byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
@@ -864,7 +935,15 @@ public class FileValidator {
         }
     }
 
-    // save the file to the output directory with appropriate owner and permissions
+    /**
+     * Helper method to save the file defined file attributes to the output directory and return the path to the saved file
+     * @param fileCategory (String) the file category of the file being validated
+     * @param fileExtension (String) the file extension of the file being validated
+     * @param outDir (Path) the path to the output directory
+     * @param fileName (String) the name of the file being validated
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @return String (String) the path to the saved file
+     */
     private String saveFileToOutputDir(String fileCategory, String fileExtension, Path outDir, String fileName, byte[] fileBytes) {
         Path targetFilePath = Paths.get(outDir.toString(), fileName);
         try {
@@ -874,9 +953,6 @@ public class FileValidator {
             logSevere(sharedMessage.toString());
             return sharedMessage.toString();
         }
-        // Try to set the file owner and permissions
-
-
         String changeOwnershipUser = (String) extensions.getValidationValue(fileCategory, fileExtension, "change_ownership_user");
         String changePermissionsMode = (String) extensions.getValidationValue(fileCategory, fileExtension, "change_ownership_mode");
 
@@ -891,7 +967,6 @@ public class FileValidator {
             logSevere(newFileAttributesStatus);
             return newFileAttributesStatus;
         }
-        // Return the full path to the saved file since no errors were encountered
         return targetFilePath.toAbsolutePath().toString();
     }
 }
