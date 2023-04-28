@@ -114,13 +114,16 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Set branch name
-        run: echo "BRANCH_NAME=$(basename ${GITHUB_REF})" >> $GITHUB_ENV
+        run: |
+          echo "BRANCH_NAME=${{ github.head_ref#refs/heads/ }}" >> $GITHUB_ENV
+          echo "Exported Branch name: $BRANCH_NAME"
         
       - name: Run bench tests and compare results.
         run: |
+          pwd
           cd ..
           pwd
-          echo "PR Branch name: $BRANCH_NAME"
+          echo "Read Branch name: $BRANCH_NAME"
           git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
           cd master-branch
           pwd
