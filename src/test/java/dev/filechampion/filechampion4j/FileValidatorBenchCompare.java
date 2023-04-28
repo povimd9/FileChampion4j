@@ -19,7 +19,7 @@ public class FileValidatorBenchCompare {
     private static final String benchOutputFile = "benchmarks/benchResults.txt";
     
     /**
-     * Check if the last result in the benchResults.txt file is not worse than the previous results by more than MAX_DIFFERENCE_FROM_PREV
+     * Check if the last result in the benchResults.txt file is not worse than the previous results by more than MAX_DIFFERENCE_FROM_PREV, fail the test if it is.
      */
     @Test
     void checkPreviousBenchResults() {
