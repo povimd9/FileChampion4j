@@ -27,6 +27,9 @@ import java.security.MessageDigest;
  * @see <a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a>
  */
 public class FileValidator {
+    /**
+     * Initialize logging configuration from logging.properties file in resources folder
+     */
     static {
         try {
             Object o = FileValidator.class.getResourceAsStream("/logging.properties");
