@@ -108,14 +108,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run bench tests and generate benchmarks/benchResults.txt
       run: |
-        checkoutWD=$(pwd)
+        export checkoutWD=$(pwd)
         mvn clean test -Dtest="FileValidatorBenchRun"
-    - name: Clone master branch
-      run: |
         cd ..
         git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
-    - name: Copy result.txt to master branch
-      run: |
         \cp -r /${checkoutWD}/benchmarks/benchResults.txt master-branch/benchmarks/
         cd master-branch
         mvn clean test -Dtest="FileValidatorBenchRun"
