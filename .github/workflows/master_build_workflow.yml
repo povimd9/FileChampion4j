@@ -102,7 +102,7 @@ jobs:
 
   bench:
     name: Bench and Compare against master
-    if: ${{ github.ref != 'refs/heads/master' && (github.event.head_commit.modified_files | contains('src/main/java/dev/filechampion/filechampion4j/') && github.event.head_commit.modified_files | contains('.java')) }}
+    if: ${{ github.ref != 'refs/heads/master' && contains(github.event.head_commit.modified_files, 'src/main/java/dev/filechampion/filechampion4j/') && contains(join(github.event.head_commit.modified_files), '.java') }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
