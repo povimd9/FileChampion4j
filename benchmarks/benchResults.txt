@@ -1,0 +1,14 @@
+--------------- 2023-04-26T18:36:53.781 ---------------
+Magic Throughput Bench, 492.376897 ci
+Magic Average Time Bench, 0.002042 ms
+Magic Sample Bench, 0.001880 ms
+Magic Single Shot Bench, 0.002379 ms
+Mime Throughput Bench, 109.902420 ci
+Mime Average Time Bench, 0.009275 ms
+Mime Sample Bench, 0.010067 ms
+Mime Single Shot Bench, 0.011362 ms
+Sig Throughput Bench, 603.437921 ci
+Sig Average Time Bench, 0.001700 ms
+Sig Sample Bench, 0.001703 ms
+Sig Single Shot Bench, 0.002305 ms
+--------------- 2023-04-26T18:36:53.785 ---------------
