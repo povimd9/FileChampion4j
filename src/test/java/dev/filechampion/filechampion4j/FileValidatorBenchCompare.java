@@ -26,7 +26,6 @@ public class FileValidatorBenchCompare {
         String[] resultsBlocs = new String[2];
         try (RandomAccessFile raf = new RandomAccessFile(benchOutputFile, "r")) {
             long length = raf.length();
-            assertTrue(length > 1076, "File is too small to contain previous results");
             long pos = length - 545;
             int blocksFound = 0;
             while (pos >= 0 && blocksFound < 2) {
@@ -40,25 +39,29 @@ public class FileValidatorBenchCompare {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HashMap<String, Double> currentResultslines = loadMap(resultsBlocs[0].split("\\r?\\n"));
-        HashMap<String, Double> previousResultslines = loadMap(resultsBlocs[1].split("\\r?\\n"));
-        List<String> failedResultsList = new ArrayList<>();
+        try {
+            HashMap<String, Double> currentResultslines = loadMap(resultsBlocs[0].split("\\r?\\n"));
+            HashMap<String, Double> previousResultslines = loadMap(resultsBlocs[1].split("\\r?\\n"));
+            List<String> failedResultsList = new ArrayList<>();
 
-        // Test each result against the previous result, based on previous results keys to support new tests
-        for (String key : previousResultslines.keySet()) {
-            String benchResults = compareResultLines(key , currentResultslines.get(key), previousResultslines.get(key), key.contains("Throughput ")? true : false);
-            if (benchResults.contains("' worse, vs '")) {
-                failedResultsList.add(benchResults);
+            // Test each result against the previous result, based on previous results keys to support new tests
+            for (String key : previousResultslines.keySet()) {
+                String benchResults = compareResultLines(key , currentResultslines.get(key), previousResultslines.get(key), key.contains("Throughput ")? true : false);
+                if (benchResults.contains("' worse, vs '")) {
+                    failedResultsList.add(benchResults);
+                }
+                System.out.println(benchResults);
             }
-            System.out.println(benchResults);
-        }
 
-        if (failedResultsList.size() > 0) {
-            System.out.println("The following tests have results that are worse than than defined max degradation:");
-            for (String result : failedResultsList) {
-                System.out.println(result);
+            if (failedResultsList.size() > 0) {
+                System.out.println("The following tests have results that are worse than than defined max degradation:");
+                for (String result : failedResultsList) {
+                    System.out.println(result);
+                }
+                assertTrue(false, "Some tests have results that are worse than than defined max degradation");
             }
-            assertTrue(false, "Some tests have results that are worse than than defined max degradation");
+        } catch (Exception e) {
+            assertTrue(false, "Failed to load results from benchResults.txt file" + e.getMessage());
         }
     }
 
