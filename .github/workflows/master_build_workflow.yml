@@ -112,21 +112,26 @@ jobs:
           distribution: 'corretto'
       - name: Git checkout
         uses: actions/checkout@v3
+      
+      - name: Set branch name
+        run: echo "BRANCH_NAME=$(basename ${GITHUB_REF})" >> $GITHUB_ENV
+        
       - name: Run bench tests and compare results.
         run: |
           cd ..
           pwd
-          echo ${GITHUB_REF##*/}
+          echo "PR Branch name: $BRANCH_NAME"
           git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
           cd master-branch
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
           cd ..
           pwd
-          git clone -b ${GITHUB_REF##*/} --single-branch https://github.com/povimd9/FileChampion4j.git pr-branch
+          git clone -b $BRANCH_NAME --single-branch https://github.com/povimd9/FileChampion4j.git pr-branch
           \cp -r master-branch/benchmarks/ pr-branch/benchmarks/
           cd pr-branch
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
           mvn test -Dtest="FileValidatorBenchCompare"
+
         if: ${{ success() }}
