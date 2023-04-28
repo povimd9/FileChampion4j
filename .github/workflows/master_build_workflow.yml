@@ -101,6 +101,8 @@ jobs:
           category: "/language:${{matrix.language}}"
 
   bench:
+    name: Bench and Compare against master
+    needs: [build-and-test]
     if: ${{ github.ref != 'refs/heads/master' }}
     runs-on: ubuntu-latest
     steps:
