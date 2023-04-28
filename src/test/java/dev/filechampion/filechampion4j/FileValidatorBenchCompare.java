@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  */
 public class FileValidatorBenchCompare {
     private static final double MAX_DIFFERENCE_FROM_PREV = 5;
-    private static final String benchOutputFile = "benchmarks/benchResults.txt";
+    private static final String benchOutputFile = "/home/runner/work/FileChampion4j/FileChampion4j/benchmarks/benchResults.txt";
     
     /**
      * Check if the last result in the benchResults.txt file is not worse than the previous results by more than MAX_DIFFERENCE_FROM_PREV, fail the test if it is.
