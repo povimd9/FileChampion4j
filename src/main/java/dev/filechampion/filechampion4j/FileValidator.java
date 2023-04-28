@@ -25,7 +25,7 @@ import java.security.MessageDigest;
  * @author filechampion
  * @version 0.9.8.2
  * @see <a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a>
- * TODO: update javadocs and wiki
+ * TODO: update wiki
  */
 public class FileValidator {
     static {
@@ -71,7 +71,7 @@ public class FileValidator {
 
 
     /**
-     * This method is used to get the json configurations
+     * This method is used to initiate the class with relevant json configurations
      * @param configJsonObject
      */
     public FileValidator(JSONObject configJsonObject) throws IllegalArgumentException {
