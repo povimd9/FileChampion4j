@@ -105,15 +105,22 @@ jobs:
     if: ${{ github.ref != 'refs/heads/master' && contains(github.event.head_commit.modified_files, 'src/main/java/dev/filechampion/filechampion4j/') && contains(join(github.event.head_commit.modified_files), '.java') }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Run bench tests and generate benchmarks/benchResults.txt
-      run: |
-        export checkoutWD=$(pwd)
-        mvn clean test -Dtest="FileValidatorBenchRun"
-        cd ..
-        git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
-        \cp -r /${checkoutWD}/benchmarks/ master-branch/benchmarks/
-        cd master-branch
-        mvn clean test -Dtest="FileValidatorBenchRun"
-        mvn test -Dtest="FileValidatorBenchCompare"
-      if: ${{ success() }}
+      - uses: actions/checkout@v3
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'corretto'
+      - name: Run bench tests and compare results.
+        run: |
+          git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
+          cd master-branch
+          mvnw clean test -Dtest="FileValidatorBenchRun"
+          cd..
+          echo ${{ GITHUB_HEAD_REF }}
+          git clone -b ${{ GITHUB_HEAD_REF }} --single-branch https://github.com/povimd9/FileChampion4j.git pr-branch
+          \cp -r master-branch/benchmarks/ pr-branch/benchmarks/
+          cd pr-branch
+          mvn clean test -Dtest="FileValidatorBenchRun"
+          mvn test -Dtest="FileValidatorBenchCompare"
+        if: ${{ success() }}
