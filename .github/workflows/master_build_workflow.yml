@@ -110,29 +110,21 @@ jobs:
         with:
           java-version: '8'
           distribution: 'corretto'
+          
       - name: Git checkout
         uses: actions/checkout@v3
-      
-      - name: Set branch name
-        run: |
-          echo "BRANCH_NAME=${{ github.head_ref#refs/heads/ }}" >> $GITHUB_ENV
-          echo "Exported Branch name: $BRANCH_NAME"
         
       - name: Run bench tests and compare results.
         run: |
           pwd
+          export checkoutWD=$(pwd)
           cd ..
-          pwd
-          echo "Read Branch name: $BRANCH_NAME"
           git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
           cd master-branch
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
-          cd ..
-          pwd
-          git clone -b $BRANCH_NAME --single-branch https://github.com/povimd9/FileChampion4j.git pr-branch
-          \cp -r master-branch/benchmarks/ pr-branch/benchmarks/
-          cd pr-branch
+          \cp -r benchmarks/ ${checkoutWD}/benchmarks/
+          cd ${checkoutWD}
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
           mvn test -Dtest="FileValidatorBenchCompare"
