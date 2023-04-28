@@ -112,7 +112,7 @@ jobs:
         mvn clean test -Dtest="FileValidatorBenchRun"
         cd ..
         git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
-        \cp -r /${checkoutWD}/benchmarks/benchResults.txt master-branch/benchmarks/
+        \cp -r /${checkoutWD}/benchmarks/ master-branch/benchmarks/
         cd master-branch
         mvn clean test -Dtest="FileValidatorBenchRun"
         mvn test -Dtest="FileValidatorBenchCompare"
