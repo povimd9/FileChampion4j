@@ -117,16 +117,18 @@ jobs:
       - name: Run bench tests and compare results.
         run: |
           pwd
-          export checkoutWD=$(pwd)
           cd ..
           git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
           cd master-branch
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
-          \cp -r benchmarks/ ${checkoutWD}/benchmarks/
-          cd ${checkoutWD}
+          cat /home/runner/work/FileChampion4j/master-branch/benchmarks/benchResults.txt
+          \cp /home/runner/work/FileChampion4j/master-branch/benchmarks/benchResults.txt /home/runner/work/FileChampion4j/FileChampion4j/benchmarks/benchResults.txt
+          cat /home/runner/work/FileChampion4j/FileChampion4j/benchmarks/benchResults.txt
+          cd /home/runner/work/FileChampion4j/FileChampion4j/
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
+          cat /home/runner/work/FileChampion4j/FileChampion4j/benchmarks/benchResults.txt
           mvn test -Dtest="FileValidatorBenchCompare"
 
         if: ${{ success() }}
