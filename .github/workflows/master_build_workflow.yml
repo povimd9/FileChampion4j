@@ -113,11 +113,11 @@ jobs:
           distribution: 'corretto'
       - name: Run bench tests and compare results.
         run: |
+          echo ${{ vars.GITHUB_HEAD_REF }}
           git clone -b master --single-branch https://github.com/povimd9/FileChampion4j.git master-branch
           cd master-branch
-          mvnw clean test -Dtest="FileValidatorBenchRun"
+          mvn clean test -Dtest="FileValidatorBenchRun"
           cd..
-          echo ${{ vars.GITHUB_HEAD_REF }}
           git clone -b ${{ vars.GITHUB_HEAD_REF }} --single-branch https://github.com/povimd9/FileChampion4j.git pr-branch
           \cp -r master-branch/benchmarks/ pr-branch/benchmarks/
           cd pr-branch
