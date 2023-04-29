@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
@@ -15,8 +16,10 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.util.UUID;
 
 import java.util.logging.Level;
@@ -42,6 +45,21 @@ public class FileValidatorJsonTest {
     // Config JSON objects for testing //
     /////////////////////////////////////
 
+    // Config JSON object for testing mime type
+    private static final JSONObject CONFIG_JSON_CHECKSUMS = new JSONObject("{\r\n"
+    + "  \"Validations\": {\r\n"
+    + "  \"Documents\": {\r\n"
+    + "    \"pdf\": {\r\n"
+    + "      \"magic_bytes\": \"25504446\",\r\n"
+    + "      \"header_signatures\": \"25504446\",\r\n"
+    + "      \"footer_signatures\": \"2525454f46\",\r\n"
+    + "      \"name_encoding\": true,\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
+    + "      }\r\n"
+    + "  }\r\n"
+    + "}\r\n"
+    + "}");
+    
     // Config JSON object for testing mime type
     private static final JSONObject CONFIG_JSON_MIME = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
@@ -378,7 +396,17 @@ public class FileValidatorJsonTest {
     + "  }\r\n"
     + "}");
 
-    
+    // Test valid inputs to compare checksums
+    @Test
+    void testChecksums() throws Exception {
+        byte[] fileInBytes = generatePdfBytes(250000);
+        String fileName = "test.pdf";
+        FileValidator validator = new FileValidator(CONFIG_JSON_CHECKSUMS);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
+    }
+
     // Test step timeout
     @Test
     void testStepTimeout() throws Exception {
@@ -633,5 +661,16 @@ public class FileValidatorJsonTest {
         document.close();
         writer.close();
         return baos.toByteArray();
+    }
+
+    // Calculate file checksum
+    private static String calculateChecksum(byte[] fileBytes) {
+        try {
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
+            return new BigInteger(1, hash).toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

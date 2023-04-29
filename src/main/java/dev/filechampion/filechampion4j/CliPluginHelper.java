@@ -25,12 +25,12 @@ import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 
 
 public class CliPluginHelper {
-    private final StepConfig singleStepConfig;
-    private final int timeout;
-    private static final String ERRST_STRING = "Error: ";
+    private StepConfig singleStepConfig;
+    private int timeout;
+    private String ERRST_STRING = "Error: ";
     private String endpoint;
-    private final String responseConfig;
-    private final StringBuilder logMessage = new StringBuilder();
+    private String responseConfig;
+    private StringBuilder logMessage = new StringBuilder();
 
     static {
         try {

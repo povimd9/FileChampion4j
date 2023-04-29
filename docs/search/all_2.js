@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['calculatechecksum_0',['calculateChecksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#afddde3a9748be9f0487a553d50a2d5c4',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['calculatechecksum_0',['calculateChecksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af3055195e4109920308326f7d807cc29',1,'dev::filechampion::filechampion4j::FileValidator']]],
   ['categoriesmap_1',['categoriesMap',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61',1,'dev::filechampion::filechampion4j::Extensions']]],
   ['changefileacl_2',['changeFileAcl',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca',1,'dev::filechampion::filechampion4j::FileAclHelper']]],
   ['checkfilesize_3',['checkFileSize',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a578f3eed384beb9cc9e15a648b2722b6',1,'dev::filechampion::filechampion4j::FileValidator']]],
@@ -10,12 +10,14 @@ var searchData=
   ['checkpluginsconfig_7',['checkPluginsConfig',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a62c4a7a9000c3144937697051081dce2',1,'dev::filechampion::filechampion4j::FileValidator']]],
   ['checkpluginsexist_8',['checkPluginsExist',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a4e885231ccddcf38fe15a3caa3168c2b',1,'dev::filechampion::filechampion4j::FileValidator']]],
   ['cleanfilename_9',['cleanFileName',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a2834964df0ea03005603547d7defff68',1,'dev::filechampion::filechampion4j::ValidationResponse']]],
-  ['clipluginhelper_10',['cliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a8b27cbf3ee67e426dc163e1e1915be13',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]],
-  ['clipluginhelper_11',['CliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html#ae5a576210723f85200cb56142bf90c53',1,'dev.filechampion.filechampion4j.CliPluginHelper.CliPluginHelper()'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html',1,'dev.filechampion.filechampion4j.CliPluginHelper']]],
-  ['clipluginhelper_2ejava_12',['CliPluginHelper.java',['../_cli_plugin_helper_8java.html',1,'']]],
-  ['configjsonobject_13',['configJsonObject',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a10dae43a3de7168c83cc4aa0b145e0ef',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['containsfootersignatures_14',['containsFooterSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a8f4cb0774223f82e2cf72558b6edd114',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['containsheadersignatures_15',['containsHeaderSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9cb61c4724f0d3542eedec7d0f6b2943',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['containsmagicbytes_16',['containsMagicBytes',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9659dd19b95c61f1b52cfab5ebc5a6b0',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['credspath_17',['credsPath',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a7186e7b8f090b4168ce58c811e0e27bd',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]]
+  ['clipluginhelper_10',['CliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html#ae5a576210723f85200cb56142bf90c53',1,'dev::filechampion::filechampion4j::CliPluginHelper']]],
+  ['clipluginhelper_11',['cliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a8b27cbf3ee67e426dc163e1e1915be13',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]],
+  ['clipluginhelper_12',['CliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html',1,'dev::filechampion::filechampion4j']]],
+  ['clipluginhelper_2ejava_13',['CliPluginHelper.java',['../_cli_plugin_helper_8java.html',1,'']]],
+  ['commonfileerror_14',['commonFileError',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a4fe69bdcc32188c3f29fcd1f0d846df6',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['configjsonobject_15',['configJsonObject',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a7b99c979ed2edc47dd99d52803ae7cbc',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['containsfootersignatures_16',['containsFooterSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a8f4cb0774223f82e2cf72558b6edd114',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['containsheadersignatures_17',['containsHeaderSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9cb61c4724f0d3542eedec7d0f6b2943',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['containsmagicbytes_18',['containsMagicBytes',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a9659dd19b95c61f1b52cfab5ebc5a6b0',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['credspath_19',['credsPath',['../classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html#a7186e7b8f090b4168ce58c811e0e27bd',1,'dev::filechampion::filechampion4j::PluginsHelper::StepConfig']]]
 ];
