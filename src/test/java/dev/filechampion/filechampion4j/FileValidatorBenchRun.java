@@ -38,7 +38,6 @@ class FileValidatorBenchRun {
     @Test
     void benchFileChampion() {
         String beforeContentToAppend = "--------------- " + java.time.LocalDateTime.now() + " ---------------"+ System.lineSeparator();
-        String afterContentToAppend = "--------------- " + java.time.LocalDateTime.now() + " ---------------"+ System.lineSeparator();
         try {
             Files.createDirectories(Paths.get(benchOutputFile.substring(0, benchOutputFile.lastIndexOf("/"))));
             Path newFilePath = Paths.get(benchOutputFile);
@@ -63,6 +62,7 @@ class FileValidatorBenchRun {
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(request);
 
+        String afterContentToAppend = "--------------- " + java.time.LocalDateTime.now() + " ---------------"+ System.lineSeparator();
         try {
             Files.write(
             Paths.get(benchOutputFile), 
