@@ -51,6 +51,17 @@ jobs:
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
       
+      - name: Push new benchmarks to master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PREVIEW_VERSION: ${{ vars.PREVIEW_VERSION }}
+        run: |
+          git config --global user.name "povimd9"
+          git config --global user.email "povimd9@users.noreply.github.com"
+          git add benchmarks/
+          git commit -m "Add new benchmark scores"
+          git push -f --set-upstream origin "master"
+      
       - name: Create version branch and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
