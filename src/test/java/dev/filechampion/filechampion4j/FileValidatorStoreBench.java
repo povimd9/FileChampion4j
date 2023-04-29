@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Warmup;
@@ -39,7 +41,11 @@ import org.openjdk.jmh.annotations.Setup;
 @Warmup(iterations = 7, time = 10, timeUnit =  TimeUnit.MILLISECONDS)
 @Measurement(iterations = 5, time = 20, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
-public class FileValidatorMimeBench {
+public class FileValidatorStoreBench {
+    @TempDir
+    private Path tempDirectory;
+    private String testUsername = System.getProperty("user.name");
+    private Path filePath;
     private FileValidator validator;
     private byte[] fileInBytesSmall;
     private String fileName;
@@ -59,8 +65,8 @@ public class FileValidatorMimeBench {
     + "      \"header_signatures\": \"D0CF11E0A1B11AE1\",\r\n"
     + "      \"footer_signatures\": \"0000000000000000\",\r\n"
     + "      \"change_ownership\": true,\r\n"
-    + "      \"change_ownership_user\": \"User1\",\r\n"
-    + "      \"change_ownership_mode\": \"r\",\r\n"
+    + "      \"change_ownership_user\": \"" + testUsername + "\",\r\n"
+    + "      \"change_ownership_mode\": \"rw\",\r\n"
     + "      \"name_encoding\": true,\r\n"
     + "      \"max_size\": \"4000\"\r\n"
     + "    }\r\n"
@@ -86,19 +92,19 @@ public class FileValidatorMimeBench {
         for(RunResult runResult : runResults) {
             switch(i) {
                 case 0:
-                contentToAppend = "Mime Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
+                contentToAppend = "Storage Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
                     break;
                 case 1:
-                contentToAppend = "Mime Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Storage Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 2:
-                contentToAppend = "Mime Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Storage Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 3:
-                contentToAppend = "Mime Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Storage Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 default:
-                contentToAppend = "Mime Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Storage Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
             }
             
@@ -115,42 +121,22 @@ public class FileValidatorMimeBench {
         }
     }
 
-    //private ByteArrayOutputStream outputStream;
-    //private StreamHandler handler;
     @Setup(org.openjdk.jmh.annotations.Level.Iteration)
     public void benchSetUp() throws IOException {
-        /*outputStream = new ByteArrayOutputStream();
-        Logger logger = Logger.getLogger(FileValidator.class.getName());
-        logger.setLevel(java.util.logging.Level.SEVERE);
-        handler = new StreamHandler(outputStream, new SimpleFormatter());
-        logger.addHandler(handler);*/
-
         try {
             validator = new FileValidator(testConfig);
             fileInBytesSmall = generatePdfBytes(250000);
+            filePath =  Files.write(tempDirectory.resolve("test.pdf"), fileInBytesSmall);
+            fileName = filePath.getFileName().toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fileName = "test&test.pdf";
-        
     }
 
-    /*@org.openjdk.jmh.annotations.TearDown(org.openjdk.jmh.annotations.Level.Iteration)
-    public void flushLog() {
-        handler.flush(); 
-        //String loggerOutput = outputStream.toString();
-        try {
-            OutputStream fileOutput = new FileOutputStream("target/jmh/mimeBenchTestLogs.txt", false);
-            outputStream.writeTo(fileOutput);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-    
-    // Benchmark test for 'validateFile' method with only mime validation
+    // Benchmark test for 'validateFile' file path method with only mime validation
     @Benchmark
     public void benchValidMime() throws Exception {
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, tempDirectory, "aplication/pdf");
     }
 
     // Generate a pdf file with a given size in bytes
