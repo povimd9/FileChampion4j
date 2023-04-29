@@ -9,14 +9,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.UUID;
-import java.util.logging.StreamHandler;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -37,8 +35,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Benchmark test for 'validateFile' method in 'FileValidator' class.
  */
-@Warmup(iterations = 10, time = 10, timeUnit =  TimeUnit.MILLISECONDS)
-@Measurement(iterations = 5, time = 40, timeUnit =  TimeUnit.MILLISECONDS)
+@Warmup(iterations = 7, time = 10, timeUnit =  TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 20, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class FileValidatorMagicBench {
     private FileValidator validator;
