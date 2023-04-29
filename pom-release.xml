@@ -240,8 +240,7 @@
                         <java.version>1.8</java.version>
                     </systemPropertyVariables>
                     <includes>
-                        <include>**/Bench*.java</include>
-                        <include>**/*Bench.java</include>
+                        <include>**/FileValidatorBenchRun.java</include>
                     </includes>
                     <parallel>classes</parallel>
                     <perCoreThreadCount>true</perCoreThreadCount>
@@ -260,8 +259,7 @@
                                 <java.version>1.8</java.version>
                             </systemPropertyVariables>
                             <includes>
-                                <include>**/Bench*.java</include>
-                                <include>**/*Bench.java</include>
+                                <include>**/FileValidatorBenchRun.java</include>
                             </includes>
                             <printSummary>true</printSummary>
                             <printFailures>true</printFailures>
