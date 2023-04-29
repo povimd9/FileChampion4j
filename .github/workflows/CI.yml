@@ -3,7 +3,7 @@ name: CI
 on:
   workflow_run:
     workflows:
-      - master_build_workflow
+      - Build, Test, and Bench
     types:
       - completed
     branches:
