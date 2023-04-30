@@ -116,15 +116,8 @@ public class FileValidatorSigBench {
         }
     }
 
-    //private ByteArrayOutputStream outputStream;
-    //private StreamHandler handler;
     @Setup(org.openjdk.jmh.annotations.Level.Iteration)
     public void benchSetUp() throws IOException {
-        /*outputStream = new ByteArrayOutputStream();
-        Logger logger = Logger.getLogger(FileValidator.class.getName());
-        logger.setLevel(java.util.logging.Level.SEVERE);
-        handler = new StreamHandler(outputStream, new SimpleFormatter());
-        logger.addHandler(handler);*/
 
         try {
             validator = new FileValidator(testConfig);

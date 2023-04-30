@@ -45,7 +45,6 @@ public class FileValidatorStoreBench {
     @TempDir
     private Path tempDirectory;
     private String testUsername = System.getProperty("user.name");
-    private Path filePath;
     private FileValidator validator;
     private byte[] fileInBytesSmall;
     private String fileName;
@@ -77,7 +76,7 @@ public class FileValidatorStoreBench {
     @Test
     public void fileValidatorSmallBench() throws RunnerException {
         Options opt = new OptionsBuilder()
-        .include(FileValidatorMimeBench.class.getSimpleName())
+        .include(FileValidatorStoreBench.class.getSimpleName())
         .forks(3)
         .mode(Mode.All)
         .output("benchmarks/results.txt")
@@ -121,13 +120,11 @@ public class FileValidatorStoreBench {
         }
     }
 
-    @Setup(org.openjdk.jmh.annotations.Level.Iteration)
+    @Setup(org.openjdk.jmh.annotations.Level.Invocation)
     public void benchSetUp() throws IOException {
         try {
             validator = new FileValidator(testConfig);
             fileInBytesSmall = generatePdfBytes(250000);
-            filePath =  Files.write(tempDirectory.resolve("test.pdf"), fileInBytesSmall);
-            fileName = filePath.getFileName().toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,8 +132,9 @@ public class FileValidatorStoreBench {
 
     // Benchmark test for 'validateFile' file path method with only mime validation
     @Benchmark
-    public void benchValidMime() throws Exception {
+    public void benchValidMimeStore() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, tempDirectory, "aplication/pdf");
+        System.out.println(fileValidationResults.toString());
     }
 
     // Generate a pdf file with a given size in bytes

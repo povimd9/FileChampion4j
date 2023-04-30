@@ -115,16 +115,8 @@ public class FileValidatorMagicBench {
         }
     }
 
-    //private ByteArrayOutputStream outputStream;
-    //private StreamHandler handler;
-    @Setup(org.openjdk.jmh.annotations.Level.Iteration)
+    @Setup(org.openjdk.jmh.annotations.Level.Invocation)
     public void benchSetUp() throws IOException {
-        /*outputStream = new ByteArrayOutputStream();
-        Logger logger = Logger.getLogger(FileValidator.class.getName());
-        logger.setLevel(java.util.logging.Level.SEVERE);
-        handler = new StreamHandler(outputStream, new SimpleFormatter());
-        logger.addHandler(handler);*/
-
         try {
             validator = new FileValidator(testConfig);
             fileInBytesSmall = generatePdfBytes(250000);
@@ -132,27 +124,13 @@ public class FileValidatorMagicBench {
             e.printStackTrace();
         }
         fileName = "test&test.pdf";
-        
     }
 
-    /*@org.openjdk.jmh.annotations.TearDown(org.openjdk.jmh.annotations.Level.Iteration)
-    public void flushLog() {
-        handler.flush(); 
-        //String loggerOutput = outputStream.toString();
-        try {
-            OutputStream fileOutput = new FileOutputStream("target/jmh/magicBenchTestLogs.txt", false);
-            outputStream.writeTo(fileOutput);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-    
     // Benchmark test for 'validateFile' method with only magic bytes validation
     @Benchmark
     public void benchValidMagic() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName);
     }
-
     // Generate a pdf file with a given size in bytes
     private byte[] generatePdfBytes(int sizeInBytes) throws Exception {
         if (sizeInBytes <= 0) {

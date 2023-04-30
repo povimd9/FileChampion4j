@@ -48,14 +48,21 @@ public class FileValidator {
     private Extensions extensions;
     private StringBuilder sharedMessage = new StringBuilder();
     private String sharedStepMessage = "Step: ";
+    private String errorResponse = "File is not valid.";
     private String fileCategory;
     private String fileName;
     private byte[] originalFile;
-    private String fileChecksum;
     private String mimeString;
     private Path outDir;
     private String fileExtension;
     private String commonFileError = "Error reading file: ";
+    private String commonLogString;
+    private String responseAggregationFail;
+    private int responseMsgCountFail;
+    private StringBuilder sbresponseAggregationFail;
+    private String responseAggregationSuccess;
+    private int responseMsgCountSuccess;
+    private StringBuilder sbresponseAggregationSuccess;
 
     /**
      * This method is used to initiate the class with relevant json configurations
@@ -87,6 +94,72 @@ public class FileValidator {
     }
 
     /**
+     * This method is used to validate the file bytes with existing mime type, typically present in web related file uploads, 
+     * and save the file to the output directory if passed validations.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir,  String mimeString) {
+        logFine("Validating with request mime " + mimeString  + " and storage for file bytes of: " + fileName);
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.originalFile = originalFile;
+        this.mimeString = mimeString;
+        this.outDir = outputDir;
+        return validateFileMain();
+    }
+
+    /**
+     * This method is used to validate the file path with existing mime type, typically present in web related file uploads, 
+     * and save the file to the output directory if passed validations.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir,  String mimeString) {
+        logFine("Validating with request mime " + mimeString  + " and storage for file path of: " + fileName);
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.mimeString = mimeString;
+        this.outDir = outputDir;
+        try {
+            Path path = filePath;
+            originalFile = Files.readAllBytes(path);
+        } catch (IOException e) {
+            logWarn(commonFileError + e.getMessage());
+            throw new IllegalArgumentException(commonFileError + e.getMessage());
+        }
+        return validateFileMain();
+    }
+    
+    /**
+     * This method is used to validate the file as file bytes, with existing mime type, typically present in web related file uploads.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String mimeString) {
+        logFine("Validating with request " + mimeString  + " mime for file bytes of: " + fileName);
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.originalFile = originalFile;
+        this.mimeString = mimeString;
+        return validateFileMain();
+    }
+
+    /**
      * This method is used to validate the file as file bytes, save the file to the output directory if passed validations, and return the results.
      * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
      * @param originalFile (byte[]) - The file to be validated as a byte array.
@@ -96,10 +169,35 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir) {
+        logFine("Validating and Storing file bytes of: " + fileName);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
         this.outDir = outputDir;
+        return validateFileMain();
+    }
+
+    /**
+     * This method is used to validate the file path with existing mime type, typically present in web related file uploads.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName,  String mimeString) {
+        logFine("Validating with request mime " + mimeString  + " for file path of: " + fileName);
+        this.fileCategory = fileCategory;
+        this.fileName = fileName;
+        this.mimeString = mimeString;
+        try {
+            Path path = filePath;
+            originalFile = Files.readAllBytes(path);
+        } catch (IOException e) {
+            logWarn(commonFileError + e.getMessage());
+            throw new IllegalArgumentException(commonFileError + e.getMessage());
+        }
         return validateFileMain();
     }
 
@@ -113,6 +211,7 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir) {
+        logFine("Validating and Storing file path of: " + fileName);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.outDir = outputDir;
@@ -135,6 +234,7 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile,String fileName) {
+        logFine("Validating file bytes of: " + fileName);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
@@ -150,94 +250,9 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName) {
+        logFine("Validating file path of: " + fileName);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
-        try {
-            Path path = filePath;
-            originalFile = Files.readAllBytes(path);
-        } catch (IOException e) {
-            logWarn(commonFileError + e.getMessage());
-            throw new IllegalArgumentException(commonFileError + e.getMessage());
-        }
-        return validateFileMain();
-    }
-
-    /**
-     * This method is used to validate the file as file bytes, with existing mime type, typically present in web related file uploads.
-     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
-     * @param originalFile (byte[]) - The file to be validated as a byte array.
-     * @param fileName (String) - The original name of the file to be validated.
-     * @param mimeString (String) - The mime type of the file to be validated.
-     * @return (ValidationResponse) - The results of the validations.
-     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
-     */
-    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String mimeString) {
-        this.fileCategory = fileCategory;
-        this.fileName = fileName;
-        this.originalFile = originalFile;
-        this.mimeString = mimeString;
-        return validateFileMain();
-    }
-
-    /**
-     * This method is used to validate the file bytes with existing mime type, typically present in web related file uploads, 
-     * and save the file to the output directory if passed validations.
-     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
-     * @param originalFile (byte[]) - The file to be validated as a byte array.
-     * @param fileName (String) - The original name of the file to be validated.
-     * @param outputDir (Path) - The directory to save the file to if it passes validations.
-     * @param mimeString (String) - The mime type of the file to be validated.
-     * @return (ValidationResponse) - The results of the validations.
-     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
-     */
-    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir,  String mimeString) {
-        this.fileCategory = fileCategory;
-        this.fileName = fileName;
-        this.originalFile = originalFile;
-        this.mimeString = mimeString;
-        this.outDir = outputDir;
-        return validateFileMain();
-    }
-
-    /**
-     * This method is used to validate the file path with existing mime type, typically present in web related file uploads, 
-     * and save the file to the output directory if passed validations.
-     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
-     * @param filePath (Path) - The target file path to be validated as a String.
-     * @param fileName (String) - The original name of the file to be validated.
-     * @param outputDir (Path) - The directory to save the file to if it passes validations.
-     * @param mimeString (String) - The mime type of the file to be validated.
-     * @return (ValidationResponse) - The results of the validations.
-     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
-     */
-    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir,  String mimeString) {
-        this.fileCategory = fileCategory;
-        this.fileName = fileName;
-        this.mimeString = mimeString;
-        this.outDir = outputDir;
-        try {
-            Path path = filePath;
-            originalFile = Files.readAllBytes(path);
-        } catch (IOException e) {
-            logWarn(commonFileError + e.getMessage());
-            throw new IllegalArgumentException(commonFileError + e.getMessage());
-        }
-        return validateFileMain();
-    }
-
-    /**
-     * This method is used to validate the file path with existing mime type, typically present in web related file uploads.
-     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
-     * @param filePath (Path) - The target file path to be validated as a String.
-     * @param fileName (String) - The original name of the file to be validated.
-     * @param mimeString (String) - The mime type of the file to be validated.
-     * @return (ValidationResponse) - The results of the validations.
-     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
-     */
-    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName,  String mimeString) {
-        this.fileCategory = fileCategory;
-        this.fileName = fileName;
-        this.mimeString = mimeString;
         try {
             Path path = filePath;
             originalFile = Files.readAllBytes(path);
@@ -254,13 +269,20 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     private ValidationResponse validateFileMain() {
+        commonLogString = String.format(" for file extension: %s", fileExtension);
+        responseAggregationFail = "";
+        responseMsgCountFail = 0;
+        sbresponseAggregationFail = new StringBuilder(responseAggregationFail);
+        responseAggregationSuccess = "";
+        responseMsgCountSuccess = 0;
+        sbresponseAggregationSuccess = new StringBuilder(responseAggregationSuccess);
+
         // Check that the input parameters are not null or empty
         checkMethodInputs(fileCategory, originalFile, fileName);
 
         // Initialize variables
         fileExtension = getFileExtension(fileName);
         String originalFilenameClean = fileName.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}.]", "_");
-        fileChecksum = isBlank(fileChecksum)? calculateChecksum(originalFile) : fileChecksum;
 
         // Log the file type category being validated
         sharedMessage.replace(0, sharedMessage.length(), "Validating ").append(originalFilenameClean).append(", as file type: ").append(fileCategory);
@@ -272,18 +294,27 @@ public class FileValidator {
             if (executionResults.contains(". Failed for step:")) {
                 sharedMessage.replace(0, sharedMessage.length(), "executeBeforePlugins failed for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
                 logWarn(sharedMessage.toString());
-                return new ValidationResponse(false, sharedMessage.toString() , originalFilenameClean, null, null);
-            } else if (executionResults.substring(0, 12).contains(". Error for step:")) {
+                return new ValidationResponse(false, errorResponse, sharedMessage.toString() , originalFilenameClean, null, null);
+            } else if (executionResults.contains(". Error for step:")) {
                 sharedMessage.replace(0, sharedMessage.length(), "Error executing Plugins defined to run before validations for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
-                logWarn(sharedMessage.toString());
+                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("executeBeforePlugins passed with error: ")
+                    .append(executionResults);
+                    responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+                    logFine(responseAggregationSuccess);
+                logWarn("Error in executeBeforePlugins: " + executionResults);
             } else {
+                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("executeBeforePlugins executed successfully: ")
+                    .append(executionResults);
+                    responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+                    logFine(responseAggregationSuccess);
                 logInfo(executionResults);
             }
         }  else {
             sharedMessage.replace(0, sharedMessage.length(), "No before plugins defined for file: ").append(originalFilenameClean);
             logInfo(sharedMessage.toString());
         }
-        
         return (doValidations(originalFilenameClean));
     }
 
@@ -294,14 +325,6 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     private ValidationResponse doValidations(String originalFilenameClean) {
-        String commonLogString = String.format(" for file extension: %s", fileExtension);
-        String responseAggregationFail = "";
-        int responseMsgCountFail = 0;
-        StringBuilder sbresponseAggregationFail = new StringBuilder(responseAggregationFail);
-        String responseAggregationSuccess = "";
-        int responseMsgCountSuccess = 0;
-        StringBuilder sbresponseAggregationSuccess = new StringBuilder(responseAggregationSuccess);
-
         // Check that the file size is not greater than the maximum allowed size, dont continue if it is
         int maxSize;
         try {
@@ -314,12 +337,12 @@ public class FileValidator {
                 .append("File size (")
                 .append(originalFile.length / 1000)
                 .append("KB) exceeds maximum allowed size (")
-                .append((String) extensions.getValidationValue(fileCategory, fileExtension, "max_size"))
+                .append(maxSize)
                 .append("KB)")
                 .append(commonLogString);
             responseAggregationFail = sbresponseAggregationFail.toString();
             logWarn(responseAggregationFail);
-            return new ValidationResponse(false, responseAggregationFail, originalFilenameClean, originalFile, fileChecksum);
+            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, calculateChecksum(originalFile));
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("File size check passed, file size: ")
@@ -361,7 +384,7 @@ public class FileValidator {
             logFine(responseAggregationSuccess);
         }
 
-        // Check header signatures (optional)
+        // Check header signatures
         String headerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, "header_signatures");
         if (!isBlank(headerSignatures) && !containsHeaderSignatures(originalFile, headerSignatures)) {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
@@ -377,7 +400,7 @@ public class FileValidator {
             logFine(responseAggregationSuccess);
         }
 
-        // Check footer signatures (optional)
+        // Check footer signatures
         String footerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, "footer_signatures");
         if (!isBlank(footerSignatures) && !containsFooterSignatures(originalFile, footerSignatures)) {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
@@ -405,13 +428,18 @@ public class FileValidator {
                 responseAggregationFail = sbresponseAggregationFail.toString();
                 logWarn(responseAggregationFail);
             } else if (executionResults.contains(". Error for step:")) {
+                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("executeAfterPlugins passed with error: ")
+                    .append(executionResults);
+                responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+                logFine(responseAggregationSuccess);
                 logWarn("Error in executeAfterPlugins: " + executionResults);
             } else {
                 sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                     .append("executeAfterPlugins executed successfully: ")
                     .append(executionResults);
-                    responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-                    logFine(responseAggregationSuccess);
+                responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+                logFine(responseAggregationSuccess);
             }
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
@@ -419,13 +447,11 @@ public class FileValidator {
             responseAggregationSuccess = sbresponseAggregationSuccess.toString();
             logFine(responseAggregationSuccess);
         }
-            
+
         // Check if file passed all defined validations, return false and reason if not.
         if (responseMsgCountFail > 0) {
             logFine(responseAggregationFail);
-            return new ValidationResponse(false, responseAggregationFail, originalFilenameClean, originalFile, fileChecksum);
-        } else {
-            logInfo(responseAggregationSuccess);
+            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, calculateChecksum(originalFile));
         }
 
         // Check if the file name should be encoded
@@ -434,8 +460,13 @@ public class FileValidator {
         if (isNameEncoding) { 
             sharedMessage.replace(0, sharedMessage.length(), Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8))).append(".").append(fileExtension);
             encodedFileName = sharedMessage.toString();
-            String encodingStatus = String.format("File name: '%s' has been successfully encoded to: '%s'", originalFilenameClean, encodedFileName);
-            logInfo(encodingStatus);
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("File name: ")
+                    .append(originalFilenameClean)
+                    .append(" has been successfully encoded to: ")
+                    .append(encodedFileName);
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logFine(responseAggregationSuccess);
         }
         String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;
 
@@ -445,19 +476,29 @@ public class FileValidator {
             savedFilePath = saveFileToOutputDir(fileCategory, fileExtension, outDir, targetFileName, originalFile);
             if (savedFilePath.contains("Error:")) {
                 // Return valid file response if file failed to save to output directory
-                sharedMessage.replace(0, sharedMessage.length(), "File is valid but failed to save to output directory: ").append(savedFilePath);
-                return new ValidationResponse(true, sharedMessage.toString(), originalFilenameClean, originalFile, fileChecksum);
+                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("File is valid but failed to save to output directory: ")
+                    .append(savedFilePath);
+                responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+                logInfo(responseAggregationSuccess);
+                return new ValidationResponse(true, "File is valid but failed to save to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, calculateChecksum(originalFile));
             }
             // Return valid file response if file was saved to output directory
-            sharedMessage.replace(0, sharedMessage.length(), "File is valid and was saved to output directory: ").append(savedFilePath);
-            return new ValidationResponse(true, sharedMessage.toString() , originalFilenameClean, originalFile, fileChecksum, savedFilePath);
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("File is valid and was saved to output directory: ")
+                .append(savedFilePath);
+            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+            logInfo(responseAggregationSuccess);
+            return new ValidationResponse(true, "File is valid and was saved to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, calculateChecksum(originalFile), savedFilePath);
         }
 
         // Return valid response if file passed all validations but is not meant to be saved to disk
-        sharedMessage.replace(0, sharedMessage.length(), "File is valid: ").append(originalFilenameClean);
-        String validMessage = sharedMessage.toString();
-        logInfo(validMessage);
-        return new ValidationResponse(true, validMessage, originalFilenameClean, originalFile, fileChecksum);
+        sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+            .append("File is valid: ")
+            .append(originalFilenameClean);
+        responseAggregationSuccess = sbresponseAggregationSuccess.toString();
+        logInfo(responseAggregationSuccess);
+        return new ValidationResponse(true, "File is valid", responseAggregationSuccess, originalFilenameClean, originalFile, calculateChecksum(originalFile));
     }
     
 
@@ -687,7 +728,7 @@ public class FileValidator {
         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
             Map<String, Map<String, String>> stepResults = stepConfigs.get(extensionPlugin)
                 .getCliPluginHelper()
-                .execute(fileExtension, originalFile, fileChecksum);    
+                .execute(fileExtension, originalFile);    
             stepResultsMap.putAll(stepResults.get(stepResults.keySet().toArray()[0]));
 
             if (!stepResultsMap.isEmpty() && stepResults.containsKey("Success")) {
@@ -698,11 +739,10 @@ public class FileValidator {
 
                 if (!isBlank(newFilePath)) {
                     try {
-                        Path newFile = new File(stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(".")+1, 
-                        extensionPluginName.length()) + ".filePath")).toPath();
+                        Path newFile = new File(newFilePath).toPath();
                         originalFile = Files.readAllBytes(newFile);
-                        fileChecksum = calculateChecksum(originalFile);
                         deleteTempDir(newFile.getParent().toAbsolutePath());
+                        logFine(String.format("Successfully read plugin expected file: %s", newFilePath));
                     } catch (IOException e) {
                         sharedMessage.replace(0, sharedMessage.length(), "Error reading plugin expected file: ").append(e.getMessage());
                         logWarn(String.format(sharedMessage.toString()));
@@ -712,12 +752,12 @@ public class FileValidator {
                 if (!isBlank(newB64Content)) {
                     try {
                         originalFile = Base64.getDecoder().decode(newB64Content);
+                        logFine("Successfully decoded plugin expected file");
                     } catch (Exception e) {
                         sharedMessage.replace(0, sharedMessage.length(), "Error decoding plugin expected file: ").append(e.getMessage());
                         logWarn(String.format(sharedMessage.toString()));
                         return sharedMessage.toString();
                     }
-                    fileChecksum = calculateChecksum(originalFile);
                 }
             }
             for(Map.Entry<String, String> entry : stepResultsMap.entrySet()) {
@@ -740,8 +780,8 @@ public class FileValidator {
     
     /**
      * isBlank wrapper method for support of Java 8
-     * @param str
-     * @return
+     * @param str (String) the string to check if empty or null
+     * @return boolean (boolean) true if the string is empty or null, false otherwise
      */
     private boolean isBlank(String str) {
         return str == null || str.trim().isEmpty();
@@ -808,16 +848,18 @@ public class FileValidator {
         if (isBlank(fileMimeType)) {
             Path tempFile = saveFileToTempDir(fileExtension, originalFileBytes);
             if (tempFile == null) {
+                logWarn("checkMimeType failed: tempFile is null");
                 return false;
             }
             try {
                 fileMimeType = Files.probeContentType(tempFile);
-                deleteTempDir(tempFile);
             } catch (Exception e) {
                 logWarn("checkMimeType failed: " + e.getMessage());
+            } finally {
+                deleteTempDir(tempFile);
             }
         }
-        return fileMimeType != null && !isBlank(fileMimeType) && fileMimeType.equals(mimeType);
+        return !isBlank(fileMimeType) && fileMimeType.equals(mimeType);
     }
     
     /**

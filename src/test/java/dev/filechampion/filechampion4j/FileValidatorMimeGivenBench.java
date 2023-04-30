@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
@@ -14,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Warmup;
@@ -42,14 +40,13 @@ import org.openjdk.jmh.annotations.Setup;
 @Measurement(iterations = 5, time = 20, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class FileValidatorMimeGivenBench {
-    private Path filePath;
     private FileValidator validator;
     private byte[] fileInBytesSmall;
     private String fileName;
-    public static int testConfigCounter = 0;
-    private static final String benchOutputFile = "benchmarks/benchResults.txt";
+    private String mimeString = "application/pdf";
+    private String benchOutputFile = "benchmarks/benchResults.txt";
     
-    private JSONObject testConfig = 
+    private JSONObject testMimeConfig = 
     new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -74,7 +71,7 @@ public class FileValidatorMimeGivenBench {
     @Test
     public void fileValidatorSmallBench() throws RunnerException {
         Options opt = new OptionsBuilder()
-        .include(FileValidatorMimeBench.class.getSimpleName())
+        .include(FileValidatorMimeGivenBench.class.getSimpleName())
         .forks(3)
         .mode(Mode.All)
         .output("benchmarks/results.txt")
@@ -118,21 +115,22 @@ public class FileValidatorMimeGivenBench {
         }
     }
 
-    @Setup(org.openjdk.jmh.annotations.Level.Iteration)
+    @Setup(org.openjdk.jmh.annotations.Level.Invocation)
     public void benchSetUp() throws IOException {
         try {
-            validator = new FileValidator(testConfig);
+            validator = new FileValidator(testMimeConfig);
             fileInBytesSmall = generatePdfBytes(250000);
-            fileName = "testFile.pdf";
         } catch (Exception e) {
             e.printStackTrace();
         }
+        fileName = "test&test.pdf";
+
     }
 
     // Benchmark test for 'validateFile' file path method with only mime validation
     @Benchmark
     public void benchValidMime() throws Exception {
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, "aplication/pdf");
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, "application/pdf");
     }
 
     // Generate a pdf file with a given size in bytes

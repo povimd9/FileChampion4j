@@ -417,7 +417,7 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(jsonObject);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid, got: " + fileValidationResults.resultsInfo());
-        assertTrue(fileValidationResults.resultsInfo().contains("timeout"), "Expected validation response to contain timeout");
+        assertTrue(fileValidationResults.resultsDetails().contains("timeout"), "Expected validation response to contain timeout");
     }
 
     // Test step failure
@@ -430,7 +430,7 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(jsonObject);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
-        assertTrue(fileValidationResults.resultsInfo().contains("Error"), "Expected validation response to contain fail");
+        assertTrue(fileValidationResults.resultsDetails().contains("Error"), "Expected validation response to contain fail");
     }
 
     // Test step failure before validations
@@ -443,7 +443,7 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(jsonObject);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
-        assertTrue(fileValidationResults.resultsInfo().contains("Error"), "Expected validation response to contain fail");
+        assertTrue(fileValidationResults.resultsDetails().contains("Error"), "Expected validation response to contain fail");
     }
 
     // Test non existing plugin load failure
