@@ -40,6 +40,7 @@ jobs:
         with:
           java-version: '${{ matrix.java-version }}'
           distribution: 'corretto'
+          cache: 'maven'
 
       - name: Make mvnw executable (${{ matrix.os }})
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
@@ -90,6 +91,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'maven'
 
       - run: |
           echo "Run, Build Application using script"
@@ -110,6 +112,7 @@ jobs:
         with:
           java-version: '8'
           distribution: 'corretto'
+          cache: 'maven'
           
       - name: Git checkout
         uses: actions/checkout@v3
