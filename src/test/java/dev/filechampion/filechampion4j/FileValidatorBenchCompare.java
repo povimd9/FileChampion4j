@@ -52,7 +52,10 @@ public class FileValidatorBenchCompare {
             List<String> failedResultsList = new ArrayList<>();
 
             // Test each result against the previous result, based on previous results keys to support new tests
-            for (String key : previousResultslines.keySet()) {
+            for (String key : currentResultslines.keySet()) {
+                if (!previousResultslines.containsKey(key)) {
+                    continue;
+                }
                 String benchResults = compareResultLines(key , currentResultslines.get(key), previousResultslines.get(key), key.contains("Throughput ")? true : false);
                 if (benchResults.contains("' worse, vs '")) {
                     failedResultsList.add(benchResults);
