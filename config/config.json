@@ -1,6 +1,6 @@
 {
   "Validations": {
-    "Documents": {
+    "SmallDocuments": {
       "pdf": {
         "mime_type": "application/pdf",
         "magic_bytes": "25504446",
@@ -10,7 +10,8 @@
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
         "name_encoding": true,
-        "max_size": "126000",
+        "max_size": "5000",
+        "add_checksum": true,
         "extension_plugins": ["clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
       },
       "doc": {
@@ -22,7 +23,34 @@
         "change_ownership_user": "User1",
         "change_ownership_mode": "r",
         "name_encoding": true,
-        "max_size": "4000"
+        "max_size": "5000"
+      }
+    },
+    "LargeDocuments": {
+      "pdf": {
+        "mime_type": "application/pdf",
+        "magic_bytes": "25504446",
+        "header_signatures": "25504446",
+        "footer_signatures": "2525454f46",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "150000",
+        "add_checksum": false,
+        "extension_plugins": ["clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
+      },
+      "doc": {
+        "mime_type": "application/msword",
+        "magic_bytes": "D0CF11E0A1B11AE1",
+        "header_signatures": "D0CF11E0A1B11AE1",
+        "footer_signatures": "0000000000000000",
+        "change_ownership": true,
+        "change_ownership_user": "User1",
+        "change_ownership_mode": "r",
+        "name_encoding": true,
+        "max_size": "150000",
+        "add_checksum": false
       }
     },
     "Images": {

@@ -56,7 +56,7 @@ public class Extensions {
     private List<String> stringKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
     "footer_signatures", "change_ownership_user", "change_ownership_mode",
     "max_size", "extension_plugins");
-    private List<String> boolKeyValues = Arrays.asList("change_ownership", "name_encoding");
+    private List<String> boolKeyValues = Arrays.asList("change_ownership", "name_encoding", "add_checksum");
 
     /**
      * Constructor for Extensions class
