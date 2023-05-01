@@ -1,6 +1,5 @@
 package dev.filechampion.filechampion4j;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -13,13 +12,22 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class is used to calculate the SHA256 checksum of a file.
+ * It is optimized for large files and uses multiple threads to
+ * calculate the checksum in parallel.
+ */
 public class SH256Calculate {
-
     private static final int MIN_CHUNK_SIZE = 1024 * 1024; // 0.5 MB
     private static final int MAX_CHUNK_SIZE = 5 * 1024 * 1024; // 2 MB
     private final byte[] inputData;
     private int byteSize;
 
+    /**
+     * Creates a new instance of the SH256Calculate class.
+     * @param inputData (bytep[]) The input data to calculate the checksum for.
+     * @throws IllegalArgumentException Thrown if the input data is null or empty.
+     */
     public SH256Calculate(byte[] inputData) throws IllegalArgumentException {
         if (inputData == null || inputData.length == 0) {
             throw new IllegalArgumentException("Input data must contain at least one byte.");
@@ -28,17 +36,38 @@ public class SH256Calculate {
         this.byteSize = inputData.length;
     }
 
+    /**
+    * Calculates the SHA256 checksum for the input data.
+    * @return (byte[]) The SHA256 checksum.
+    * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
+    * @throws InterruptedException Thrown if the thread is interrupted.
+    * @throws ExecutionException Thrown if the execution fails.
+    * @throws IOException Thrown if an I/O error occurs.
+    */
     public byte[] getChecksum() throws NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException {
         if (byteSize < MIN_CHUNK_SIZE * 2) {
-            return calculateSmallSHA256Checksum(inputData);
+            return calculateSmallSHA256Checksum();
         }
         return calculateSHA256Checksum() ;
     }
 
-    private byte[] calculateSmallSHA256Checksum(byte[] fileBytes) throws NoSuchAlgorithmException {
-        return MessageDigest.getInstance("SHA-256").digest(fileBytes);
+    /**
+     * Calculates the SHA256 checksum for small input data.
+     * @return (byte[]) The SHA256 checksum.
+     * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
+     */
+    private byte[] calculateSmallSHA256Checksum() throws NoSuchAlgorithmException {
+        return MessageDigest.getInstance("SHA-256").digest(inputData);
     }
 
+    /**
+     * Calculates the SHA256 checksum for large input data.
+     * @return (byte[]) The SHA256 checksum.
+     * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
+     * @throws InterruptedException Thrown if the thread is interrupted.
+     * @throws ExecutionException Thrown if the execution fails.
+     * @throws IOException Thrown if an I/O error occurs.
+     */
     private byte[] calculateSHA256Checksum() throws NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException  {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         ByteArrayInputStream bais = new ByteArrayInputStream(inputData);
@@ -64,6 +93,9 @@ public class SH256Calculate {
         return md.digest();
     }
 
+    /**
+     * This class is used to calculate the SHA256 checksum for a chunk of data.
+     */
     private static class ChecksumTask implements Runnable {
         private MessageDigest md;
         private byte[] buffer;
