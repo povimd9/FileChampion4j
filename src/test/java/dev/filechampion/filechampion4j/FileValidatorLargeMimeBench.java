@@ -123,6 +123,6 @@ public class FileValidatorLargeMimeBench {
     // Benchmark test for 'validateFile' method with only magic bytes validation
     @Benchmark
     public void benchValidMagic() throws Exception {
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesLarge, fileName);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, "application/pdf");
     }
 }

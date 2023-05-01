@@ -47,8 +47,8 @@ public class FileValidatorBenchCompare {
         }
 
         try {
-            HashMap<String, Double> previousResultslines = loadMap(resultsBlocs[0].split("\\r?\\n"));
-            HashMap<String, Double> currentResultslines = loadMap(resultsBlocs[1].split("\\r?\\n"));
+            HashMap<String, Double> currentResultslines = loadMap(resultsBlocs[0].split("\\r?\\n"));
+            HashMap<String, Double> previousResultslines = loadMap(resultsBlocs[1].split("\\r?\\n"));
             List<String> failedResultsList = new ArrayList<>();
 
             // Test each result against the previous result, based on previous results keys to support new tests

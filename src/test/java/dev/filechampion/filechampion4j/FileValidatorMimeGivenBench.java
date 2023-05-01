@@ -78,19 +78,19 @@ public class FileValidatorMimeGivenBench {
         for(RunResult runResult : runResults) {
             switch(i) {
                 case 0:
-                contentToAppend = "Given Mime Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
+                contentToAppend = "Mime Given Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
                     break;
                 case 1:
-                contentToAppend = "Given Mime Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 2:
-                contentToAppend = "Given Mime Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 3:
-                contentToAppend = "Given Mime Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 default:
-                contentToAppend = "Given Mime Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
             }
             
