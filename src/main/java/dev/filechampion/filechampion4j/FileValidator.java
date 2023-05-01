@@ -971,8 +971,9 @@ public class FileValidator {
      */
     private String calculateChecksum(byte[] fileBytes) {
         try {
-            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
-            return new BigInteger(1, hash).toString(16);
+            SH256Calculate paralChecksum = new SH256Calculate(fileBytes);
+            byte[] checksum = paralChecksum.getChecksum();
+            return new BigInteger(1, checksum).toString(16);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
