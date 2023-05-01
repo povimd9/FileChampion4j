@@ -48,6 +48,8 @@ public class Extensions {
     private Map<String, Map<String, Object>> extensionsMap;
     private Map<String, Object> validationsMap;
     private Map<String, Object> validationCache = new HashMap<>();
+    private String sharedMessage1 = "Unsupported value type: ";
+    private String sharedMessage2 = " for key: ";
     private List<String> allowedKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
         "footer_signatures", "change_ownership", "change_ownership_user", "change_ownership_mode",
         "name_encoding", "max_size", "extension_plugins");
@@ -89,10 +91,19 @@ public class Extensions {
     private void mapConfiguredExtensions(){
         for (Map.Entry<String, Object> extensionEntry : categoriesMap.entrySet().iterator().next().getValue().entrySet()) {
             String extension = extensionEntry.getKey();
-            extensionsMap.put(extensionEntry.getKey(), (HashMap) extensionEntry.getValue());
-            sbLogMessage.replace(0, sbLogMessage.length(), extension).append(" ")
-                .append(extensionEntry.getValue().toString());
-            logFine(sbLogMessage.toString());
+            if (extensionEntry.getValue() instanceof HashMap) {
+                extensionsMap.put(extensionEntry.getKey(), (HashMap) extensionEntry.getValue());
+                sbLogMessage.replace(0, sbLogMessage.length(), extension).append(" ")
+                    .append(extensionEntry.getValue().toString());
+                logFine(sbLogMessage.toString());
+            } else {
+                sbLogMessage.replace(0, sbLogMessage.length(), sharedMessage1)
+                    .append(extensionEntry.getValue().getClass().getName())
+                    .append(sharedMessage2)
+                    .append(extension);
+                logWarn(sbLogMessage.toString());
+                throw new IllegalArgumentException(sbLogMessage.toString());
+            }
         }
         if (extensionsMap.entrySet().iterator().next().getValue().entrySet().isEmpty()) {
             sbLogMessage.replace(0, sbLogMessage.length(), "At least one validation must be configured");
@@ -117,9 +128,9 @@ public class Extensions {
                 } else if (value instanceof ArrayList ) {
                     setArrayList(validation, value);
                 } else {
-                    sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+                    sbLogMessage.replace(0, sbLogMessage.length(),  sharedMessage1)
                             .append(value.getClass().getName())
-                            .append(" for key: ")
+                            .append(sharedMessage2)
                             .append(validation);
                     throw new IllegalArgumentException(sbLogMessage.toString());
                 }
@@ -147,9 +158,9 @@ public class Extensions {
         if (stringKeyValues.contains(validation)) {
             validationsMap.put(validation, value.toString());
         } else {
-            sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+            sbLogMessage.replace(0, sbLogMessage.length(),  sharedMessage1)
                 .append(value.getClass().getName())
-                .append(" for key: ")
+                .append(sharedMessage2)
                 .append(validation);
             logWarn(sbLogMessage.toString());
             throw new IllegalArgumentException(sbLogMessage.toString());
@@ -165,9 +176,9 @@ public class Extensions {
         if (boolKeyValues.contains(validation)) {
             validationsMap.put(validation, (Boolean) value);
         } else {
-            sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+            sbLogMessage.replace(0, sbLogMessage.length(),  sharedMessage1)
                 .append(value.getClass().getName())
-                .append(" for key: ")
+                .append(sharedMessage2)
                 .append(validation);
             logWarn(sbLogMessage.toString());
             throw new IllegalArgumentException(sbLogMessage.toString());
@@ -183,9 +194,9 @@ public class Extensions {
         if (validation.equals("extension_plugins")) {
             validationsMap.put(validation, (ArrayList) value);
         } else {
-            sbLogMessage.replace(0, sbLogMessage.length(),  "Unsupported value type: ")
+            sbLogMessage.replace(0, sbLogMessage.length(),  sharedMessage1)
                 .append(value.getClass().getName())
-                .append(" for key: ")
+                .append(sharedMessage2)
                 .append(validation);
             logWarn(sbLogMessage.toString());
             throw new IllegalArgumentException(sbLogMessage.toString());

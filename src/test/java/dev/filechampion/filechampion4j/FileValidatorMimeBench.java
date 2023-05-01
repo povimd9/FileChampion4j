@@ -127,7 +127,7 @@ public class FileValidatorMimeBench {
 
         try {
             validator = new FileValidator(testConfig);
-            fileInBytesSmall = generatePdfBytes(250000);
+            fileInBytesSmall = Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.SequenceInputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -27,7 +29,7 @@ import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 public class CliPluginHelper {
     private StepConfig singleStepConfig;
     private int timeout;
-    private String ERRST_STRING = "Error: ";
+    private String errString = "Error: ";
     private String endpoint;
     private String responseConfig;
     private StringBuilder logMessage = new StringBuilder();
@@ -69,10 +71,9 @@ public class CliPluginHelper {
      * Executes the CLI command
      * @param fileExtension (String) - the file extension
      * @param fileContent (byte[]) - the file content
-     * @param fileChecksum (String) - the file checksum
      * @return Map<String, Map<String, String>> - the results map
      */
-    public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent, String fileChecksum) { 
+    public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent) { 
     String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
         Map<String, String> responsePatterns = new HashMap<>();
@@ -80,13 +81,13 @@ public class CliPluginHelper {
 
         filePathRaw = saveFileToTempDir(fileExtension, fileContent);
         if (filePathRaw == null) {
-            responsePatterns.put(ERRST_STRING, "Failed to save file to temporary directory");
-            responseMap.put(ERRST_STRING, responsePatterns);
+            responsePatterns.put(errString, "Failed to save file to temporary directory");
+            responseMap.put(errString, responsePatterns);
             return responseMap;
         }
 
         String filePath = filePathRaw.toString();
-        prepEndpoint(filePath, fileContent, fileChecksum);
+        prepEndpoint(filePath, fileContent);
         logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(" endpoint: ").append(endpoint);
         logFine(logMessage.toString());
 
@@ -95,7 +96,7 @@ public class CliPluginHelper {
             logFine(singleStepConfig.getName() + " result: " + result);
         } catch (IOException|NullPointerException|InterruptedException e) {
             Thread.currentThread().interrupt();
-            responsePatterns.put(ERRST_STRING, e.getMessage());
+            responsePatterns.put(errString, e.getMessage());
         }
 
         String expectedResults = responseConfig.substring(0, responseConfig.indexOf("${")>-1?
@@ -109,7 +110,7 @@ public class CliPluginHelper {
             logMessage.replace(0, logMessage.length(), "Error, expected: \"")
                     .append(expectedResults).append("\", received: ");
             responsePatterns.put(logMessage.toString(), result);
-            responseMap.put(ERRST_STRING, responsePatterns);
+            responseMap.put(errString, responsePatterns);
             deleteTempDir(filePathRaw);
             return responseMap;
         }
@@ -131,7 +132,6 @@ public class CliPluginHelper {
             return responsePatterns;
 
         }
-    
         do {
             String placeholderName = placeholderMatcher.group(1);
             String placeholderValue;
@@ -177,12 +177,12 @@ public class CliPluginHelper {
      * Prepares the endpoint command by replacing the placeholders with the actual values
      * @param filePath (String) - the path to the file
      * @param fileContent (byte[]) - the file content
-     * @param fileChecksum (String) - the file checksum
      */
-    private void prepEndpoint(String filePath, byte[] fileContent, String fileChecksum) {
-        String newEndpoint = endpoint.replace("${filePath}", filePath)
-        .replace("${fileContent}", Base64.getEncoder().encodeToString(fileContent))
-        .replace("${fileChecksum}", fileChecksum);
+    private void prepEndpoint(String filePath, byte[] fileContent) {
+        
+        String newEndpoint = endpoint.contains("${filePath}") ? endpoint.replace("${filePath}", filePath) : endpoint;
+        newEndpoint = newEndpoint.contains("${fileContent}") ? newEndpoint.replace("${fileContent}", Base64.getEncoder().encodeToString(fileContent)) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum}") ? newEndpoint.replace("${fileChecksum}", calculateChecksum(fileContent)) : newEndpoint;
         endpoint = newEndpoint;
     }
 
@@ -218,15 +218,24 @@ public class CliPluginHelper {
         SequenceInputStream sequenceInputStream = new SequenceInputStream(inputStream, errorStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(sequenceInputStream));
         try(Scanner scanner = new Scanner(bufferedReader).useDelimiter("\\A")){
-        
-        String results;
-        if (exitCode == 143 || exitCode == 1) {
-            if (System.currentTimeMillis() - timeoutCounter > timeout * 1000) {
+            String results;
+            if (exitCode == 143 || exitCode == 1) {
+                if (System.currentTimeMillis() - timeoutCounter > timeout * 1000) {
+                    bufferedReader.close();
+                    sequenceInputStream.close();
+                    errorStream.close();
+                    inputStream.close();
+                    logMessage.replace(0, logMessage.length(), errString).append("Process timeout: ").append(command);
+                    logWarn(logMessage.toString());
+                    return logMessage.toString();
+                }
+                results = scanner.hasNext() ? scanner.next() : "";
                 bufferedReader.close();
                 sequenceInputStream.close();
                 errorStream.close();
                 inputStream.close();
-                logMessage.replace(0, logMessage.length(), ERRST_STRING).append("Process timeout: ").append(command);
+                timer.cancel();
+                logMessage.replace(0, logMessage.length(), errString).append(command) .append("Process failed: ").append(results);
                 logWarn(logMessage.toString());
                 return logMessage.toString();
             }
@@ -236,23 +245,18 @@ public class CliPluginHelper {
             errorStream.close();
             inputStream.close();
             timer.cancel();
-            logMessage.replace(0, logMessage.length(), ERRST_STRING).append(command) .append("Process failed: ").append(results);
-            logWarn(logMessage.toString());
-            return logMessage.toString();
+            logFine(results);
+            return results;
         }
-
-        results = scanner.hasNext() ? scanner.next() : "";
-        bufferedReader.close();
-        sequenceInputStream.close();
-        errorStream.close();
-        inputStream.close();
-        timer.cancel();
-        logFine(results);
-        return results;
-    }
     }
 
-    // Save the file to temporary directory for analysis
+    
+    /**
+     * Saves the file to a temporary directory
+     * @param fileExtension (String) - the file extension
+     * @param originalFile (byte[]) - the file content
+     * @return Path - the path to the file
+     */
     private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
         Path tempFilePath;
         try {
@@ -268,7 +272,11 @@ public class CliPluginHelper {
         }
     }
 
-    // Explicitly delete the temporary directory and file
+    /**
+     * Deletes the temporary directory
+     * @param tempFilePath (Path) - the path to the temporary directory
+     * @return Boolean - true if the directory was deleted successfully, false otherwise
+     */
     private Boolean deleteTempDir(Path tempFilePath) {
         try (Stream<Path> walk = Files.walk(tempFilePath)) {
             walk.sorted(Comparator.reverseOrder())
@@ -279,6 +287,21 @@ public class CliPluginHelper {
             logMessage.replace(0, logMessage.length(), "Error deleteTempDir failed: ").append(e.getMessage());
             logWarn(logMessage.toString());
             return false;
+        }
+    }
+
+    /**
+     * Calculate the checksum of the file
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @return String (String) the SHA-256 checksum of the file
+     */
+    private String calculateChecksum(byte[] fileBytes) {
+        try {
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
+            return new BigInteger(1, hash).toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

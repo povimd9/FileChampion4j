@@ -41,18 +41,21 @@ public class FileValidatorBenchCompare {
                     resultsBlocs[1] += line + System.lineSeparator();
                 }
             });
-            System.out.println("Loaded results from benchResults.txt file" + resultsBlocs[0] + resultsBlocs[1]);
+            System.out.println("Loaded results from " + benchOutputFile + " file: " + System.lineSeparator() + resultsBlocs[0] + System.lineSeparator() + resultsBlocs[1]);
         } catch (IOException e) {
             System.out.println("Failed to load results from" + benchOutputFile + " file: " + e.getMessage());
         }
 
         try {
-            HashMap<String, Double> previousResultslines = loadMap(resultsBlocs[0].split("\\r?\\n"));
             HashMap<String, Double> currentResultslines = loadMap(resultsBlocs[1].split("\\r?\\n"));
+            HashMap<String, Double> previousResultslines = loadMap(resultsBlocs[0].split("\\r?\\n"));
             List<String> failedResultsList = new ArrayList<>();
 
             // Test each result against the previous result, based on previous results keys to support new tests
-            for (String key : previousResultslines.keySet()) {
+            for (String key : currentResultslines.keySet()) {
+                if (!previousResultslines.containsKey(key)) {
+                    continue;
+                }
                 String benchResults = compareResultLines(key , currentResultslines.get(key), previousResultslines.get(key), key.contains("Throughput ")? true : false);
                 if (benchResults.contains("' worse, vs '")) {
                     failedResultsList.add(benchResults);

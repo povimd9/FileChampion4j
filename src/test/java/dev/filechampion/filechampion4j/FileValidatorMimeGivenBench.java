@@ -2,19 +2,14 @@ package dev.filechampion.filechampion4j;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Warmup;
@@ -24,15 +19,11 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -42,14 +33,12 @@ import org.openjdk.jmh.annotations.Setup;
 @Measurement(iterations = 5, time = 20, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class FileValidatorMimeGivenBench {
-    private Path filePath;
     private FileValidator validator;
     private byte[] fileInBytesSmall;
     private String fileName;
-    public static int testConfigCounter = 0;
-    private static final String benchOutputFile = "benchmarks/benchResults.txt";
+    private String benchOutputFile = "benchmarks/benchResults.txt";
     
-    private JSONObject testConfig = 
+    private JSONObject testMimeConfig = 
     new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
@@ -74,7 +63,7 @@ public class FileValidatorMimeGivenBench {
     @Test
     public void fileValidatorSmallBench() throws RunnerException {
         Options opt = new OptionsBuilder()
-        .include(FileValidatorMimeBench.class.getSimpleName())
+        .include(FileValidatorMimeGivenBench.class.getSimpleName())
         .forks(3)
         .mode(Mode.All)
         .output("benchmarks/results.txt")
@@ -89,19 +78,19 @@ public class FileValidatorMimeGivenBench {
         for(RunResult runResult : runResults) {
             switch(i) {
                 case 0:
-                contentToAppend = "Given Mime Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
+                contentToAppend = "Mime Given Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
                     break;
                 case 1:
-                contentToAppend = "Given Mime Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 2:
-                contentToAppend = "Given Mime Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 3:
-                contentToAppend = "Given Mime Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 default:
-                contentToAppend = "Given Mime Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Mime Given Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
             }
             
@@ -118,45 +107,21 @@ public class FileValidatorMimeGivenBench {
         }
     }
 
-    @Setup(org.openjdk.jmh.annotations.Level.Iteration)
+    @Setup(org.openjdk.jmh.annotations.Level.Invocation)
     public void benchSetUp() throws IOException {
         try {
-            validator = new FileValidator(testConfig);
-            fileInBytesSmall = generatePdfBytes(250000);
-            fileName = "testFile.pdf";
+            validator = new FileValidator(testMimeConfig);
+            fileInBytesSmall = Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        fileName = "test&test.pdf";
+
     }
 
     // Benchmark test for 'validateFile' file path method with only mime validation
     @Benchmark
     public void benchValidMime() throws Exception {
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, "aplication/pdf");
-    }
-
-    // Generate a pdf file with a given size in bytes
-    private byte[] generatePdfBytes(int sizeInBytes) throws Exception {
-        if (sizeInBytes <= 0) {
-            throw new IllegalArgumentException("Size in Bytes must be a positive value.");
-        }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Document document = new Document(PageSize.A4);
-        PdfWriter writer = PdfWriter.getInstance(document, baos);
-        writer.setFullCompression();
-        writer.setCompressionLevel(0);
-        document.open();
-        String content = UUID.randomUUID().toString() + UUID.randomUUID().toString();
-        int contentLength = content.getBytes().length;
-        while (baos.size() < sizeInBytes) {
-            int iterations = (sizeInBytes - baos.size()) / contentLength;
-            for (int i = 0; i < iterations; i++) {
-                document.add(new Paragraph(content));
-            }
-            writer.flush();
-        }
-        document.close();
-        writer.close();
-        return baos.toByteArray();
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, "application/pdf");
     }
 }
