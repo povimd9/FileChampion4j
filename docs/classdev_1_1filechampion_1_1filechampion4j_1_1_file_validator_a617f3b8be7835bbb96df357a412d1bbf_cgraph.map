@@ -1,13 +1,12 @@
 <map id="dev.filechampion.filechampion4j.FileValidator.executeBeforePlugins" name="dev.filechampion.filechampion4j.FileValidator.executeBeforePlugins">
-<area shape="rect" id="node1" title=" " alt="" coords="5,248,229,288"/>
-<area shape="rect" id="node2" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a00a7f2979f0321f1823ce815ecd20945" title=" " alt="" coords="277,156,484,196"/>
-<area shape="rect" id="node7" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a94cfea52d37b0b2b2e69ef72211feeb3" title=" " alt="" coords="535,248,741,288"/>
-<area shape="rect" id="node8" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac3de7a6e3faa8e7f76d0d3705e02a42d" title=" " alt="" coords="277,312,484,352"/>
-<area shape="rect" id="node3" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af3055195e4109920308326f7d807cc29" title=" " alt="" coords="532,5,744,45"/>
-<area shape="rect" id="node4" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a8e5b65357971125d0d18f1ca1a303a82" title=" " alt="" coords="535,69,741,109"/>
-<area shape="rect" id="node5" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af46946cfe82bbc2234cf895bd8f4ef80" title=" " alt="" coords="792,99,999,139"/>
-<area shape="rect" id="node6" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a802b48ac84041a593048ed535c839940" title=" " alt="" coords="535,184,741,224"/>
-<area shape="rect" id="node9" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441" title=" " alt="" coords="535,312,741,352"/>
-<area shape="rect" id="node11" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50" title=" " alt="" coords="535,376,741,416"/>
-<area shape="rect" id="node10" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482" title=" " alt="" coords="792,312,999,352"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,184,229,224"/>
+<area shape="rect" id="node2" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a00a7f2979f0321f1823ce815ecd20945" title=" " alt="" coords="277,120,484,160"/>
+<area shape="rect" id="node6" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a94cfea52d37b0b2b2e69ef72211feeb3" title=" " alt="" coords="532,184,739,224"/>
+<area shape="rect" id="node7" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac3de7a6e3faa8e7f76d0d3705e02a42d" title=" " alt="" coords="277,248,484,288"/>
+<area shape="rect" id="node3" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a8e5b65357971125d0d18f1ca1a303a82" title=" " alt="" coords="532,5,739,45"/>
+<area shape="rect" id="node4" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af46946cfe82bbc2234cf895bd8f4ef80" title=" " alt="" coords="787,35,993,75"/>
+<area shape="rect" id="node5" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a802b48ac84041a593048ed535c839940" title=" " alt="" coords="532,120,739,160"/>
+<area shape="rect" id="node8" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441" title=" " alt="" coords="532,248,739,288"/>
+<area shape="rect" id="node10" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50" title=" " alt="" coords="532,312,739,352"/>
+<area shape="rect" id="node9" href="$classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482" title=" " alt="" coords="787,248,993,288"/>
 </map>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['calculatechecksum_0',['calculateChecksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af3055195e4109920308326f7d807cc29',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['calculatechecksum_0',['calculateChecksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html#a1909fb4ef2f9e8a3029bbc8c921bc2fa',1,'dev.filechampion.filechampion4j.CliPluginHelper.calculateChecksum()'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af3055195e4109920308326f7d807cc29',1,'dev.filechampion.filechampion4j.FileValidator.calculateChecksum()']]],
   ['changefileacl_1',['changeFileAcl',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca',1,'dev::filechampion::filechampion4j::FileAclHelper']]],
   ['checkfilesize_2',['checkFileSize',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a578f3eed384beb9cc9e15a648b2722b6',1,'dev::filechampion::filechampion4j::FileValidator']]],
   ['checkinputs_3',['checkInputs',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441',1,'dev::filechampion::filechampion4j::Extensions']]],
