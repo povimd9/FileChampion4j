@@ -17,6 +17,8 @@ var classdev_1_1filechampion_1_1filechampion4j_1_1_extensions =
     [ "extensionsMap", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320", null ],
     [ "LOGGER", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c", null ],
     [ "sbLogMessage", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb", null ],
+    [ "sharedMessage1", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0", null ],
+    [ "sharedMessage2", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a", null ],
     [ "stringKeyValues", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a90d91f0bf36cbb203c321674c977ea07", null ],
     [ "validationCache", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6", null ],
     [ "validationsMap", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624", null ]
