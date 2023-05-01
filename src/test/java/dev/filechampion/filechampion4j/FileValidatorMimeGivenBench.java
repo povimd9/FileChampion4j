@@ -2,14 +2,11 @@ package dev.filechampion.filechampion4j;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -22,15 +19,11 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -43,7 +36,6 @@ public class FileValidatorMimeGivenBench {
     private FileValidator validator;
     private byte[] fileInBytesSmall;
     private String fileName;
-    private String mimeString = "application/pdf";
     private String benchOutputFile = "benchmarks/benchResults.txt";
     
     private JSONObject testMimeConfig = 
@@ -119,7 +111,7 @@ public class FileValidatorMimeGivenBench {
     public void benchSetUp() throws IOException {
         try {
             validator = new FileValidator(testMimeConfig);
-            fileInBytesSmall = generatePdfBytes(250000);
+            fileInBytesSmall = Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,30 +123,5 @@ public class FileValidatorMimeGivenBench {
     @Benchmark
     public void benchValidMime() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName, "application/pdf");
-    }
-
-    // Generate a pdf file with a given size in bytes
-    private byte[] generatePdfBytes(int sizeInBytes) throws Exception {
-        if (sizeInBytes <= 0) {
-            throw new IllegalArgumentException("Size in Bytes must be a positive value.");
-        }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Document document = new Document(PageSize.A4);
-        PdfWriter writer = PdfWriter.getInstance(document, baos);
-        writer.setFullCompression();
-        writer.setCompressionLevel(0);
-        document.open();
-        String content = UUID.randomUUID().toString() + UUID.randomUUID().toString();
-        int contentLength = content.getBytes().length;
-        while (baos.size() < sizeInBytes) {
-            int iterations = (sizeInBytes - baos.size()) / contentLength;
-            for (int i = 0; i < iterations; i++) {
-                document.add(new Paragraph(content));
-            }
-            writer.flush();
-        }
-        document.close();
-        writer.close();
-        return baos.toByteArray();
     }
 }

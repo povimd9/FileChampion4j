@@ -2,13 +2,11 @@ package dev.filechampion.filechampion4j;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
-import java.util.UUID;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -20,11 +18,6 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.State;
@@ -121,7 +114,7 @@ public class FileValidatorSigBench {
 
         try {
             validator = new FileValidator(testConfig);
-            fileInBytesSmall = generatePdfBytes(250000);
+            fileInBytesSmall = Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,30 +138,5 @@ public class FileValidatorSigBench {
     @Benchmark
     public void benchValidSig() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesSmall, fileName);
-    }
-
-    // Generate a pdf file with a given size in bytes
-    private byte[] generatePdfBytes(int sizeInBytes) throws Exception {
-        if (sizeInBytes <= 0) {
-            throw new IllegalArgumentException("Size in Bytes must be a positive value.");
-        }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Document document = new Document(PageSize.A4);
-        PdfWriter writer = PdfWriter.getInstance(document, baos);
-        writer.setFullCompression();
-        writer.setCompressionLevel(0);
-        document.open();
-        String content = UUID.randomUUID().toString() + UUID.randomUUID().toString();
-        int contentLength = content.getBytes().length;
-        while (baos.size() < sizeInBytes) {
-            int iterations = (sizeInBytes - baos.size()) / contentLength;
-            for (int i = 0; i < iterations; i++) {
-                document.add(new Paragraph(content));
-            }
-            writer.flush();
-        }
-        document.close();
-        writer.close();
-        return baos.toByteArray();
     }
 }
