@@ -28,6 +28,7 @@ jobs:
         with:
           java-version: 8
           distribution: 'corretto'
+          cache: 'maven'
         env:
           JAVA8_HOME: ${{ env.JAVA_HOME }}
 
