@@ -118,7 +118,7 @@ public class FileValidatorSigBench {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fileName = "test&test.pdf";
+        fileName = "testSmall.pdf";
         
     }
 

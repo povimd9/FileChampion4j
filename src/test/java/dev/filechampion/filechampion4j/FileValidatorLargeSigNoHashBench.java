@@ -57,15 +57,14 @@ public class FileValidatorLargeSigNoHashBench {
     + "      \"change_ownership_user\": \"User1\",\r\n"
     + "      \"change_ownership_mode\": \"r\",\r\n"
     + "      \"name_encoding\": true,\r\n"
-    + "      \"max_size\": \"4000\",\r\n"
-    + "      \"add_checksum\": false\r\n"
+    + "      \"max_size\": \"4000\"\r\n"
     + "    }\r\n"
     + "  }\r\n"
     + "}\r\n"
     + "}");
 
     @Test
-    public void fileValidatorSmallBench() throws RunnerException {
+    public void fileValidatorSigLargeNoHashBench() throws RunnerException {
         Options opt = new OptionsBuilder()
         .include(FileValidatorLargeSigNoHashBench.class.getSimpleName())
         .forks(2)
@@ -85,7 +84,7 @@ public class FileValidatorLargeSigNoHashBench {
                 contentToAppend = "Sig Large File No Checksum Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
                     break;
                 case 1:
-                contentToAppend = "Sig  Large File No Checksum Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Sig Large File No Checksum Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 2:
                 contentToAppend = "Sig Large File No Checksum Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
@@ -94,7 +93,7 @@ public class FileValidatorLargeSigNoHashBench {
                 contentToAppend = "Sig Large File No Checksum Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 default:
-                contentToAppend = "Sig Large File No Checksum Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore() + " ms" + System.lineSeparator());
+                contentToAppend = "Sig Large File No Checksum Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
             }
             
@@ -111,21 +110,34 @@ public class FileValidatorLargeSigNoHashBench {
         }
     }
 
-    @Setup(org.openjdk.jmh.annotations.Level.Invocation)
+    @Setup(org.openjdk.jmh.annotations.Level.Iteration)
     public void benchSetUp() throws IOException {
+
         try {
-            fileInBytesLarge = Files.readAllBytes(Paths.get("src","test", "resources", "testLarge.pdf").toAbsolutePath());
             validator = new FileValidator(testConfig);
+            fileInBytesLarge = Files.readAllBytes(Paths.get("src","test", "resources", "testLarge.pdf").toAbsolutePath());
         } catch (Exception e) {
-            System.out.println("Error in benchSetUp: " + e.getMessage());
             e.printStackTrace();
         }
         fileName = "testLarge.pdf";
+        
     }
 
-    // Benchmark test for 'validateFile' method with only magic bytes validation
+    /*@org.openjdk.jmh.annotations.TearDown(org.openjdk.jmh.annotations.Level.Iteration)
+    public void flushLog() {
+        handler.flush(); 
+        //String loggerOutput = outputStream.toString();
+        try {
+            OutputStream fileOutput = new FileOutputStream("target/jmh/sigBenchTestLogs.txt", false);
+            outputStream.writeTo(fileOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+    
+    // Benchmark test for 'validateFile' method with only signatures validation
     @Benchmark
-    public void benchValidMagic() throws Exception {
+    public void benchValidSig() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesLarge, fileName);
     }
 }

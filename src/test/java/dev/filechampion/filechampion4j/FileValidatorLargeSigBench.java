@@ -63,7 +63,7 @@ public class FileValidatorLargeSigBench {
     + "}");
 
     @Test
-    public void fileValidatorSmallBench() throws RunnerException {
+    public void fileValidatorNoHashBench() throws RunnerException {
         Options opt = new OptionsBuilder()
         .include(FileValidatorLargeSigBench.class.getSimpleName())
         .forks(2)
@@ -83,7 +83,7 @@ public class FileValidatorLargeSigBench {
                 contentToAppend = "Sig Large File Throughput Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ci" + System.lineSeparator();
                     break;
                 case 1:
-                contentToAppend = "Sig  Large File Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
+                contentToAppend = "Sig Large File Average Time Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 case 2:
                 contentToAppend = "Sig Large File Sample Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
@@ -92,7 +92,7 @@ public class FileValidatorLargeSigBench {
                 contentToAppend = "Sig Large File Single Shot Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
                 default:
-                contentToAppend = "Sig Large File Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore() + " ms" + System.lineSeparator());
+                contentToAppend = "Sig Large File Unknown Bench, " + String.format("%.6f",runResult.getPrimaryResult().getScore()) + " ms" + System.lineSeparator();
                     break;
             }
             
@@ -109,21 +109,34 @@ public class FileValidatorLargeSigBench {
         }
     }
 
-    @Setup(org.openjdk.jmh.annotations.Level.Invocation)
+    @Setup(org.openjdk.jmh.annotations.Level.Iteration)
     public void benchSetUp() throws IOException {
+
         try {
-            fileInBytesLarge = Files.readAllBytes(Paths.get("src","test", "resources", "testLarge.pdf").toAbsolutePath());
             validator = new FileValidator(testConfig);
+            fileInBytesLarge = Files.readAllBytes(Paths.get("src","test", "resources", "testLarge.pdf").toAbsolutePath());
         } catch (Exception e) {
-            System.out.println("Error in benchSetUp: " + e.getMessage());
             e.printStackTrace();
         }
         fileName = "testLarge.pdf";
+        
     }
 
-    // Benchmark test for 'validateFile' method with only magic bytes validation
+    /*@org.openjdk.jmh.annotations.TearDown(org.openjdk.jmh.annotations.Level.Iteration)
+    public void flushLog() {
+        handler.flush(); 
+        //String loggerOutput = outputStream.toString();
+        try {
+            OutputStream fileOutput = new FileOutputStream("target/jmh/sigBenchTestLogs.txt", false);
+            outputStream.writeTo(fileOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+    
+    // Benchmark test for 'validateFile' method with only signatures validation
     @Benchmark
-    public void benchValidMagic() throws Exception {
+    public void benchValidSig() throws Exception {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesLarge, fileName);
     }
 }
