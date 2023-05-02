@@ -38,6 +38,7 @@
         "name_encoding": true,
         "max_size": "150000",
         "add_checksum": false,
+        "fail_fast": true,
         "extension_plugins": ["clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
       },
       "doc": {
@@ -50,7 +51,8 @@
         "change_ownership_mode": "r",
         "name_encoding": true,
         "max_size": "150000",
-        "add_checksum": false
+        "add_checksum": false,
+        "fail_fast": true
       }
     },
     "Images": {
