@@ -37,7 +37,7 @@ import org.openjdk.jmh.annotations.Setup;
  * Benchmark test for 'validateFile' method in 'FileValidator' class.
  */
 @Warmup(iterations = 10, time = 100, timeUnit =  TimeUnit.MILLISECONDS)
-@Measurement(iterations = 30, time = 300, timeUnit =  TimeUnit.MILLISECONDS)
+@Measurement(iterations = 50, time = 100, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class FileValidatorMimeBench {
     private FileValidator validator;
@@ -75,6 +75,7 @@ public class FileValidatorMimeBench {
         .forks(1)
         .mode(Mode.All)
         .output("benchmarks/results.txt")
+        .jvmArgs("-XX:+UseSerialGC")
         .build();
         new Runner(opt).run();
         Collection<RunResult> runResults = new Runner(opt).run();
