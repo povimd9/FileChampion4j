@@ -17,7 +17,6 @@ import java.util.logging.LogManager;
 import org.json.JSONObject;
 import dev.filechampion.filechampion4j.PluginsHelper.PluginConfig;
 import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
-import java.security.MessageDigest;
 
 
 /**
@@ -342,7 +341,7 @@ public class FileValidator {
                 .append(commonLogString);
             responseAggregationFail = sbresponseAggregationFail.toString();
             logWarn(responseAggregationFail);
-            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, calculateChecksum(originalFile));
+            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, "");
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("File size check passed, file size: ")
@@ -448,10 +447,14 @@ public class FileValidator {
             logFine(responseAggregationSuccess);
         }
 
+        boolean isAddChecksum = extensions.getValidationValue(fileCategory, fileExtension, "add_checksum") != null 
+        ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, "add_checksum") : true;
+        String checksumString = isAddChecksum ? calculateChecksum(originalFile) : "";
+
         // Check if file passed all defined validations, return false and reason if not.
         if (responseMsgCountFail > 0) {
             logFine(responseAggregationFail);
-            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, calculateChecksum(originalFile));
+            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, checksumString);
         }
 
         // Check if the file name should be encoded
@@ -481,7 +484,7 @@ public class FileValidator {
                     .append(savedFilePath);
                 responseAggregationSuccess = sbresponseAggregationSuccess.toString();
                 logInfo(responseAggregationSuccess);
-                return new ValidationResponse(true, "File is valid but failed to save to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, calculateChecksum(originalFile));
+                return new ValidationResponse(true, "File is valid but failed to save to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, checksumString);
             }
             // Return valid file response if file was saved to output directory
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
@@ -489,7 +492,7 @@ public class FileValidator {
                 .append(savedFilePath);
             responseAggregationSuccess = sbresponseAggregationSuccess.toString();
             logInfo(responseAggregationSuccess);
-            return new ValidationResponse(true, "File is valid and was saved to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, calculateChecksum(originalFile), savedFilePath);
+            return new ValidationResponse(true, "File is valid and was saved to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, checksumString);
         }
 
         // Return valid response if file passed all validations but is not meant to be saved to disk
@@ -498,7 +501,7 @@ public class FileValidator {
             .append(originalFilenameClean);
         responseAggregationSuccess = sbresponseAggregationSuccess.toString();
         logInfo(responseAggregationSuccess);
-        return new ValidationResponse(true, "File is valid", responseAggregationSuccess, originalFilenameClean, originalFile, calculateChecksum(originalFile));
+        return new ValidationResponse(true, "File is valid", responseAggregationSuccess, originalFilenameClean, originalFile, checksumString);
     }
     
 
@@ -971,8 +974,9 @@ public class FileValidator {
      */
     private String calculateChecksum(byte[] fileBytes) {
         try {
-            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
-            return new BigInteger(1, hash).toString(16);
+            SH256Calculate paralChecksum = new SH256Calculate(fileBytes);
+            byte[] checksum = paralChecksum.getChecksum();
+            return new BigInteger(1, checksum).toString(16);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -997,9 +1001,28 @@ public class FileValidator {
             logSevere(sharedMessage.toString());
             return sharedMessage.toString();
         }
-        String changeOwnershipUser = (String) extensions.getValidationValue(fileCategory, fileExtension, "change_ownership_user");
-        String changePermissionsMode = (String) extensions.getValidationValue(fileCategory, fileExtension, "change_ownership_mode");
 
+        boolean changeOwnership = extensions.getValidationValue(fileCategory, fileExtension, "change_ownership") != null 
+        ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, "change_ownership") : false;
+        if (changeOwnership) {
+            String changeOwnershipUser = (String) extensions.getValidationValue(fileCategory, fileExtension, "change_ownership_user");
+            String changePermissionsMode = (String) extensions.getValidationValue(fileCategory, fileExtension, "change_ownership_mode");
+            String changeOwnershipStatus = setFileAttributes(targetFilePath, changeOwnershipUser, changePermissionsMode);
+            if (changeOwnershipStatus.contains("Error:")) {
+                return changeOwnershipStatus;
+            }
+        }
+        return targetFilePath.toAbsolutePath().toString();
+    }
+
+    /**
+     * Helper method to set the file attributes
+     * @param targetFilePath (Path) the path to the file
+     * @param changeOwnershipUser (String) the user to change the ownership to
+     * @param changePermissionsMode (String) the permissions to change the file to
+     * @return String (String) the status of the file attribute change
+     */
+    private String setFileAttributes(Path targetFilePath, String changeOwnershipUser, String changePermissionsMode) {
         FileAclHelper fileAclHelper = new FileAclHelper(targetFilePath, changeOwnershipUser, changePermissionsMode);
         String newFileAttributesStatus = fileAclHelper.changeFileAcl();
         if (newFileAttributesStatus.contains("Error:")) {
@@ -1010,7 +1033,8 @@ public class FileValidator {
             }
             logSevere(newFileAttributesStatus);
             return newFileAttributesStatus;
+        } else {
+            return "Success: File attributes changed successfully";
         }
-        return targetFilePath.toAbsolutePath().toString();
     }
 }

@@ -62,7 +62,7 @@ public class FileValidatorMagicBench {
 
     
     @Test
-    public void fileValidatorSmallBench() throws RunnerException {
+    public void fileValidatorMagicSmallBench() throws RunnerException {
         Options opt = new OptionsBuilder()
         .include(FileValidatorMagicBench.class.getSimpleName())
         .forks(2)
@@ -116,7 +116,7 @@ public class FileValidatorMagicBench {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fileName = "test&test.pdf";
+        fileName = "testSmall.pdf";
     }
 
     // Benchmark test for 'validateFile' method with only magic bytes validation

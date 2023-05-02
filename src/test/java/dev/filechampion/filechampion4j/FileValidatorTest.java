@@ -13,11 +13,12 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.util.UUID;
 import java.util.logging.LogManager;
 
@@ -209,6 +210,66 @@ public class FileValidatorTest {
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
     }
 
+    // Test valid inputs including large valid pdf file as bytes with storage
+    @Test
+    void testValidInputsLargeBytesStore() throws Exception {
+        fileInBytes = Files.readAllBytes(Paths.get("src","test", "resources", "testVeryLarge.pdf").toAbsolutePath());
+        fileName = "testVeryLarge.pdf";
+        JSONObject testLargeConfig = 
+        new JSONObject("{\r\n"
+        + "  \"Validations\": {\r\n"
+        + "  \"Documents\": {\r\n"
+        + "    \"pdf\": {\r\n"
+        + "      \"mime_type\": \"application/pdf\"\r\n"
+        + "      }\r\n"
+        + "  }\r\n"
+        + "}\r\n"
+        + "}");
+        validator = new FileValidator(testLargeConfig);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempOutDirectory, "application/pdf");
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
+    }
+
+    // Test valid inputs including large valid pdf file as bytes with storage without checksum
+    @Test
+    void testValidInputsLargeBytesStoreNoChecksum() throws Exception {
+        fileInBytes = Files.readAllBytes(Paths.get("src","test", "resources", "testVeryLarge.pdf").toAbsolutePath());
+        fileName = "testVeryLarge.pdf";
+        JSONObject testLargeConfig = 
+        new JSONObject("{\r\n"
+        + "  \"Validations\": {\r\n"
+        + "  \"Documents\": {\r\n"
+        + "    \"pdf\": {\r\n"
+        + "      \"mime_type\": \"application/pdf\",\r\n"
+        + "      \"add_checksum\": false\r\n"
+        + "      }\r\n"
+        + "  }\r\n"
+        + "}\r\n"
+        + "}");
+        validator = new FileValidator(testLargeConfig);
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempOutDirectory, "application/pdf");
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
+        assertEquals( "", fileValidationResults.getFileChecksum(), "Expected checksum to be empty, got: " + fileValidationResults.getFileChecksum());
+    }
+
+    // Test valid inputs with add_checksum false
+    @Test
+    void testValidInputsBytesStoreNoChecksum() throws Exception {
+        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestChecksumBool.json").toAbsolutePath()));
+        JSONObject jsonObject = new JSONObject(jsonConfigContent);
+        validator = new FileValidator(jsonObject);
+        fileInBytes = generatePdfBytes(250000);
+        fileName = "test&test.pdf";
+        ValidationResponse fileValidationResults = validator.validateFile("LargeDocuments", fileInBytes, fileName);
+        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
+        assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
+        assertEquals( "", fileValidationResults.getFileChecksum(), "Expected checksum to be empty, got: " + fileValidationResults.getFileChecksum());
+    }
+
+        
+
     // Test valid inputs including valid pdf bytes, with mime type, with storage
     @Test
     void testValidInputsMimeStore() throws Exception {
@@ -292,6 +353,7 @@ public class FileValidatorTest {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "application/pdf");
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
+        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksum to be " + calculateChecksum(fileInBytes) + ", got: " + fileValidationResults.getFileChecksum());
     }
 
     // Test valid inputs with invalid pdf file path with storage
@@ -402,5 +464,16 @@ public class FileValidatorTest {
         writer.close();
     
         return baos.toByteArray();
+    }
+
+    // Calculate checksum of a file in traditional way
+    private String calculateChecksum(byte[] fileBytes) {
+        try {
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
+            return new BigInteger(1, hash).toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
