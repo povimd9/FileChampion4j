@@ -8,10 +8,9 @@ var searchData=
   ['executeafterplugins_5',['executeAfterPlugins',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a83647450ba9249c13f405b650e86dce4',1,'dev::filechampion::filechampion4j::FileValidator']]],
   ['executebeforeplugins_6',['executeBeforePlugins',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a617f3b8be7835bbb96df357a412d1bbf',1,'dev::filechampion::filechampion4j::FileValidator']]],
   ['executeplugin_7',['executePlugin',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a00a7f2979f0321f1823ce815ecd20945',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['extensions_8',['Extensions',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html',1,'dev::filechampion::filechampion4j']]],
+  ['extensions_8',['Extensions',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html',1,'dev.filechampion.filechampion4j.Extensions'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ae95e2932f76f0acf941cb9fa093f6306',1,'dev.filechampion.filechampion4j.Extensions.Extensions()']]],
   ['extensions_9',['extensions',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a3f50b1a0e7fae98727a1002c68a9403d',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['extensions_10',['Extensions',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ae95e2932f76f0acf941cb9fa093f6306',1,'dev::filechampion::filechampion4j::Extensions']]],
-  ['extensions_2ejava_11',['Extensions.java',['../_extensions_8java.html',1,'']]],
-  ['extensionsmap_12',['extensionsMap',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320',1,'dev::filechampion::filechampion4j::Extensions']]],
-  ['extractresponsepatterns_13',['extractResponsePatterns',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html#aa311727086faa1c01c796bafc7132ce5',1,'dev::filechampion::filechampion4j::CliPluginHelper']]]
+  ['extensions_2ejava_10',['Extensions.java',['../_extensions_8java.html',1,'']]],
+  ['extensionsmap_11',['extensionsMap',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320',1,'dev::filechampion::filechampion4j::Extensions']]],
+  ['extractresponsepatterns_12',['extractResponsePatterns',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html#aa311727086faa1c01c796bafc7132ce5',1,'dev::filechampion::filechampion4j::CliPluginHelper']]]
 ];

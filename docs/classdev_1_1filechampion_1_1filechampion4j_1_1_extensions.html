@@ -172,7 +172,7 @@ Private Attributes</h2></td></tr>
 <tr class="separator:adfbb87bc762856b29c057c464aa2052c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90d91f0bf36cbb203c321674c977ea07"><td class="memItemLeft" align="right" valign="top">List&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a90d91f0bf36cbb203c321674c977ea07">stringKeyValues</a></td></tr>
 <tr class="separator:a90d91f0bf36cbb203c321674c977ea07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f7cba89986dfc7c79e1ec67f3ce6d68"><td class="memItemLeft" align="right" valign="top">List&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0f7cba89986dfc7c79e1ec67f3ce6d68">boolKeyValues</a> = Arrays.asList(&quot;change_ownership&quot;, &quot;name_encoding&quot;)</td></tr>
+<tr class="memitem:a0f7cba89986dfc7c79e1ec67f3ce6d68"><td class="memItemLeft" align="right" valign="top">List&lt; String &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0f7cba89986dfc7c79e1ec67f3ce6d68">boolKeyValues</a> = Arrays.asList(&quot;change_ownership&quot;, &quot;name_encoding&quot;, &quot;add_checksum&quot;)</td></tr>
 <tr class="separator:a0f7cba89986dfc7c79e1ec67f3ce6d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
@@ -440,7 +440,7 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_extensions_8java_source.html#l00212">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00048">dev.filechampion.filechampion4j.Extensions.extensionsMap</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, and <a class="el" href="_extensions_8java_source.html#l00050">dev.filechampion.filechampion4j.Extensions.validationCache</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_file_validator_8java_source.html#l00327">dev.filechampion.filechampion4j.FileValidator.doValidations()</a>, <a class="el" href="_file_validator_8java_source.html#l00671">dev.filechampion.filechampion4j.FileValidator.executeAfterPlugins()</a>, <a class="el" href="_file_validator_8java_source.html#l00620">dev.filechampion.filechampion4j.FileValidator.executeBeforePlugins()</a>, <a class="el" href="_file_validator_8java_source.html#l00991">dev.filechampion.filechampion4j.FileValidator.saveFileToOutputDir()</a>, and <a class="el" href="_file_validator_8java_source.html#l00271">dev.filechampion.filechampion4j.FileValidator.validateFileMain()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_file_validator_8java_source.html#l00357">dev.filechampion.filechampion4j.FileValidator.doValidations()</a>, <a class="el" href="_file_validator_8java_source.html#l00688">dev.filechampion.filechampion4j.FileValidator.executeAfterPlugins()</a>, <a class="el" href="_file_validator_8java_source.html#l00637">dev.filechampion.filechampion4j.FileValidator.executeBeforePlugins()</a>, <a class="el" href="_file_validator_8java_source.html#l01013">dev.filechampion.filechampion4j.FileValidator.saveFileToOutputDir()</a>, and <a class="el" href="_file_validator_8java_source.html#l00304">dev.filechampion.filechampion4j.FileValidator.validateFileMain()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -933,7 +933,7 @@ Here is the caller graph for this function:</div>
 <p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00175">175</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  175</span>                                                              {</div>
 <div class="line"><span class="lineno">  176</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0f7cba89986dfc7c79e1ec67f3ce6d68">boolKeyValues</a>.contains(validation)) {</div>
-<div class="line"><span class="lineno">  177</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, (Boolean) value);</div>
+<div class="line"><span class="lineno">  177</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, (<span class="keywordtype">boolean</span>) value);</div>
 <div class="line"><span class="lineno">  178</span>        } <span class="keywordflow">else</span> {</div>
 <div class="line"><span class="lineno">  179</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
 <div class="line"><span class="lineno">  180</span>                .append(value.getClass().getName())</div>
@@ -1075,7 +1075,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= Arrays.asList(<span class="stringliteral">&quot;mime_type&quot;</span>, <span class="stringliteral">&quot;magic_bytes&quot;</span>, <span class="stringliteral">&quot;header_signatures&quot;</span>, </div>
 <div class="line">        <span class="stringliteral">&quot;footer_signatures&quot;</span>, <span class="stringliteral">&quot;change_ownership&quot;</span>, <span class="stringliteral">&quot;change_ownership_user&quot;</span>, <span class="stringliteral">&quot;change_ownership_mode&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;name_encoding&quot;</span>, <span class="stringliteral">&quot;max_size&quot;</span>, <span class="stringliteral">&quot;extension_plugins&quot;</span>)</div>
+<div class="line">        <span class="stringliteral">&quot;name_encoding&quot;</span>, <span class="stringliteral">&quot;max_size&quot;</span>, <span class="stringliteral">&quot;extension_plugins&quot;</span>, <span class="stringliteral">&quot;add_checksum&quot;</span>)</div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00053">53</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
@@ -1093,7 +1093,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">List&lt;String&gt; dev.filechampion.filechampion4j.Extensions.boolKeyValues = Arrays.asList(&quot;change_ownership&quot;, &quot;name_encoding&quot;)</td>
+          <td class="memname">List&lt;String&gt; dev.filechampion.filechampion4j.Extensions.boolKeyValues = Arrays.asList(&quot;change_ownership&quot;, &quot;name_encoding&quot;, &quot;add_checksum&quot;)</td>
         </tr>
       </table>
   </td>
@@ -1355,7 +1355,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>dev</b></li><li class="navelem"><b>filechampion</b></li><li class="navelem"><a class="el" href="namespacedev_1_1filechampion_1_1filechampion4j.html">filechampion4j</a></li><li class="navelem"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html">Extensions</a></li>
-    <li class="footer">Generated on Mon May 1 2023 01:37:57 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Mon May 1 2023 23:29:20 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

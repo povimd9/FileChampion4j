@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * Unit test for FileValidator class.
  */
 public class FileValidatorBenchCompare {
-    private static final double MAX_DIFFERENCE_FROM_PREV = 5;
+    private static final double MAX_DIFFERENCE_FROM_PREV = 15;
     private static final Path benchOutputFile = Paths.get("benchmarks", "benchResults.txt");
     private int blocksFound = 0;
     

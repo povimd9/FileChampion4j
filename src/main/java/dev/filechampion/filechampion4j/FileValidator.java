@@ -45,7 +45,7 @@ public class FileValidator {
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();
     private Map<String, StepConfig> stepConfigsAfter = new HashMap<>();
     private Extensions extensions;
-    private StringBuilder sharedMessage = new StringBuilder();
+    private StringBuilder sharedStringBuilder = new StringBuilder();
     private String sharedStepMessage = "Step: ";
     private String errorResponse = "File is not valid.";
     private String fileCategory;
@@ -56,10 +56,8 @@ public class FileValidator {
     private String fileExtension;
     private String commonFileError = "Error reading file: ";
     private String commonLogString;
-    private String responseAggregationFail;
     private int responseMsgCountFail;
     private StringBuilder sbresponseAggregationFail;
-    private String responseAggregationSuccess;
     private int responseMsgCountSuccess;
     private StringBuilder sbresponseAggregationSuccess;
 
@@ -74,7 +72,9 @@ public class FileValidator {
             try {
                 extensions = new Extensions(configJsonObject.getJSONObject("Validations"));
             } catch (Exception e) {
-                logWarn("Error initializing extensions: " + e.getMessage());
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error initializing extensions: ")
+                    .append(e.getMessage());
+                logWarn(sharedStringBuilder);
                 throw new IllegalArgumentException("Error initializing extensions: " + e.getMessage());
             }
         }
@@ -86,7 +86,9 @@ public class FileValidator {
                 loadPlugins();
                 checkPluginsConfig();
             } catch (Exception e) {
-                logWarn("Error initializing plugins: " + e.getMessage());
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error initializing plugins: ")
+                    .append(e.getMessage());
+                logWarn(sharedStringBuilder);
                 throw new IllegalArgumentException("Error initializing plugins: " + e.getMessage());
             }
         }
@@ -104,7 +106,11 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir,  String mimeString) {
-        logFine("Validating with request mime " + mimeString  + " and storage for file bytes of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating with request mime ")
+            .append(mimeString)
+            .append(" and storage for file bytes of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
@@ -125,7 +131,11 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir,  String mimeString) {
-        logFine("Validating with request mime " + mimeString  + " and storage for file path of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating with request mime ")
+            .append(mimeString)
+            .append(" and storage for file path of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.mimeString = mimeString;
@@ -134,7 +144,9 @@ public class FileValidator {
             Path path = filePath;
             originalFile = Files.readAllBytes(path);
         } catch (IOException e) {
-            logWarn(commonFileError + e.getMessage());
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
+                .append(e.getMessage());
+            logWarn(sharedStringBuilder);
             throw new IllegalArgumentException(commonFileError + e.getMessage());
         }
         return validateFileMain();
@@ -150,7 +162,11 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String mimeString) {
-        logFine("Validating with request " + mimeString  + " mime for file bytes of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating with request ")
+            .append(mimeString)
+            .append(" mime for file bytes of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
@@ -168,7 +184,9 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir) {
-        logFine("Validating and Storing file bytes of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating and Storing file bytes of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
@@ -186,7 +204,11 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName,  String mimeString) {
-        logFine("Validating with request mime " + mimeString  + " for file path of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating with request mime ")
+            .append(mimeString)
+            .append(" for file path of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.mimeString = mimeString;
@@ -194,7 +216,9 @@ public class FileValidator {
             Path path = filePath;
             originalFile = Files.readAllBytes(path);
         } catch (IOException e) {
-            logWarn(commonFileError + e.getMessage());
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
+                .append(e.getMessage());
+            logWarn(sharedStringBuilder);
             throw new IllegalArgumentException(commonFileError + e.getMessage());
         }
         return validateFileMain();
@@ -210,7 +234,9 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir) {
-        logFine("Validating and Storing file path of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating and Storing file path of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.outDir = outputDir;
@@ -218,7 +244,9 @@ public class FileValidator {
             Path path = filePath;
             originalFile = Files.readAllBytes(path);
         } catch (IOException e) {
-            logWarn(commonFileError + e.getMessage());
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
+                .append(e.getMessage());
+            logWarn(sharedStringBuilder);
             throw new IllegalArgumentException(commonFileError + e.getMessage());
         }
         return validateFileMain();
@@ -233,7 +261,9 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile,String fileName) {
-        logFine("Validating file bytes of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating file bytes of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
@@ -249,14 +279,18 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName) {
-        logFine("Validating file path of: " + fileName);
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating file path of: ")
+            .append(fileName);
+        logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         try {
             Path path = filePath;
             originalFile = Files.readAllBytes(path);
         } catch (IOException e) {
-            logWarn(commonFileError + e.getMessage());
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
+                .append(e.getMessage());
+            logWarn(sharedStringBuilder);
             throw new IllegalArgumentException(commonFileError + e.getMessage());
         }
         return validateFileMain();
@@ -269,12 +303,10 @@ public class FileValidator {
      */
     private ValidationResponse validateFileMain() {
         commonLogString = String.format(" for file extension: %s", fileExtension);
-        responseAggregationFail = "";
         responseMsgCountFail = 0;
-        sbresponseAggregationFail = new StringBuilder(responseAggregationFail);
-        responseAggregationSuccess = "";
+        sbresponseAggregationFail = new StringBuilder("");
         responseMsgCountSuccess = 0;
-        sbresponseAggregationSuccess = new StringBuilder(responseAggregationSuccess);
+        sbresponseAggregationSuccess = new StringBuilder("");
 
         // Check that the input parameters are not null or empty
         checkMethodInputs(fileCategory, originalFile, fileName);
@@ -284,35 +316,34 @@ public class FileValidator {
         String originalFilenameClean = fileName.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}.]", "_");
 
         // Log the file type category being validated
-        sharedMessage.replace(0, sharedMessage.length(), "Validating ").append(originalFilenameClean).append(", as file type: ").append(fileCategory);
-        logInfo(sharedMessage.toString());
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating ").append(originalFilenameClean).append(", as file type: ").append(fileCategory);
+        logInfo(sharedStringBuilder);
 
         // Check for before plugins
         if (extensions.getValidationValue(fileCategory, fileExtension, "extension_plugins") != null) {
             String executionResults = executeBeforePlugins(fileCategory, fileExtension);
             if (executionResults.contains(". Failed for step:")) {
-                sharedMessage.replace(0, sharedMessage.length(), "executeBeforePlugins failed for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
-                logWarn(sharedMessage.toString());
-                return new ValidationResponse(false, errorResponse, sharedMessage.toString() , originalFilenameClean, null, null);
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "executeBeforePlugins failed for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
+                logWarn(sharedStringBuilder);
+                return new ValidationResponse(false, errorResponse, sharedStringBuilder.toString() , originalFilenameClean, null, null);
             } else if (executionResults.contains(". Error for step:")) {
-                sharedMessage.replace(0, sharedMessage.length(), "Error executing Plugins defined to run before validations for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error executing Plugins defined to run before validations for file: ").append(originalFilenameClean).append(", Results: ").append(executionResults);
                 sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                     .append("executeBeforePlugins passed with error: ")
                     .append(executionResults);
-                    responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-                    logFine(responseAggregationSuccess);
-                logWarn("Error in executeBeforePlugins: " + executionResults);
+                logFine(sbresponseAggregationSuccess);
+                logWarn(sharedStringBuilder);
             } else {
                 sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                     .append("executeBeforePlugins executed successfully: ")
                     .append(executionResults);
-                    responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-                    logFine(responseAggregationSuccess);
-                logInfo(executionResults);
+                logFine(sbresponseAggregationSuccess);
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), executionResults);
+                logInfo(sharedStringBuilder);
             }
         }  else {
-            sharedMessage.replace(0, sharedMessage.length(), "No before plugins defined for file: ").append(originalFilenameClean);
-            logInfo(sharedMessage.toString());
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), "No before plugins defined for file: ").append(originalFilenameClean);
+            logInfo(sharedStringBuilder);
         }
         return (doValidations(originalFilenameClean));
     }
@@ -339,16 +370,14 @@ public class FileValidator {
                 .append(maxSize)
                 .append("KB)")
                 .append(commonLogString);
-            responseAggregationFail = sbresponseAggregationFail.toString();
-            logWarn(responseAggregationFail);
-            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, "");
+            logWarn(sbresponseAggregationFail);
+            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, originalFile, "");
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("File size check passed, file size: ")
                 .append(originalFile.length / 1000)
                 .append("KB");
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logFine(responseAggregationSuccess);
+            logFine(sbresponseAggregationSuccess);
         }
 
         // Check that the mime type is allowed
@@ -357,14 +386,12 @@ public class FileValidator {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid mime_type")
                 .append(commonLogString);
-            responseAggregationFail = sbresponseAggregationFail.toString();
-            logWarn(responseAggregationFail);
+            logWarn(sbresponseAggregationFail);
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("Mime type check passed, mime type: ")
                 .append(mimeType);
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logFine(responseAggregationSuccess);
+            logFine(sbresponseAggregationSuccess);
         }
 
         // Check that the file contains the magic bytes
@@ -373,14 +400,12 @@ public class FileValidator {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid magic_bytes")
                 .append(commonLogString);
-            responseAggregationFail = sbresponseAggregationFail.toString();
-            logWarn(responseAggregationFail);
+            logWarn(sbresponseAggregationFail);
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("Magic bytes check passed, magic bytes: ")
                 .append(magicBytes);
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logFine(responseAggregationSuccess);
+            logFine(sbresponseAggregationSuccess);
         }
 
         // Check header signatures
@@ -389,14 +414,12 @@ public class FileValidator {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid header_signatures")
                 .append(commonLogString);
-            responseAggregationFail = sbresponseAggregationFail.toString();
-            logWarn(responseAggregationFail);
+            logWarn(sbresponseAggregationFail);
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("Header signatures check passed, header signatures: ")
                 .append(headerSignatures);
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logFine(responseAggregationSuccess);
+            logFine(sbresponseAggregationSuccess);
         }
 
         // Check footer signatures
@@ -405,14 +428,12 @@ public class FileValidator {
             sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
                 .append("Invalid footer_signatures")
                 .append(commonLogString);
-            responseAggregationFail = sbresponseAggregationFail.toString();
-            logWarn(responseAggregationFail);
+            logWarn(sbresponseAggregationFail);
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("Footer signatures check passed, footer signatures: ")
                 .append(footerSignatures);
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logFine(responseAggregationSuccess);
+            logFine(sbresponseAggregationSuccess);
         }
 
         
@@ -424,27 +445,24 @@ public class FileValidator {
                     .append("Error in executeAfterPlugins: ")
                     .append(executionResults)
                     .append(commonLogString);
-                responseAggregationFail = sbresponseAggregationFail.toString();
-                logWarn(responseAggregationFail);
+                logWarn(sbresponseAggregationFail);
             } else if (executionResults.contains(". Error for step:")) {
                 sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                     .append("executeAfterPlugins passed with error: ")
                     .append(executionResults);
-                responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-                logFine(responseAggregationSuccess);
-                logWarn("Error in executeAfterPlugins: " + executionResults);
+                logFine(sbresponseAggregationSuccess);
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error in executeAfterPlugins: ").append(executionResults);
+                logWarn(sharedStringBuilder);
             } else {
                 sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                     .append("executeAfterPlugins executed successfully: ")
                     .append(executionResults);
-                responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-                logFine(responseAggregationSuccess);
+                logFine(sbresponseAggregationSuccess);
             }
         } else {
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("No after plugins to execute");
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logFine(responseAggregationSuccess);
+            logFine(sbresponseAggregationSuccess);
         }
 
         boolean isAddChecksum = extensions.getValidationValue(fileCategory, fileExtension, "add_checksum") != null 
@@ -453,23 +471,22 @@ public class FileValidator {
 
         // Check if file passed all defined validations, return false and reason if not.
         if (responseMsgCountFail > 0) {
-            logFine(responseAggregationFail);
-            return new ValidationResponse(false, errorResponse, responseAggregationFail, originalFilenameClean, originalFile, checksumString);
+            logWarn(sbresponseAggregationFail);
+            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, originalFile, checksumString);
         }
 
         // Check if the file name should be encoded
         String encodedFileName = "";
         boolean isNameEncoding = extensions.getValidationValue(fileCategory, fileExtension, "name_encoding") != null ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, "name_encoding") : false;
         if (isNameEncoding) { 
-            sharedMessage.replace(0, sharedMessage.length(), Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8))).append(".").append(fileExtension);
-            encodedFileName = sharedMessage.toString();
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8))).append(".").append(fileExtension);
+            encodedFileName = sharedStringBuilder.toString();
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                     .append("File name: ")
                     .append(originalFilenameClean)
                     .append(" has been successfully encoded to: ")
                     .append(encodedFileName);
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logFine(responseAggregationSuccess);
+            logFine(sbresponseAggregationSuccess);
         }
         String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;
 
@@ -482,26 +499,23 @@ public class FileValidator {
                 sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                     .append("File is valid but failed to save to output directory: ")
                     .append(savedFilePath);
-                responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-                logInfo(responseAggregationSuccess);
-                return new ValidationResponse(true, "File is valid but failed to save to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, checksumString);
+                logInfo(sbresponseAggregationSuccess);
+                return new ValidationResponse(true, "File is valid but failed to save to output directory", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);
             }
             // Return valid file response if file was saved to output directory
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("File is valid and was saved to output directory: ")
                 .append(savedFilePath);
-            responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-            logInfo(responseAggregationSuccess);
-            return new ValidationResponse(true, "File is valid and was saved to output directory", responseAggregationSuccess, originalFilenameClean, originalFile, checksumString);
+            logInfo(sbresponseAggregationSuccess);
+            return new ValidationResponse(true, "File is valid and was saved to output directory", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);
         }
 
         // Return valid response if file passed all validations but is not meant to be saved to disk
         sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
             .append("File is valid: ")
             .append(originalFilenameClean);
-        responseAggregationSuccess = sbresponseAggregationSuccess.toString();
-        logInfo(responseAggregationSuccess);
-        return new ValidationResponse(true, "File is valid", responseAggregationSuccess, originalFilenameClean, originalFile, checksumString);
+        logInfo(sbresponseAggregationSuccess);
+        return new ValidationResponse(true, "File is valid", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);
     }
     
 
@@ -513,9 +527,9 @@ public class FileValidator {
      * LOGGER.info wrapper
      * @param message (String) - message to log
      */
-    private void logInfo(String message) {
+    private void logInfo(StringBuilder message) {
         if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.info(message);
+            LOGGER.info(message.toString());
         }
     }
 
@@ -523,9 +537,9 @@ public class FileValidator {
      * LOGGER.warning wrapper
      * @param message (String) - message to log
      */
-    private void logWarn(String message) {
+    private void logWarn(StringBuilder message) {
         if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.warning(message);
+            LOGGER.warning(message.toString());
         }
     }
 
@@ -533,19 +547,19 @@ public class FileValidator {
      * LOGGER.severe wrapper
      * @param message (String) - message to log
      */
-    private void logSevere(String message) {
+    private void logSevere(StringBuilder message) {
         if (LOGGER.isLoggable(Level.SEVERE)) {
-            LOGGER.severe(message);
+            LOGGER.severe(message.toString());
         }
     }
 
     /**
      * LOGGER.fine wrapper
-     * @param message (String) - message to log
+     * @param message (StringBuilder) - message to log
      */
-    private void logFine(String message) {
+    private void logFine(StringBuilder message) {
         if (LOGGER.isLoggable(Level.FINE )) {
-            LOGGER.fine(message);
+            LOGGER.fine(message.toString());
         }
     }
 
@@ -588,9 +602,9 @@ public class FileValidator {
     private void checkPluginsExist(JSONObject validationsJsonObject, String categroyKey, String extensionKey){
         for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray("extension_plugins").toList().toArray(new String[0])) {
             if (!stepConfigsBefore.containsKey(pluginName) && !stepConfigsAfter.containsKey(pluginName)) {
-                sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(pluginName).append(" defined in config does not exist in plugins configuration");
-                logWarn(sharedMessage.toString());
-                throw new IllegalArgumentException(sharedMessage.toString());
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage).append(pluginName).append(" defined in config does not exist in plugins configuration");
+                logWarn(sharedStringBuilder);
+                throw new IllegalArgumentException(sharedStringBuilder.toString());
             }
         }
     }
@@ -632,37 +646,37 @@ public class FileValidator {
             for (String step : stepConfigsBefore.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);
-                    sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage)
+                    sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage)
                         .append(stepConfigsBefore.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
-                    if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
+                    if (stepResults.startsWith(sharedStringBuilder.toString()) || stepResults.startsWith("Error ")) {
                         if (stepConfigsBefore.get(extensionPlugin).getOnFail().equals("fail")) {
                             sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
-                            .append("Failed for step: ")
-                            .append(stepConfigsBefore.get(extensionPlugin).getName())
-                            .append(sharedString + stepResults);
-                            logFine(stepResults);        
+                                .append("Failed for step: ")
+                                .append(stepConfigsBefore.get(extensionPlugin).getName())
+                                .append(sharedString)
+                                .append(stepResults);
+                            logFine(sbResponseAggregation);        
                             return sbResponseAggregation.toString();
                         }
                         sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Error for step: ")
                             .append(stepConfigsBefore.get(extensionPlugin).getName())
                             .append(sharedString + stepResults);
-                            logFine(stepResults);
+                        logFine(sbResponseAggregation);
                         ++responseMsgCount;
                         responseAggregation = sbResponseAggregation.toString();
                     } else {
                         sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Success for step: ")
                             .append(stepConfigsBefore.get(extensionPlugin).getName());
-                            logFine(stepResults);
+                        logFine(sbResponseAggregation);
                         ++responseMsgCount;
-                        responseAggregation = sbResponseAggregation.toString();
                     }
                 }
             }
         }
-        return "executeBeforePlugins completed: " + responseAggregation;
+        return "executeBeforePlugins completed: " + sbResponseAggregation.toString();
     }
 
     /**
@@ -682,37 +696,37 @@ public class FileValidator {
             for (String step : stepConfigsAfter.keySet()) {
                 if (step.equals(extensionPlugin)) {
                     String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);
-                    sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage)
+                    sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage)
                         .append(stepConfigsAfter.get(extensionPlugin).getName()).append(" Success, Results: Error");
                     String sharedString = ", Results: ";
-                    if (stepResults.startsWith(sharedMessage.toString()) || stepResults.startsWith("Error ")) {
+                    if (stepResults.startsWith(sharedStringBuilder.toString()) || stepResults.startsWith("Error ")) {
                         if (stepConfigsAfter.get(extensionPlugin).getOnFail().equals("fail")) {
                             sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
-                            .append("Failed for step: ")
-                            .append(stepConfigsAfter.get(extensionPlugin).getName())
-                            .append(sharedString + stepResults);
-                            logFine(stepResults);    
+                                .append("Failed for step: ")
+                                .append(stepConfigsAfter.get(extensionPlugin).getName())
+                                .append(sharedString)
+                                .append(stepResults);
+                            logFine(sbResponseAggregation);
                             return sbResponseAggregation.toString();
                         }
                         sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Error for step: ")
                             .append(stepConfigsAfter.get(extensionPlugin).getName())
                             .append(sharedString + stepResults);
-                            logFine(stepResults);
+                        logFine(sbResponseAggregation);
                         ++responseMsgCount;
                         responseAggregation = sbResponseAggregation.toString();
                     } else {
                         sbResponseAggregation.append(System.lineSeparator()).append("\t")  .append(responseMsgCount + ". ")
                             .append("Success for step: ")
                             .append(stepConfigsAfter.get(extensionPlugin).getName());
-                            logFine(stepResults);
+                        logFine(sbResponseAggregation);
                         ++responseMsgCount;
-                        responseAggregation = sbResponseAggregation.toString();
                     }
                 }
             }
         }
-        return "executeAfterPlugins completed: " + responseAggregation;
+        return "executeAfterPlugins completed: " + sbResponseAggregation.toString();
     }
 
     /**
@@ -725,8 +739,8 @@ public class FileValidator {
     private String executePlugin(String extensionPlugin, Map<String, StepConfig> stepConfigs , String fileExtension) {
         Map<String, String> stepResultsMap = new HashMap<>();
         String extensionPluginName = stepConfigs.get(extensionPlugin).getName();
-        sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(extensionPluginName);
-        logFine(sharedMessage.toString());
+        sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage).append(extensionPluginName);
+        logFine(sharedStringBuilder);
         
         if (stepConfigs.get(extensionPlugin).getType().equals("cli")) {
             Map<String, Map<String, String>> stepResults = stepConfigs.get(extensionPlugin)
@@ -745,39 +759,41 @@ public class FileValidator {
                         Path newFile = new File(newFilePath).toPath();
                         originalFile = Files.readAllBytes(newFile);
                         deleteTempDir(newFile.getParent().toAbsolutePath());
-                        logFine(String.format("Successfully read plugin expected file: %s", newFilePath));
+                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Successfully read plugin expected file: ").append(newFilePath);
+                        logFine(sharedStringBuilder);
                     } catch (IOException e) {
-                        sharedMessage.replace(0, sharedMessage.length(), "Error reading plugin expected file: ").append(e.getMessage());
-                        logWarn(String.format(sharedMessage.toString()));
-                        return sharedMessage.toString();
+                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error reading plugin expected file: ").append(e.getMessage());
+                        logWarn(sharedStringBuilder);
+                        return sharedStringBuilder.toString();
                     }
                 }
                 if (!isBlank(newB64Content)) {
                     try {
                         originalFile = Base64.getDecoder().decode(newB64Content);
-                        logFine("Successfully decoded plugin expected file");
+                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Successfully decoded plugin expected file");
+                        logFine(sharedStringBuilder);
                     } catch (Exception e) {
-                        sharedMessage.replace(0, sharedMessage.length(), "Error decoding plugin expected file: ").append(e.getMessage());
-                        logWarn(String.format(sharedMessage.toString()));
-                        return sharedMessage.toString();
+                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error decoding plugin expected file: ").append(e.getMessage());
+                        logWarn(sharedStringBuilder);
+                        return sharedStringBuilder.toString();
                     }
                 }
             }
             for(Map.Entry<String, String> entry : stepResultsMap.entrySet()) {
                 String errorMsg =  entry.getValue();
                 String errorDetails = entry.getKey();
-                sharedMessage.replace(0, sharedMessage.length(), sharedStepMessage).append(extensionPluginName)
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage).append(extensionPluginName)
                     .append(" Success, Results: ")
                     .append(errorDetails)
                     .append("\"")
                     .append(errorMsg);
-                logFine(sharedMessage.toString());
+                logFine(sharedStringBuilder);
             }
-            return sharedMessage.toString();
+            return sharedStringBuilder.toString();
         } else if (stepConfigs.get(extensionPlugin).getType().equals("http")) {
             // TODO: Implement http plugin type
         }
-        return sharedMessage.toString();
+        return sharedStringBuilder.toString();
     }
 
     
@@ -814,8 +830,8 @@ public class FileValidator {
             tempFilePath = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
             Files.write(tempFilePath, originalFile);
         } catch (Exception e) {
-            sharedMessage.replace(0, sharedMessage.length(), "Error: Saving file to temporary directory failed: ").append(e.getMessage());
-            logWarn(sharedMessage.toString());
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: Saving file to temporary directory failed: ").append(e.getMessage());
+            logWarn(sharedStringBuilder);
             return null;
         }
         return tempFilePath;
@@ -833,8 +849,8 @@ public class FileValidator {
             .forEach(File::delete);
             return true;
         } catch (Exception e) {
-            sharedMessage.replace(0, sharedMessage.length(), "Error: Delete temporary directoy failed: ").append(e.getMessage());
-            logWarn(sharedMessage.toString());
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: Delete temporary directoy failed: ").append(e.getMessage());
+            logWarn(sharedStringBuilder);
             return false;
         }
     }
@@ -851,13 +867,15 @@ public class FileValidator {
         if (isBlank(fileMimeType)) {
             Path tempFile = saveFileToTempDir(fileExtension, originalFileBytes);
             if (tempFile == null) {
-                logWarn("checkMimeType failed: tempFile is null");
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: checkMimeType failed: tempFile is null");
+                logWarn(sharedStringBuilder);
                 return false;
             }
             try {
                 fileMimeType = Files.probeContentType(tempFile);
             } catch (Exception e) {
-                logWarn("checkMimeType failed: " + e.getMessage());
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: checkMimeType failed: ").append(e.getMessage());
+                logWarn(sharedStringBuilder);
             } finally {
                 deleteTempDir(tempFile);
             }
@@ -997,9 +1015,9 @@ public class FileValidator {
         try {
             Files.write(targetFilePath, fileBytes, StandardOpenOption.CREATE);
         } catch (IOException e) {
-            sharedMessage.replace(0, sharedMessage.length(), "Error: Saving file to directory failed: ").append(e.getMessage());
-            logSevere(sharedMessage.toString());
-            return sharedMessage.toString();
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: Saving file to directory failed: ").append(e.getMessage());
+            logSevere(sharedStringBuilder);
+            return sharedStringBuilder.toString();
         }
 
         boolean changeOwnership = extensions.getValidationValue(fileCategory, fileExtension, "change_ownership") != null 
@@ -1029,9 +1047,11 @@ public class FileValidator {
             try {
                 Files.deleteIfExists(targetFilePath);
             } catch (IOException e) { 
-                logSevere("Error: Failed to delete file from permissions change operation: " + e.getMessage());
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: Failed to delete file from permissions change operation: ").append(e.getMessage());
+                logSevere(sharedStringBuilder);
             }
-            logSevere(newFileAttributesStatus);
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), newFileAttributesStatus);
+            logSevere(sharedStringBuilder);
             return newFileAttributesStatus;
         } else {
             return "Success: File attributes changed successfully";
