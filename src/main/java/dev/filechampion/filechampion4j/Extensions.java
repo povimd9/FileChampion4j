@@ -52,7 +52,7 @@ public class Extensions {
     private String sharedMessage2 = " for key: ";
     private List<String> allowedKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
         "footer_signatures", "change_ownership", "change_ownership_user", "change_ownership_mode",
-        "name_encoding", "max_size", "extension_plugins");
+        "name_encoding", "max_size", "extension_plugins", "add_checksum");
     private List<String> stringKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
     "footer_signatures", "change_ownership_user", "change_ownership_mode",
     "max_size", "extension_plugins");
@@ -174,7 +174,7 @@ public class Extensions {
      */
     private void setBoolean (String validation, Object value) {
         if (boolKeyValues.contains(validation)) {
-            validationsMap.put(validation, (Boolean) value);
+            validationsMap.put(validation, (boolean) value);
         } else {
             sbLogMessage.replace(0, sbLogMessage.length(),  sharedMessage1)
                 .append(value.getClass().getName())
