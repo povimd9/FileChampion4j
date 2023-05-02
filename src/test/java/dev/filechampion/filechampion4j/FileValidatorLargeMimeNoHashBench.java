@@ -44,7 +44,8 @@ public class FileValidatorLargeMimeNoHashBench {
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
-    + "      \"magic_bytes\": \"25504446\"\r\n"
+    + "      \"mime_type\": \"application/pdf\",\r\n"
+    + "      \"add_checksum\": false\r\n"
     + "      },\r\n"
     + "    \"doc\": {\r\n"
     + "      \"mime_type\": \"application/msword\",\r\n"
@@ -124,6 +125,6 @@ public class FileValidatorLargeMimeNoHashBench {
     // Benchmark test for 'validateFile' method with only magic bytes validation
     @Benchmark
     public void benchValidMagic() throws Exception {
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesLarge, fileName, "application/pdf");
+        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytesLarge, fileName);
     }
 }
