@@ -29,8 +29,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Benchmark test for 'validateFile' method in 'FileValidator' class.
  */
-@Warmup(iterations = 10, time = 10, timeUnit =  TimeUnit.MILLISECONDS)
-@Measurement(iterations = 10, time = 30, timeUnit =  TimeUnit.MILLISECONDS)
+@Warmup(iterations = 10, time = 100, timeUnit =  TimeUnit.MILLISECONDS)
+@Measurement(iterations = 30, time = 300, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class FileValidatorSigBench {
     private FileValidator validator;
@@ -66,7 +66,7 @@ public class FileValidatorSigBench {
     public void fileValidatorSmallBench() throws RunnerException {
         Options opt = new OptionsBuilder()
         .include(FileValidatorSigBench.class.getSimpleName())
-        .forks(2)
+        .forks(1)
         .mode(Mode.All)
         .output("benchmarks/results.txt")
         .build();
