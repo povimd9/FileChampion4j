@@ -29,8 +29,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Benchmark test for 'validateFile' method in 'FileValidator' class.
  */
-@Warmup(iterations = 10, time = 100, timeUnit =  TimeUnit.MILLISECONDS)
-@Measurement(iterations = 50, time = 100, timeUnit =  TimeUnit.MILLISECONDS)
+@Warmup(iterations = 5, time = 500, timeUnit =  TimeUnit.MILLISECONDS)
+@Measurement(iterations = 15, time = 1000, timeUnit =  TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class FileValidatorLargeMimeNoHashBench {
     private FileValidator validator;
@@ -70,7 +70,7 @@ public class FileValidatorLargeMimeNoHashBench {
         .forks(1)
         .mode(Mode.All)
         .output("benchmarks/results.txt")
-        .jvmArgs("-XX:+UseSerialGC")
+        .jvmArgs("-XX:+UseG1GC")
         .build();
         new Runner(opt).run();
         Collection<RunResult> runResults = new Runner(opt).run();
