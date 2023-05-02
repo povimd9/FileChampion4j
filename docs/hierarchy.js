@@ -11,5 +11,6 @@ var hierarchy =
     ] ],
     [ "dev.filechampion.filechampion4j.SH256Calculate", "classdev_1_1filechampion_1_1filechampion4j_1_1_s_h256_calculate.html", null ],
     [ "dev.filechampion.filechampion4j.PluginsHelper.StepConfig", "classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_1_1_step_config.html", null ],
-    [ "dev.filechampion.filechampion4j.ValidationResponse", "classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html", null ]
+    [ "dev.filechampion.filechampion4j.ValidationResponse", "classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html", null ],
+    [ "dev.filechampion.filechampion4j.ValidationsHelper", "classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html", null ]
 ];

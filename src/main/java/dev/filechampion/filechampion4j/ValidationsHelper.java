@@ -46,13 +46,9 @@ public class ValidationsHelper {
 
 
     /**
-     * This is the constructor for the ValidationsHelper class.
-     * @param extensions
-     * @param fileCategory
-     * @param originalFile
-     * @param mimeString
-     * @param outDir
-     */
+    * This is the constructor for the ValidationsHelper class.
+    * @param extensions (Extensions) the Extensions object containing the file validation configuration
+    */
     public ValidationsHelper(Extensions extensions) {
         this.extensions = extensions;
     }
@@ -67,7 +63,7 @@ public class ValidationsHelper {
      * @throws IOException (IOException) if the file cannot be saved/deleted to/from a temporary directory
      * @throws SecurityException (SecurityException) if the accessed to file is denied for Files.probContentType
      */
-    public StringBuilder getValidationResults(String fileCategory, String fileName, byte[] originalFile, String mimeString) throws IOException, SecurityException{
+    public StringBuilder getValidationResults(String fileCategory, String fileName, byte[] originalFile, String mimeString) throws IOException, SecurityException, NumberFormatException{
         this.fileExtension = getFileExtension(fileName);
         this.responseMsgCountFail = 0;
         this.sbresponseAggregationFail = new StringBuilder();
@@ -89,7 +85,7 @@ public class ValidationsHelper {
      * @throws IOException (IOException) if the file cannot be saved/deleted to/from a temporary directory
      * @throws SecurityException (SecurityException) if the accessed to file is denied for Files.probContentType
      */
-    private StringBuilder doValidations() throws IOException, SecurityException {
+    private StringBuilder doValidations() throws IOException, SecurityException, NumberFormatException {
         
         checkFileSize();
         if (responseMsgCountFail > 0 && failFast) {
@@ -282,7 +278,7 @@ public class ValidationsHelper {
      * @param magicBytesPattern (String) the expected magic bytes of the file being validated
      * @return Boolean (Boolean) true if the file contains the expected magic bytes, false otherwise
      */
-    private boolean containsMagicBytesProcessor(byte[] originalFileBytes, String magicBytesPattern) {
+    private boolean containsMagicBytesProcessor(byte[] originalFileBytes, String magicBytesPattern) throws NumberFormatException{
         if (originalFileBytes.length == 0 || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
             return false;
         }
@@ -336,7 +332,7 @@ public class ValidationsHelper {
      * @param headerSignaturesPattern (String) the expected header signatures of the file being validated
      * @return Boolean (Boolean) true if the file contains the expected header signatures, false otherwise
      */
-    private boolean containsHeaderSignaturesProcessor(byte[] fileBytes, String headerSignaturesPattern) {
+    private boolean containsHeaderSignaturesProcessor(byte[] fileBytes, String headerSignaturesPattern) throws NumberFormatException {
         if (isBlank(headerSignaturesPattern)) {
             return true;
         }
@@ -383,7 +379,7 @@ public class ValidationsHelper {
      * @param footerSignaturesPattern (String) the expected footer signatures of the file being validated
      * @return Boolean (Boolean) true if the file contains the expected footer signatures, false otherwise
      */
-    private boolean containsFooterSignaturesProcessor(byte[] fileBytes, String footerSignaturesPattern) {
+    private boolean containsFooterSignaturesProcessor(byte[] fileBytes, String footerSignaturesPattern) throws NumberFormatException {
         if (isBlank(footerSignaturesPattern)) {
             return true;
         }
