@@ -262,7 +262,7 @@ public class FileValidatorTest {
         validator = new FileValidator(jsonObject);
         fileInBytes = generatePdfBytes(250000);
         fileName = "test&test.pdf";
-        ValidationResponse fileValidationResults = validator.validateFile("LargeDocuments", fileInBytes, fileName, tempOutDirectory);
+        ValidationResponse fileValidationResults = validator.validateFile("LargeDocuments", fileInBytes, fileName);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
         assertEquals( "", fileValidationResults.getFileChecksum(), "Expected checksum to be empty, got: " + fileValidationResults.getFileChecksum());
