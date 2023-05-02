@@ -45,6 +45,8 @@ public class FileValidator {
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();
     private Map<String, StepConfig> stepConfigsAfter = new HashMap<>();
     private Extensions extensions;
+    private boolean failFast = false;
+    private ValidationsHelper validationsHelper;
     private StringBuilder sharedStringBuilder = new StringBuilder();
     private String sharedStepMessage = "Step: ";
     private String errorResponse = "File is not valid.";
@@ -71,6 +73,7 @@ public class FileValidator {
         } else {
             try {
                 extensions = new Extensions(configJsonObject.getJSONObject("Validations"));
+                validationsHelper = new ValidationsHelper(extensions);
             } catch (Exception e) {
                 sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error initializing extensions: ")
                     .append(e.getMessage());
@@ -315,6 +318,10 @@ public class FileValidator {
         fileExtension = getFileExtension(fileName);
         String originalFilenameClean = fileName.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}.]", "_");
 
+        // Check if validations should fail fast
+        failFast = extensions.getValidationValue(fileCategory, fileExtension, "fail_fast") != null ?
+            (boolean) extensions.getValidationValue(fileCategory, fileExtension, "fail_fast") : false;
+
         // Log the file type category being validated
         sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating ").append(originalFilenameClean).append(", as file type: ").append(fileCategory);
         logInfo(sharedStringBuilder);
@@ -355,115 +362,24 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     private ValidationResponse doValidations(String originalFilenameClean) {
-        // Check that the file size is not greater than the maximum allowed size, dont continue if it is
-        int maxSize;
         try {
-            maxSize = Integer.parseInt(extensions.getValidationValue(fileCategory, fileExtension, "max_size") != null ? extensions.getValidationValue(fileCategory, fileExtension, "max_size").toString() : "-1");
-        } catch (NumberFormatException e) {
-            maxSize = -1;
-        }
-        if (maxSize > -1 && Boolean.FALSE.equals(checkFileSize(originalFile.length, maxSize))) {
-            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
-                .append("File size (")
-                .append(originalFile.length / 1000)
-                .append("KB) exceeds maximum allowed size (")
-                .append(maxSize)
-                .append("KB)")
-                .append(commonLogString);
-            logWarn(sbresponseAggregationFail);
-            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, originalFile, "");
-        } else {
-            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                .append("File size check passed, file size: ")
-                .append(originalFile.length / 1000)
-                .append("KB");
-            logFine(sbresponseAggregationSuccess);
+            sharedStringBuilder = validationsHelper.getValidationResults(fileCategory, originalFilenameClean, originalFile, mimeString);
+        } catch (Exception e) {
+            sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error in doValidations: ").append(e.getMessage());
+            logWarn(sharedStringBuilder);
+            return new ValidationResponse(false, errorResponse, sharedStringBuilder.toString() , originalFilenameClean, null, null);
         }
 
-        // Check that the mime type is allowed
-        String mimeType = (String) extensions.getValidationValue(fileCategory, fileExtension, "mime_type");
-        if (!isBlank(mimeType) && !checkMimeType(originalFile, fileExtension, mimeType)) {
-            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
-                .append("Invalid mime_type")
-                .append(commonLogString);
-            logWarn(sbresponseAggregationFail);
+        if (sharedStringBuilder.indexOf("Invalid") > -1) {
+            sbresponseAggregationFail.append(sharedStringBuilder);
+            logWarn(sharedStringBuilder);
+            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, null, null);
         } else {
-            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                .append("Mime type check passed, mime type: ")
-                .append(mimeType);
-            logFine(sbresponseAggregationSuccess);
+            sbresponseAggregationSuccess.append(sharedStringBuilder);
         }
 
-        // Check that the file contains the magic bytes
-        String magicBytes = (String) extensions.getValidationValue(fileCategory, fileExtension, "magic_bytes");
-        if (!isBlank(magicBytes) && !containsMagicBytes(originalFile, magicBytes)) {
-            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
-                .append("Invalid magic_bytes")
-                .append(commonLogString);
-            logWarn(sbresponseAggregationFail);
-        } else {
-            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                .append("Magic bytes check passed, magic bytes: ")
-                .append(magicBytes);
-            logFine(sbresponseAggregationSuccess);
-        }
-
-        // Check header signatures
-        String headerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, "header_signatures");
-        if (!isBlank(headerSignatures) && !containsHeaderSignatures(originalFile, headerSignatures)) {
-            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
-                .append("Invalid header_signatures")
-                .append(commonLogString);
-            logWarn(sbresponseAggregationFail);
-        } else {
-            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                .append("Header signatures check passed, header signatures: ")
-                .append(headerSignatures);
-            logFine(sbresponseAggregationSuccess);
-        }
-
-        // Check footer signatures
-        String footerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, "footer_signatures");
-        if (!isBlank(footerSignatures) && !containsFooterSignatures(originalFile, footerSignatures)) {
-            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
-                .append("Invalid footer_signatures")
-                .append(commonLogString);
-            logWarn(sbresponseAggregationFail);
-        } else {
-            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                .append("Footer signatures check passed, footer signatures: ")
-                .append(footerSignatures);
-            logFine(sbresponseAggregationSuccess);
-        }
-
-        
         // Check for after plugins
-        if (extensions.getValidationValue(fileCategory, fileExtension, "extension_plugins") != null) {
-            String executionResults = executeAfterPlugins(fileCategory, fileExtension);
-            if (executionResults.contains(". Failed for step:")) {
-                sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
-                    .append("Error in executeAfterPlugins: ")
-                    .append(executionResults)
-                    .append(commonLogString);
-                logWarn(sbresponseAggregationFail);
-            } else if (executionResults.contains(". Error for step:")) {
-                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                    .append("executeAfterPlugins passed with error: ")
-                    .append(executionResults);
-                logFine(sbresponseAggregationSuccess);
-                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error in executeAfterPlugins: ").append(executionResults);
-                logWarn(sharedStringBuilder);
-            } else {
-                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                    .append("executeAfterPlugins executed successfully: ")
-                    .append(executionResults);
-                logFine(sbresponseAggregationSuccess);
-            }
-        } else {
-            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
-                .append("No after plugins to execute");
-            logFine(sbresponseAggregationSuccess);
-        }
+        executeAfterPlugins();
 
         boolean isAddChecksum = extensions.getValidationValue(fileCategory, fileExtension, "add_checksum") != null 
         ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, "add_checksum") : true;
@@ -679,13 +595,43 @@ public class FileValidator {
         return "executeBeforePlugins completed: " + sbResponseAggregation.toString();
     }
 
+    private void executeAfterPlugins() {
+        // Check for after plugins
+        if (extensions.getValidationValue(fileCategory, fileExtension, "extension_plugins") != null) {
+            String executionResults = executeAfterPluginsProcess(fileCategory, fileExtension);
+            if (executionResults.contains(". Failed for step:")) {
+                sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + ". ")
+                    .append("Error in executeAfterPlugins: ")
+                    .append(executionResults)
+                    .append(commonLogString);
+                logWarn(sbresponseAggregationFail);
+            } else if (executionResults.contains(". Error for step:")) {
+                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("executeAfterPlugins passed with error: ")
+                    .append(executionResults);
+                logFine(sbresponseAggregationSuccess);
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error in executeAfterPlugins: ").append(executionResults);
+                logWarn(sharedStringBuilder);
+            } else {
+                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                    .append("executeAfterPlugins executed successfully: ")
+                    .append(executionResults);
+                logFine(sbresponseAggregationSuccess);
+            }
+        } else {
+            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
+                .append("No after plugins to execute");
+            logFine(sbresponseAggregationSuccess);
+        }
+    }
+
     /**
      * Execute and check results of plugins configured to run after the validations
      * @param fileCategory (String) the file category of the file being validated
      * @param fileExtension (String) the file extension of the file being validated
      * @return String (String) a string containing the results of the plugin execution
      */
-    private String executeAfterPlugins(String fileCategory, String fileExtension) {
+    private String executeAfterPluginsProcess(String fileCategory, String fileExtension) {
         String responseAggregation = "";
         char responseMsgCount = 'a';
         StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);
@@ -805,37 +751,6 @@ public class FileValidator {
     private boolean isBlank(String str) {
         return str == null || str.trim().isEmpty();
     }
-    
-    /**
-     * Compare file size to the maximum allowed size
-     * @param originalFileSize (int) the size of the file being validated
-     * @param extensionMaxSize (int) the maximum allowed size of the file being validated
-     * @return Boolean (Boolean) true if the file size is less than or equal to the maximum allowed size, false otherwise
-     */
-    private Boolean checkFileSize(int originalFileSize, int extensionMaxSize) {
-        return (extensionMaxSize == 0) || (originalFileSize / 1000) <= extensionMaxSize;
-    }
-
-    /**
-     * Helper method to save the file to a temporary directory
-     * @param fileExtension (String) the file extension of the file being validated
-     * @param originalFile (byte[]) the file bytes of the file being validated
-     * @return Path (Path) the path to the temporary file
-     */
-    private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
-        Path tempFilePath = null;
-        try {
-            // Create a temporary directory
-            Path tempDir = Files.createTempDirectory("tempDir");
-            tempFilePath = Files.createTempFile(tempDir, "tempFile", "." + fileExtension);
-            Files.write(tempFilePath, originalFile);
-        } catch (Exception e) {
-            sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: Saving file to temporary directory failed: ").append(e.getMessage());
-            logWarn(sharedStringBuilder);
-            return null;
-        }
-        return tempFilePath;
-    }
 
     /**
      * Helper method to delete the temporary directory
@@ -856,34 +771,6 @@ public class FileValidator {
     }
 
     /**
-     * Compare the file MIME type to the expected MIME type
-     * @param originalFileBytes (byte[]) the file bytes of the file being validated
-     * @param fileExtension (String) the file extension of the file being validated
-     * @param mimeType (String) the expected MIME type of the file being validated
-     * @return Boolean (Boolean) true if the file MIME type matches the expected MIME type, false otherwise
-     */
-    private boolean checkMimeType(byte[] originalFileBytes, String fileExtension, String mimeType) {
-        String fileMimeType = isBlank(mimeString) ? "" : mimeString;
-        if (isBlank(fileMimeType)) {
-            Path tempFile = saveFileToTempDir(fileExtension, originalFileBytes);
-            if (tempFile == null) {
-                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: checkMimeType failed: tempFile is null");
-                logWarn(sharedStringBuilder);
-                return false;
-            }
-            try {
-                fileMimeType = Files.probeContentType(tempFile);
-            } catch (Exception e) {
-                sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: checkMimeType failed: ").append(e.getMessage());
-                logWarn(sharedStringBuilder);
-            } finally {
-                deleteTempDir(tempFile);
-            }
-        }
-        return !isBlank(fileMimeType) && fileMimeType.equals(mimeType);
-    }
-    
-    /**
      * Parse the file extension from the file name
      * @param fileName (String) the name of the file being validated
      * @return String (String) the file extension of the file being validated
@@ -895,96 +782,7 @@ public class FileValidator {
         }
         return fileName.substring(dotIndex + 1);
     }
-
-    /**
-     * Check if the file contains the expected magic bytes
-     * @param originalFileBytes (byte[]) the file bytes of the file being validated
-     * @param magicBytesPattern (String) the expected magic bytes of the file being validated
-     * @return Boolean (Boolean) true if the file contains the expected magic bytes, false otherwise
-     */
-    private boolean containsMagicBytes(byte[] originalFileBytes, String magicBytesPattern) {
-        if (originalFileBytes.length == 0 || magicBytesPattern == null || magicBytesPattern.isEmpty()) {
-            return false;
-        }
-        magicBytesPattern = magicBytesPattern.replaceAll("\\p{Zs}", "");
-        if (magicBytesPattern.length() % 2 != 0) {
-            magicBytesPattern = "0" + magicBytesPattern;
-        }
-        byte[] magicBytes = new byte[magicBytesPattern.length() / 2];
-        for (int i = 0; i < magicBytesPattern.length(); i += 2) {
-            magicBytes[i / 2] = (byte) Integer.parseInt(magicBytesPattern.substring(i, i + 2), 16);
-        }
-        for (int i = 0; i < originalFileBytes.length - magicBytes.length; i++) {
-            boolean found = true;
-            for (int j = 0; j < magicBytes.length; j++) {
-                if (originalFileBytes[i + j] != magicBytes[j]) {
-                    found = false;
-                    break;
-                }
-            }
-            if (found) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Check if the file contains the expected header signatures
-     * @param fileBytes (byte[]) the file bytes of the file being validated
-     * @param headerSignaturesPattern (String) the expected header signatures of the file being validated
-     * @return Boolean (Boolean) true if the file contains the expected header signatures, false otherwise
-     */
-    private boolean containsHeaderSignatures(byte[] fileBytes, String headerSignaturesPattern) {
-        if (isBlank(headerSignaturesPattern)) {
-            return true;
-        }
-        String hexPattern = headerSignaturesPattern.replaceAll("\\p{Zs}", "");
-        if (hexPattern.length() % 2 != 0) {
-            hexPattern = "0" + hexPattern;
-        }
-        byte[] headerSignatures = new byte[hexPattern.length() / 2];
-        for (int i = 0; i < hexPattern.length(); i += 2) {
-            headerSignatures[i / 2] = (byte) Integer.parseInt(hexPattern.substring(i, i + 2), 16);
-        }
-        for (int i = 0; i < headerSignatures.length; i++) {
-            if (i >= fileBytes.length || fileBytes[i] != headerSignatures[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Check if the file contains the expected footer signatures
-     * @param fileBytes (byte[]) the file bytes of the file being validated
-     * @param footerSignaturesPattern (String) the expected footer signatures of the file being validated
-     * @return Boolean (Boolean) true if the file contains the expected footer signatures, false otherwise
-     */
-    private boolean containsFooterSignatures(byte[] fileBytes, String footerSignaturesPattern) {
-        if (isBlank(footerSignaturesPattern)) {
-            return true;
-        }
-        String hexPattern = footerSignaturesPattern.replaceAll("\\p{Zs}", "");
-        if (hexPattern.length() % 2 != 0) {
-            hexPattern = "0" + hexPattern;
-        }
-        byte[] footerSignatures = new byte[hexPattern.length() / 2];
-        for (int i = 0; i < hexPattern.length(); i += 2) {
-            footerSignatures[i / 2] = (byte) Integer.parseInt(hexPattern.substring(i, i + 2), 16);
-        }
-        int footerStartIndex = fileBytes.length - footerSignatures.length -1;
-        if (footerStartIndex < 0) {
-            return false;
-        }
-        for (int i = 0; i < footerSignatures.length; i++) {
-            if (fileBytes[footerStartIndex + i] != footerSignatures[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+ 
     /**
      * Calculate the checksum of the file
      * @param fileBytes (byte[]) the file bytes of the file being validated
