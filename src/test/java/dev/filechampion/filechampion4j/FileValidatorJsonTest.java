@@ -417,7 +417,7 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(jsonObject);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid, got: " + fileValidationResults.resultsInfo());
-        assertTrue(fileValidationResults.resultsDetails().contains("timeout"), "Expected validation response to contain timeout");
+        assertTrue(fileValidationResults.resultsDetails().contains("Process timeout"), "Expected validation response to contain 'Process timeout'");
     }
 
     // Test step failure
@@ -555,7 +555,8 @@ public class FileValidatorJsonTest {
         String fileName = "test.pdf";
         FileValidator validator = new FileValidator(CONFIG_JSON_SIZE);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
-        assertTrue(fileValidationResults.isValid(), "Expected validation response to be invalid");
+        assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
+        assertTrue(fileValidationResults.resultsDetails().contains("Invalid file size"), "Expected validation response to contain 'Invalid file size', got:" + fileValidationResults.resultsDetails());
     }
 
     // Test only basic parameters in json config with size as string

@@ -334,6 +334,17 @@ public class FileValidatorTest {
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
     }
 
+    // Test valid inputs with invalid file name
+    @Test
+    void testValidInputsBytesNoExtFilename() throws Exception {
+        fileInBytes = generatePdfBytes(250000);
+        fileName = "test";
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
+        validator.validateFile("Documents", fileInBytes, fileName), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("extension  not found"), 
+        "Expected exception to contain 'extension  not found', got: " + exception.getMessage());
+    }
+
     // Test valid inputs including valid pdf bytes, with mime type, without storage
     @Test
     void testValidInputsMime() throws Exception {
@@ -418,7 +429,7 @@ public class FileValidatorTest {
         fileName = "notReal.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempOutDirectory);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid when content does not match extension");
-        assertTrue(fileValidationResults.resultsDetails().contains("Invalid magic_bytes for file extension:"), "Expected 'Invalid magic_bytes', got: " + fileValidationResults.resultsDetails());
+        assertTrue(fileValidationResults.resultsDetails().contains("Invalid magic_bytes for file"), "Expected response to contain 'Invalid magic_bytes for file', got: " + fileValidationResults.resultsDetails());
     }
 
     // Test saving to non existing directory

@@ -5,6 +5,9 @@ var searchData=
   ['validationcache_2',['validationCache',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6',1,'dev::filechampion::filechampion4j::Extensions']]],
   ['validationresponse_3',['ValidationResponse',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html',1,'dev.filechampion.filechampion4j.ValidationResponse'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a541a5ac6937f48e16d353795ad20f235',1,'dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()']]],
   ['validationresponse_2ejava_4',['ValidationResponse.java',['../_validation_response_8java.html',1,'']]],
-  ['validationsmap_5',['validationsMap',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624',1,'dev::filechampion::filechampion4j::Extensions']]],
-  ['validfilepath_6',['validFilePath',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea',1,'dev::filechampion::filechampion4j::ValidationResponse']]]
+  ['validationshelper_5',['ValidationsHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html',1,'dev.filechampion.filechampion4j.ValidationsHelper'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#aff5a4a41b0d2d79c2ce421fa484c3775',1,'dev.filechampion.filechampion4j.ValidationsHelper.ValidationsHelper()']]],
+  ['validationshelper_6',['validationsHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a93b5230e2ecf87d1afb86d898e0a91e6',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['validationshelper_2ejava_7',['ValidationsHelper.java',['../_validations_helper_8java.html',1,'']]],
+  ['validationsmap_8',['validationsMap',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624',1,'dev::filechampion::filechampion4j::Extensions']]],
+  ['validfilepath_9',['validFilePath',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea',1,'dev::filechampion::filechampion4j::ValidationResponse']]]
 ];
