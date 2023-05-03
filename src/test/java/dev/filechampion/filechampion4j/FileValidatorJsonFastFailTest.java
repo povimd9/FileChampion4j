@@ -40,7 +40,7 @@ public class FileValidatorJsonFastFailTest {
     /////////////////////////////////////
 
     // Config JSON object for testing mime type
-    private static final JSONObject CONFIG_JSON_MIME = new JSONObject("{\r\n"
+    private static final JSONObject CONFIG_JSON_INVALID_MIME = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
@@ -60,7 +60,7 @@ public class FileValidatorJsonFastFailTest {
     + "}");
 
     // Config JSON object for testing magic bytes
-    private static final JSONObject CONFIG_JSON_MAGIC = new JSONObject("{\r\n"
+    private static final JSONObject CONFIG_JSON_INVALID_MAGIC = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
@@ -80,7 +80,7 @@ public class FileValidatorJsonFastFailTest {
     + "}");
 
     // Config JSON object for testing header signatures
-    private static final JSONObject CONFIG_JSON_HEADER = new JSONObject("{\r\n"
+    private static final JSONObject CONFIG_JSON_INVALID_HEADER = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
@@ -100,7 +100,7 @@ public class FileValidatorJsonFastFailTest {
     + "}");
 
     // Config JSON object for testing footer signatures
-    private static final JSONObject CONFIG_JSON_FOOTER = new JSONObject("{\r\n"
+    private static final JSONObject CONFIG_JSON_INVALID_FOOTER = new JSONObject("{\r\n"
     + "  \"Validations\": {\r\n"
     + "  \"Documents\": {\r\n"
     + "    \"pdf\": {\r\n"
@@ -337,7 +337,7 @@ public class FileValidatorJsonFastFailTest {
     void testInValidMime() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        FileValidator validator = new FileValidator(CONFIG_JSON_MIME);
+        FileValidator validator = new FileValidator(CONFIG_JSON_INVALID_MIME);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
@@ -347,7 +347,7 @@ public class FileValidatorJsonFastFailTest {
     void testInValidMagic() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        FileValidator validator = new FileValidator(CONFIG_JSON_MAGIC);
+        FileValidator validator = new FileValidator(CONFIG_JSON_INVALID_MAGIC);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
@@ -357,7 +357,7 @@ public class FileValidatorJsonFastFailTest {
     void testInValidMagicHeader() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        FileValidator validator = new FileValidator(CONFIG_JSON_HEADER);
+        FileValidator validator = new FileValidator(CONFIG_JSON_INVALID_HEADER);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }
@@ -367,7 +367,7 @@ public class FileValidatorJsonFastFailTest {
     void testInValidMagicFooter() throws Exception {
         byte[] fileInBytes = generatePdfBytes(250000);
         String fileName = "test.pdf";
-        FileValidator validator = new FileValidator(CONFIG_JSON_FOOTER);
+        FileValidator validator = new FileValidator(CONFIG_JSON_INVALID_FOOTER);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid");
     }

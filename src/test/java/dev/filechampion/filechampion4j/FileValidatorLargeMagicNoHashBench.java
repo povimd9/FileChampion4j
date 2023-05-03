@@ -64,7 +64,7 @@ public class FileValidatorLargeMagicNoHashBench {
 
     
     @Test
-    public void fileValidatorSmallBench() throws RunnerException {
+    public void fileValidatorLargeMagicNoHashBench() throws RunnerException {
         Options opt = new OptionsBuilder()
         .include(FileValidatorLargeMagicNoHashBench.class.getSimpleName())
         .forks(1)
