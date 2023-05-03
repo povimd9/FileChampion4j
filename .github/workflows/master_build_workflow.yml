@@ -131,18 +131,17 @@ jobs:
           cd /home/runner/work/FileChampion4j/FileChampion4j/
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
-          cat /home/runner/work/FileChampion4j/FileChampion4j/benchmarks/benchResults.txt
-          mvn test -Dtest="FileValidatorBenchCompare"
+          
           
       - name: Push benchmark results back to branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREVIEW_VERSION: ${{ vars.PREVIEW_VERSION }}
         run: |
+          cat /home/runner/work/FileChampion4j/FileChampion4j/benchmarks/benchResults.txt
+          mvn test -Dtest="FileValidatorBenchCompare"
           git config --global user.name "povimd9"
           git config --global user.email "povimd9@users.noreply.github.com"
           git add benchmarks/
           git commit -m "Push benchmark results back to branch"
           git push -f
-
-        if: ${{ success() }}
