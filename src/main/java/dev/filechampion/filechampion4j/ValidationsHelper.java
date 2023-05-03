@@ -202,7 +202,7 @@ public class ValidationsHelper {
     private StringBuilder checkMimeType()throws IOException, SecurityException {
         String mimeType = (String) extensions.getValidationValue(fileCategory, fileExtension, "mime_type");
         String fileMimeType = isBlank(mimeString) ? "" : mimeString;
-        if (isBlank(fileMimeType)) {
+        if (!isBlank(mimeType) && isBlank(fileMimeType)) {
             Path tempFile = saveFileToTempDir(fileExtension, originalFile);
             if (tempFile == null) {
                 sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Error: checkMimeType failed: tempFile is null");
