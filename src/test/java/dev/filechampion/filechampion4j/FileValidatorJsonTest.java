@@ -417,7 +417,7 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(jsonObject);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertFalse(fileValidationResults.isValid(), "Expected validation response to be invalid, got: " + fileValidationResults.resultsInfo());
-        assertTrue(fileValidationResults.resultsDetails().contains("timeout"), "Expected validation response to contain timeout");
+        assertTrue(fileValidationResults.resultsDetails().contains("Process timeout"), "Expected validation response to contain 'Process timeout'");
     }
 
     // Test step failure
