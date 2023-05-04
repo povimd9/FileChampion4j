@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidationResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">filechampion4j</a> &gt; <a href="index.source.html" class="el_package">dev.filechampion.filechampion4j</a> &gt; <span class="el_source">ValidationResponse.java</span></div><h1>ValidationResponse.java</h1><pre class="source lang-java linenums">package dev.filechampion.filechampion4j;
+
+
+/**
+ * This class is used to return the results of a file validation.
+ */
+public class ValidationResponse {
+    private final boolean isValid;
+    private final String resultsInfo;
+    private final String resultsDetails;
+    private final String cleanFileName;
+    private final byte[] fileBytes;
+    private final String fileChecksum;
+    private final String[] validFilePath;
+
+    /**
+    * ValidationResponse is used to return the results of a file validation.
+    * @param isValid (Boolean) true if the file is valid, false otherwise
+    * @param resultsInfo (String) a String containing the result sammery of the validation
+    * @param resultsDetails (String) a String containing the details of the validation
+    * @param cleanFileName (String) the file name with all special characters replaced with underscores
+    * @param fileBytes (bytes[]) the file bytes
+    * @param fileChecksum (String) the file checksum
+    * @param validFilePath (String) optional valid file path if outputDir was set in the filechampion4j constructor
+    */
+<span class="fc" id="L26">    public ValidationResponse(boolean isValid, String resultsInfo, String resultsDetails, String cleanFileName, byte[] fileBytes, String fileChecksum, String... validFilePath) {</span>
+<span class="fc" id="L27">        this.isValid = isValid;</span>
+<span class="fc" id="L28">        this.resultsInfo = resultsInfo;</span>
+<span class="fc" id="L29">        this.resultsDetails = resultsDetails;</span>
+<span class="fc" id="L30">        this.fileBytes = fileBytes;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        this.fileChecksum = fileChecksum != null ? fileChecksum : &quot;null&quot;;</span>
+<span class="fc" id="L32">        this.validFilePath = validFilePath;</span>
+<span class="fc" id="L33">        this.cleanFileName = cleanFileName;</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Returns true if the file is valid, false otherwise
+     * @return (Boolean) true if the file is valid, false otherwise
+     */
+    public boolean isValid() {
+<span class="fc" id="L41">        return isValid;</span>
+    }
+
+    /**
+     * Returns a String containing the result sammery of the validation
+     * @return (String) a String containing the result sammery of the validation
+     */
+    public String resultsInfo() {
+<span class="fc" id="L49">        return resultsInfo;</span>
+    }
+
+    /**
+     * Returns a String containing the details of the validation
+     * @return (String) a String containing the details of the validation
+     */
+    public String resultsDetails() {
+<span class="fc" id="L57">        return resultsDetails;</span>
+    }
+
+    /**
+     * Returns the file name with all special characters replaced with underscores
+     * @return (String) the file name with all special characters replaced with underscores
+     */
+    public String getCleanFileName() {
+<span class="fc" id="L65">        return cleanFileName;</span>
+    }
+
+    /**
+     * Returns the file bytes
+     * @return (bytes[]) the file bytes of validated file
+     */
+    public byte[] getFileBytes() {
+<span class="fc" id="L73">        return fileBytes;</span>
+    }
+
+    /**
+     * Returns the file SHA-256 checksum
+     * @return (String) the file checksum
+     */
+    public String getFileChecksum() {
+<span class="fc" id="L81">        return fileChecksum;</span>
+    }
+
+    /**
+     * Returns the valid file path if outputDir was set in the filechampion4j constructor
+     * @return (String) the valid file path if outputDir was set in the filechampion4j constructor
+     */
+    public String[] getValidFilePath() {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        return validFilePath != null ? validFilePath : new String[0];</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

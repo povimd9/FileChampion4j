@@ -65,7 +65,7 @@ public class FileValidator {
 
     /**
      * This method is used to initiate the class with relevant json configurations
-     * @param configJsonObject
+     * @param configJsonObject (JSONObject) - The json object containing the Validations and Plugins configurations for the class.
      */
     public FileValidator(JSONObject configJsonObject) throws IllegalArgumentException {
         if (configJsonObject == null || configJsonObject.isEmpty() || !configJsonObject.has("Validations")) {

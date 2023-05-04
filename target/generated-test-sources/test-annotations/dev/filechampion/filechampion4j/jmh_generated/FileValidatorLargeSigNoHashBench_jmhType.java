@@ -1,0 +1,4 @@
+package dev.filechampion.filechampion4j.jmh_generated;
+public class FileValidatorLargeSigNoHashBench_jmhType extends FileValidatorLargeSigNoHashBench_jmhType_B3 {
+}
+

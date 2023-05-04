@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: dev.filechampion.filechampion4j.FileValidatorJsonFastFailTest
+-------------------------------------------------------------------------------
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.641 s - in dev.filechampion.filechampion4j.FileValidatorJsonFastFailTest
