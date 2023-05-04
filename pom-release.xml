@@ -251,47 +251,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Run the bench tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <forkCount>1</forkCount>
-                    <reuseForks>true</reuseForks>
-                    <!--suppress UnresolvedMavenProperty reported by Idea-->
-                    <argLine>${argLine}</argLine>
-                    <systemPropertyVariables>
-                        <java.version>1.8</java.version>
-                    </systemPropertyVariables>
-                    <includes>
-                        <include>**/FileValidatorBenchRun.java</include>
-                    </includes>
-                    <parallel>classes</parallel>
-                    <perCoreThreadCount>true</perCoreThreadCount>
-                    <printSummary>true</printSummary>
-                    <printFailures>true</printFailures>
-                    <argLine>-Xmx12g</argLine>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>test-java</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <java.version>1.8</java.version>
-                            </systemPropertyVariables>
-                            <includes>
-                                <include>**/FileValidatorBenchRun.java</include>
-                            </includes>
-                            <printSummary>true</printSummary>
-                            <printFailures>true</printFailures>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
             <!-- Sign the jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
