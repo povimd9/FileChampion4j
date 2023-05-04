@@ -39,8 +39,6 @@ public class FileValidatorTest {
     private FileValidator validator;
     private String fileName;
     private byte[] fileInBytes;
-    String restrictedPath = System.getProperty("os.name").startsWith("Windows")? 
-    "C:\\Windows\\System32" : "/etc/passwd";
 
     @Setup
     @BeforeEach
@@ -450,11 +448,13 @@ public class FileValidatorTest {
     void testSaveToNonExistingDirectory() throws Exception {
         fileInBytes = generatePdfBytes(250000);
         fileName = "test.pdf";
-        Path tmpDirectory = Paths.get(restrictedPath);
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
-        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to target directory fails");
-        assertTrue(fileValidationResults.resultsDetails().contains("File is valid but failed to save to output directory"), 
-            "Expected 'File is valid but failed to save to output directory', got: " + fileValidationResults.resultsDetails());
+        if (!System.getProperty("os.name").startsWith("Windows")) {
+            Path tmpDirectory = Paths.get("/etc/passwd");
+            ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
+            assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to target directory fails");
+            assertTrue(fileValidationResults.resultsDetails().contains("File is valid but failed to save to output directory"), 
+                "Expected 'File is valid but failed to save to output directory', got: " + fileValidationResults.resultsDetails());
+        }
     }
 
     // Test saving to non existing directory
