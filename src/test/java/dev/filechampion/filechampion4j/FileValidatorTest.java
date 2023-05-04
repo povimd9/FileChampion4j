@@ -341,8 +341,19 @@ public class FileValidatorTest {
         fileName = "test";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
         validator.validateFile("Documents", fileInBytes, fileName), "Expected exception to be thrown");
-        assertTrue(exception.getMessage().contains("extension  not found"), 
-        "Expected exception to contain 'extension  not found', got: " + exception.getMessage());
+        assertTrue(exception.getMessage().contains("fileName must contain a file extension."), 
+        "Expected exception to contain 'fileName must contain a file extension.', got: " + exception.getMessage());
+    }
+
+    // Test valid inputs with invalid file name
+    @Test
+    void testValidInputsBytesExtDontExistFilename() throws Exception {
+        fileInBytes = generatePdfBytes(250000);
+        fileName = "test.extensiondoesnotexist";
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
+        validator.validateFile("Documents", fileInBytes, fileName), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("extension extensiondoesnotexist not found"), 
+        "Expected exception to contain 'extension extensiondoesnotexist not found', got: " + exception.getMessage());
     }
 
     // Test valid inputs including valid pdf bytes, with mime type, without storage
@@ -373,31 +384,31 @@ public class FileValidatorTest {
         Path filePath =  Paths.get("doesnotexist/somepath/test.pdf");
         fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
-        validator.validateFile("Documents", filePath, fileName, tempOutDirectory), "Expected 'Error reading file' exception.");
-        assertTrue(exception.getMessage().contains("Error reading file:"), 
-        "Expected exception to contain 'Error reading file'.");
+        validator.validateFile("Documents", filePath, fileName, tempOutDirectory), "Expected exception to be thrown.");
+        assertTrue(exception.getMessage().contains("filepath does not exist."), 
+        "Expected exception to contain 'filepath does not exist.', got: " + exception.getMessage());
     }
     
-    // Test valid inputs including valid pdf file path, with mime type, with storage
+    // Test inputs including invalid pdf file path, with mime type, with storage
     @Test
     void testValidInputsNoPathMimeStore() throws Exception {
         Path filePath =  Paths.get("doesnotexist/somepath/test.pdf");
         fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
-        validator.validateFile("Documents", filePath, fileName, tempOutDirectory, "application/pdf"), "Expected 'Error reading file' exception.");
-        assertTrue(exception.getMessage().contains("Error reading file:"), 
-        "Expected exception to contain 'Error reading file'.");
+        validator.validateFile("Documents", filePath, fileName, tempOutDirectory, "application/pdf"), "Expected exception to be thrown.");
+        assertTrue(exception.getMessage().contains("filepath does not exist."), 
+        "Expected exception to contain 'filepath does not exist.', got: " + exception.getMessage());
     }
 
-    // Test valid inputs with invalid pdf file path without storage
+    // Test inputs with invalid pdf file path without storage
     @Test
     void testValidInputsNoPath() throws Exception {
         Path filePath =  Paths.get("doesnotexist/somepath/test.pdf");
         fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
-        validator.validateFile("Documents", filePath, fileName), "Expected 'Error reading file' exception.");
-        assertTrue(exception.getMessage().contains("Error reading file:"), 
-        "Expected exception to contain 'Error reading file'.");
+        validator.validateFile("Documents", filePath, fileName), "Expected exception to be thrown.");
+        assertTrue(exception.getMessage().contains("filepath does not exist."), 
+        "Expected exception to contain 'filepath does not exist.', got: " + exception.getMessage());
     }
 
     // Test valid inputs including valid pdf file path, with mime type, without storage
@@ -406,9 +417,9 @@ public class FileValidatorTest {
         Path filePath =  Paths.get("doesnotexist/somepath/test.pdf");
         fileName = "test.pdf";
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
-        validator.validateFile("Documents", filePath, fileName, "application/pdf"), "Expected 'Error reading file' exception.");
-        assertTrue(exception.getMessage().contains("Error reading file:"), 
-        "Expected exception to contain 'Error reading file'.");
+        validator.validateFile("Documents", filePath, fileName, "application/pdf"), "Expected 'filepath does not exist.' exception.");
+        assertTrue(exception.getMessage().contains("filepath does not exist."), 
+        "Expected exception to contain 'filepath does not exist.', got: " + exception.getMessage());
     }
 
     // Test file with content mismatching its extension inclufing magic bytes, header and footer, validations
@@ -437,12 +448,26 @@ public class FileValidatorTest {
     void testSaveToNonExistingDirectory() throws Exception {
         fileInBytes = generatePdfBytes(250000);
         fileName = "test.pdf";
-        Path tmpDirectory = Paths.get("nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
-        ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
-        assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to non existing directory");
-        assertTrue(fileValidationResults.resultsInfo().contains("File is valid but failed to save to output directory"), "Expected 'File is valid but failed to save to output directory', got: " + fileValidationResults.resultsInfo());
+        if (!System.getProperty("os.name").startsWith("Windows")) {
+            Path tmpDirectory = Paths.get("/etc/passwd");
+            ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory);
+            assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid when saving to target directory fails");
+            assertTrue(fileValidationResults.resultsDetails().contains("File is valid but failed to save to output directory"), 
+                "Expected 'File is valid but failed to save to output directory', got: " + fileValidationResults.resultsDetails());
+        }
     }
 
+    // Test saving to non existing directory
+    @Test
+    void testSaveToBlockedExistingDirectory() throws Exception {
+        fileInBytes = generatePdfBytes(250000);
+        fileName = "test.pdf";
+        Path tmpDirectory = Paths.get("nonExistingDirectory-9384rhj934f8h3498h/3hd923d8h");
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> 
+        validator.validateFile("Documents", fileInBytes, fileName, tmpDirectory), "Expected exception to be thrown.");
+        assertTrue(exception.getMessage().contains("outDir does not exist."), 
+        "Expected exception to contain 'outDir does not exist.', got: " + exception.getMessage());
+    }
 
 
     // Helper methods

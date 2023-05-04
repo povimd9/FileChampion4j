@@ -216,7 +216,7 @@ public class Extensions {
             logWarn(sbLogMessage.toString());
             throw new IllegalArgumentException(sbLogMessage.toString());
         }
-        if (!extensionsMap.containsKey(extension)) {
+        if (!categoriesMap.get(category).containsKey(extension)) {
             sbLogMessage.replace(0, sbLogMessage.length(), "extension ").append(extension)
                 .append(" not found");
             logWarn(sbLogMessage.toString());
@@ -246,8 +246,8 @@ public class Extensions {
             logFine(sbLogMessage.toString());
             return validationCache.get(cacheKey);
         }
-
-        Object value = extensionsMap.get(extension).get(validationKey);
+        
+        Object value = ((HashMap<?,?>) categoriesMap.get(category).get(extension)).get(validationKey);
         if (value != null) {
             validationCache.put(cacheKey, value);
             sbLogMessage.replace(0, sbLogMessage.length(), "Returning ").append(validationKey)

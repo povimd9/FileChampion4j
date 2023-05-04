@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['failfast_0',['failFast',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a4499765551f2ac817360ea9ba85e6cc8',1,'dev.filechampion.filechampion4j.FileValidator.failFast()'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a8b6e4acba8bd655e1b535a7e2f83391d',1,'dev.filechampion.filechampion4j.ValidationsHelper.failFast()']]],
+  ['failfast_0',['failFast',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a8b6e4acba8bd655e1b535a7e2f83391d',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
   ['fileaclhelper_1',['FileAclHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html',1,'dev.filechampion.filechampion4j.FileAclHelper'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ad04da5e33b2b213475500855dafe095e',1,'dev.filechampion.filechampion4j.FileAclHelper.FileAclHelper()']]],
   ['fileaclhelper_2ejava_2',['FileAclHelper.java',['../_file_acl_helper_8java.html',1,'']]],
   ['filebytes_3',['fileBytes',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8',1,'dev::filechampion::filechampion4j::ValidationResponse']]],
@@ -8,6 +8,7 @@ var searchData=
   ['filechecksum_5',['fileChecksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93',1,'dev::filechampion::filechampion4j::ValidationResponse']]],
   ['fileextension_6',['fileExtension',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a98ac299ff7afaa3a48563293caa74c90',1,'dev.filechampion.filechampion4j.FileValidator.fileExtension()'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a69d618a3ec092eb45a00609c313a14d9',1,'dev.filechampion.filechampion4j.ValidationsHelper.fileExtension()']]],
   ['filename_7',['fileName',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a73eae52b52dbc48855dd0ae417224255',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['filevalidator_8',['FileValidator',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html',1,'dev.filechampion.filechampion4j.FileValidator'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a5239bec4548e36c68d28e92281006d99',1,'dev.filechampion.filechampion4j.FileValidator.FileValidator()']]],
-  ['filevalidator_2ejava_9',['FileValidator.java',['../_file_validator_8java.html',1,'']]]
+  ['filepath_8',['filePath',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a6997021a27bb3315be08284343335901',1,'dev::filechampion::filechampion4j::FileValidator']]],
+  ['filevalidator_9',['FileValidator',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html',1,'dev.filechampion.filechampion4j.FileValidator'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a5239bec4548e36c68d28e92281006d99',1,'dev.filechampion.filechampion4j.FileValidator.FileValidator()']]],
+  ['filevalidator_2ejava_10',['FileValidator.java',['../_file_validator_8java.html',1,'']]]
 ];

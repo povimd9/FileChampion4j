@@ -49,14 +49,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- AssertJ for logs testing -->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.24.2</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- JMH for benchmarking -->
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
