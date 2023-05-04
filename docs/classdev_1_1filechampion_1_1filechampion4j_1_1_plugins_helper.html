@@ -159,16 +159,15 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">plugins</td><td>(JSONObject) a JSONObject containing all plugins </td></tr>
+    <tr><td class="paramname">plugins</td><td>(JSONObject) a JSONObject containing plugin configuration data </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(PluginsHelper) a PluginsHelper object </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_helper_8java_source.html#l00020">20</a> of file <a class="el" href="_plugins_helper_8java_source.html">PluginsHelper.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   20</span>                                             {</div>
-<div class="line"><span class="lineno">   21</span>        this.plugins = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html#aa889649ce7152d7ce4ae60a7436b50c7">plugins</a>;</div>
-<div class="line"><span class="lineno">   22</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_plugins_helper_8java_source.html#l00019">19</a> of file <a class="el" href="_plugins_helper_8java_source.html">PluginsHelper.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   19</span>                                             {</div>
+<div class="line"><span class="lineno">   20</span>        this.plugins = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html#aa889649ce7152d7ce4ae60a7436b50c7">plugins</a>;</div>
+<div class="line"><span class="lineno">   21</span>    }</div>
 <div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper_html_aa889649ce7152d7ce4ae60a7436b50c7"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html#aa889649ce7152d7ce4ae60a7436b50c7">dev.filechampion.filechampion4j.PluginsHelper.plugins</a></div><div class="ttdeci">JSONObject plugins</div><div class="ttdef"><b>Definition:</b> <a href="_plugins_helper_8java_source.html#l00013">PluginsHelper.java:13</a></div></div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="_plugins_helper_8java_source.html#l00013">dev.filechampion.filechampion4j.PluginsHelper.plugins</a>.</p>
@@ -190,60 +189,60 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns a list of PluginConfig objects. </p><dl class="section return"><dt>Returns</dt><dd>(List&lt;PluginConfig&gt;) a list of PluginConfig objects </dd></dl>
+<p>Returns a list of PluginConfig objects. </p><dl class="section return"><dt>Returns</dt><dd>(HashMap&lt;String, PluginConfig&gt;) a map of PluginConfig objects </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_helper_8java_source.html#l00028">28</a> of file <a class="el" href="_plugins_helper_8java_source.html">PluginsHelper.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   28</span>                                                        {</div>
-<div class="line"><span class="lineno">   29</span>        HashMap&lt;String, PluginConfig&gt; pluginConfigs = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
-<div class="line"><span class="lineno">   30</span>        Map&lt;String, StepConfig&gt; stepConfigs = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<p class="definition">Definition at line <a class="el" href="_plugins_helper_8java_source.html#l00027">27</a> of file <a class="el" href="_plugins_helper_8java_source.html">PluginsHelper.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   27</span>                                                        {</div>
+<div class="line"><span class="lineno">   28</span>        HashMap&lt;String, PluginConfig&gt; pluginConfigs = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><span class="lineno">   29</span>        Map&lt;String, StepConfig&gt; stepConfigs = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><span class="lineno">   30</span> </div>
 <div class="line"><span class="lineno">   31</span> </div>
-<div class="line"><span class="lineno">   32</span> </div>
-<div class="line"><span class="lineno">   33</span>        <span class="keywordflow">for</span> (String pluginName : <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html#aa889649ce7152d7ce4ae60a7436b50c7">plugins</a>.keySet()) {</div>
-<div class="line"><span class="lineno">   34</span>            JSONObject plugin = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html#aa889649ce7152d7ce4ae60a7436b50c7">plugins</a>.getJSONObject(pluginName);</div>
-<div class="line"><span class="lineno">   35</span>            PluginConfig pluginConfig = <span class="keyword">new</span> PluginConfig();</div>
-<div class="line"><span class="lineno">   36</span>            pluginConfig.setName(pluginName);</div>
-<div class="line"><span class="lineno">   37</span> </div>
-<div class="line"><span class="lineno">   38</span>            <span class="keywordflow">for</span> (String stepName : plugin.keySet()) {</div>
-<div class="line"><span class="lineno">   39</span>                JSONObject step = plugin.getJSONObject(stepName);</div>
-<div class="line"><span class="lineno">   40</span>                StepConfig stepConfig = <span class="keyword">new</span> StepConfig();</div>
-<div class="line"><span class="lineno">   41</span>                String pluginStepName = pluginName + <span class="stringliteral">&quot;.&quot;</span> + stepName.substring(0, stepName.lastIndexOf(<span class="charliteral">&#39;.&#39;</span>));</div>
-<div class="line"><span class="lineno">   42</span>                stepConfig.setName(pluginStepName);</div>
-<div class="line"><span class="lineno">   43</span> </div>
-<div class="line"><span class="lineno">   44</span>                stepConfig.setType(step.getString(<span class="stringliteral">&quot;type&quot;</span>));</div>
-<div class="line"><span class="lineno">   45</span>                stepConfig.setRunBefore(step.optBoolean(<span class="stringliteral">&quot;run_before&quot;</span>));</div>
-<div class="line"><span class="lineno">   46</span>                stepConfig.setRunAfter(step.optBoolean(<span class="stringliteral">&quot;run_after&quot;</span>));</div>
-<div class="line"><span class="lineno">   47</span>                stepConfig.setCredsPath(step.optString(<span class="stringliteral">&quot;creds_path&quot;</span>));</div>
-<div class="line"><span class="lineno">   48</span>                stepConfig.setTimeout(step.getInt(<span class="stringliteral">&quot;timeout&quot;</span>));</div>
-<div class="line"><span class="lineno">   49</span>                stepConfig.setOnFail(step.getString(<span class="stringliteral">&quot;on_timeout_or_fail&quot;</span>));</div>
-<div class="line"><span class="lineno">   50</span>                stepConfig.setEndpoint(step.getString(<span class="stringliteral">&quot;endpoint&quot;</span>));</div>
-<div class="line"><span class="lineno">   51</span>                stepConfig.setResponse(step.getString(<span class="stringliteral">&quot;response&quot;</span>));</div>
-<div class="line"><span class="lineno">   52</span> </div>
-<div class="line"><span class="lineno">   53</span>                <span class="keywordflow">switch</span> (stepConfig.getType()) {</div>
-<div class="line"><span class="lineno">   54</span>                    <span class="keywordflow">case</span> <span class="stringliteral">&quot;cli&quot;</span>:</div>
-<div class="line"><span class="lineno">   55</span>                        CliPluginHelper cliPluginStep = <span class="keyword">new</span> CliPluginHelper(stepConfig);</div>
-<div class="line"><span class="lineno">   56</span>                        stepConfig.setCliPluginHelper(cliPluginStep);</div>
-<div class="line"><span class="lineno">   57</span>                        stepConfigs.put(pluginStepName, stepConfig);</div>
-<div class="line"><span class="lineno">   58</span> </div>
-<div class="line"><span class="lineno">   59</span>                        <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">   60</span>                    <span class="keywordflow">case</span> <span class="stringliteral">&quot;http&quot;</span>:</div>
-<div class="line"><span class="lineno">   61</span>                        stepConfig.setMethod(step.optString(<span class="stringliteral">&quot;method&quot;</span>));</div>
-<div class="line"><span class="lineno">   62</span>                        stepConfig.setHeaders(step.optJSONObject(<span class="stringliteral">&quot;headers&quot;</span>));</div>
-<div class="line"><span class="lineno">   63</span>                        stepConfig.setBody(step.optJSONObject(<span class="stringliteral">&quot;body&quot;</span>));</div>
-<div class="line"><span class="lineno">   64</span>                        stepConfig.setHttpPassCode(step.optInt(<span class="stringliteral">&quot;http_pass_code&quot;</span>));</div>
-<div class="line"><span class="lineno">   65</span>                        stepConfig.setHttpFailCode(step.optInt(<span class="stringliteral">&quot;http_fail_code&quot;</span>));</div>
-<div class="line"><span class="lineno">   66</span>                        stepConfigs.put(pluginStepName, stepConfig);</div>
-<div class="line"><span class="lineno">   67</span>                        <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">   68</span>                    <span class="keywordflow">default</span>:</div>
-<div class="line"><span class="lineno">   69</span>                        <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">   70</span>                }</div>
-<div class="line"><span class="lineno">   71</span>            }</div>
-<div class="line"><span class="lineno">   72</span>            pluginConfig.setStepConfigs(stepConfigs);</div>
-<div class="line"><span class="lineno">   73</span>            pluginConfigs.put(pluginName, pluginConfig);</div>
-<div class="line"><span class="lineno">   74</span>        }</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">return</span> pluginConfigs;</div>
-<div class="line"><span class="lineno">   76</span>    }</div>
+<div class="line"><span class="lineno">   32</span>        <span class="keywordflow">for</span> (String pluginName : <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html#aa889649ce7152d7ce4ae60a7436b50c7">plugins</a>.keySet()) {</div>
+<div class="line"><span class="lineno">   33</span>            JSONObject plugin = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html#aa889649ce7152d7ce4ae60a7436b50c7">plugins</a>.getJSONObject(pluginName);</div>
+<div class="line"><span class="lineno">   34</span>            PluginConfig pluginConfig = <span class="keyword">new</span> PluginConfig();</div>
+<div class="line"><span class="lineno">   35</span>            pluginConfig.setName(pluginName);</div>
+<div class="line"><span class="lineno">   36</span> </div>
+<div class="line"><span class="lineno">   37</span>            <span class="keywordflow">for</span> (String stepName : plugin.keySet()) {</div>
+<div class="line"><span class="lineno">   38</span>                JSONObject step = plugin.getJSONObject(stepName);</div>
+<div class="line"><span class="lineno">   39</span>                StepConfig stepConfig = <span class="keyword">new</span> StepConfig();</div>
+<div class="line"><span class="lineno">   40</span>                String pluginStepName = pluginName + <span class="stringliteral">&quot;.&quot;</span> + stepName.substring(0, stepName.lastIndexOf(<span class="charliteral">&#39;.&#39;</span>));</div>
+<div class="line"><span class="lineno">   41</span>                stepConfig.setName(pluginStepName);</div>
+<div class="line"><span class="lineno">   42</span> </div>
+<div class="line"><span class="lineno">   43</span>                stepConfig.setType(step.getString(<span class="stringliteral">&quot;type&quot;</span>));</div>
+<div class="line"><span class="lineno">   44</span>                stepConfig.setRunBefore(step.optBoolean(<span class="stringliteral">&quot;run_before&quot;</span>));</div>
+<div class="line"><span class="lineno">   45</span>                stepConfig.setRunAfter(step.optBoolean(<span class="stringliteral">&quot;run_after&quot;</span>));</div>
+<div class="line"><span class="lineno">   46</span>                stepConfig.setCredsPath(step.optString(<span class="stringliteral">&quot;creds_path&quot;</span>));</div>
+<div class="line"><span class="lineno">   47</span>                stepConfig.setTimeout(step.getInt(<span class="stringliteral">&quot;timeout&quot;</span>));</div>
+<div class="line"><span class="lineno">   48</span>                stepConfig.setOnFail(step.getString(<span class="stringliteral">&quot;on_timeout_or_fail&quot;</span>));</div>
+<div class="line"><span class="lineno">   49</span>                stepConfig.setEndpoint(step.getString(<span class="stringliteral">&quot;endpoint&quot;</span>));</div>
+<div class="line"><span class="lineno">   50</span>                stepConfig.setResponse(step.getString(<span class="stringliteral">&quot;response&quot;</span>));</div>
+<div class="line"><span class="lineno">   51</span> </div>
+<div class="line"><span class="lineno">   52</span>                <span class="keywordflow">switch</span> (stepConfig.getType()) {</div>
+<div class="line"><span class="lineno">   53</span>                    <span class="keywordflow">case</span> <span class="stringliteral">&quot;cli&quot;</span>:</div>
+<div class="line"><span class="lineno">   54</span>                        CliPluginHelper cliPluginStep = <span class="keyword">new</span> CliPluginHelper(stepConfig);</div>
+<div class="line"><span class="lineno">   55</span>                        stepConfig.setCliPluginHelper(cliPluginStep);</div>
+<div class="line"><span class="lineno">   56</span>                        stepConfigs.put(pluginStepName, stepConfig);</div>
+<div class="line"><span class="lineno">   57</span> </div>
+<div class="line"><span class="lineno">   58</span>                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">   59</span>                    <span class="keywordflow">case</span> <span class="stringliteral">&quot;http&quot;</span>:</div>
+<div class="line"><span class="lineno">   60</span>                        stepConfig.setMethod(step.optString(<span class="stringliteral">&quot;method&quot;</span>));</div>
+<div class="line"><span class="lineno">   61</span>                        stepConfig.setHeaders(step.optJSONObject(<span class="stringliteral">&quot;headers&quot;</span>));</div>
+<div class="line"><span class="lineno">   62</span>                        stepConfig.setBody(step.optJSONObject(<span class="stringliteral">&quot;body&quot;</span>));</div>
+<div class="line"><span class="lineno">   63</span>                        stepConfig.setHttpPassCode(step.optInt(<span class="stringliteral">&quot;http_pass_code&quot;</span>));</div>
+<div class="line"><span class="lineno">   64</span>                        stepConfig.setHttpFailCode(step.optInt(<span class="stringliteral">&quot;http_fail_code&quot;</span>));</div>
+<div class="line"><span class="lineno">   65</span>                        stepConfigs.put(pluginStepName, stepConfig);</div>
+<div class="line"><span class="lineno">   66</span>                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">   67</span>                    <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">   68</span>                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">   69</span>                }</div>
+<div class="line"><span class="lineno">   70</span>            }</div>
+<div class="line"><span class="lineno">   71</span>            pluginConfig.setStepConfigs(stepConfigs);</div>
+<div class="line"><span class="lineno">   72</span>            pluginConfigs.put(pluginName, pluginConfig);</div>
+<div class="line"><span class="lineno">   73</span>        }</div>
+<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">return</span> pluginConfigs;</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_plugins_helper_8java_source.html#l00157">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.getType()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00013">dev.filechampion.filechampion4j.PluginsHelper.plugins</a>, <a class="el" href="_plugins_helper_8java_source.html#l00217">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setBody()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setCliPluginHelper()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00241">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setCredsPath()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00169">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setEndpoint()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00209">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setHeaders()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00233">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setHttpFailCode()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00225">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setHttpPassCode()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00201">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setMethod()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00091">dev.filechampion.filechampion4j.PluginsHelper.PluginConfig.setName()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00153">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setName()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00185">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setOnFail()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00193">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setResponse()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00137">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setRunAfter()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00129">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setRunBefore()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00099">dev.filechampion.filechampion4j.PluginsHelper.PluginConfig.setStepConfigs()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00177">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setTimeout()</a>, and <a class="el" href="_plugins_helper_8java_source.html#l00161">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setType()</a>.</p>
+<p class="reference">References <a class="el" href="_plugins_helper_8java_source.html#l00205">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.getType()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00013">dev.filechampion.filechampion4j.PluginsHelper.plugins</a>, <a class="el" href="_plugins_helper_8java_source.html#l00325">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setBody()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00181">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setCliPluginHelper()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00373">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setCredsPath()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00229">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setEndpoint()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00309">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setHeaders()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00357">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setHttpFailCode()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00341">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setHttpPassCode()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00293">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setMethod()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00096">dev.filechampion.filechampion4j.PluginsHelper.PluginConfig.setName()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setName()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00261">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setOnFail()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00277">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setResponse()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00165">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setRunAfter()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00149">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setRunBefore()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00112">dev.filechampion.filechampion4j.PluginsHelper.PluginConfig.setStepConfigs()</a>, <a class="el" href="_plugins_helper_8java_source.html#l00245">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setTimeout()</a>, and <a class="el" href="_plugins_helper_8java_source.html#l00213">dev.filechampion.filechampion4j.PluginsHelper.StepConfig.setType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_validator_8java_source.html#l00449">dev.filechampion.filechampion4j.FileValidator.loadPlugins()</a>.</p>
 <div class="dynheader">
@@ -308,7 +307,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="_plugins_helper_8java_source.html#l00013">13</a> of file <a class="el" href="_plugins_helper_8java_source.html">PluginsHelper.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_plugins_helper_8java_source.html#l00020">dev.filechampion.filechampion4j.PluginsHelper.PluginsHelper()</a>, and <a class="el" href="_plugins_helper_8java_source.html#l00028">dev.filechampion.filechampion4j.PluginsHelper.getPluginConfigs()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_plugins_helper_8java_source.html#l00019">dev.filechampion.filechampion4j.PluginsHelper.PluginsHelper()</a>, and <a class="el" href="_plugins_helper_8java_source.html#l00027">dev.filechampion.filechampion4j.PluginsHelper.getPluginConfigs()</a>.</p>
 
 </div>
 </div>
@@ -321,7 +320,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>dev</b></li><li class="navelem"><b>filechampion</b></li><li class="navelem"><a class="el" href="namespacedev_1_1filechampion_1_1filechampion4j.html">filechampion4j</a></li><li class="navelem"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html">PluginsHelper</a></li>
-    <li class="footer">Generated on Thu May 4 2023 01:20:57 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Thu May 4 2023 17:53:52 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

@@ -155,7 +155,7 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is used to return the results of a file validation. </p>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00008">8</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00007">7</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a541a5ac6937f48e16d353795ad20f235" name="a541a5ac6937f48e16d353795ad20f235"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a541a5ac6937f48e16d353795ad20f235">&#9670;&#160;</a></span>ValidationResponse()</h2>
@@ -217,33 +217,33 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">isValid</td><td>(Boolean) true if the file is valid, false otherwise </td></tr>
     <tr><td class="paramname">resultsInfo</td><td>(String) a String containing the result sammery of the validation </td></tr>
     <tr><td class="paramname">resultsDetails</td><td>(String) a String containing the details of the validation </td></tr>
+    <tr><td class="paramname">cleanFileName</td><td>(String) the file name with all special characters replaced with underscores </td></tr>
     <tr><td class="paramname">fileBytes</td><td>(bytes[]) the file bytes </td></tr>
     <tr><td class="paramname">fileChecksum</td><td>(String) the file checksum </td></tr>
     <tr><td class="paramname">validFilePath</td><td>(String) optional valid file path if outputDir was set in the filechampion4j constructor </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ValidationResponse (ValidationResponse) object with FileValidator.validateFile() results </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00027">27</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   27</span>                                                                                                                                                                                {</div>
-<div class="line"><span class="lineno">   28</span>        this.isValid = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#acd4b66043f96c3258cbc719612b1c0f0">isValid</a>;</div>
-<div class="line"><span class="lineno">   29</span>        this.resultsInfo = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a4470984c8a9f5ff7cd980c7cb4806895">resultsInfo</a>;</div>
-<div class="line"><span class="lineno">   30</span>        this.resultsDetails = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ae80ebe4714a8cdaaef6e5875f21693bf">resultsDetails</a>;</div>
-<div class="line"><span class="lineno">   31</span>        this.fileBytes = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8">fileBytes</a>;</div>
-<div class="line"><span class="lineno">   32</span>        this.fileChecksum = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">fileChecksum</a> != <span class="keyword">null</span> ? <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">fileChecksum</a> : <span class="stringliteral">&quot;null&quot;</span>;</div>
-<div class="line"><span class="lineno">   33</span>        this.validFilePath = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">validFilePath</a>;</div>
-<div class="line"><span class="lineno">   34</span>        this.cleanFileName = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a2834964df0ea03005603547d7defff68">cleanFileName</a>;</div>
-<div class="line"><span class="lineno">   35</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a2834964df0ea03005603547d7defff68"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a2834964df0ea03005603547d7defff68">dev.filechampion.filechampion4j.ValidationResponse.cleanFileName</a></div><div class="ttdeci">final String cleanFileName</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00012">ValidationResponse.java:12</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a4470984c8a9f5ff7cd980c7cb4806895"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a4470984c8a9f5ff7cd980c7cb4806895">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo</a></div><div class="ttdeci">final String resultsInfo</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00010">ValidationResponse.java:10</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a7365db372a23241e814dc16660187e93"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">dev.filechampion.filechampion4j.ValidationResponse.fileChecksum</a></div><div class="ttdeci">final String fileChecksum</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00014">ValidationResponse.java:14</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a821a84c7f3b3725950ab9bb1be8a13c8"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8">dev.filechampion.filechampion4j.ValidationResponse.fileBytes</a></div><div class="ttdeci">final byte[] fileBytes</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00013">ValidationResponse.java:13</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_ab9e0eb54ee8f3445f3190da8dd86e7ea"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">dev.filechampion.filechampion4j.ValidationResponse.validFilePath</a></div><div class="ttdeci">final String[] validFilePath</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00015">ValidationResponse.java:15</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_acd4b66043f96c3258cbc719612b1c0f0"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#acd4b66043f96c3258cbc719612b1c0f0">dev.filechampion.filechampion4j.ValidationResponse.isValid</a></div><div class="ttdeci">final boolean isValid</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00009">ValidationResponse.java:9</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_ae80ebe4714a8cdaaef6e5875f21693bf"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ae80ebe4714a8cdaaef6e5875f21693bf">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails</a></div><div class="ttdeci">final String resultsDetails</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00011">ValidationResponse.java:11</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00026">26</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   26</span>                                                                                                                                                                                {</div>
+<div class="line"><span class="lineno">   27</span>        this.isValid = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#acd4b66043f96c3258cbc719612b1c0f0">isValid</a>;</div>
+<div class="line"><span class="lineno">   28</span>        this.resultsInfo = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a4470984c8a9f5ff7cd980c7cb4806895">resultsInfo</a>;</div>
+<div class="line"><span class="lineno">   29</span>        this.resultsDetails = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ae80ebe4714a8cdaaef6e5875f21693bf">resultsDetails</a>;</div>
+<div class="line"><span class="lineno">   30</span>        this.fileBytes = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8">fileBytes</a>;</div>
+<div class="line"><span class="lineno">   31</span>        this.fileChecksum = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">fileChecksum</a> != <span class="keyword">null</span> ? <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">fileChecksum</a> : <span class="stringliteral">&quot;null&quot;</span>;</div>
+<div class="line"><span class="lineno">   32</span>        this.validFilePath = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">validFilePath</a>;</div>
+<div class="line"><span class="lineno">   33</span>        this.cleanFileName = <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a2834964df0ea03005603547d7defff68">cleanFileName</a>;</div>
+<div class="line"><span class="lineno">   34</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a2834964df0ea03005603547d7defff68"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a2834964df0ea03005603547d7defff68">dev.filechampion.filechampion4j.ValidationResponse.cleanFileName</a></div><div class="ttdeci">final String cleanFileName</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00011">ValidationResponse.java:11</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a4470984c8a9f5ff7cd980c7cb4806895"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a4470984c8a9f5ff7cd980c7cb4806895">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo</a></div><div class="ttdeci">final String resultsInfo</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00009">ValidationResponse.java:9</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a7365db372a23241e814dc16660187e93"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">dev.filechampion.filechampion4j.ValidationResponse.fileChecksum</a></div><div class="ttdeci">final String fileChecksum</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00013">ValidationResponse.java:13</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_a821a84c7f3b3725950ab9bb1be8a13c8"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8">dev.filechampion.filechampion4j.ValidationResponse.fileBytes</a></div><div class="ttdeci">final byte[] fileBytes</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00012">ValidationResponse.java:12</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_ab9e0eb54ee8f3445f3190da8dd86e7ea"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">dev.filechampion.filechampion4j.ValidationResponse.validFilePath</a></div><div class="ttdeci">final String[] validFilePath</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00014">ValidationResponse.java:14</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_acd4b66043f96c3258cbc719612b1c0f0"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#acd4b66043f96c3258cbc719612b1c0f0">dev.filechampion.filechampion4j.ValidationResponse.isValid</a></div><div class="ttdeci">final boolean isValid</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00008">ValidationResponse.java:8</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_validation_response_html_ae80ebe4714a8cdaaef6e5875f21693bf"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ae80ebe4714a8cdaaef6e5875f21693bf">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails</a></div><div class="ttdeci">final String resultsDetails</div><div class="ttdef"><b>Definition:</b> <a href="_validation_response_8java_source.html#l00010">ValidationResponse.java:10</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00012">dev.filechampion.filechampion4j.ValidationResponse.cleanFileName</a>, <a class="el" href="_validation_response_8java_source.html#l00013">dev.filechampion.filechampion4j.ValidationResponse.fileBytes</a>, <a class="el" href="_validation_response_8java_source.html#l00014">dev.filechampion.filechampion4j.ValidationResponse.fileChecksum</a>, <a class="el" href="_validation_response_8java_source.html#l00009">dev.filechampion.filechampion4j.ValidationResponse.isValid</a>, <a class="el" href="_validation_response_8java_source.html#l00011">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails</a>, <a class="el" href="_validation_response_8java_source.html#l00010">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo</a>, and <a class="el" href="_validation_response_8java_source.html#l00015">dev.filechampion.filechampion4j.ValidationResponse.validFilePath</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00011">dev.filechampion.filechampion4j.ValidationResponse.cleanFileName</a>, <a class="el" href="_validation_response_8java_source.html#l00012">dev.filechampion.filechampion4j.ValidationResponse.fileBytes</a>, <a class="el" href="_validation_response_8java_source.html#l00013">dev.filechampion.filechampion4j.ValidationResponse.fileChecksum</a>, <a class="el" href="_validation_response_8java_source.html#l00008">dev.filechampion.filechampion4j.ValidationResponse.isValid</a>, <a class="el" href="_validation_response_8java_source.html#l00010">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails</a>, <a class="el" href="_validation_response_8java_source.html#l00009">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo</a>, and <a class="el" href="_validation_response_8java_source.html#l00014">dev.filechampion.filechampion4j.ValidationResponse.validFilePath</a>.</p>
 
 </div>
 </div>
@@ -262,13 +262,14 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns the file name with all special characters replaced with underscores </p><dl class="section return"><dt>Returns</dt><dd>(String) the file name with all special characters replaced with underscores </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00049">49</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>                                     {</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a2834964df0ea03005603547d7defff68">cleanFileName</a>;</div>
-<div class="line"><span class="lineno">   51</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00064">64</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   64</span>                                     {</div>
+<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a2834964df0ea03005603547d7defff68">cleanFileName</a>;</div>
+<div class="line"><span class="lineno">   66</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00012">dev.filechampion.filechampion4j.ValidationResponse.cleanFileName</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00011">dev.filechampion.filechampion4j.ValidationResponse.cleanFileName</a>.</p>
 
 </div>
 </div>
@@ -286,13 +287,14 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns the file bytes </p><dl class="section return"><dt>Returns</dt><dd>(bytes[]) the file bytes of validated file </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00053">53</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   53</span>                                 {</div>
-<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8">fileBytes</a>;</div>
-<div class="line"><span class="lineno">   55</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00072">72</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>                                 {</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a821a84c7f3b3725950ab9bb1be8a13c8">fileBytes</a>;</div>
+<div class="line"><span class="lineno">   74</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00013">dev.filechampion.filechampion4j.ValidationResponse.fileBytes</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00012">dev.filechampion.filechampion4j.ValidationResponse.fileBytes</a>.</p>
 
 </div>
 </div>
@@ -310,13 +312,14 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns the file SHA-256 checksum </p><dl class="section return"><dt>Returns</dt><dd>(String) the file checksum </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00057">57</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>                                    {</div>
-<div class="line"><span class="lineno">   58</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">fileChecksum</a>;</div>
-<div class="line"><span class="lineno">   59</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00080">80</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>                                    {</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a7365db372a23241e814dc16660187e93">fileChecksum</a>;</div>
+<div class="line"><span class="lineno">   82</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00014">dev.filechampion.filechampion4j.ValidationResponse.fileChecksum</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00013">dev.filechampion.filechampion4j.ValidationResponse.fileChecksum</a>.</p>
 
 </div>
 </div>
@@ -334,13 +337,14 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns the valid file path if outputDir was set in the filechampion4j constructor </p><dl class="section return"><dt>Returns</dt><dd>(String) the valid file path if outputDir was set in the filechampion4j constructor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00061">61</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>                                       {</div>
-<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">validFilePath</a> != <span class="keyword">null</span> ? <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">validFilePath</a> : <span class="keyword">new</span> String[0];</div>
-<div class="line"><span class="lineno">   63</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00088">88</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>                                       {</div>
+<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">validFilePath</a> != <span class="keyword">null</span> ? <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ab9e0eb54ee8f3445f3190da8dd86e7ea">validFilePath</a> : <span class="keyword">new</span> String[0];</div>
+<div class="line"><span class="lineno">   90</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00015">dev.filechampion.filechampion4j.ValidationResponse.validFilePath</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00014">dev.filechampion.filechampion4j.ValidationResponse.validFilePath</a>.</p>
 
 </div>
 </div>
@@ -358,13 +362,14 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns true if the file is valid, false otherwise </p><dl class="section return"><dt>Returns</dt><dd>(Boolean) true if the file is valid, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00037">37</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   37</span>                             {</div>
-<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#acd4b66043f96c3258cbc719612b1c0f0">isValid</a>;</div>
-<div class="line"><span class="lineno">   39</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00040">40</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>                             {</div>
+<div class="line"><span class="lineno">   41</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#acd4b66043f96c3258cbc719612b1c0f0">isValid</a>;</div>
+<div class="line"><span class="lineno">   42</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00009">dev.filechampion.filechampion4j.ValidationResponse.isValid</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00008">dev.filechampion.filechampion4j.ValidationResponse.isValid</a>.</p>
 
 </div>
 </div>
@@ -382,13 +387,14 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns a String containing the details of the validation </p><dl class="section return"><dt>Returns</dt><dd>(String) a String containing the details of the validation </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00045">45</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   45</span>                                   {</div>
-<div class="line"><span class="lineno">   46</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ae80ebe4714a8cdaaef6e5875f21693bf">resultsDetails</a>;</div>
-<div class="line"><span class="lineno">   47</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00056">56</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   56</span>                                   {</div>
+<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#ae80ebe4714a8cdaaef6e5875f21693bf">resultsDetails</a>;</div>
+<div class="line"><span class="lineno">   58</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00011">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00010">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails</a>.</p>
 
 </div>
 </div>
@@ -406,13 +412,14 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns a String containing the result sammery of the validation </p><dl class="section return"><dt>Returns</dt><dd>(String) a String containing the result sammery of the validation </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00041">41</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   41</span>                                {</div>
-<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a4470984c8a9f5ff7cd980c7cb4806895">resultsInfo</a>;</div>
-<div class="line"><span class="lineno">   43</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00048">48</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>                                {</div>
+<div class="line"><span class="lineno">   49</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html#a4470984c8a9f5ff7cd980c7cb4806895">resultsInfo</a>;</div>
+<div class="line"><span class="lineno">   50</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00010">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo</a>.</p>
+<p class="reference">References <a class="el" href="_validation_response_8java_source.html#l00009">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo</a>.</p>
 
 </div>
 </div>
@@ -437,9 +444,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00012">12</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00011">11</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00027">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00049">dev.filechampion.filechampion4j.ValidationResponse.getCleanFileName()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00026">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00064">dev.filechampion.filechampion4j.ValidationResponse.getCleanFileName()</a>.</p>
 
 </div>
 </div>
@@ -463,9 +470,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00013">13</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00012">12</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00027">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00053">dev.filechampion.filechampion4j.ValidationResponse.getFileBytes()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00026">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00072">dev.filechampion.filechampion4j.ValidationResponse.getFileBytes()</a>.</p>
 
 </div>
 </div>
@@ -489,9 +496,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00014">14</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00013">13</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00027">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00057">dev.filechampion.filechampion4j.ValidationResponse.getFileChecksum()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00026">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00080">dev.filechampion.filechampion4j.ValidationResponse.getFileChecksum()</a>.</p>
 
 </div>
 </div>
@@ -515,9 +522,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00009">9</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00008">8</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00027">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00037">dev.filechampion.filechampion4j.ValidationResponse.isValid()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00026">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00040">dev.filechampion.filechampion4j.ValidationResponse.isValid()</a>.</p>
 
 </div>
 </div>
@@ -541,9 +548,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00011">11</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00010">10</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00027">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00045">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00026">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00056">dev.filechampion.filechampion4j.ValidationResponse.resultsDetails()</a>.</p>
 
 </div>
 </div>
@@ -567,9 +574,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00010">10</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00009">9</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00027">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00041">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00026">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00048">dev.filechampion.filechampion4j.ValidationResponse.resultsInfo()</a>.</p>
 
 </div>
 </div>
@@ -593,9 +600,9 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00015">15</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_validation_response_8java_source.html#l00014">14</a> of file <a class="el" href="_validation_response_8java_source.html">ValidationResponse.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00027">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00061">dev.filechampion.filechampion4j.ValidationResponse.getValidFilePath()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validation_response_8java_source.html#l00026">dev.filechampion.filechampion4j.ValidationResponse.ValidationResponse()</a>, and <a class="el" href="_validation_response_8java_source.html#l00088">dev.filechampion.filechampion4j.ValidationResponse.getValidFilePath()</a>.</p>
 
 </div>
 </div>
@@ -608,7 +615,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>dev</b></li><li class="navelem"><b>filechampion</b></li><li class="navelem"><a class="el" href="namespacedev_1_1filechampion_1_1filechampion4j.html">filechampion4j</a></li><li class="navelem"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html">ValidationResponse</a></li>
-    <li class="footer">Generated on Thu May 4 2023 01:20:57 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Thu May 4 2023 17:53:52 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

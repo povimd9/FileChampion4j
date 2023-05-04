@@ -280,6 +280,8 @@
                     <keypass>${signkey.pass}</keypass>
                 </configuration>
             </plugin>
+
+            <!-- package javadoc and sources -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="dev.filechampion.filechampion4j.ValidationResponseTest" time="0.103" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\User1\git\FileChampion4j\target\test-classes;C:\Users\User1\git\FileChampion4j\target\classes;C:\Users\User1\.m2\repository\org\json\json\20230227\json-20230227.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\User1\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\User1\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-launcher\1.9.3\junit-platform-launcher-1.9.3.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-core\1.36\jmh-core-1.36.jar;C:\Users\User1\.m2\repository\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar;C:\Users\User1\.m2\repository\org\apache\commons\commons-math3\3.2\commons-math3-3.2.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-generator-annprocess\1.36\jmh-generator-annprocess-1.36.jar;C:\Users\User1\.m2\repository\com\itextpdf\itextpdf\5.5.13.3\itextpdf-5.5.13.3.jar;"/>
+    <property name="java.vm.vendor" value="Amazon.com Inc."/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://aws.amazon.com/corretto/"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\bin"/>
+    <property name="sun.java.command" value="C:\Users\User1\AppData\Local\Temp\surefire3697329113225347831\surefirebooter-20230504175010060_95.jar C:\Users\User1\AppData\Local\Temp\surefire3697329113225347831 2023-05-04T17-50-07_366-jvmRun1 surefire-20230504175010060_93tmp surefire_6-20230504175010060_94tmp"/>
+    <property name="surefire.test.class.path" value="C:\Users\User1\git\FileChampion4j\target\test-classes;C:\Users\User1\git\FileChampion4j\target\classes;C:\Users\User1\.m2\repository\org\json\json\20230227\json-20230227.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\User1\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\User1\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-launcher\1.9.3\junit-platform-launcher-1.9.3.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-core\1.36\jmh-core-1.36.jar;C:\Users\User1\.m2\repository\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar;C:\Users\User1\.m2\repository\org\apache\commons\commons-math3\3.2\commons-math3-3.2.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-generator-annprocess\1.36\jmh-generator-annprocess-1.36.jar;C:\Users\User1\.m2\repository\com\itextpdf\itextpdf\5.5.13.3\itextpdf-5.5.13.3.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\User1"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre"/>
+    <property name="basedir" value="C:\Users\User1\git\FileChampion4j"/>
+    <property name="file.separator" value="\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\User1\AppData\Local\Temp\surefire3697329113225347831\surefirebooter-20230504175010060_95.jar;C:\\Users\\User1\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.10\\org.jacoco.agent-0.8.10-runtime.jar"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\resources.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\rt.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\sunrsasign.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\jsse.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\jce.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\charsets.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\jfr.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\classes"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_275-b01"/>
+    <property name="user.name" value="User1"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\endorsed"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\User1\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/corretto/corretto-8/issues/"/>
+    <property name="java.io.tmpdir" value="C:\Users\User1\AppData\Local\Temp\"/>
+    <property name="java.version" value="1.8.0_275"/>
+    <property name="user.dir" value="C:\Users\User1\git\FileChampion4j"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Amazon Corretto\jdk17.0.6_10\bin;C:\Program Files\Python310\Scripts\;C:\Program Files\Python310\;C:\Program Files\Amazon Corretto\jdk11.0.18_10\bin;C:\Program Files\Amazon Corretto\jdk1.8.0_275\bin;C:\Python38\Scripts\;C:\Python38\;C:\Program Files\Java\jre1.8.0_251\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Go\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\Gpg4win\..\GnuPG\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\OpenSSL-Win64\bin;C:\ProgramData\chocolatey\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Microsoft Group Policy\Windows 10 May 2021 Update (21H1)\PolicyDefinitions\;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\nodejs\;C:\Ruby25-x64\bin;C:\Users\User1\AppData\Local\Microsoft\WindowsApps;C:\Users\User1\go\bin;C:\Program Files (x86)\Nmap;C:\Program Files\JetBrains\PyCharm Community Edition 2021.3\bin;;C:\Program Files\Amazon Corretto\jdk1.8.0_275\bin;C:\Users\User1\AppData\Roaming\npm;C:\Users\User1\.dotnet\tools;C:\Users\User1\.dotnet\tools;C:\Program Files\Graphviz\bin;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Amazon.com Inc."/>
+    <property name="java.vm.version" value="25.275-b01"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="testValidationResponse" classname="dev.filechampion.filechampion4j.ValidationResponseTest" time="0.06"/>
+</testsuite>

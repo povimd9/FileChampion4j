@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CliPluginHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">filechampion4j</a> &gt; <a href="index.source.html" class="el_package">dev.filechampion.filechampion4j</a> &gt; <span class="el_source">CliPluginHelper.java</span></div><h1>CliPluginHelper.java</h1><pre class="source lang-java linenums">package dev.filechampion.filechampion4j;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.SequenceInputStream;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
+
+/**
+ * CliPluginHelper
+ */
+public class CliPluginHelper {
+    private StepConfig singleStepConfig;
+    private int timeout;
+<span class="fc" id="L33">    private String errString = &quot;Error: &quot;;</span>
+    private String endpoint;
+    private String responseConfig;
+<span class="fc" id="L36">    private StringBuilder logMessage = new StringBuilder();</span>
+
+    static {
+        try {
+<span class="fc" id="L40">            LogManager.getLogManager().readConfiguration(</span>
+<span class="fc" id="L41">                FileValidator.class.getResourceAsStream(&quot;/logging.properties&quot;));</span>
+<span class="nc" id="L42">        } catch (IOException e) {</span>
+<span class="nc" id="L43">            throw new IllegalArgumentException(&quot;Could not load default logging configuration: &quot;, e);</span>
+<span class="fc" id="L44">        }</span>
+    }
+<span class="fc" id="L46">    private static final Logger LOGGER = Logger.getLogger(CliPluginHelper.class.getName());</span>
+    private void logFine(String message) {
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (LOGGER.isLoggable(Level.FINE )) {</span>
+<span class="nc" id="L49">            LOGGER.fine(message);</span>
+        }
+<span class="fc" id="L51">    }</span>
+    private void logWarn(String message) {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (LOGGER.isLoggable(Level.WARNING)) {</span>
+<span class="fc" id="L54">            LOGGER.warning(message);</span>
+        }
+<span class="fc" id="L56">    }</span>
+
+    /**
+     * Constructor for CliPluginHelper
+     * @param singleStepConfig (StepConfig) - the step configuration
+     */
+<span class="fc" id="L62">    public CliPluginHelper(StepConfig singleStepConfig) {</span>
+<span class="fc" id="L63">        this.singleStepConfig = singleStepConfig;</span>
+<span class="fc" id="L64">        this.endpoint = singleStepConfig.getEndpoint();</span>
+<span class="fc" id="L65">        this.timeout = singleStepConfig.getTimeout();</span>
+<span class="fc" id="L66">        this.responseConfig = singleStepConfig.getResponse();</span>
+<span class="fc" id="L67">        logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(&quot; object created&quot;);</span>
+<span class="fc" id="L68">        logFine(logMessage.toString());</span>
+<span class="fc" id="L69">    }</span>
+    
+    /**
+     * Executes the CLI command
+     * @param fileExtension (String) - the file extension
+     * @param fileContent (byte[]) - the file content
+     * @return Map&amp;lt;String, Map&amp;lt;String, String&amp;gt;&amp;gt; - the results map
+     */
+    public Map&lt;String, Map&lt;String, String&gt;&gt; execute(String fileExtension, byte[] fileContent) { 
+<span class="fc" id="L78">    String result = &quot;&quot;;</span>
+<span class="fc" id="L79">        Map&lt;String, Map&lt;String, String&gt;&gt; responseMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L80">        Map&lt;String, String&gt; responsePatterns = new HashMap&lt;&gt;();</span>
+        Path filePathRaw;
+
+<span class="fc" id="L83">        filePathRaw = saveFileToTempDir(fileExtension, fileContent);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (filePathRaw == null) {</span>
+<span class="fc" id="L85">            responsePatterns.put(errString, &quot;Failed to save file to temporary directory&quot;);</span>
+<span class="fc" id="L86">            responseMap.put(errString, responsePatterns);</span>
+<span class="fc" id="L87">            return responseMap;</span>
+        }
+
+<span class="fc" id="L90">        String filePath = filePathRaw.toString();</span>
+<span class="fc" id="L91">        prepEndpoint(filePath, fileContent);</span>
+<span class="fc" id="L92">        logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(&quot; endpoint: &quot;).append(endpoint);</span>
+<span class="fc" id="L93">        logFine(logMessage.toString());</span>
+
+        try {
+<span class="fc" id="L96">            result = timedProcessExecution(endpoint);</span>
+<span class="fc" id="L97">            logFine(singleStepConfig.getName() + &quot; result: &quot; + result);</span>
+<span class="fc" id="L98">        } catch (IOException|NullPointerException|InterruptedException e) {</span>
+<span class="fc" id="L99">            Thread.currentThread().interrupt();</span>
+<span class="fc" id="L100">            responsePatterns.put(errString, e.getMessage());</span>
+<span class="fc" id="L101">        }</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        String expectedResults = responseConfig.substring(0, responseConfig.indexOf(&quot;${&quot;)&gt;-1?</span>
+<span class="fc" id="L104">        responseConfig.indexOf(&quot;${&quot;) : responseConfig.length());</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (result.contains(expectedResults)) {</span>
+<span class="fc" id="L107">            responsePatterns = extractResponsePatterns(result);</span>
+<span class="fc" id="L108">            responseMap.put(&quot;Success&quot;, responsePatterns);</span>
+<span class="fc" id="L109">            return responseMap;</span>
+        } else {
+<span class="fc" id="L111">            logMessage.replace(0, logMessage.length(), &quot;Error, expected: \&quot;&quot;)</span>
+<span class="fc" id="L112">                    .append(expectedResults).append(&quot;\&quot;, received: &quot;);</span>
+<span class="fc" id="L113">            responsePatterns.put(logMessage.toString(), result);</span>
+<span class="fc" id="L114">            responseMap.put(errString, responsePatterns);</span>
+<span class="fc" id="L115">            deleteTempDir(filePathRaw);</span>
+<span class="fc" id="L116">            return responseMap;</span>
+        }
+    }
+
+    /**
+     * Extracts the response patterns from the results
+     * @param results (String) - the results
+     * @return Map&amp;lt;String, String&amp;gt; - the response patterns map
+     */
+    private Map&lt;String, String&gt; extractResponsePatterns (String results) {
+<span class="fc" id="L126">        Map&lt;String, String&gt; responsePatterns = new HashMap&lt;&gt;();</span>
+    
+        // Extract the placeholder name from the response pattern
+<span class="fc" id="L129">        Pattern placeholderPattern = Pattern.compile(&quot;\\$\\{(.+?)\\}&quot;);</span>
+<span class="fc" id="L130">        Matcher placeholderMatcher = placeholderPattern.matcher(responseConfig);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (!placeholderMatcher.find()) {</span>
+<span class="fc" id="L132">            responsePatterns.put(results, results);</span>
+<span class="fc" id="L133">            return responsePatterns;</span>
+
+        }
+        do {
+<span class="fc" id="L137">            String placeholderName = placeholderMatcher.group(1);</span>
+            String placeholderValue;
+    
+<span class="fc" id="L140">            logMessage.replace(0, logMessage.length(), &quot;Placeholder name: &quot;)</span>
+<span class="fc" id="L141">            .append(placeholderName)</span>
+<span class="fc" id="L142">            .append(&quot;, ResponseConfig: &quot;)</span>
+<span class="fc" id="L143">            .append(responseConfig);</span>
+<span class="fc" id="L144">            logFine(logMessage.toString());</span>
+            
+<span class="fc" id="L146">            String fixedPrefix = String.format(&quot;%s&quot;, responseConfig.substring(0, responseConfig.indexOf(&quot;${&quot;)));</span>
+<span class="fc" id="L147">            logMessage.replace(0, logMessage.length(), &quot;Fixed prefix: &quot;).append(fixedPrefix);</span>
+<span class="fc" id="L148">            logFine(logMessage.toString());</span>
+    
+            String fixedSuffix;
+<span class="fc" id="L151">            int suffixStartIndex = responseConfig.indexOf(&quot;${&quot;) + placeholderName.length() + 3;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">            if (suffixStartIndex == responseConfig.length()) {</span>
+<span class="fc" id="L153">                fixedSuffix = &quot;&quot;;</span>
+            } else {
+<span class="fc" id="L155">                fixedSuffix = responseConfig.substring(suffixStartIndex);</span>
+<span class="fc" id="L156">                logMessage.replace(0, logMessage.length(), &quot;Fixed suffix: &quot;).append(fixedSuffix);</span>
+<span class="fc" id="L157">                logFine(logMessage.toString());</span>
+            }
+    
+<span class="fc" id="L160">            String captureGroupPattern = String.format(&quot;%s(.*)%s&quot;, fixedPrefix, fixedSuffix);</span>
+<span class="fc" id="L161">            logMessage.replace(0, logMessage.length(), &quot;Capture group pattern: &quot;).append(captureGroupPattern);</span>
+<span class="fc" id="L162">            logFine(logMessage.toString());</span>
+    
+<span class="fc" id="L164">            Pattern pattern = Pattern.compile(captureGroupPattern);</span>
+<span class="fc" id="L165">            Matcher matcher = pattern.matcher(results);</span>
+    
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">            if (matcher.find()) {</span>
+<span class="fc" id="L168">                placeholderValue = matcher.group(1);</span>
+<span class="fc" id="L169">                responsePatterns.put(placeholderName, placeholderValue);</span>
+            }
+    
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        } while (placeholderMatcher.find());</span>
+    
+<span class="fc" id="L174">        return responsePatterns;</span>
+    }
+    
+    /**
+     * Prepares the endpoint command by replacing the placeholders with the actual values
+     * @param filePath (String) - the path to the file
+     * @param fileContent (byte[]) - the file content
+     */
+    private void prepEndpoint(String filePath, byte[] fileContent) {
+        
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        String newEndpoint = endpoint.contains(&quot;${filePath}&quot;) ? endpoint.replace(&quot;${filePath}&quot;, filePath) : endpoint;</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        newEndpoint = newEndpoint.contains(&quot;${fileContent}&quot;) ? newEndpoint.replace(&quot;${fileContent}&quot;, Base64.getEncoder().encodeToString(fileContent)) : newEndpoint;</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        newEndpoint = newEndpoint.contains(&quot;${fileChecksum}&quot;) ? newEndpoint.replace(&quot;${fileChecksum}&quot;, calculateChecksum(fileContent)) : newEndpoint;</span>
+<span class="fc" id="L187">        endpoint = newEndpoint;</span>
+<span class="fc" id="L188">    }</span>
+
+    /**
+     * Executes the CLI command with a timeout
+     * @param command (String) - the command to execute
+     * @return String - the results
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws NullPointerException
+     */
+    private String timedProcessExecution(String command) throws IOException, InterruptedException, NullPointerException {
+<span class="fc" id="L199">        ProcessBuilder processBuilder = new ProcessBuilder(command.split(&quot;\\p{Zs}+&quot;));</span>
+<span class="fc" id="L200">        logMessage.replace(0, logMessage.length(), &quot;Process starting: &quot;).append(command);</span>
+<span class="fc" id="L201">        logFine(logMessage.toString());</span>
+
+<span class="fc" id="L203">        long timeoutCounter = System.currentTimeMillis();</span>
+<span class="fc" id="L204">        Process process = processBuilder.start();</span>
+<span class="fc" id="L205">        TimeUnit timeUnit = TimeUnit.SECONDS;</span>
+<span class="fc" id="L206">        java.util.Timer timer = new java.util.Timer();</span>
+<span class="fc" id="L207">        timer.schedule(</span>
+<span class="fc" id="L208">            new java.util.TimerTask() {</span>
+                @Override
+                public void run() {
+<span class="fc" id="L211">                    process.destroy();</span>
+<span class="fc" id="L212">                }</span>
+            },
+<span class="fc" id="L214">            timeUnit.toMillis(timeout)</span>
+        );
+<span class="fc" id="L216">        int exitCode = process.waitFor();</span>
+<span class="fc" id="L217">        InputStream inputStream = process.getInputStream();</span>
+<span class="fc" id="L218">        InputStream errorStream = process.getErrorStream();</span>
+<span class="fc" id="L219">        SequenceInputStream sequenceInputStream = new SequenceInputStream(inputStream, errorStream);</span>
+<span class="fc" id="L220">        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(sequenceInputStream));</span>
+<span class="fc" id="L221">        try(Scanner scanner = new Scanner(bufferedReader).useDelimiter(&quot;\\A&quot;)){</span>
+            String results;
+<span class="pc bpc" id="L223" title="1 of 4 branches missed.">            if (exitCode == 143 || exitCode == 1) {</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">                if (System.currentTimeMillis() - timeoutCounter &gt; timeout * 1000) {</span>
+<span class="fc" id="L225">                    bufferedReader.close();</span>
+<span class="fc" id="L226">                    sequenceInputStream.close();</span>
+<span class="fc" id="L227">                    errorStream.close();</span>
+<span class="fc" id="L228">                    inputStream.close();</span>
+<span class="fc" id="L229">                    logMessage.replace(0, logMessage.length(), errString).append(&quot;Process timeout: &quot;).append(command);</span>
+<span class="fc" id="L230">                    logWarn(logMessage.toString());</span>
+<span class="fc" id="L231">                    return logMessage.toString();</span>
+                }
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">                results = scanner.hasNext() ? scanner.next() : &quot;&quot;;</span>
+<span class="fc" id="L234">                bufferedReader.close();</span>
+<span class="fc" id="L235">                sequenceInputStream.close();</span>
+<span class="fc" id="L236">                errorStream.close();</span>
+<span class="fc" id="L237">                inputStream.close();</span>
+<span class="fc" id="L238">                timer.cancel();</span>
+<span class="fc" id="L239">                logMessage.replace(0, logMessage.length(), errString).append(command) .append(&quot;Process failed: &quot;).append(results);</span>
+<span class="fc" id="L240">                logWarn(logMessage.toString());</span>
+<span class="fc" id="L241">                return logMessage.toString();</span>
+            }
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">            results = scanner.hasNext() ? scanner.next() : &quot;&quot;;</span>
+<span class="fc" id="L244">            bufferedReader.close();</span>
+<span class="fc" id="L245">            sequenceInputStream.close();</span>
+<span class="fc" id="L246">            errorStream.close();</span>
+<span class="fc" id="L247">            inputStream.close();</span>
+<span class="fc" id="L248">            timer.cancel();</span>
+<span class="fc" id="L249">            logFine(results);</span>
+<span class="fc" id="L250">            return results;</span>
+        }
+    }
+
+    
+    /**
+     * Saves the file to a temporary directory
+     * @param fileExtension (String) - the file extension
+     * @param originalFile (byte[]) - the file content
+     * @return Path - the path to the file
+     */
+    private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
+        Path tempFilePath;
+        try {
+            // Create a temporary directory
+<span class="fc" id="L265">            Path tempDir = Files.createTempDirectory(&quot;tempDir&quot;);</span>
+<span class="fc" id="L266">            tempFilePath = Files.createTempFile(tempDir, &quot;tempFile&quot;, &quot;.&quot; + fileExtension);</span>
+<span class="fc" id="L267">            Files.write(tempFilePath, originalFile);</span>
+<span class="fc" id="L268">            return tempFilePath;</span>
+<span class="fc" id="L269">        } catch (Exception e) {</span>
+<span class="fc" id="L270">            logMessage.replace(0, logMessage.length(), &quot;Error saveFileToTempDir failed: &quot;).append(e.getMessage());</span>
+<span class="fc" id="L271">            logWarn(logMessage.toString());</span>
+<span class="fc" id="L272">            return null;</span>
+        }
+    }
+
+    /**
+     * Deletes the temporary directory
+     * @param tempFilePath (Path) - the path to the temporary directory
+     * @return Boolean - true if the directory was deleted successfully, false otherwise
+     */
+    private Boolean deleteTempDir(Path tempFilePath) {
+<span class="fc" id="L282">        try (Stream&lt;Path&gt; walk = Files.walk(tempFilePath)) {</span>
+<span class="fc" id="L283">            walk.sorted(Comparator.reverseOrder())</span>
+<span class="fc" id="L284">                    .map(Path::toFile)</span>
+<span class="fc" id="L285">                    .forEach(File::delete);</span>
+<span class="fc" id="L286">            return true;</span>
+<span class="nc" id="L287">        } catch (Exception e) {</span>
+<span class="nc" id="L288">            logMessage.replace(0, logMessage.length(), &quot;Error deleteTempDir failed: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L289">            logWarn(logMessage.toString());</span>
+<span class="nc" id="L290">            return false;</span>
+        }
+    }
+
+    /**
+     * Calculate the checksum of the file
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @return String (String) the SHA-256 checksum of the file
+     */
+    private String calculateChecksum(byte[] fileBytes) {
+        try {
+<span class="nc" id="L301">            SH256Calculate paralChecksum = new SH256Calculate(fileBytes);</span>
+<span class="nc" id="L302">            byte[] checksum = paralChecksum.getChecksum();</span>
+<span class="nc" id="L303">            return new BigInteger(1, checksum).toString(16);</span>
+<span class="nc" id="L304">        } catch (Exception e) {</span>
+<span class="nc" id="L305">            e.printStackTrace();</span>
+<span class="nc" id="L306">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

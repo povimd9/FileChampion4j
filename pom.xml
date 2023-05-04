@@ -3,11 +3,42 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <organization>
+        <name>filechampion.dev</name>
+        <url>https://github.com/povimd9</url>
+    </organization>
     <groupId>dev.filechampion</groupId>
     <artifactId>filechampion4j</artifactId>
     <version>0.9.8.2</version>
     <packaging>jar</packaging>
     <name>filechampion4j</name>
+    <description>
+        FileChampion4j is a powerful and flexible Java library for validating and processing files. 
+        The library can be used to check files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, and more. 
+        The library can also execute extension plugins that are defined for the file type.
+    </description>
+    <url>https://github.com/povimd9/FileChampion4j</url>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0 License</name>
+            <url>https://github.com/povimd9/FileChampion4j/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name> povimd9 </name>
+            <email>blumo@filechampion.dev</email>
+            <organization>filechampion</organization>
+            <organizationUrl>https://github.com/povimd9/FileChampion4j</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/povimd9/FileChampion4j.git</connection>
+        <url>https://github.com/povimd9/FileChampion4j/tree/release-0.9.8.2</url>
+    </scm>
 
     <properties>
         <maven.compiler.source>${java.major.version}</maven.compiler.source>
@@ -196,6 +227,36 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Generate javadoc and source jars -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
             <!-- Sign the jar -->
             <plugin>
                 <groupId>org.simplify4u.plugins</groupId>

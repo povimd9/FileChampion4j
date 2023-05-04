@@ -9,7 +9,6 @@ import java.io.SequenceInputStream;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -25,7 +24,9 @@ import java.util.stream.Stream;
 
 import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 
-
+/**
+ * CliPluginHelper
+ */
 public class CliPluginHelper {
     private StepConfig singleStepConfig;
     private int timeout;
@@ -71,7 +72,7 @@ public class CliPluginHelper {
      * Executes the CLI command
      * @param fileExtension (String) - the file extension
      * @param fileContent (byte[]) - the file content
-     * @return Map<String, Map<String, String>> - the results map
+     * @return Map&lt;String, Map&lt;String, String&gt;&gt; - the results map
      */
     public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent) { 
     String result = "";
@@ -119,7 +120,7 @@ public class CliPluginHelper {
     /**
      * Extracts the response patterns from the results
      * @param results (String) - the results
-     * @return Map<String, String> - the response patterns map
+     * @return Map&lt;String, String&gt; - the response patterns map
      */
     private Map<String, String> extractResponsePatterns (String results) {
         Map<String, String> responsePatterns = new HashMap<>();

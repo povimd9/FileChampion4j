@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="dev.filechampion.filechampion4j.FileValidatorTest" time="40.258" tests="30" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\User1\git\FileChampion4j\target\test-classes;C:\Users\User1\git\FileChampion4j\target\classes;C:\Users\User1\.m2\repository\org\json\json\20230227\json-20230227.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\User1\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\User1\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-launcher\1.9.3\junit-platform-launcher-1.9.3.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-core\1.36\jmh-core-1.36.jar;C:\Users\User1\.m2\repository\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar;C:\Users\User1\.m2\repository\org\apache\commons\commons-math3\3.2\commons-math3-3.2.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-generator-annprocess\1.36\jmh-generator-annprocess-1.36.jar;C:\Users\User1\.m2\repository\com\itextpdf\itextpdf\5.5.13.3\itextpdf-5.5.13.3.jar;"/>
+    <property name="java.vm.vendor" value="Amazon.com Inc."/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://aws.amazon.com/corretto/"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\bin"/>
+    <property name="sun.java.command" value="C:\Users\User1\AppData\Local\Temp\surefire3697329113225347831\surefirebooter-20230504175010060_59.jar C:\Users\User1\AppData\Local\Temp\surefire3697329113225347831 2023-05-04T17-50-07_366-jvmRun1 surefire-20230504175010060_57tmp surefire_4-20230504175010060_58tmp"/>
+    <property name="surefire.test.class.path" value="C:\Users\User1\git\FileChampion4j\target\test-classes;C:\Users\User1\git\FileChampion4j\target\classes;C:\Users\User1\.m2\repository\org\json\json\20230227\json-20230227.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\User1\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\User1\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;C:\Users\User1\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\User1\.m2\repository\org\junit\platform\junit-platform-launcher\1.9.3\junit-platform-launcher-1.9.3.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-core\1.36\jmh-core-1.36.jar;C:\Users\User1\.m2\repository\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar;C:\Users\User1\.m2\repository\org\apache\commons\commons-math3\3.2\commons-math3-3.2.jar;C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-generator-annprocess\1.36\jmh-generator-annprocess-1.36.jar;C:\Users\User1\.m2\repository\com\itextpdf\itextpdf\5.5.13.3\itextpdf-5.5.13.3.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\User1"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre"/>
+    <property name="basedir" value="C:\Users\User1\git\FileChampion4j"/>
+    <property name="file.separator" value="\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\User1\AppData\Local\Temp\surefire3697329113225347831\surefirebooter-20230504175010060_59.jar;C:\\Users\\User1\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.10\\org.jacoco.agent-0.8.10-runtime.jar"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\resources.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\rt.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\sunrsasign.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\jsse.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\jce.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\charsets.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\jfr.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\classes"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_275-b01"/>
+    <property name="user.name" value="User1"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\endorsed"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\User1\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/corretto/corretto-8/issues/"/>
+    <property name="java.io.tmpdir" value="C:\Users\User1\AppData\Local\Temp\"/>
+    <property name="java.version" value="1.8.0_275"/>
+    <property name="user.dir" value="C:\Users\User1\git\FileChampion4j"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Amazon Corretto\jdk17.0.6_10\bin;C:\Program Files\Python310\Scripts\;C:\Program Files\Python310\;C:\Program Files\Amazon Corretto\jdk11.0.18_10\bin;C:\Program Files\Amazon Corretto\jdk1.8.0_275\bin;C:\Python38\Scripts\;C:\Python38\;C:\Program Files\Java\jre1.8.0_251\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Go\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\Gpg4win\..\GnuPG\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\OpenSSL-Win64\bin;C:\ProgramData\chocolatey\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Microsoft Group Policy\Windows 10 May 2021 Update (21H1)\PolicyDefinitions\;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\nodejs\;C:\Ruby25-x64\bin;C:\Users\User1\AppData\Local\Microsoft\WindowsApps;C:\Users\User1\go\bin;C:\Program Files (x86)\Nmap;C:\Program Files\JetBrains\PyCharm Community Edition 2021.3\bin;;C:\Program Files\Amazon Corretto\jdk1.8.0_275\bin;C:\Users\User1\AppData\Roaming\npm;C:\Users\User1\.dotnet\tools;C:\Users\User1\.dotnet\tools;C:\Program Files\Graphviz\bin;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Amazon.com Inc."/>
+    <property name="java.vm.version" value="25.275-b01"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Amazon Corretto\jdk1.8.0_275\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="testValidInputsBytesExtDontExistFilename" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="5.173">
+    <system-err><![CDATA[May 04, 2023 5:50:46 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:47 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.extensiondoesnotexist, as file type: Documents
+May 04, 2023 5:50:47 PM dev.filechampion.filechampion4j.Extensions logWarn
+WARNING: extension extensiondoesnotexist not found
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsPathStore" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="1.89">
+    <system-err><![CDATA[May 04, 2023 5:50:48 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:48 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: Documents
+May 04, 2023 5:50:48 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+May 04, 2023 5:50:49 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. executeBeforePlugins executed successfully: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+2. executeAfterPlugins executed successfully: executeAfterPlugins completed: 
+	a. Success for step: clean_pdf_documents2.step1
+	b. Success for step: clean_pdf_documents3.step1
+3. File name: test.pdf has been successfully encoded to: dGVzdC5wZGY=.pdf
+4. File is valid and was saved to output directory: C:\Users\User1\AppData\Local\Temp\junit7145683844610606890\dGVzdC5wZGY=.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsMimeStore" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="1.899">
+    <system-err><![CDATA[May 04, 2023 5:50:49 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:50 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: Documents
+May 04, 2023 5:50:50 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+May 04, 2023 5:50:51 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. executeBeforePlugins executed successfully: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+2. executeAfterPlugins executed successfully: executeAfterPlugins completed: 
+	a. Success for step: clean_pdf_documents2.step1
+	b. Success for step: clean_pdf_documents3.step1
+3. File name: test.pdf has been successfully encoded to: dGVzdC5wZGY=.pdf
+4. File is valid and was saved to output directory: C:\Users\User1\AppData\Local\Temp\junit2142893380770256888\dGVzdC5wZGY=.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsNoPathMime" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.468">
+    <system-err><![CDATA[May 04, 2023 5:50:51 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsLargeBytesStore" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.983">
+    <system-err><![CDATA[May 04, 2023 5:50:52 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:52 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:52 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating testVeryLarge.pdf, as file type: Documents
+May 04, 2023 5:50:52 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: No before plugins defined for file: testVeryLarge.pdf
+May 04, 2023 5:50:52 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. File size check passed, file size: 56715KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: null
+4. Header signatures check passed, header signatures: null
+5. Footer signatures check passed, footer signatures: null
+1. No after plugins to execute
+2. File is valid and was saved to output directory: C:\Users\User1\AppData\Local\Temp\junit944147996354199448\testVeryLarge.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsMime" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.925">
+    <system-err><![CDATA[May 04, 2023 5:50:53 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:53 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:53 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: Documents
+May 04, 2023 5:50:53 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: No before plugins defined for file: test.pdf
+May 04, 2023 5:50:53 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: null
+4. Header signatures check passed, header signatures: null
+5. Footer signatures check passed, footer signatures: null
+1. No after plugins to execute
+2. File is valid: test.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsPath" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="1.806">
+    <system-err><![CDATA[May 04, 2023 5:50:54 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:54 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: Documents
+May 04, 2023 5:50:54 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+May 04, 2023 5:50:55 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. executeBeforePlugins executed successfully: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+2. executeAfterPlugins executed successfully: executeAfterPlugins completed: 
+	a. Success for step: clean_pdf_documents2.step1
+	b. Success for step: clean_pdf_documents3.step1
+3. File name: test.pdf has been successfully encoded to: dGVzdC5wZGY=.pdf
+4. File is valid: test.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testFileTooLarge" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="9.282">
+    <system-err><![CDATA[May 04, 2023 5:50:56 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:50:56 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:04 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating largeFile.pdf, as file type: Documents
+May 04, 2023 5:51:04 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: No before plugins defined for file: largeFile.pdf
+May 04, 2023 5:51:04 PM dev.filechampion.filechampion4j.ValidationsHelper logWarn
+WARNING: 
+1. Invalid file size (6878KB) exceeds maximum allowed size (10KB) for file: largeFile.pdf
+May 04, 2023 5:51:04 PM dev.filechampion.filechampion4j.ValidationsHelper logWarn
+WARNING: 
+1. Invalid file size (6878KB) exceeds maximum allowed size (10KB) for file: largeFile.pdf
+May 04, 2023 5:51:04 PM dev.filechampion.filechampion4j.FileValidator logWarn
+WARNING: 
+1. Invalid file size (6878KB) exceeds maximum allowed size (10KB) for file: largeFile.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testNullConfigJsonObject" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.457">
+    <system-err><![CDATA[May 04, 2023 5:51:05 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsPathMimeStore" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="1.846">
+    <system-err><![CDATA[May 04, 2023 5:51:05 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:06 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: Documents
+May 04, 2023 5:51:06 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+May 04, 2023 5:51:07 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. executeBeforePlugins executed successfully: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+2. executeAfterPlugins executed successfully: executeAfterPlugins completed: 
+	a. Success for step: clean_pdf_documents2.step1
+	b. Success for step: clean_pdf_documents3.step1
+3. File name: test.pdf has been successfully encoded to: dGVzdC5wZGY=.pdf
+4. File is valid and was saved to output directory: C:\Users\User1\AppData\Local\Temp\junit904227621011418254\dGVzdC5wZGY=.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testDefaultLoggingConfiguration" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.466">
+    <system-err><![CDATA[May 04, 2023 5:51:07 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsNoPath" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.401">
+    <system-err><![CDATA[May 04, 2023 5:51:07 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testBlankFileCategory" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.515">
+    <system-err><![CDATA[May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testContenMismatch" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.441">
+    <system-err><![CDATA[May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating notReal.pdf, as file type: Documents
+May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: No before plugins defined for file: notReal.pdf
+May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.ValidationsHelper logWarn
+WARNING: 
+1. Invalid magic_bytes for file: notReal.pdf
+May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.ValidationsHelper logWarn
+WARNING: 
+1. Invalid magic_bytes for file: notReal.pdf
+May 04, 2023 5:51:08 PM dev.filechampion.filechampion4j.FileValidator logWarn
+WARNING: 
+1. Invalid magic_bytes for file: notReal.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testSaveToBlockedExistingDirectory" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.812">
+    <system-err><![CDATA[May 04, 2023 5:51:09 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testFileCategoryNotConfigured" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.419">
+    <system-err><![CDATA[May 04, 2023 5:51:10 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:10 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: 0934jt0-349rtj3409rj3409rj
+May 04, 2023 5:51:10 PM dev.filechampion.filechampion4j.Extensions logWarn
+WARNING: category 0934jt0-349rtj3409rj3409rj not found
+]]></system-err>
+  </testcase>
+  <testcase name="testBlankFileName" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.52">
+    <system-err><![CDATA[May 04, 2023 5:51:10 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testNullOriginalFile" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.39">
+    <system-err><![CDATA[May 04, 2023 5:51:11 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testSaveToNonExistingDirectory" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.885">
+    <system-err><![CDATA[May 04, 2023 5:51:11 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsBytesStoreNoChecksum" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.941">
+    <system-err><![CDATA[May 04, 2023 5:51:12 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:12 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:12 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test_test.pdf, as file type: LargeDocuments
+May 04, 2023 5:51:12 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: No before plugins defined for file: test_test.pdf
+May 04, 2023 5:51:12 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+1. No after plugins to execute
+2. File is valid: test_test.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testEmptyOriginalFile" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.423">
+    <system-err><![CDATA[May 04, 2023 5:51:13 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsNoPathStore" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.445">
+    <system-err><![CDATA[May 04, 2023 5:51:13 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsLargeBytesStoreNoChecksum" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.614">
+    <system-err><![CDATA[May 04, 2023 5:51:14 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:14 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:14 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating testVeryLarge.pdf, as file type: Documents
+May 04, 2023 5:51:14 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: No before plugins defined for file: testVeryLarge.pdf
+May 04, 2023 5:51:14 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. File size check passed, file size: 56715KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: null
+4. Header signatures check passed, header signatures: null
+5. Footer signatures check passed, footer signatures: null
+1. No after plugins to execute
+2. File is valid and was saved to output directory: C:\Users\User1\AppData\Local\Temp\junit2109445144249471299\testVeryLarge.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsBytes" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="1.894">
+    <system-err><![CDATA[May 04, 2023 5:51:14 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:15 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: Documents
+May 04, 2023 5:51:15 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+May 04, 2023 5:51:16 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. executeBeforePlugins executed successfully: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+2. executeAfterPlugins executed successfully: executeAfterPlugins completed: 
+	a. Success for step: clean_pdf_documents2.step1
+	b. Success for step: clean_pdf_documents3.step1
+3. File name: test.pdf has been successfully encoded to: dGVzdC5wZGY=.pdf
+4. File is valid: test.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsBytesStore" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="2.033">
+    <system-err><![CDATA[May 04, 2023 5:51:16 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:17 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test_test.pdf, as file type: Documents
+May 04, 2023 5:51:17 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+May 04, 2023 5:51:18 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. executeBeforePlugins executed successfully: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+2. executeAfterPlugins executed successfully: executeAfterPlugins completed: 
+	a. Success for step: clean_pdf_documents2.step1
+	b. Success for step: clean_pdf_documents3.step1
+3. File name: test_test.pdf has been successfully encoded to: dGVzdF90ZXN0LnBkZg==.pdf
+4. File is valid and was saved to output directory: C:\Users\User1\AppData\Local\Temp\junit5826814181872316774\dGVzdF90ZXN0LnBkZg==.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testInvalidExtension" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.455">
+    <system-err><![CDATA[May 04, 2023 5:51:18 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:18 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.txt, as file type: Documents
+May 04, 2023 5:51:18 PM dev.filechampion.filechampion4j.Extensions logWarn
+WARNING: extension txt not found
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsPathMime" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="1.867">
+    <system-err><![CDATA[May 04, 2023 5:51:19 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+May 04, 2023 5:51:19 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: Validating test.pdf, as file type: Documents
+May 04, 2023 5:51:20 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+May 04, 2023 5:51:20 PM dev.filechampion.filechampion4j.FileValidator logInfo
+INFO: 
+1. executeBeforePlugins executed successfully: executeBeforePlugins completed: 
+	a. Success for step: clean_pdf_documents1.step1
+1. File size check passed, file size: 343KB
+2. Mime type check passed, mime type: application/pdf
+3. Magic bytes check passed, magic bytes: 25504446
+4. Header signatures check passed, header signatures: 25504446
+5. Footer signatures check passed, footer signatures: 2525454f46
+2. executeAfterPlugins executed successfully: executeAfterPlugins completed: 
+	a. Success for step: clean_pdf_documents2.step1
+	b. Success for step: clean_pdf_documents3.step1
+3. File name: test.pdf has been successfully encoded to: dGVzdC5wZGY=.pdf
+4. File is valid: test.pdf
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsBytesNoExtFilename" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.854">
+    <system-err><![CDATA[May 04, 2023 5:51:21 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testValidInputsNoPathMimeStore" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.619">
+    <system-err><![CDATA[May 04, 2023 5:51:22 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+  <testcase name="testEmptyConfigJsonObject" classname="dev.filechampion.filechampion4j.FileValidatorTest" time="0.463">
+    <system-err><![CDATA[May 04, 2023 5:51:22 PM dev.filechampion.filechampion4j.Extensions logInfo
+INFO: Loaded Validations Configurtion
+]]></system-err>
+  </testcase>
+</testsuite>

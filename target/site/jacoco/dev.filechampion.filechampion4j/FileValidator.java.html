@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">filechampion4j</a> &gt; <a href="index.source.html" class="el_package">dev.filechampion.filechampion4j</a> &gt; <span class="el_source">FileValidator.java</span></div><h1>FileValidator.java</h1><pre class="source lang-java linenums">package dev.filechampion.filechampion4j;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import org.json.JSONObject;
+import dev.filechampion.filechampion4j.PluginsHelper.PluginConfig;
+import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
+
+
+/**
+ * This class is used to validate files
+ * @author filechampion
+ * @version 0.9.8.2
+ * @see &lt;a href=&quot;https://github.com/povimd9/FileChampion4j/wiki&quot;&gt;FileChampion4j Wiki&lt;/a&gt;
+ */
+public class FileValidator {
+    /**
+     * Initialize logging configuration from logging.properties file in resources folder
+     */
+    static {
+        try {
+<span class="fc" id="L34">            Object o = FileValidator.class.getResourceAsStream(&quot;/logging.properties&quot;);</span>
+<span class="fc" id="L35">            LogManager.getLogManager().readConfiguration((InputStream) o);</span>
+<span class="nc" id="L36">        } catch (NullPointerException e) {</span>
+<span class="nc" id="L37">            throw new IllegalArgumentException(&quot;Could not load default logging configuration: file not found&quot;, e);</span>
+<span class="nc" id="L38">        } catch (Exception e) {</span>
+<span class="nc" id="L39">            throw new IllegalArgumentException(&quot;Could not load default logging configuration: error reading file&quot;, e);</span>
+<span class="fc" id="L40">        }</span>
+    }
+<span class="fc" id="L42">    private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());</span>
+    private JSONObject configJsonObject;
+    private PluginsHelper pluginsHelper;
+<span class="fc" id="L45">    private Map&lt;String, StepConfig&gt; stepConfigsBefore = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L46">    private Map&lt;String, StepConfig&gt; stepConfigsAfter = new HashMap&lt;&gt;();</span>
+    private Extensions extensions;
+    private ValidationsHelper validationsHelper;
+<span class="fc" id="L49">    private StringBuilder sharedStringBuilder = new StringBuilder();</span>
+<span class="fc" id="L50">    private String sharedStepMessage = &quot;Step: &quot;;</span>
+<span class="fc" id="L51">    private String errorResponse = &quot;File is not valid.&quot;;</span>
+    private String fileCategory;
+    private String fileName;
+    private Path filePath;
+    private byte[] originalFile;
+    private String mimeString;
+    private Path outDir;
+    private String fileExtension;
+<span class="fc" id="L59">    private String commonFileError = &quot;Error reading file: &quot;;</span>
+    private String commonLogString;
+    private int responseMsgCountFail;
+    private StringBuilder sbresponseAggregationFail;
+    private int responseMsgCountSuccess;
+    private StringBuilder sbresponseAggregationSuccess;
+
+    /**
+     * This method is used to initiate the class with relevant json configurations
+     * @param configJsonObject (JSONObject) - The json object containing the Validations and Plugins configurations for the class.
+     */
+<span class="fc" id="L70">    public FileValidator(JSONObject configJsonObject) throws IllegalArgumentException {</span>
+<span class="pc bpc" id="L71" title="1 of 6 branches missed.">        if (configJsonObject == null || configJsonObject.isEmpty() || !configJsonObject.has(&quot;Validations&quot;)) {</span>
+<span class="fc" id="L72">            throw new IllegalArgumentException(&quot;Config JSON object cannot be null or empty, and must have Validations section.&quot;);</span>
+        } else {
+            try {
+<span class="fc" id="L75">                extensions = new Extensions(configJsonObject.getJSONObject(&quot;Validations&quot;));</span>
+<span class="fc" id="L76">                validationsHelper = new ValidationsHelper(extensions);</span>
+<span class="fc" id="L77">            } catch (Exception e) {</span>
+<span class="fc" id="L78">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error initializing extensions: &quot;)</span>
+<span class="fc" id="L79">                    .append(e.getMessage());</span>
+<span class="fc" id="L80">                logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L81">                throw new IllegalArgumentException(&quot;Error initializing extensions: &quot; + e.getMessage());</span>
+<span class="fc" id="L82">            }</span>
+        }
+
+<span class="fc" id="L85">        this.configJsonObject = configJsonObject;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (configJsonObject.has(&quot;Plugins&quot;)) {</span>
+            try {
+<span class="fc" id="L88">                pluginsHelper = new PluginsHelper(configJsonObject.getJSONObject(&quot;Plugins&quot;));</span>
+<span class="fc" id="L89">                loadPlugins();</span>
+<span class="fc" id="L90">                checkPluginsConfig();</span>
+<span class="fc" id="L91">            } catch (Exception e) {</span>
+<span class="fc" id="L92">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error initializing plugins: &quot;)</span>
+<span class="fc" id="L93">                    .append(e.getMessage());</span>
+<span class="fc" id="L94">                logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L95">                throw new IllegalArgumentException(&quot;Error initializing plugins: &quot; + e.getMessage());</span>
+<span class="fc" id="L96">            }</span>
+        }
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * This method is used to validate the file bytes with existing mime type, typically present in web related file uploads, 
+     * and save the file to the output directory if passed validations.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir,  String mimeString) {
+<span class="fc" id="L112">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating with request mime &quot;)</span>
+<span class="fc" id="L113">            .append(mimeString)</span>
+<span class="fc" id="L114">            .append(&quot; and storage for file bytes of: &quot;)</span>
+<span class="fc" id="L115">            .append(fileName);</span>
+<span class="fc" id="L116">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L117">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L118">        this.fileName = fileName;</span>
+<span class="fc" id="L119">        this.originalFile = originalFile;</span>
+<span class="fc" id="L120">        this.mimeString = mimeString;</span>
+<span class="fc" id="L121">        this.outDir = outputDir;</span>
+<span class="fc" id="L122">        return validateFileMain();</span>
+    }
+
+    /**
+     * This method is used to validate the file path with existing mime type, typically present in web related file uploads, 
+     * and save the file to the output directory if passed validations.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir,  String mimeString) {
+<span class="fc" id="L137">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating with request mime &quot;)</span>
+<span class="fc" id="L138">            .append(mimeString)</span>
+<span class="fc" id="L139">            .append(&quot; and storage for file path of: &quot;)</span>
+<span class="fc" id="L140">            .append(fileName);</span>
+<span class="fc" id="L141">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L142">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L143">        this.fileName = fileName;</span>
+<span class="fc" id="L144">        this.mimeString = mimeString;</span>
+<span class="fc" id="L145">        this.outDir = outputDir;</span>
+<span class="fc" id="L146">        this.filePath = filePath;</span>
+<span class="fc" id="L147">        return validateFileMain();</span>
+    }
+    
+    /**
+     * This method is used to validate the file as file bytes, with existing mime type, typically present in web related file uploads.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, String mimeString) {
+<span class="fc" id="L160">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating with request &quot;)</span>
+<span class="fc" id="L161">            .append(mimeString)</span>
+<span class="fc" id="L162">            .append(&quot; mime for file bytes of: &quot;)</span>
+<span class="fc" id="L163">            .append(fileName);</span>
+<span class="fc" id="L164">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L165">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L166">        this.fileName = fileName;</span>
+<span class="fc" id="L167">        this.originalFile = originalFile;</span>
+<span class="fc" id="L168">        this.mimeString = mimeString;</span>
+<span class="fc" id="L169">        return validateFileMain();</span>
+    }
+
+    /**
+     * This method is used to validate the file as file bytes, save the file to the output directory if passed validations, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir) {
+<span class="fc" id="L182">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating and Storing file bytes of: &quot;)</span>
+<span class="fc" id="L183">            .append(fileName);</span>
+<span class="fc" id="L184">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L185">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L186">        this.fileName = fileName;</span>
+<span class="fc" id="L187">        this.originalFile = originalFile;</span>
+<span class="fc" id="L188">        this.outDir = outputDir;</span>
+<span class="fc" id="L189">        return validateFileMain();</span>
+    }
+
+    /**
+     * This method is used to validate the file path with existing mime type, typically present in web related file uploads.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param mimeString (String) - The mime type of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName,  String mimeString) {
+<span class="fc" id="L202">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating with request mime &quot;)</span>
+<span class="fc" id="L203">            .append(mimeString)</span>
+<span class="fc" id="L204">            .append(&quot; for file path of: &quot;)</span>
+<span class="fc" id="L205">            .append(fileName);</span>
+<span class="fc" id="L206">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L207">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L208">        this.fileName = fileName;</span>
+<span class="fc" id="L209">        this.mimeString = mimeString;</span>
+<span class="fc" id="L210">        this.filePath = filePath;</span>
+<span class="fc" id="L211">        return validateFileMain();</span>
+    }
+
+    /**
+     * This method is used to validate the file in target path, save the file to the output directory if passed validations, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @param outputDir (Path) - The directory to save the file to if it passes validations.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName, Path outputDir) {
+<span class="fc" id="L224">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating and Storing file path of: &quot;)</span>
+<span class="fc" id="L225">            .append(fileName);</span>
+<span class="fc" id="L226">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L227">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L228">        this.fileName = fileName;</span>
+<span class="fc" id="L229">        this.outDir = outputDir;</span>
+<span class="fc" id="L230">        this.filePath = filePath;</span>
+<span class="fc" id="L231">        return validateFileMain();</span>
+    }
+
+    /**
+     * This method is used to validate the file as file bytes, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param originalFile (byte[]) - The file to be validated as a byte array.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, byte[] originalFile,String fileName) {
+<span class="fc" id="L243">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating file bytes of: &quot;)</span>
+<span class="fc" id="L244">            .append(fileName);</span>
+<span class="fc" id="L245">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L246">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L247">        this.fileName = fileName;</span>
+<span class="fc" id="L248">        this.originalFile = originalFile;</span>
+<span class="fc" id="L249">        return validateFileMain();</span>
+    }
+
+    /**
+     * This method is used to validate the file in target path, and return the results.
+     * @param fileCategory (String) - The category of the file to be validated.  This is used to determine which validations to run.
+     * @param filePath (Path) - The target file path to be validated as a String.
+     * @param fileName (String) - The original name of the file to be validated.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    public ValidationResponse validateFile(String fileCategory, Path filePath, String fileName) {
+<span class="fc" id="L261">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating file path of: &quot;)</span>
+<span class="fc" id="L262">            .append(fileName);</span>
+<span class="fc" id="L263">        logFine(sharedStringBuilder);</span>
+<span class="fc" id="L264">        this.fileCategory = fileCategory;</span>
+<span class="fc" id="L265">        this.fileName = fileName;</span>
+<span class="fc" id="L266">        this.filePath = filePath;</span>
+<span class="fc" id="L267">        return validateFileMain();</span>
+    }
+
+    /**
+     * This method is the internal entry point for the file validation process.
+     * @return (ValidationResponse) - The results of the validations.
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    private ValidationResponse validateFileMain() {
+<span class="fc" id="L276">        commonLogString = String.format(&quot; for file extension: %s&quot;, fileExtension);</span>
+<span class="fc" id="L277">        responseMsgCountFail = 0;</span>
+<span class="fc" id="L278">        sbresponseAggregationFail = new StringBuilder(&quot;&quot;);</span>
+<span class="fc" id="L279">        responseMsgCountSuccess = 0;</span>
+<span class="fc" id="L280">        sbresponseAggregationSuccess = new StringBuilder(&quot;&quot;);</span>
+
+        // Check that the input parameters are not null or empty
+<span class="fc" id="L283">        checkMethodInputs();</span>
+
+        // Initialize variables
+<span class="fc" id="L286">        fileExtension = getFileExtension(fileName);</span>
+<span class="fc" id="L287">        String originalFilenameClean = fileName.replaceAll(&quot;[^\\p{IsAlphabetic}\\p{IsDigit}.]&quot;, &quot;_&quot;);</span>
+
+        // Log the file type category being validated
+<span class="fc" id="L290">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Validating &quot;).append(originalFilenameClean).append(&quot;, as file type: &quot;).append(fileCategory);</span>
+<span class="fc" id="L291">        logInfo(sharedStringBuilder);</span>
+
+        // Check for before plugins
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        if (extensions.getValidationValue(fileCategory, fileExtension, &quot;extension_plugins&quot;) != null) {</span>
+<span class="fc" id="L295">            String executionResults = executeBeforePlugins(fileCategory, fileExtension);</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">            if (executionResults.contains(&quot;. Failed for step:&quot;)) {</span>
+<span class="fc" id="L297">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;executeBeforePlugins failed for file: &quot;).append(originalFilenameClean).append(&quot;, Results: &quot;).append(executionResults);</span>
+<span class="fc" id="L298">                logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L299">                return new ValidationResponse(false, errorResponse, sharedStringBuilder.toString() , originalFilenameClean, null, null);</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">            } else if (executionResults.contains(&quot;. Error for step:&quot;)) {</span>
+<span class="fc" id="L301">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error executing Plugins defined to run before validations for file: &quot;).append(originalFilenameClean).append(&quot;, Results: &quot;).append(executionResults);</span>
+<span class="fc" id="L302">                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L303">                    .append(&quot;executeBeforePlugins passed with error: &quot;)</span>
+<span class="fc" id="L304">                    .append(executionResults);</span>
+<span class="fc" id="L305">                logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L306">                logWarn(sharedStringBuilder);</span>
+            } else {
+<span class="fc" id="L308">                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L309">                    .append(&quot;executeBeforePlugins executed successfully: &quot;)</span>
+<span class="fc" id="L310">                    .append(executionResults);</span>
+<span class="fc" id="L311">                logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L312">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), executionResults);</span>
+<span class="fc" id="L313">                logInfo(sharedStringBuilder);</span>
+            }
+<span class="fc" id="L315">        }  else {</span>
+<span class="fc" id="L316">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;No before plugins defined for file: &quot;).append(originalFilenameClean);</span>
+<span class="fc" id="L317">            logInfo(sharedStringBuilder);</span>
+        }
+<span class="fc" id="L319">        return (doValidations(originalFilenameClean));</span>
+    }
+
+    /**
+     * Following initial validations and before plugins, this method is used to execute the validations for the file.
+     * @param originalFilenameClean (String) a string containing the cleaned file name
+     * @return ValidationResponse (ValidationResponse) a ValidationResponse object containing the results of the validation
+     * @throws IllegalArgumentException - If any of the required inputs are null or empty.
+     */
+    private ValidationResponse doValidations(String originalFilenameClean) {
+        try {
+<span class="fc" id="L330">            sharedStringBuilder = validationsHelper.getValidationResults(fileCategory, originalFilenameClean, originalFile, mimeString);</span>
+<span class="fc" id="L331">        } catch (Exception e) {</span>
+<span class="fc" id="L332">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error in doValidations: &quot;).append(e.getMessage());</span>
+<span class="fc" id="L333">            logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L334">            return new ValidationResponse(false, errorResponse, sharedStringBuilder.toString() , originalFilenameClean, null, null);</span>
+<span class="fc" id="L335">        }</span>
+
+<span class="fc bfc" id="L337" title="All 2 branches covered.">        if (sharedStringBuilder.indexOf(&quot;Invalid&quot;) &gt; -1) {</span>
+<span class="fc" id="L338">            sbresponseAggregationFail.append(sharedStringBuilder);</span>
+<span class="fc" id="L339">            logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L340">            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, null, null);</span>
+        } else {
+<span class="fc" id="L342">            sbresponseAggregationSuccess.append(sharedStringBuilder);</span>
+        }
+
+        // Check for after plugins
+<span class="fc" id="L346">        executeAfterPlugins();</span>
+
+<span class="fc bfc" id="L348" title="All 2 branches covered.">        boolean isAddChecksum = extensions.getValidationValue(fileCategory, fileExtension, &quot;add_checksum&quot;) != null </span>
+<span class="fc" id="L349">        ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, &quot;add_checksum&quot;) : true;</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">        String checksumString = isAddChecksum ? calculateChecksum(originalFile) : &quot;&quot;;</span>
+
+        // Check if file passed all defined validations, return false and reason if not.
+<span class="fc bfc" id="L353" title="All 2 branches covered.">        if (responseMsgCountFail &gt; 0) {</span>
+<span class="fc" id="L354">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L355">            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, originalFile, checksumString);</span>
+        }
+
+        // Check if the file name should be encoded
+<span class="fc" id="L359">        String encodedFileName = &quot;&quot;;</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">        boolean isNameEncoding = extensions.getValidationValue(fileCategory, fileExtension, &quot;name_encoding&quot;) != null ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, &quot;name_encoding&quot;) : false;</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        if (isNameEncoding) { </span>
+<span class="fc" id="L362">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), Base64.getEncoder().encodeToString(originalFilenameClean.getBytes(StandardCharsets.UTF_8))).append(&quot;.&quot;).append(fileExtension);</span>
+<span class="fc" id="L363">            encodedFileName = sharedStringBuilder.toString();</span>
+<span class="fc" id="L364">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L365">                    .append(&quot;File name: &quot;)</span>
+<span class="fc" id="L366">                    .append(originalFilenameClean)</span>
+<span class="fc" id="L367">                    .append(&quot; has been successfully encoded to: &quot;)</span>
+<span class="fc" id="L368">                    .append(encodedFileName);</span>
+<span class="fc" id="L369">            logFine(sbresponseAggregationSuccess);</span>
+        }
+<span class="fc bfc" id="L371" title="All 2 branches covered.">        String targetFileName = encodedFileName.isEmpty() ? originalFilenameClean : encodedFileName;</span>
+
+        // Check if the file should be saved to output directory
+        String savedFilePath;
+<span class="pc bpc" id="L375" title="1 of 4 branches missed.">        if (outDir != null &amp;&amp; !isBlank(outDir.toString())) {</span>
+<span class="fc" id="L376">            savedFilePath = saveFileToOutputDir(fileCategory, fileExtension, outDir, targetFileName, originalFile);</span>
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">            if (savedFilePath.contains(&quot;Error:&quot;)) {</span>
+                // Return valid file response if file failed to save to output directory
+<span class="nc" id="L379">                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="nc" id="L380">                    .append(&quot;File is valid but failed to save to output directory: &quot;)</span>
+<span class="nc" id="L381">                    .append(savedFilePath);</span>
+<span class="nc" id="L382">                logInfo(sbresponseAggregationSuccess);</span>
+<span class="nc" id="L383">                return new ValidationResponse(true, &quot;File is valid but failed to save to output directory&quot;, sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);</span>
+            }
+            // Return valid file response if file was saved to output directory
+<span class="fc" id="L386">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L387">                .append(&quot;File is valid and was saved to output directory: &quot;)</span>
+<span class="fc" id="L388">                .append(savedFilePath);</span>
+<span class="fc" id="L389">            logInfo(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L390">            return new ValidationResponse(true, &quot;File is valid and was saved to output directory&quot;, sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);</span>
+        }
+
+        // Return valid response if file passed all validations but is not meant to be saved to disk
+<span class="fc" id="L394">        sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L395">            .append(&quot;File is valid: &quot;)</span>
+<span class="fc" id="L396">            .append(originalFilenameClean);</span>
+<span class="fc" id="L397">        logInfo(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L398">        return new ValidationResponse(true, &quot;File is valid&quot;, sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);</span>
+    }
+    
+
+    ////////////////////
+    // Helper methods //
+    ////////////////////
+
+    /**
+     * LOGGER.info wrapper
+     * @param message (String) - message to log
+     */
+    private void logInfo(StringBuilder message) {
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">        if (LOGGER.isLoggable(Level.INFO)) {</span>
+<span class="fc" id="L412">            LOGGER.info(message.toString());</span>
+        }
+<span class="fc" id="L414">    }</span>
+
+    /**
+     * LOGGER.warning wrapper
+     * @param message (String) - message to log
+     */
+    private void logWarn(StringBuilder message) {
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">        if (LOGGER.isLoggable(Level.WARNING)) {</span>
+<span class="fc" id="L422">            LOGGER.warning(message.toString());</span>
+        }
+<span class="fc" id="L424">    }</span>
+
+    /**
+     * LOGGER.severe wrapper
+     * @param message (String) - message to log
+     */
+    private void logSevere(StringBuilder message) {
+<span class="nc bnc" id="L431" title="All 2 branches missed.">        if (LOGGER.isLoggable(Level.SEVERE)) {</span>
+<span class="nc" id="L432">            LOGGER.severe(message.toString());</span>
+        }
+<span class="nc" id="L434">    }</span>
+
+    /**
+     * LOGGER.fine wrapper
+     * @param message (StringBuilder) - message to log
+     */
+    private void logFine(StringBuilder message) {
+<span class="fc bfc" id="L441" title="All 2 branches covered.">        if (LOGGER.isLoggable(Level.FINE )) {</span>
+<span class="fc" id="L442">            LOGGER.fine(message.toString());</span>
+        }
+<span class="fc" id="L444">    }</span>
+
+    /**
+     * Method to load the plugins objects into maps
+     */
+    private void loadPlugins() {
+<span class="fc bfc" id="L450" title="All 2 branches covered.">        for (PluginConfig pluginConfig : pluginsHelper.getPluginConfigs().values()) {</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">            for (String step : pluginConfig.getStepConfigs().keySet()) {</span>
+<span class="fc" id="L452">                StepConfig stepConfig = pluginConfig.getStepConfigs().get(step);</span>
+<span class="fc bfc" id="L453" title="All 4 branches covered.">                stepConfigsBefore.put(stepConfig.isRunBefore()? step : &quot;&quot;, stepConfig.isRunBefore()? stepConfig : null);</span>
+<span class="fc bfc" id="L454" title="All 4 branches covered.">                stepConfigsAfter.put(stepConfig.isRunAfter()? step : &quot;&quot;, stepConfig.isRunAfter()? stepConfig : null);</span>
+<span class="fc" id="L455">            }</span>
+<span class="fc" id="L456">        }</span>
+<span class="fc" id="L457">    }</span>
+
+    /**
+     * Method to check that all extensions defined in config exist in plugins configuration from Validation.json
+     */
+    private void checkPluginsConfig() {
+        // check that all extensions defined plugins exist in maps
+<span class="fc" id="L464">        JSONObject validationsJsonObject = configJsonObject.getJSONObject(&quot;Validations&quot;);</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">        for (int i = 0; i &lt; validationsJsonObject.length(); i++) {</span>
+<span class="fc" id="L466">            String categroyKey = validationsJsonObject.names().getString(i);</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">            for (int k=0; k &lt; validationsJsonObject.getJSONObject(categroyKey).length(); k++) {</span>
+<span class="fc" id="L468">                String extensionKey = validationsJsonObject.getJSONObject(categroyKey).names().getString(k);</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">                if (validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).has(&quot;extension_plugins&quot;)) {</span>
+<span class="fc" id="L470">                    checkPluginsExist(validationsJsonObject, categroyKey, extensionKey);</span>
+                }
+            }
+        }
+<span class="fc" id="L474">    }</span>
+
+    /**
+     * Method to check that each extension defined in config exist in plugins configuration
+     * @param validationsJsonObject (JSONObject) - the validations.json object
+     * @param categroyKey (String) - the category key
+     * @param extensionKey (String) - the extension key
+     */
+    private void checkPluginsExist(JSONObject validationsJsonObject, String categroyKey, String extensionKey){
+<span class="fc bfc" id="L483" title="All 2 branches covered.">        for (String pluginName : validationsJsonObject.getJSONObject(categroyKey).getJSONObject(extensionKey).getJSONArray(&quot;extension_plugins&quot;).toList().toArray(new String[0])) {</span>
+<span class="fc bfc" id="L484" title="All 4 branches covered.">            if (!stepConfigsBefore.containsKey(pluginName) &amp;&amp; !stepConfigsAfter.containsKey(pluginName)) {</span>
+<span class="fc" id="L485">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage).append(pluginName).append(&quot; defined in config does not exist in plugins configuration&quot;);</span>
+<span class="fc" id="L486">                logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L487">                throw new IllegalArgumentException(sharedStringBuilder.toString());</span>
+            }
+        }
+<span class="fc" id="L490">    }</span>
+
+    /**
+     * This method is used to check that method inputs are as expected
+     * @throws IllegalArgumentException - If any of the inputs are null, empty, or does not contain appropiate values
+     * @throws IOException - If there is an error reading the file
+     */
+    private void checkMethodInputs() {
+<span class="fc bfc" id="L498" title="All 2 branches covered.">        if (isBlank(fileCategory)) {</span>
+<span class="fc" id="L499">            throw new IllegalArgumentException(&quot;fileCategory cannot be null or empty.&quot;);</span>
+        }
+<span class="fc bfc" id="L501" title="All 2 branches covered.">        if (isBlank(fileName)) {</span>
+<span class="fc" id="L502">            throw new IllegalArgumentException(&quot;fileName cannot be null or empty.&quot;);</span>
+        }
+<span class="fc bfc" id="L504" title="All 2 branches covered.">        if (fileName.indexOf(&quot;.&quot;) == -1) {</span>
+<span class="fc" id="L505">            throw new IllegalArgumentException(&quot;fileName must contain a file extension.&quot;);</span>
+        }
+<span class="fc bfc" id="L507" title="All 4 branches covered.">        if (outDir != null &amp;&amp; !Files.exists(outDir)) {</span>
+<span class="fc" id="L508">            throw new IllegalArgumentException(&quot;outDir does not exist.&quot;);</span>
+        }
+<span class="fc bfc" id="L510" title="All 4 branches covered.">        if (filePath != null &amp;&amp; !Files.exists(filePath)) {</span>
+<span class="fc" id="L511">            throw new IllegalArgumentException(&quot;filepath does not exist.&quot;);</span>
+<span class="pc bpc" id="L512" title="1 of 4 branches missed.">        } else if (filePath != null &amp;&amp; Files.isDirectory(filePath)) {</span>
+<span class="nc" id="L513">            throw new IllegalArgumentException(&quot;filepath cannot be a directory.&quot;);</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        } else if (filePath != null) {</span>
+            try {
+<span class="fc" id="L516">                Path path = filePath;</span>
+<span class="fc" id="L517">                originalFile = Files.readAllBytes(path);</span>
+<span class="nc" id="L518">            } catch (IOException e) {</span>
+<span class="nc" id="L519">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)</span>
+<span class="nc" id="L520">                    .append(e.getMessage());</span>
+<span class="nc" id="L521">                logWarn(sharedStringBuilder);</span>
+<span class="nc" id="L522">                throw new IllegalArgumentException(&quot;Error reading file: &quot; + e.getMessage());</span>
+<span class="fc" id="L523">            }</span>
+        }
+<span class="fc bfc" id="L525" title="All 4 branches covered.">        if (originalFile == null || originalFile.length == 0) {</span>
+<span class="fc" id="L526">            throw new IllegalArgumentException(&quot;originalFile cannot be null or empty.&quot;);</span>
+        }
+<span class="fc" id="L528">    }</span>
+
+    /**
+     * Execute and check results of plugins configured to run before the validations
+     * @param fileCategory (String) the file category of the file being validated
+     * @param fileExtension (String) the file extension of the file being validated
+     * @return String (String) a string containing the results of the plugin execution
+     */
+    private String executeBeforePlugins(String fileCategory, String fileExtension) {
+<span class="fc" id="L537">        String responseAggregation = &quot;&quot;;</span>
+<span class="fc" id="L538">        char responseMsgCount = 'a';</span>
+<span class="fc" id="L539">        StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);</span>
+        
+
+<span class="fc" id="L542">        ArrayList plugins = (ArrayList) extensions.getValidationValue(fileCategory, fileExtension, &quot;extension_plugins&quot;);</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">        for (int i = 0; i &lt; plugins.size(); i++) {</span>
+<span class="fc" id="L544">            String extensionPlugin = (String) plugins.get(i);</span>
+<span class="fc bfc" id="L545" title="All 2 branches covered.">            for (String step : stepConfigsBefore.keySet()) {</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">                if (step.equals(extensionPlugin)) {</span>
+<span class="fc" id="L547">                    String stepResults = executePlugin(extensionPlugin, stepConfigsBefore, fileExtension);</span>
+<span class="fc" id="L548">                    sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage)</span>
+<span class="fc" id="L549">                        .append(stepConfigsBefore.get(extensionPlugin).getName()).append(&quot; Success, Results: Error&quot;);</span>
+<span class="fc" id="L550">                    String sharedString = &quot;, Results: &quot;;</span>
+<span class="pc bpc" id="L551" title="1 of 4 branches missed.">                    if (stepResults.startsWith(sharedStringBuilder.toString()) || stepResults.startsWith(&quot;Error &quot;)) {</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">                        if (stepConfigsBefore.get(extensionPlugin).getOnFail().equals(&quot;fail&quot;)) {</span>
+<span class="fc" id="L553">                            sbResponseAggregation.append(System.lineSeparator()).append(&quot;\t&quot;)  .append(responseMsgCount + &quot;. &quot;)</span>
+<span class="fc" id="L554">                                .append(&quot;Failed for step: &quot;)</span>
+<span class="fc" id="L555">                                .append(stepConfigsBefore.get(extensionPlugin).getName())</span>
+<span class="fc" id="L556">                                .append(sharedString)</span>
+<span class="fc" id="L557">                                .append(stepResults);</span>
+<span class="fc" id="L558">                            logFine(sbResponseAggregation);        </span>
+<span class="fc" id="L559">                            return sbResponseAggregation.toString();</span>
+                        }
+<span class="fc" id="L561">                        sbResponseAggregation.append(System.lineSeparator()).append(&quot;\t&quot;)  .append(responseMsgCount + &quot;. &quot;)</span>
+<span class="fc" id="L562">                            .append(&quot;Error for step: &quot;)</span>
+<span class="fc" id="L563">                            .append(stepConfigsBefore.get(extensionPlugin).getName())</span>
+<span class="fc" id="L564">                            .append(sharedString + stepResults);</span>
+<span class="fc" id="L565">                        logFine(sbResponseAggregation);</span>
+<span class="fc" id="L566">                        ++responseMsgCount;</span>
+<span class="fc" id="L567">                        responseAggregation = sbResponseAggregation.toString();</span>
+                    } else {
+<span class="fc" id="L569">                        sbResponseAggregation.append(System.lineSeparator()).append(&quot;\t&quot;)  .append(responseMsgCount + &quot;. &quot;)</span>
+<span class="fc" id="L570">                            .append(&quot;Success for step: &quot;)</span>
+<span class="fc" id="L571">                            .append(stepConfigsBefore.get(extensionPlugin).getName());</span>
+<span class="fc" id="L572">                        logFine(sbResponseAggregation);</span>
+<span class="fc" id="L573">                        ++responseMsgCount;</span>
+                    }
+                }
+<span class="fc" id="L576">            }</span>
+        }
+<span class="fc" id="L578">        return &quot;executeBeforePlugins completed: &quot; + sbResponseAggregation.toString();</span>
+    }
+
+    private void executeAfterPlugins() {
+        // Check for after plugins
+<span class="fc bfc" id="L583" title="All 2 branches covered.">        if (extensions.getValidationValue(fileCategory, fileExtension, &quot;extension_plugins&quot;) != null) {</span>
+<span class="fc" id="L584">            String executionResults = executeAfterPluginsProcess(fileCategory, fileExtension);</span>
+<span class="fc bfc" id="L585" title="All 2 branches covered.">            if (executionResults.contains(&quot;. Failed for step:&quot;)) {</span>
+<span class="fc" id="L586">                sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + &quot;. &quot;)</span>
+<span class="fc" id="L587">                    .append(&quot;Error in executeAfterPlugins: &quot;)</span>
+<span class="fc" id="L588">                    .append(executionResults)</span>
+<span class="fc" id="L589">                    .append(commonLogString);</span>
+<span class="fc" id="L590">                logWarn(sbresponseAggregationFail);</span>
+<span class="pc bpc" id="L591" title="1 of 2 branches missed.">            } else if (executionResults.contains(&quot;. Error for step:&quot;)) {</span>
+<span class="nc" id="L592">                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="nc" id="L593">                    .append(&quot;executeAfterPlugins passed with error: &quot;)</span>
+<span class="nc" id="L594">                    .append(executionResults);</span>
+<span class="nc" id="L595">                logFine(sbresponseAggregationSuccess);</span>
+<span class="nc" id="L596">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error in executeAfterPlugins: &quot;).append(executionResults);</span>
+<span class="nc" id="L597">                logWarn(sharedStringBuilder);</span>
+            } else {
+<span class="fc" id="L599">                sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L600">                    .append(&quot;executeAfterPlugins executed successfully: &quot;)</span>
+<span class="fc" id="L601">                    .append(executionResults);</span>
+<span class="fc" id="L602">                logFine(sbresponseAggregationSuccess);</span>
+            }
+<span class="fc" id="L604">        } else {</span>
+<span class="fc" id="L605">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L606">                .append(&quot;No after plugins to execute&quot;);</span>
+<span class="fc" id="L607">            logFine(sbresponseAggregationSuccess);</span>
+        }
+<span class="fc" id="L609">    }</span>
+
+    /**
+     * Execute and check results of plugins configured to run after the validations
+     * @param fileCategory (String) the file category of the file being validated
+     * @param fileExtension (String) the file extension of the file being validated
+     * @return String (String) a string containing the results of the plugin execution
+     */
+    private String executeAfterPluginsProcess(String fileCategory, String fileExtension) {
+<span class="fc" id="L618">        String responseAggregation = &quot;&quot;;</span>
+<span class="fc" id="L619">        char responseMsgCount = 'a';</span>
+<span class="fc" id="L620">        StringBuilder sbResponseAggregation = new StringBuilder(responseAggregation);</span>
+        
+<span class="fc" id="L622">        ArrayList plugins = (ArrayList) extensions.getValidationValue(fileCategory, fileExtension, &quot;extension_plugins&quot;);</span>
+<span class="fc bfc" id="L623" title="All 2 branches covered.">        for (int i = 0; i &lt; plugins.size(); i++) {</span>
+<span class="fc" id="L624">            String extensionPlugin = (String) plugins.get(i);</span>
+<span class="fc bfc" id="L625" title="All 2 branches covered.">            for (String step : stepConfigsAfter.keySet()) {</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">                if (step.equals(extensionPlugin)) {</span>
+<span class="fc" id="L627">                    String stepResults = executePlugin(extensionPlugin, stepConfigsAfter, fileExtension);</span>
+<span class="fc" id="L628">                    sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage)</span>
+<span class="fc" id="L629">                        .append(stepConfigsAfter.get(extensionPlugin).getName()).append(&quot; Success, Results: Error&quot;);</span>
+<span class="fc" id="L630">                    String sharedString = &quot;, Results: &quot;;</span>
+<span class="pc bpc" id="L631" title="1 of 4 branches missed.">                    if (stepResults.startsWith(sharedStringBuilder.toString()) || stepResults.startsWith(&quot;Error &quot;)) {</span>
+<span class="fc bfc" id="L632" title="All 2 branches covered.">                        if (stepConfigsAfter.get(extensionPlugin).getOnFail().equals(&quot;fail&quot;)) {</span>
+<span class="fc" id="L633">                            sbResponseAggregation.append(System.lineSeparator()).append(&quot;\t&quot;)  .append(responseMsgCount + &quot;. &quot;)</span>
+<span class="fc" id="L634">                                .append(&quot;Failed for step: &quot;)</span>
+<span class="fc" id="L635">                                .append(stepConfigsAfter.get(extensionPlugin).getName())</span>
+<span class="fc" id="L636">                                .append(sharedString)</span>
+<span class="fc" id="L637">                                .append(stepResults);</span>
+<span class="fc" id="L638">                            logFine(sbResponseAggregation);</span>
+<span class="fc" id="L639">                            return sbResponseAggregation.toString();</span>
+                        }
+<span class="fc" id="L641">                        sbResponseAggregation.append(System.lineSeparator()).append(&quot;\t&quot;)  .append(responseMsgCount + &quot;. &quot;)</span>
+<span class="fc" id="L642">                            .append(&quot;Error for step: &quot;)</span>
+<span class="fc" id="L643">                            .append(stepConfigsAfter.get(extensionPlugin).getName())</span>
+<span class="fc" id="L644">                            .append(sharedString + stepResults);</span>
+<span class="fc" id="L645">                        logFine(sbResponseAggregation);</span>
+<span class="fc" id="L646">                        ++responseMsgCount;</span>
+<span class="fc" id="L647">                        responseAggregation = sbResponseAggregation.toString();</span>
+                    } else {
+<span class="fc" id="L649">                        sbResponseAggregation.append(System.lineSeparator()).append(&quot;\t&quot;)  .append(responseMsgCount + &quot;. &quot;)</span>
+<span class="fc" id="L650">                            .append(&quot;Success for step: &quot;)</span>
+<span class="fc" id="L651">                            .append(stepConfigsAfter.get(extensionPlugin).getName());</span>
+<span class="fc" id="L652">                        logFine(sbResponseAggregation);</span>
+<span class="fc" id="L653">                        ++responseMsgCount;</span>
+                    }
+                }
+<span class="fc" id="L656">            }</span>
+        }
+<span class="fc" id="L658">        return &quot;executeAfterPlugins completed: &quot; + sbResponseAggregation.toString();</span>
+    }
+
+    /**
+     * Execute a single plugin step
+     * @param extensionPlugin (String) a string containing the name of the plugin step to execute
+     * @param stepConfigs (Map&lt;String, StepConfig&gt;) a map containing the configuration for the step to execute
+     * @param fileExtension (String) the file extension of the file being validated
+     * @return String (String) a string containing the results of the plugin execution
+     */
+    private String executePlugin(String extensionPlugin, Map&lt;String, StepConfig&gt; stepConfigs , String fileExtension) {
+<span class="fc" id="L669">        Map&lt;String, String&gt; stepResultsMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L670">        String extensionPluginName = stepConfigs.get(extensionPlugin).getName();</span>
+<span class="fc" id="L671">        sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage).append(extensionPluginName);</span>
+<span class="fc" id="L672">        logFine(sharedStringBuilder);</span>
+        
+<span class="fc bfc" id="L674" title="All 2 branches covered.">        if (stepConfigs.get(extensionPlugin).getType().equals(&quot;cli&quot;)) {</span>
+<span class="fc" id="L675">            Map&lt;String, Map&lt;String, String&gt;&gt; stepResults = stepConfigs.get(extensionPlugin)</span>
+<span class="fc" id="L676">                .getCliPluginHelper()</span>
+<span class="fc" id="L677">                .execute(fileExtension, originalFile);    </span>
+<span class="fc" id="L678">            stepResultsMap.putAll(stepResults.get(stepResults.keySet().toArray()[0]));</span>
+
+<span class="pc bpc" id="L680" title="1 of 4 branches missed.">            if (!stepResultsMap.isEmpty() &amp;&amp; stepResults.containsKey(&quot;Success&quot;)) {</span>
+<span class="fc" id="L681">                String newFilePath = stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(&quot;.&quot;)+1,</span>
+<span class="fc" id="L682">                extensionPluginName.length()) + &quot;.filePath&quot;);</span>
+<span class="fc" id="L683">                String newB64Content = stepResultsMap.get(extensionPluginName.substring(extensionPluginName.lastIndexOf(&quot;.&quot;)+1,</span>
+<span class="fc" id="L684">                extensionPluginName.length()) + &quot;.fileContent&quot;);</span>
+
+<span class="fc bfc" id="L686" title="All 2 branches covered.">                if (!isBlank(newFilePath)) {</span>
+                    try {
+<span class="fc" id="L688">                        Path newFile = new File(newFilePath).toPath();</span>
+<span class="fc" id="L689">                        originalFile = Files.readAllBytes(newFile);</span>
+<span class="fc" id="L690">                        deleteTempDir(newFile.getParent().toAbsolutePath());</span>
+<span class="fc" id="L691">                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Successfully read plugin expected file: &quot;).append(newFilePath);</span>
+<span class="fc" id="L692">                        logFine(sharedStringBuilder);</span>
+<span class="nc" id="L693">                    } catch (IOException e) {</span>
+<span class="nc" id="L694">                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error reading plugin expected file: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L695">                        logWarn(sharedStringBuilder);</span>
+<span class="nc" id="L696">                        return sharedStringBuilder.toString();</span>
+<span class="fc" id="L697">                    }</span>
+                }
+<span class="fc bfc" id="L699" title="All 2 branches covered.">                if (!isBlank(newB64Content)) {</span>
+                    try {
+<span class="fc" id="L701">                        originalFile = Base64.getDecoder().decode(newB64Content);</span>
+<span class="fc" id="L702">                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Successfully decoded plugin expected file&quot;);</span>
+<span class="fc" id="L703">                        logFine(sharedStringBuilder);</span>
+<span class="nc" id="L704">                    } catch (Exception e) {</span>
+<span class="nc" id="L705">                        sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error decoding plugin expected file: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L706">                        logWarn(sharedStringBuilder);</span>
+<span class="nc" id="L707">                        return sharedStringBuilder.toString();</span>
+<span class="fc" id="L708">                    }</span>
+                }
+            }
+<span class="fc bfc" id="L711" title="All 2 branches covered.">            for(Map.Entry&lt;String, String&gt; entry : stepResultsMap.entrySet()) {</span>
+<span class="fc" id="L712">                String errorMsg =  entry.getValue();</span>
+<span class="fc" id="L713">                String errorDetails = entry.getKey();</span>
+<span class="fc" id="L714">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), sharedStepMessage).append(extensionPluginName)</span>
+<span class="fc" id="L715">                    .append(&quot; Success, Results: &quot;)</span>
+<span class="fc" id="L716">                    .append(errorDetails)</span>
+<span class="fc" id="L717">                    .append(&quot;\&quot;&quot;)</span>
+<span class="fc" id="L718">                    .append(errorMsg);</span>
+<span class="fc" id="L719">                logFine(sharedStringBuilder);</span>
+<span class="fc" id="L720">            }</span>
+<span class="fc" id="L721">            return sharedStringBuilder.toString();</span>
+<span class="pc bpc" id="L722" title="1 of 2 branches missed.">        } else if (stepConfigs.get(extensionPlugin).getType().equals(&quot;http&quot;)) {</span>
+            // TODO: Implement http plugin type
+        }
+<span class="fc" id="L725">        return sharedStringBuilder.toString();</span>
+    }
+
+    
+    /**
+     * isBlank wrapper method for support of Java 8
+     * @param str (String) the string to check if empty or null
+     * @return boolean (boolean) true if the string is empty or null, false otherwise
+     */
+    private boolean isBlank(String str) {
+<span class="fc bfc" id="L735" title="All 4 branches covered.">        return str == null || str.trim().isEmpty();</span>
+    }
+
+    /**
+     * Helper method to delete the temporary directory
+     * @param tempFilePath (Path) the path to the temporary file
+     * @return Boolean (Boolean) true if the temporary directory was deleted successfully, false otherwise
+     */
+    private Boolean deleteTempDir(Path tempFilePath) {
+<span class="fc" id="L744">        try (Stream&lt;Path&gt; walk = Files.walk(tempFilePath)) {</span>
+<span class="fc" id="L745">            walk.sorted(Comparator.reverseOrder())</span>
+<span class="fc" id="L746">            .map(Path::toFile)</span>
+<span class="fc" id="L747">            .forEach(File::delete);</span>
+<span class="fc" id="L748">            return true;</span>
+<span class="nc" id="L749">        } catch (Exception e) {</span>
+<span class="nc" id="L750">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: Delete temporary directoy failed: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L751">            logWarn(sharedStringBuilder);</span>
+<span class="nc" id="L752">            return false;</span>
+        }
+    }
+
+    /**
+     * Parse the file extension from the file name
+     * @param fileName (String) the name of the file being validated
+     * @return String (String) the file extension of the file being validated
+     */
+    private String getFileExtension(String fileName) {
+<span class="fc" id="L762">        int dotIndex = fileName.lastIndexOf('.');</span>
+<span class="pc bpc" id="L763" title="2 of 4 branches missed.">        if (dotIndex == -1 || dotIndex == fileName.length() - 1) {</span>
+<span class="nc" id="L764">            return &quot;&quot;;</span>
+        }
+<span class="fc" id="L766">        return fileName.substring(dotIndex + 1);</span>
+    }
+ 
+    /**
+     * Calculate the checksum of the file
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @return String (String) the SHA-256 checksum of the file
+     */
+    private String calculateChecksum(byte[] fileBytes) {
+        try {
+<span class="fc" id="L776">            SH256Calculate paralChecksum = new SH256Calculate(fileBytes);</span>
+<span class="fc" id="L777">            byte[] checksum = paralChecksum.getChecksum();</span>
+<span class="fc" id="L778">            return new BigInteger(1, checksum).toString(16);</span>
+<span class="nc" id="L779">        } catch (Exception e) {</span>
+<span class="nc" id="L780">            e.printStackTrace();</span>
+<span class="nc" id="L781">            return null;</span>
+        }
+    }
+
+    /**
+     * Helper method to save the file defined file attributes to the output directory and return the path to the saved file
+     * @param fileCategory (String) the file category of the file being validated
+     * @param fileExtension (String) the file extension of the file being validated
+     * @param outDir (Path) the path to the output directory
+     * @param fileName (String) the name of the file being validated
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @return String (String) the path to the saved file
+     */
+    private String saveFileToOutputDir(String fileCategory, String fileExtension, Path outDir, String fileName, byte[] fileBytes) {
+<span class="fc" id="L795">        Path targetFilePath = Paths.get(outDir.toString(), fileName);</span>
+        try {
+<span class="fc" id="L797">            Files.write(targetFilePath, fileBytes, StandardOpenOption.CREATE);</span>
+<span class="nc" id="L798">        } catch (IOException e) {</span>
+<span class="nc" id="L799">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: Saving file to directory failed: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L800">            logSevere(sharedStringBuilder);</span>
+<span class="nc" id="L801">            return sharedStringBuilder.toString();</span>
+<span class="fc" id="L802">        }</span>
+
+<span class="fc bfc" id="L804" title="All 2 branches covered.">        boolean changeOwnership = extensions.getValidationValue(fileCategory, fileExtension, &quot;change_ownership&quot;) != null </span>
+<span class="fc" id="L805">        ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, &quot;change_ownership&quot;) : false;</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">        if (changeOwnership) {</span>
+<span class="fc" id="L807">            String changeOwnershipUser = (String) extensions.getValidationValue(fileCategory, fileExtension, &quot;change_ownership_user&quot;);</span>
+<span class="fc" id="L808">            String changePermissionsMode = (String) extensions.getValidationValue(fileCategory, fileExtension, &quot;change_ownership_mode&quot;);</span>
+<span class="fc" id="L809">            String changeOwnershipStatus = setFileAttributes(targetFilePath, changeOwnershipUser, changePermissionsMode);</span>
+<span class="pc bpc" id="L810" title="1 of 2 branches missed.">            if (changeOwnershipStatus.contains(&quot;Error:&quot;)) {</span>
+<span class="nc" id="L811">                return changeOwnershipStatus;</span>
+            }
+        }
+<span class="fc" id="L814">        return targetFilePath.toAbsolutePath().toString();</span>
+    }
+
+    /**
+     * Helper method to set the file attributes
+     * @param targetFilePath (Path) the path to the file
+     * @param changeOwnershipUser (String) the user to change the ownership to
+     * @param changePermissionsMode (String) the permissions to change the file to
+     * @return String (String) the status of the file attribute change
+     */
+    private String setFileAttributes(Path targetFilePath, String changeOwnershipUser, String changePermissionsMode) {
+<span class="fc" id="L825">        FileAclHelper fileAclHelper = new FileAclHelper(targetFilePath, changeOwnershipUser, changePermissionsMode);</span>
+<span class="fc" id="L826">        String newFileAttributesStatus = fileAclHelper.changeFileAcl();</span>
+<span class="pc bpc" id="L827" title="1 of 2 branches missed.">        if (newFileAttributesStatus.contains(&quot;Error:&quot;)) {</span>
+            try {
+<span class="nc" id="L829">                Files.deleteIfExists(targetFilePath);</span>
+<span class="nc" id="L830">            } catch (IOException e) { </span>
+<span class="nc" id="L831">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: Failed to delete file from permissions change operation: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L832">                logSevere(sharedStringBuilder);</span>
+<span class="nc" id="L833">            }</span>
+<span class="nc" id="L834">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), newFileAttributesStatus);</span>
+<span class="nc" id="L835">            logSevere(sharedStringBuilder);</span>
+<span class="nc" id="L836">            return newFileAttributesStatus;</span>
+        } else {
+<span class="fc" id="L838">            return &quot;Success: File attributes changed successfully&quot;;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

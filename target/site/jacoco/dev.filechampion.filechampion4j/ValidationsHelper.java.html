@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidationsHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">filechampion4j</a> &gt; <a href="index.source.html" class="el_package">dev.filechampion.filechampion4j</a> &gt; <span class="el_source">ValidationsHelper.java</span></div><h1>ValidationsHelper.java</h1><pre class="source lang-java linenums">package dev.filechampion.filechampion4j;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+
+
+/**
+ * This class contains helper methods for the FileValidator class
+ * @version 0.9.8.2
+ */
+public class ValidationsHelper {
+    /**
+     * Initialize logging configuration from logging.properties file in resources folder
+     */
+    static {
+        try {
+<span class="fc" id="L25">            Object o = FileValidator.class.getResourceAsStream(&quot;/logging.properties&quot;);</span>
+<span class="fc" id="L26">            LogManager.getLogManager().readConfiguration((InputStream) o);</span>
+<span class="nc" id="L27">        } catch (NullPointerException e) {</span>
+<span class="nc" id="L28">            throw new IllegalArgumentException(&quot;Could not load default logging configuration: file not found&quot;, e);</span>
+<span class="nc" id="L29">        } catch (Exception e) {</span>
+<span class="nc" id="L30">            throw new IllegalArgumentException(&quot;Could not load default logging configuration: error reading file&quot;, e);</span>
+<span class="fc" id="L31">        }</span>
+    }
+<span class="fc" id="L33">    private static final Logger LOGGER = Logger.getLogger(ValidationsHelper.class.getName());</span>
+    private Extensions extensions;
+<span class="fc" id="L35">    private boolean failFast = false;</span>
+<span class="fc" id="L36">    private StringBuilder sharedStringBuilder = new StringBuilder();</span>
+    private String fileCategory;
+    private byte[] originalFile;
+    private String mimeString;
+    private String fileExtension;
+    private String commonLogString;
+    private int responseMsgCountFail;
+    private StringBuilder sbresponseAggregationFail;
+    private int responseMsgCountSuccess;
+    private StringBuilder sbresponseAggregationSuccess;
+
+
+    /**
+    * This is the constructor for the ValidationsHelper class.
+    * @param extensions (Extensions) the Extensions object containing the file validation configuration
+    */
+<span class="fc" id="L52">    public ValidationsHelper(Extensions extensions) {</span>
+<span class="fc" id="L53">        this.extensions = extensions;</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * ValidationsHelper entry point for file validation
+     * @param fileCategory (String) the file category of the file being validated
+     * @param fileName (String) the file name of the file being validated
+     * @param originalFile (byte[]) the byte of the file being validated
+     * @param mimeString (String) the mime type of the file being validated
+     * @return StringBuilder (StringBuilder) the results of the file validations
+     * @throws IOException (IOException) if the file cannot be saved/deleted to/from a temporary directory
+     * @throws SecurityException (SecurityException) if the accessed to file is denied for Files.probContentType
+     */
+    public StringBuilder getValidationResults(String fileCategory, String fileName, byte[] originalFile, String mimeString) throws IOException, SecurityException, NumberFormatException{
+<span class="fc" id="L67">        this.fileExtension = getFileExtension(fileName);</span>
+<span class="fc" id="L68">        this.responseMsgCountFail = 0;</span>
+<span class="fc" id="L69">        this.sbresponseAggregationFail = new StringBuilder();</span>
+<span class="fc" id="L70">        this.responseMsgCountSuccess = 0;</span>
+<span class="fc" id="L71">        this.sbresponseAggregationSuccess = new StringBuilder();</span>
+<span class="fc" id="L72">        this.fileCategory = fileCategory;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        this .failFast = extensions.getValidationValue(fileCategory, fileExtension, &quot;fail_fast&quot;) != null ?</span>
+<span class="fc" id="L74">            (boolean) extensions.getValidationValue(fileCategory, fileExtension, &quot;fail_fast&quot;) : false;</span>
+<span class="fc" id="L75">        this.originalFile = originalFile;</span>
+<span class="fc" id="L76">        this.mimeString = mimeString;</span>
+<span class="fc" id="L77">        this.commonLogString = &quot; for file: &quot; + fileName;</span>
+        
+<span class="fc" id="L79">        return doValidations();</span>
+    }
+
+    /**
+     * Following initial validations and before plugins, this method is used to execute the validations for the file.
+     * @return StringBuilder (StringBuilder) the results of the file validations
+     * @throws IOException (IOException) if the file cannot be saved/deleted to/from a temporary directory
+     * @throws SecurityException (SecurityException) if the accessed to file is denied for Files.probContentType
+     */
+    private StringBuilder doValidations() throws IOException, SecurityException, NumberFormatException {
+        
+<span class="fc" id="L90">        checkFileSize();</span>
+<span class="fc bfc" id="L91" title="All 4 branches covered.">        if (responseMsgCountFail &gt; 0 &amp;&amp; failFast) {</span>
+<span class="fc" id="L92">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L93">            return sbresponseAggregationFail;</span>
+        }
+
+<span class="fc" id="L96">        checkMimeType();</span>
+<span class="fc bfc" id="L97" title="All 4 branches covered.">        if (responseMsgCountFail &gt; 0 &amp;&amp; failFast) {</span>
+<span class="fc" id="L98">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L99">            return sbresponseAggregationFail;</span>
+        }
+
+<span class="fc" id="L102">        containsMagicBytes();</span>
+<span class="fc bfc" id="L103" title="All 4 branches covered.">        if (responseMsgCountFail &gt; 0 &amp;&amp; failFast) {</span>
+<span class="fc" id="L104">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L105">            return sbresponseAggregationFail;</span>
+        }
+        
+<span class="fc" id="L108">        containsHeaderSignatures();</span>
+<span class="fc bfc" id="L109" title="All 4 branches covered.">        if (responseMsgCountFail &gt; 0 &amp;&amp; failFast) {</span>
+<span class="fc" id="L110">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L111">            return sbresponseAggregationFail;</span>
+        }
+
+<span class="fc" id="L114">        containsFooterSignatures();</span>
+<span class="fc bfc" id="L115" title="All 4 branches covered.">        if (responseMsgCountFail &gt; 0 &amp;&amp; failFast) {</span>
+<span class="fc" id="L116">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L117">            return sbresponseAggregationFail;</span>
+        }
+
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (responseMsgCountFail &gt; 0) {</span>
+<span class="fc" id="L121">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L122">            return sbresponseAggregationFail;</span>
+        } else {
+<span class="fc" id="L124">            logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L125">            return sbresponseAggregationSuccess;</span>
+        }
+    }
+
+
+    ////////////////////
+    // Helper methods //
+    ////////////////////
+
+    /**
+     * LOGGER.warning wrapper
+     * @param message (String) - message to log
+     */
+    private void logWarn(StringBuilder message) {
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (LOGGER.isLoggable(Level.WARNING)) {</span>
+<span class="fc" id="L140">            LOGGER.warning(message.toString());</span>
+        }
+<span class="fc" id="L142">    }</span>
+
+    /**
+     * LOGGER.fine wrapper
+     * @param message (StringBuilder) - message to log
+     */
+    private void logFine(StringBuilder message) {
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if (LOGGER.isLoggable(Level.FINE )) {</span>
+<span class="nc" id="L150">            LOGGER.fine(message.toString());</span>
+        }
+<span class="fc" id="L152">    }</span>
+
+    /**
+     * isBlank wrapper method for support of Java 8
+     * @param str (String) the string to check if empty or null
+     * @return boolean (boolean) true if the string is empty or null, false otherwise
+     */
+    private boolean isBlank(String str) {
+<span class="fc bfc" id="L160" title="All 4 branches covered.">        return str == null || str.trim().isEmpty();</span>
+    }
+    
+    /**
+     * Compare file size to the maximum allowed size
+     * @return StringBuilder (StringBuilder) the results of the file size check
+     */
+    private StringBuilder checkFileSize() {
+        int maxSize;
+        try {
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            maxSize = Integer.parseInt(extensions.getValidationValue(fileCategory, fileExtension, &quot;max_size&quot;) != null ? extensions.getValidationValue(fileCategory, fileExtension, &quot;max_size&quot;).toString() : &quot;-1&quot;);</span>
+<span class="nc" id="L171">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L172">            maxSize = -1;</span>
+<span class="fc" id="L173">        }</span>
+<span class="pc bpc" id="L174" title="1 of 6 branches missed.">        if ((maxSize &gt; -1) &amp;&amp; (originalFile.length / 1000 &gt; maxSize || originalFile.length == 0)) {</span>
+<span class="fc" id="L175">            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + &quot;. &quot;)</span>
+<span class="fc" id="L176">                .append(&quot;Invalid file size (&quot;)</span>
+<span class="fc" id="L177">                .append(originalFile.length / 1000)</span>
+<span class="fc" id="L178">                .append(&quot;KB) exceeds maximum allowed size (&quot;)</span>
+<span class="fc" id="L179">                .append(maxSize)</span>
+<span class="fc" id="L180">                .append(&quot;KB)&quot;)</span>
+<span class="fc" id="L181">                .append(commonLogString);</span>
+<span class="fc" id="L182">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L183">            return sbresponseAggregationFail;</span>
+        } else {
+<span class="fc" id="L185">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L186">                .append(&quot;File size check passed, file size: &quot;)</span>
+<span class="fc" id="L187">                .append(originalFile.length / 1000)</span>
+<span class="fc" id="L188">                .append(&quot;KB&quot;);</span>
+<span class="fc" id="L189">            logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L190">            return sbresponseAggregationSuccess;</span>
+        }
+    }
+
+
+
+    /**
+     * Compare the file MIME type to the expected MIME type
+     * @return StringBuilder (StringBuilder) the results of the MIME type check
+     * @throws IOException (IOException) if the file cannot be saved/deleted to/from a temporary directory
+     * @throws SecurityException (SecurityException) if the accessed to file is denied for Files.probContentType
+     */
+    private StringBuilder checkMimeType()throws IOException, SecurityException {
+<span class="fc" id="L203">        String mimeType = (String) extensions.getValidationValue(fileCategory, fileExtension, &quot;mime_type&quot;);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        String fileMimeType = isBlank(mimeString) ? &quot;&quot; : mimeString;</span>
+<span class="fc bfc" id="L205" title="All 4 branches covered.">        if (!isBlank(mimeType) &amp;&amp; isBlank(fileMimeType)) {</span>
+<span class="fc" id="L206">            Path tempFile = saveFileToTempDir(fileExtension, originalFile);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            if (tempFile == null) {</span>
+<span class="fc" id="L208">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: checkMimeType failed: tempFile is null&quot;);</span>
+<span class="fc" id="L209">                logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L210">                throw new IOException(sharedStringBuilder.toString());</span>
+            }
+            try {
+<span class="fc" id="L213">                fileMimeType = Files.probeContentType(tempFile);</span>
+<span class="nc" id="L214">            } catch (IOException e) {</span>
+<span class="nc" id="L215">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: checkMimeType failed: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L216">                logWarn(sharedStringBuilder);</span>
+<span class="nc" id="L217">                throw new IOException(sharedStringBuilder.toString());</span>
+<span class="nc" id="L218">            } catch (SecurityException e) {</span>
+<span class="nc" id="L219">                sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: checkMimeType failed: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L220">                logWarn(sharedStringBuilder);</span>
+<span class="nc" id="L221">                throw new SecurityException(sharedStringBuilder.toString());</span>
+            } finally {
+<span class="fc" id="L223">                deleteTempDir(tempFile);</span>
+            }
+        }
+<span class="pc bpc" id="L226" title="1 of 6 branches missed.">        if (!isBlank(mimeType) &amp;&amp; !isBlank(fileMimeType) &amp;&amp; !fileMimeType.equals(mimeType)) {</span>
+<span class="fc" id="L227">            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + &quot;. &quot;)</span>
+<span class="fc" id="L228">                .append(&quot;Invalid mime_type&quot;)</span>
+<span class="fc" id="L229">                .append(commonLogString);</span>
+<span class="fc" id="L230">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L231">            return sbresponseAggregationFail;</span>
+        } else {
+<span class="fc" id="L233">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L234">                .append(&quot;Mime type check passed, mime type: &quot;)</span>
+<span class="fc" id="L235">                .append(mimeType);</span>
+<span class="fc" id="L236">            logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L237">            return sbresponseAggregationSuccess;</span>
+        }
+    }
+    
+    /**
+     * Parse the file extension from the file name
+     * @param fileName (String) the name of the file being validated
+     * @return String (String) the file extension of the file being validated
+     */
+    private String getFileExtension(String fileName) {
+<span class="fc" id="L247">        int dotIndex = fileName.lastIndexOf('.');</span>
+<span class="pc bpc" id="L248" title="2 of 4 branches missed.">        if (dotIndex == -1 || dotIndex == fileName.length() - 1) {</span>
+<span class="nc" id="L249">            return &quot;&quot;;</span>
+        }
+<span class="fc" id="L251">        return fileName.substring(dotIndex + 1);</span>
+    }
+
+    /**
+     * Check if the file contains the expected magic bytes
+     * @return StringBuilder (StringBuilder) the results of the magic bytes check
+     */
+    private StringBuilder containsMagicBytes() {
+<span class="fc" id="L259">        String magicBytes = (String) extensions.getValidationValue(fileCategory, fileExtension, &quot;magic_bytes&quot;);</span>
+<span class="fc bfc" id="L260" title="All 4 branches covered.">        if (!isBlank(magicBytes) &amp;&amp; !containsMagicBytesProcessor(originalFile, magicBytes)) {</span>
+<span class="fc" id="L261">            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + &quot;. &quot;)</span>
+<span class="fc" id="L262">                .append(&quot;Invalid magic_bytes&quot;)</span>
+<span class="fc" id="L263">                .append(commonLogString);</span>
+<span class="fc" id="L264">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L265">            return sbresponseAggregationFail;</span>
+        } else {
+<span class="fc" id="L267">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L268">                .append(&quot;Magic bytes check passed, magic bytes: &quot;)</span>
+<span class="fc" id="L269">                .append(magicBytes);</span>
+<span class="fc" id="L270">            logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L271">            return sbresponseAggregationSuccess;</span>
+        }
+    }
+    
+    /**
+     * Check if the file contains the expected magic bytes
+     * @param originalFileBytes (byte[]) the file bytes of the file being validated
+     * @param magicBytesPattern (String) the expected magic bytes of the file being validated
+     * @return Boolean (Boolean) true if the file contains the expected magic bytes, false otherwise
+     */
+    private boolean containsMagicBytesProcessor(byte[] originalFileBytes, String magicBytesPattern) throws NumberFormatException{
+<span class="pc bpc" id="L282" title="3 of 6 branches missed.">        if (originalFileBytes.length == 0 || magicBytesPattern == null || magicBytesPattern.isEmpty()) {</span>
+<span class="nc" id="L283">            return false;</span>
+        }
+<span class="fc" id="L285">        magicBytesPattern = magicBytesPattern.replaceAll(&quot;\\p{Zs}&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        if (magicBytesPattern.length() % 2 != 0) {</span>
+<span class="nc" id="L287">            magicBytesPattern = &quot;0&quot; + magicBytesPattern;</span>
+        }
+<span class="fc" id="L289">        byte[] magicBytes = new byte[magicBytesPattern.length() / 2];</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        for (int i = 0; i &lt; magicBytesPattern.length(); i += 2) {</span>
+<span class="fc" id="L291">            magicBytes[i / 2] = (byte) Integer.parseInt(magicBytesPattern.substring(i, i + 2), 16);</span>
+        }
+<span class="fc bfc" id="L293" title="All 2 branches covered.">        for (int i = 0; i &lt; originalFileBytes.length - magicBytes.length; i++) {</span>
+<span class="fc" id="L294">            boolean found = true;</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">            for (int j = 0; j &lt; magicBytes.length; j++) {</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">                if (originalFileBytes[i + j] != magicBytes[j]) {</span>
+<span class="fc" id="L297">                    found = false;</span>
+<span class="fc" id="L298">                    break;</span>
+                }
+            }
+<span class="fc bfc" id="L301" title="All 2 branches covered.">            if (found) {</span>
+<span class="fc" id="L302">                return true;</span>
+            }
+        }
+<span class="fc" id="L305">        return false;</span>
+    }
+
+    /**
+     * Check if the file contains the expected header signatures
+     * @return StringBuilder (StringBuilder) the results of the header signatures check
+     */
+    private StringBuilder containsHeaderSignatures() {
+<span class="fc" id="L313">        String headerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, &quot;header_signatures&quot;);</span>
+<span class="fc bfc" id="L314" title="All 4 branches covered.">        if (!isBlank(headerSignatures) &amp;&amp; !containsHeaderSignaturesProcessor(originalFile, headerSignatures)) {</span>
+<span class="fc" id="L315">            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + &quot;. &quot;)</span>
+<span class="fc" id="L316">                .append(&quot;Invalid header_signatures&quot;)</span>
+<span class="fc" id="L317">                .append(commonLogString);</span>
+<span class="fc" id="L318">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L319">            return sbresponseAggregationFail;</span>
+        } else {
+<span class="fc" id="L321">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L322">                .append(&quot;Header signatures check passed, header signatures: &quot;)</span>
+<span class="fc" id="L323">                .append(headerSignatures);</span>
+<span class="fc" id="L324">            logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L325">            return sbresponseAggregationSuccess;</span>
+        }
+    }
+
+    /**
+     * Check if the file contains the expected header signatures
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @param headerSignaturesPattern (String) the expected header signatures of the file being validated
+     * @return Boolean (Boolean) true if the file contains the expected header signatures, false otherwise
+     */
+    private boolean containsHeaderSignaturesProcessor(byte[] fileBytes, String headerSignaturesPattern) throws NumberFormatException {
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">        if (isBlank(headerSignaturesPattern)) {</span>
+<span class="nc" id="L337">            return true;</span>
+        }
+<span class="fc" id="L339">        String hexPattern = headerSignaturesPattern.replaceAll(&quot;\\p{Zs}&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">        if (hexPattern.length() % 2 != 0) {</span>
+<span class="nc" id="L341">            hexPattern = &quot;0&quot; + hexPattern;</span>
+        }
+<span class="fc" id="L343">        byte[] headerSignatures = new byte[hexPattern.length() / 2];</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">        for (int i = 0; i &lt; hexPattern.length(); i += 2) {</span>
+<span class="fc" id="L345">            headerSignatures[i / 2] = (byte) Integer.parseInt(hexPattern.substring(i, i + 2), 16);</span>
+        }
+<span class="fc bfc" id="L347" title="All 2 branches covered.">        for (int i = 0; i &lt; headerSignatures.length; i++) {</span>
+<span class="pc bpc" id="L348" title="1 of 4 branches missed.">            if (i &gt;= fileBytes.length || fileBytes[i] != headerSignatures[i]) {</span>
+<span class="fc" id="L349">                return false;</span>
+            }
+        }
+<span class="fc" id="L352">        return true;</span>
+    }
+
+    /**
+     * Check if the file contains the expected footer signatures
+     * @return StringBuilder (StringBuilder) the results of the footer signatures check
+     */
+    private StringBuilder containsFooterSignatures() {
+<span class="fc" id="L360">        String footerSignatures = (String) extensions.getValidationValue(fileCategory, fileExtension, &quot;footer_signatures&quot;);</span>
+<span class="fc bfc" id="L361" title="All 4 branches covered.">        if (!isBlank(footerSignatures) &amp;&amp; !containsFooterSignaturesProcessor(originalFile, footerSignatures)) {</span>
+<span class="fc" id="L362">            sbresponseAggregationFail.append(System.lineSeparator() + ++responseMsgCountFail + &quot;. &quot;)</span>
+<span class="fc" id="L363">                .append(&quot;Invalid footer_signatures&quot;)</span>
+<span class="fc" id="L364">                .append(commonLogString);</span>
+<span class="fc" id="L365">            logWarn(sbresponseAggregationFail);</span>
+<span class="fc" id="L366">            return sbresponseAggregationFail;</span>
+        } else {
+<span class="fc" id="L368">            sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + &quot;. &quot;)</span>
+<span class="fc" id="L369">                .append(&quot;Footer signatures check passed, footer signatures: &quot;)</span>
+<span class="fc" id="L370">                .append(footerSignatures);</span>
+<span class="fc" id="L371">            logFine(sbresponseAggregationSuccess);</span>
+<span class="fc" id="L372">            return sbresponseAggregationSuccess;</span>
+        }
+    }
+
+    /**
+     * Check if the file contains the expected footer signatures
+     * @param fileBytes (byte[]) the file bytes of the file being validated
+     * @param footerSignaturesPattern (String) the expected footer signatures of the file being validated
+     * @return Boolean (Boolean) true if the file contains the expected footer signatures, false otherwise
+     */
+    private boolean containsFooterSignaturesProcessor(byte[] fileBytes, String footerSignaturesPattern) throws NumberFormatException {
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">        if (isBlank(footerSignaturesPattern)) {</span>
+<span class="nc" id="L384">            return true;</span>
+        }
+<span class="fc" id="L386">        String hexPattern = footerSignaturesPattern.replaceAll(&quot;\\p{Zs}&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">        if (hexPattern.length() % 2 != 0) {</span>
+<span class="fc" id="L388">            hexPattern = &quot;0&quot; + hexPattern;</span>
+        }
+<span class="fc" id="L390">        byte[] footerSignatures = new byte[hexPattern.length() / 2];</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">        for (int i = 0; i &lt; hexPattern.length(); i += 2) {</span>
+<span class="fc" id="L392">            footerSignatures[i / 2] = (byte) Integer.parseInt(hexPattern.substring(i, i + 2), 16);</span>
+        }
+<span class="fc" id="L394">        int footerStartIndex = fileBytes.length - footerSignatures.length -1;</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">        if (footerStartIndex &lt; 0) {</span>
+<span class="nc" id="L396">            return false;</span>
+        }
+<span class="fc bfc" id="L398" title="All 2 branches covered.">        for (int i = 0; i &lt; footerSignatures.length; i++) {</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">            if (fileBytes[footerStartIndex + i] != footerSignatures[i]) {</span>
+<span class="fc" id="L400">                return false;</span>
+            }
+        }
+<span class="fc" id="L403">        return true;</span>
+    }
+
+    /**
+     * Helper method to save the file to a temporary directory
+     * @param fileExtension (String) the file extension of the file being validated
+     * @param originalFile (byte[]) the file bytes of the file being validated
+     * @return Path (Path) the path to the temporary file
+     */
+    private Path saveFileToTempDir(String fileExtension, byte[] originalFile) {
+<span class="fc" id="L413">        Path tempFilePath = null;</span>
+        try {
+            // Create a temporary directory
+<span class="fc" id="L416">            Path tempDir = Files.createTempDirectory(&quot;tempDir&quot;);</span>
+<span class="fc" id="L417">            tempFilePath = Files.createTempFile(tempDir, &quot;tempFile&quot;, &quot;.&quot; + fileExtension);</span>
+<span class="fc" id="L418">            Files.write(tempFilePath, originalFile);</span>
+<span class="fc" id="L419">        } catch (Exception e) {</span>
+<span class="fc" id="L420">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: Saving file to temporary directory failed: &quot;).append(e.getMessage());</span>
+<span class="fc" id="L421">            logWarn(sharedStringBuilder);</span>
+<span class="fc" id="L422">            return null;</span>
+<span class="fc" id="L423">        }</span>
+<span class="fc" id="L424">        return tempFilePath;</span>
+    }
+
+    /**
+     * Helper method to delete the temporary directory
+     * @param tempFilePath (Path) the path to the temporary file
+     * @return Boolean (Boolean) true if the temporary directory was deleted successfully, false otherwise
+     */
+    private Boolean deleteTempDir(Path tempFilePath) {
+<span class="fc" id="L433">        try (Stream&lt;Path&gt; walk = Files.walk(tempFilePath)) {</span>
+<span class="fc" id="L434">            walk.sorted(Comparator.reverseOrder())</span>
+<span class="fc" id="L435">            .map(Path::toFile)</span>
+<span class="fc" id="L436">            .forEach(File::delete);</span>
+<span class="fc" id="L437">            return true;</span>
+<span class="nc" id="L438">        } catch (Exception e) {</span>
+<span class="nc" id="L439">            sharedStringBuilder.replace(0, sharedStringBuilder.length(), &quot;Error: Delete temporary directoy failed: &quot;).append(e.getMessage());</span>
+<span class="nc" id="L440">            logWarn(sharedStringBuilder);</span>
+<span class="nc" id="L441">            return false;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

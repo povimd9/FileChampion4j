@@ -1,0 +1,13 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+filechampion4j,dev.filechampion.filechampion4j,SH256Calculate,5,141,2,8,1,28,2,7,0,4
+filechampion4j,dev.filechampion.filechampion4j,FileValidator,274,2183,17,133,53,384,17,88,1,29
+filechampion4j,dev.filechampion.filechampion4j,CliPluginHelper.new TimerTask() {...},0,13,0,0,0,3,0,2,0,2
+filechampion4j,dev.filechampion.filechampion4j,FileAclHelper,184,344,11,17,38,78,9,15,1,9
+filechampion4j,dev.filechampion.filechampion4j,ValidationResponse,2,53,1,3,0,16,1,9,0,8
+filechampion4j,dev.filechampion.filechampion4j,Extensions,49,814,5,43,11,135,5,31,0,12
+filechampion4j,dev.filechampion.filechampion4j,ValidationsHelper,117,1038,15,97,26,183,15,59,0,18
+filechampion4j,dev.filechampion.filechampion4j,PluginsHelper.StepConfig,18,90,0,0,6,40,6,25,6,25
+filechampion4j,dev.filechampion.filechampion4j,PluginsHelper.PluginConfig,3,14,0,0,1,6,1,4,1,4
+filechampion4j,dev.filechampion.filechampion4j,SH256Calculate.ChecksumTask,0,21,0,0,0,7,0,2,0,2
+filechampion4j,dev.filechampion.filechampion4j,PluginsHelper,1,181,1,6,1,38,1,5,0,2
+filechampion4j,dev.filechampion.filechampion4j,CliPluginHelper,70,682,9,25,13,139,10,18,1,10

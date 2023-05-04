@@ -1,0 +1,45 @@
+@options
+@packages
+-classpath
+'C:/Users/User1/.m2/repository/org/json/json/20230227/json-20230227.jar;C:/Users/User1/.m2/repository/org/openjdk/jmh/jmh-core/1.36/jmh-core-1.36.jar;C:/Users/User1/.m2/repository/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar;C:/Users/User1/.m2/repository/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar;C:/Users/User1/.m2/repository/org/openjdk/jmh/jmh-generator-annprocess/1.36/jmh-generator-annprocess-1.36.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'C:/Users/User1/git/FileChampion4j/src/main/java;C:/Users/User1/git/FileChampion4j/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2023 <a href="https://github.com/povimd9">filechampion.dev</a>. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/User1/git/FileChampion4j/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'filechampion4j 0.9.8.2 API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/User1/git/FileChampion4j/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'filechampion4j 0.9.8.2 API'
+dev.filechampion.filechampion4j
+C:\Users\User1\.m2\repository\org\json\json\20230227\json-20230227.jar = 1680280436673
+C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-core\1.36\jmh-core-1.36.jar = 1680492312604
+C:\Users\User1\.m2\repository\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar = 1680492301430
+C:\Users\User1\.m2\repository\org\apache\commons\commons-math3\3.2\commons-math3-3.2.jar = 1680492301454
+C:\Users\User1\.m2\repository\org\openjdk\jmh\jmh-generator-annprocess\1.36\jmh-generator-annprocess-1.36.jar = 1680492312313
+C:\Users\User1\git\FileChampion4j\src\main\java = 1683219872227
+C:\Users\User1\git\FileChampion4j\target\generated-sources\annotations = 1683237002897
+C:\Users\User1\git\FileChampion4j\target\apidocs\allclasses-frame.html = 1683237091750
+C:\Users\User1\git\FileChampion4j\target\apidocs\allclasses-noframe.html = 1683237091753
+C:\Users\User1\git\FileChampion4j\target\apidocs\constant-values.html = 1683237091637
+C:\Users\User1\git\FileChampion4j\target\apidocs\deprecated-list.html = 1683237091745
+C:\Users\User1\git\FileChampion4j\target\apidocs\help-doc.html = 1683237091764
+C:\Users\User1\git\FileChampion4j\target\apidocs\index-all.html = 1683237091739
+C:\Users\User1\git\FileChampion4j\target\apidocs\index.html = 1683237091758
+C:\Users\User1\git\FileChampion4j\target\apidocs\overview-tree.html = 1683237091720
+C:\Users\User1\git\FileChampion4j\target\apidocs\package-list = 1683237091606
+C:\Users\User1\git\FileChampion4j\target\apidocs\script.js = 1683237091771
+C:\Users\User1\git\FileChampion4j\target\apidocs\stylesheet.css = 1683237091767
