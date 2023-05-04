@@ -1,0 +1,376 @@
+# JMH version: 1.36
+# VM version: JDK 1.8, OpenJDK 64-Bit Server VM, 25.372-b07
+# VM invoker: /opt/hostedtoolcache/Java_Corretto_jdk/8.372.07.1/x64/jre/bin/java
+# VM options: -XX:+UseG1GC
+# Blackhole mode: full + dont-inline hint (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 500 ms each
+# Measurement: 15 iterations, 1000 ms each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime
+
+# Run progress: 0.00% complete, ETA 00:00:52
+# Fork: 1 of 1
+# Warmup Iteration   1: 599.423 ops/s
+# Warmup Iteration   2: 1397.289 ops/s
+# Warmup Iteration   3: 3014.807 ops/s
+# Warmup Iteration   4: 3795.477 ops/s
+# Warmup Iteration   5: 2258.870 ops/s
+Iteration   1: 2833.636 ops/s
+Iteration   2: 3602.835 ops/s
+Iteration   3: 3881.921 ops/s
+Iteration   4: 3872.098 ops/s
+Iteration   5: 3190.389 ops/s
+Iteration   6: 3801.597 ops/s
+Iteration   7: 5339.943 ops/s
+Iteration   8: 4670.613 ops/s
+Iteration   9: 4492.477 ops/s
+Iteration  10: 4717.827 ops/s
+Iteration  11: 4681.773 ops/s
+Iteration  12: 4987.006 ops/s
+Iteration  13: 4602.134 ops/s
+Iteration  14: 4757.934 ops/s
+Iteration  15: 4772.077 ops/s
+
+
+Result "dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime":
+  4280.284 ±(99.9%) 758.097 ops/s [Average]
+  (min, avg, max) = (2833.636, 4280.284, 5339.943), stdev = 709.124
+  CI (99.9%): [3522.187, 5038.381] (assumes normal distribution)
+
+
+# JMH version: 1.36
+# VM version: JDK 1.8, OpenJDK 64-Bit Server VM, 25.372-b07
+# VM invoker: /opt/hostedtoolcache/Java_Corretto_jdk/8.372.07.1/x64/jre/bin/java
+# VM options: -XX:+UseG1GC
+# Blackhole mode: full + dont-inline hint (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 500 ms each
+# Measurement: 15 iterations, 1000 ms each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime
+
+# Run progress: 33.32% complete, ETA 00:00:35
+# Fork: 1 of 1
+# Warmup Iteration   1: 0.002 s/op
+# Warmup Iteration   2: 0.001 s/op
+# Warmup Iteration   3: 0.001 s/op
+# Warmup Iteration   4: ≈ 10⁻³ s/op
+# Warmup Iteration   5: ≈ 10⁻³ s/op
+Iteration   1: ≈ 10⁻⁴ s/op
+Iteration   2: ≈ 10⁻⁴ s/op
+Iteration   3: ≈ 10⁻⁴ s/op
+Iteration   4: ≈ 10⁻⁴ s/op
+Iteration   5: ≈ 10⁻⁴ s/op
+Iteration   6: ≈ 10⁻⁴ s/op
+Iteration   7: ≈ 10⁻⁴ s/op
+Iteration   8: ≈ 10⁻⁴ s/op
+Iteration   9: ≈ 10⁻⁴ s/op
+Iteration  10: ≈ 10⁻⁴ s/op
+Iteration  11: ≈ 10⁻⁴ s/op
+Iteration  12: ≈ 10⁻⁴ s/op
+Iteration  13: ≈ 10⁻⁴ s/op
+Iteration  14: ≈ 10⁻⁴ s/op
+Iteration  15: ≈ 10⁻⁴ s/op
+
+
+Result "dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime":
+  ≈ 10⁻⁴ s/op
+
+
+# JMH version: 1.36
+# VM version: JDK 1.8, OpenJDK 64-Bit Server VM, 25.372-b07
+# VM invoker: /opt/hostedtoolcache/Java_Corretto_jdk/8.372.07.1/x64/jre/bin/java
+# VM options: -XX:+UseG1GC
+# Blackhole mode: full + dont-inline hint (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 500 ms each
+# Measurement: 15 iterations, 1000 ms each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Sampling time
+# Benchmark: dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime
+
+# Run progress: 66.64% complete, ETA 00:00:17
+# Fork: 1 of 1
+# Warmup Iteration   1: 0.002 ±(99.9%) 0.001 s/op
+# Warmup Iteration   2: 0.001 ±(99.9%) 0.001 s/op
+# Warmup Iteration   3: ≈ 10⁻³ s/op
+# Warmup Iteration   4: ≈ 10⁻³ s/op
+# Warmup Iteration   5: ≈ 10⁻³ s/op
+Iteration   1: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.007 s/op
+                 benchValidMime·p0.999:  0.012 s/op
+                 benchValidMime·p0.9999: 0.015 s/op
+                 benchValidMime·p1.00:   0.015 s/op
+
+Iteration   2: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.004 s/op
+                 benchValidMime·p0.999:  0.010 s/op
+                 benchValidMime·p0.9999: 0.010 s/op
+                 benchValidMime·p1.00:   0.010 s/op
+
+Iteration   3: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.008 s/op
+                 benchValidMime·p0.9999: 0.009 s/op
+                 benchValidMime·p1.00:   0.009 s/op
+
+Iteration   4: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.010 s/op
+                 benchValidMime·p0.9999: 0.013 s/op
+                 benchValidMime·p1.00:   0.013 s/op
+
+Iteration   5: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.005 s/op
+                 benchValidMime·p0.999:  0.012 s/op
+                 benchValidMime·p0.9999: 0.025 s/op
+                 benchValidMime·p1.00:   0.025 s/op
+
+Iteration   6: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.007 s/op
+                 benchValidMime·p0.999:  0.011 s/op
+                 benchValidMime·p0.9999: 0.014 s/op
+                 benchValidMime·p1.00:   0.014 s/op
+
+Iteration   7: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.008 s/op
+                 benchValidMime·p0.9999: 0.010 s/op
+                 benchValidMime·p1.00:   0.010 s/op
+
+Iteration   8: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.002 s/op
+                 benchValidMime·p0.9999: 0.002 s/op
+                 benchValidMime·p1.00:   0.002 s/op
+
+Iteration   9: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.004 s/op
+                 benchValidMime·p0.9999: 0.014 s/op
+                 benchValidMime·p1.00:   0.014 s/op
+
+Iteration  10: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.002 s/op
+                 benchValidMime·p0.999:  0.002 s/op
+                 benchValidMime·p0.9999: 0.012 s/op
+                 benchValidMime·p1.00:   0.012 s/op
+
+Iteration  11: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.002 s/op
+                 benchValidMime·p0.999:  0.003 s/op
+                 benchValidMime·p0.9999: 0.008 s/op
+                 benchValidMime·p1.00:   0.008 s/op
+
+Iteration  12: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.002 s/op
+                 benchValidMime·p0.9999: 0.008 s/op
+                 benchValidMime·p1.00:   0.008 s/op
+
+Iteration  13: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.009 s/op
+                 benchValidMime·p0.9999: 0.013 s/op
+                 benchValidMime·p1.00:   0.013 s/op
+
+Iteration  14: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.001 s/op
+                 benchValidMime·p0.9999: 0.002 s/op
+                 benchValidMime·p1.00:   0.002 s/op
+
+Iteration  15: ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.00:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.50:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.90:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.95:   ≈ 10⁻⁴ s/op
+                 benchValidMime·p0.99:   0.001 s/op
+                 benchValidMime·p0.999:  0.002 s/op
+                 benchValidMime·p0.9999: 0.010 s/op
+                 benchValidMime·p1.00:   0.010 s/op
+
+
+
+Result "dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime":
+  N = 50282
+  mean =     ≈ 10⁻⁴ ±(99.9%) 0.001 s/op
+
+  Histogram, s/op:
+    [0.000, 0.003) = 50097 
+    [0.003, 0.005) = 36 
+    [0.005, 0.008) = 53 
+    [0.008, 0.010) = 74 
+    [0.010, 0.013) = 15 
+    [0.013, 0.015) = 6 
+    [0.015, 0.018) = 0 
+    [0.018, 0.020) = 0 
+    [0.020, 0.023) = 0 
+    [0.023, 0.025) = 1 
+    [0.025, 0.028) = 0 
+
+  Percentiles, s/op:
+      p(0.0000) =     ≈ 10⁻⁴ s/op
+     p(50.0000) =     ≈ 10⁻⁴ s/op
+     p(90.0000) =     ≈ 10⁻⁴ s/op
+     p(95.0000) =     ≈ 10⁻⁴ s/op
+     p(99.0000) =      0.001 s/op
+     p(99.9000) =      0.009 s/op
+     p(99.9900) =      0.014 s/op
+     p(99.9990) =      0.025 s/op
+     p(99.9999) =      0.025 s/op
+    p(100.0000) =      0.025 s/op
+
+
+# JMH version: 1.36
+# VM version: JDK 1.8, OpenJDK 64-Bit Server VM, 25.372-b07
+# VM invoker: /opt/hostedtoolcache/Java_Corretto_jdk/8.372.07.1/x64/jre/bin/java
+# VM options: -XX:+UseG1GC
+# Blackhole mode: full + dont-inline hint (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 500 ms each
+# Measurement: 15 iterations, 1000 ms each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime
+
+# Run progress: 99.96% complete, ETA 00:00:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 0.013 s/op
+# Warmup Iteration   2: 0.005 s/op
+# Warmup Iteration   3: 0.006 s/op
+# Warmup Iteration   4: 0.012 s/op
+# Warmup Iteration   5: 0.002 s/op
+Iteration   1: 0.008 s/op
+Iteration   2: 0.002 s/op
+Iteration   3: 0.002 s/op
+Iteration   4: 0.002 s/op
+Iteration   5: 0.003 s/op
+Iteration   6: 0.004 s/op
+Iteration   7: 0.004 s/op
+Iteration   8: 0.005 s/op
+Iteration   9: 0.001 s/op
+Iteration  10: 0.001 s/op
+Iteration  11: 0.001 s/op
+Iteration  12: 0.007 s/op
+Iteration  13: 0.001 s/op
+Iteration  14: 0.001 s/op
+Iteration  15: 0.001 s/op
+
+
+Result "dev.filechampion.filechampion4j.FileValidatorMimeGivenBench.benchValidMime":
+  N = 15
+  mean =      0.003 ±(99.9%) 0.003 s/op
+
+  Histogram, s/op:
+    [0.000, 0.001) = 0 
+    [0.001, 0.001) = 2 
+    [0.001, 0.002) = 4 
+    [0.002, 0.002) = 3 
+    [0.002, 0.003) = 0 
+    [0.003, 0.003) = 1 
+    [0.003, 0.004) = 0 
+    [0.004, 0.004) = 0 
+    [0.004, 0.005) = 2 
+    [0.005, 0.005) = 1 
+    [0.005, 0.006) = 0 
+    [0.006, 0.006) = 0 
+    [0.006, 0.007) = 0 
+    [0.007, 0.007) = 1 
+    [0.007, 0.008) = 0 
+    [0.008, 0.008) = 0 
+    [0.008, 0.009) = 1 
+
+  Percentiles, s/op:
+      p(0.0000) =      0.001 s/op
+     p(50.0000) =      0.002 s/op
+     p(90.0000) =      0.007 s/op
+     p(95.0000) =      0.008 s/op
+     p(99.0000) =      0.008 s/op
+     p(99.9000) =      0.008 s/op
+     p(99.9900) =      0.008 s/op
+     p(99.9990) =      0.008 s/op
+     p(99.9999) =      0.008 s/op
+    p(100.0000) =      0.008 s/op
+
+
+# Run complete. Total time: 00:00:54
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                                            Mode    Cnt     Score     Error  Units
+FileValidatorMimeGivenBench.benchValidMime                          thrpt     15  4280.284 ± 758.097  ops/s
+FileValidatorMimeGivenBench.benchValidMime                           avgt     15    ≈ 10⁻⁴             s/op
+FileValidatorMimeGivenBench.benchValidMime                         sample  50282    ≈ 10⁻⁴             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p0.00    sample           ≈ 10⁻⁴             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p0.50    sample           ≈ 10⁻⁴             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p0.90    sample           ≈ 10⁻⁴             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p0.95    sample           ≈ 10⁻⁴             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p0.99    sample            0.001             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p0.999   sample            0.009             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p0.9999  sample            0.014             s/op
+FileValidatorMimeGivenBench.benchValidMime:benchValidMime·p1.00    sample            0.025             s/op
+FileValidatorMimeGivenBench.benchValidMime                             ss     15     0.003 ±   0.003   s/op

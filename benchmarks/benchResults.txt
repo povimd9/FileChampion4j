@@ -1,0 +1,34 @@
+--------------- 2023-05-04T07:05:54.603 ---------------
+Sig Large File No Checksum Throughput Bench, 6905.104852 ci
+Sig Large File No Checksum Average Time Bench, 0.000147 ms
+Sig Large File No Checksum Sample Bench, 0.000137 ms
+Sig Large File No Checksum Single Shot Bench, 0.004487 ms
+Magic Large File No Checksum Throughput Bench, 3612.423904 ci
+Magic Large File No Checksum Average Time Bench, 0.000305 ms
+Magic Large File No Checksum Sample Bench, 0.000199 ms
+Magic Large File No Checksum Single Shot Bench, 0.001085 ms
+Magic Throughput Bench, 4663.620178 ci
+Magic Average Time Bench, 0.000230 ms
+Magic Sample Bench, 0.000224 ms
+Magic Single Shot Bench, 0.001685 ms
+Mime Throughput Bench, 1571.883599 ci
+Mime Average Time Bench, 0.000623 ms
+Mime Sample Bench, 0.000652 ms
+Mime Single Shot Bench, 0.002610 ms
+Sig Throughput Bench, 4915.338325 ci
+Sig Average Time Bench, 0.000205 ms
+Sig Sample Bench, 0.000200 ms
+Sig Single Shot Bench, 0.002578 ms
+Mime Large File No Checksum Throughput Bench, 11.325553 ci
+Mime Large File No Checksum Average Time Bench, 0.091316 ms
+Mime Large File No Checksum Sample Bench, 0.088765 ms
+Mime Large File No Checksum Single Shot Bench, 0.078824 ms
+Magic Large File Throughput Bench, 9.004055 ci
+Magic Large File Average Time Bench, 0.110348 ms
+Magic Large File Sample Bench, 0.110616 ms
+Magic Large File Single Shot Bench, 0.110778 ms
+Mime Given Throughput Bench, 4280.284113 ci
+Mime Given Average Time Bench, 0.000225 ms
+Mime Given Sample Bench, 0.000221 ms
+Mime Given Single Shot Bench, 0.002764 ms
+--------------- 2023-05-04T07:20:57.429 ---------------

@@ -1,0 +1,19 @@
+
+The following files have been resolved:
+   org.json:json:jar:20230227:compile
+   org.junit.jupiter:junit-jupiter-api:jar:5.9.3:test
+   org.opentest4j:opentest4j:jar:1.2.0:test
+   org.junit.platform:junit-platform-commons:jar:1.9.3:test
+   org.apiguardian:apiguardian-api:jar:1.1.2:test
+   org.junit.jupiter:junit-jupiter-engine:jar:5.9.3:test
+   org.junit.platform:junit-platform-engine:jar:1.9.3:test
+   org.junit.jupiter:junit-jupiter-params:jar:5.9.3:test
+   org.junit.platform:junit-platform-launcher:jar:1.9.3:test
+   org.assertj:assertj-core:jar:3.24.2:test
+   net.bytebuddy:byte-buddy:jar:1.12.21:test
+   org.openjdk.jmh:jmh-core:jar:1.36:compile
+   net.sf.jopt-simple:jopt-simple:jar:5.0.4:compile
+   org.apache.commons:commons-math3:jar:3.2:compile
+   org.openjdk.jmh:jmh-generator-annprocess:jar:1.36:compile
+   com.itextpdf:itextpdf:jar:5.5.13.3:test
+
