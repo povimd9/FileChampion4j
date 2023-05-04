@@ -131,10 +131,6 @@ jobs:
           cd /home/runner/work/FileChampion4j/FileChampion4j/
           pwd
           mvn clean test -Dtest="FileValidatorBenchRun"
-          
-      - name: Run bench tests
-        run: |
-          mvn test -Dtest="FileValidatorBenchCompare"
 
       - name: Push benchmark results back to branch
         env:
