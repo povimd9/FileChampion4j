@@ -40,6 +40,6 @@ jobs:
         run: |
           echo ${{ secrets.BLUMO_JKS }} > blumo_jks.b64
           openssl base64 -d -A -in blumo_jks.b64 > blumo.jks
-          mvn -B -U clean install --file pom-release.xml "-Djava8.home=$JAVA8_HOME" "-Dsignkey.pass=$SIGN_KEY_PASS" "-Dblumo.jks=blumo.jks"
-          mvn -B deploy --file pom-release.xml "-Djava8.home=$JAVA8_HOME" "-Dsignkey.pass=$SIGN_KEY_PASS" "-Dblumo.jks=blumo.jks"
+          mvn -B -U clean install --file pom-deploy.xml "-Djava8.home=$JAVA8_HOME" "-Dsignkey.pass=$SIGN_KEY_PASS" "-Dblumo.jks=blumo.jks"
+          mvn -B deploy --file pom-deploy.xml "-Djava8.home=$JAVA8_HOME" "-Dsignkey.pass=$SIGN_KEY_PASS" "-Dblumo.jks=blumo.jks"
           
