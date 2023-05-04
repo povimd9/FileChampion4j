@@ -12,12 +12,45 @@
     <version>0.9.8.2</version>
     <packaging>jar</packaging>
     <name>filechampion4j</name>
+    <description>
+        FileChampion4j is a powerful and flexible Java library for validating and processing files. 
+        The library can be used to check files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, and more. 
+        The library can also execute extension plugins that are defined for the file type.
+    </description>
+    <url>https://github.com/povimd9/FileChampion4j</url>
 
+    <licenses>
+        <license>
+            <name>Apache License 2.0 License</name>
+            <url>https://github.com/povimd9/FileChampion4j/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name> povimd9 </name>
+            <email>blumo@filechampion.dev</email>
+            <organization>filechampion</organization>
+            <organizationUrl>https://github.com/povimd9/FileChampion4j</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/povimd9/FileChampion4j.git</connection>
+        <url>https://github.com/povimd9/FileChampion4j/tree/release-0.9.8.2</url>
+    </scm>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <!-- org.json -->
@@ -50,14 +83,6 @@
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <version>1.9.3</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- AssertJ for logs testing -->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.24.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -269,31 +294,68 @@
             </plugin>
             <!-- Sign the jar -->
             <plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-jarsigner-plugin</artifactId>
-		<version>3.0.0</version>
-		<executions>
-			<execution>
-				<id>sign</id>
-				<goals>
-					<goal>sign</goal>
-				</goals>
-			</execution>
-			<execution>
-				<id>verify</id>
-				<goals>
-					<goal>verify</goal>
-				</goals>
-			</execution>
-		</executions>
-		<configuration>
-			<verbose>true</verbose>
-			<certs>true</certs>
-			<keystore>./blumo.jks</keystore>
-			<alias>blumo</alias>
-			<storepass>${signkey.pass}</storepass>
-			<keypass>${signkey.pass}</keypass>
-		</configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jarsigner-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>sign</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <certs>true</certs>
+                    <keystore>./blumo.jks</keystore>
+                    <alias>blumo</alias>
+                    <storepass>${signkey.pass}</storepass>
+                    <keypass>${signkey.pass}</keypass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
             </plugin>
         </plugins>
     </build>
