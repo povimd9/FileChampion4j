@@ -45,13 +45,13 @@ public class FileValidator {
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();
     private Map<String, StepConfig> stepConfigsAfter = new HashMap<>();
     private Extensions extensions;
-    private boolean failFast = false;
     private ValidationsHelper validationsHelper;
     private StringBuilder sharedStringBuilder = new StringBuilder();
     private String sharedStepMessage = "Step: ";
     private String errorResponse = "File is not valid.";
     private String fileCategory;
     private String fileName;
+    private Path filePath;
     private byte[] originalFile;
     private String mimeString;
     private Path outDir;
@@ -143,15 +143,7 @@ public class FileValidator {
         this.fileName = fileName;
         this.mimeString = mimeString;
         this.outDir = outputDir;
-        try {
-            Path path = filePath;
-            originalFile = Files.readAllBytes(path);
-        } catch (IOException e) {
-            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
-                .append(e.getMessage());
-            logWarn(sharedStringBuilder);
-            throw new IllegalArgumentException(commonFileError + e.getMessage());
-        }
+        this.filePath = filePath;
         return validateFileMain();
     }
     
@@ -215,15 +207,7 @@ public class FileValidator {
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.mimeString = mimeString;
-        try {
-            Path path = filePath;
-            originalFile = Files.readAllBytes(path);
-        } catch (IOException e) {
-            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
-                .append(e.getMessage());
-            logWarn(sharedStringBuilder);
-            throw new IllegalArgumentException(commonFileError + e.getMessage());
-        }
+        this.filePath = filePath;
         return validateFileMain();
     }
 
@@ -243,15 +227,7 @@ public class FileValidator {
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.outDir = outputDir;
-        try {
-            Path path = filePath;
-            originalFile = Files.readAllBytes(path);
-        } catch (IOException e) {
-            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
-                .append(e.getMessage());
-            logWarn(sharedStringBuilder);
-            throw new IllegalArgumentException(commonFileError + e.getMessage());
-        }
+        this.filePath = filePath;
         return validateFileMain();
     }
 
@@ -287,15 +263,7 @@ public class FileValidator {
         logFine(sharedStringBuilder);
         this.fileCategory = fileCategory;
         this.fileName = fileName;
-        try {
-            Path path = filePath;
-            originalFile = Files.readAllBytes(path);
-        } catch (IOException e) {
-            sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
-                .append(e.getMessage());
-            logWarn(sharedStringBuilder);
-            throw new IllegalArgumentException(commonFileError + e.getMessage());
-        }
+        this.filePath = filePath;
         return validateFileMain();
     }
 
@@ -312,15 +280,11 @@ public class FileValidator {
         sbresponseAggregationSuccess = new StringBuilder("");
 
         // Check that the input parameters are not null or empty
-        checkMethodInputs(fileCategory, originalFile, fileName);
+        checkMethodInputs();
 
         // Initialize variables
         fileExtension = getFileExtension(fileName);
         String originalFilenameClean = fileName.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}.]", "_");
-
-        // Check if validations should fail fast
-        failFast = extensions.getValidationValue(fileCategory, fileExtension, "fail_fast") != null ?
-            (boolean) extensions.getValidationValue(fileCategory, fileExtension, "fail_fast") : false;
 
         // Log the file type category being validated
         sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating ").append(originalFilenameClean).append(", as file type: ").append(fileCategory);
@@ -526,22 +490,41 @@ public class FileValidator {
     }
 
     /**
-     * This method is used to check that method inputs are not null or empty
-     * @param fileCategory (String) the file category of the file being validated
-     * @param originalFile (byte[]) the file being validated
-     * @param fileName (String) the file name of the file being validated
+     * This method is used to check that method inputs are as expected
+     * @throws IllegalArgumentException - If any of the inputs are null, empty, or does not contain appropiate values
+     * @throws IOException - If there is an error reading the file
      */
-    private void checkMethodInputs( String fileCategory, byte[] originalFile, String fileName) {
+    private void checkMethodInputs() {
         if (isBlank(fileCategory)) {
             throw new IllegalArgumentException("fileCategory cannot be null or empty.");
         }
         if (isBlank(fileName)) {
             throw new IllegalArgumentException("fileName cannot be null or empty.");
         }
+        if (fileName.indexOf(".") == -1) {
+            throw new IllegalArgumentException("fileName must contain a file extension.");
+        }
+        if (outDir != null && !Files.exists(outDir)) {
+            throw new IllegalArgumentException("outDir does not exist.");
+        }
+        if (filePath != null && !Files.exists(filePath)) {
+            throw new IllegalArgumentException("filepath does not exist.");
+        } else if (filePath != null && Files.isDirectory(filePath)) {
+            throw new IllegalArgumentException("filepath cannot be a directory.");
+        } else if (filePath != null) {
+            try {
+                Path path = filePath;
+                originalFile = Files.readAllBytes(path);
+            } catch (IOException e) {
+                sharedStringBuilder.replace(0, sharedStringBuilder.length(), commonFileError)
+                    .append(e.getMessage());
+                logWarn(sharedStringBuilder);
+                throw new IllegalArgumentException("Error reading file: " + e.getMessage());
+            }
+        }
         if (originalFile == null || originalFile.length == 0) {
             throw new IllegalArgumentException("originalFile cannot be null or empty.");
         }
-        this.originalFile = originalFile;
     }
 
     /**

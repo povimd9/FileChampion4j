@@ -2,14 +2,13 @@
     "Validations": {
       "SmallDocuments": {
         "pdf": {
-          "mime_type": "application/pdf",
+          "mime_type": "wrongmime",
           "magic_bytes": "25504446",
           "header_signatures": "25504446",
           "footer_signatures": "2525454f46",
           "name_encoding": true,
           "max_size": "5000",
-          "add_checksum": true,
-          "extension_plugins": ["clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
+          "add_checksum": true
         },
         "doc": {
           "mime_type": "application/msword",
@@ -29,10 +28,10 @@
           "magic_bytes": "25504446",
           "header_signatures": "25504446",
           "footer_signatures": "2525454f46",
-          "name_encoding": true,
+          "name_encoding": false,
           "max_size": "150000",
           "add_checksum": false,
-          "extension_plugins": ["clean_pdf_documents1.step1", "clean_pdf_documents2.step1"]
+          "fail_fast": true
         },
         "doc": {
           "mime_type": "application/msword",

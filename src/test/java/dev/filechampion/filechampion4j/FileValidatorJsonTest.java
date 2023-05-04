@@ -637,6 +637,21 @@ public class FileValidatorJsonTest {
         "Expected exception to contain 'At least one validation must be configured'.");
     }
 
+    // Test multiple categories in json config
+    @Test
+    void testMultiCategoryJson() throws Exception {
+        String jsonConfigContent = new String(Files.readAllBytes(Paths.get("src","test", "resources", "configTestChecksumBool.json").toAbsolutePath()));
+        JSONObject jsonObject = new JSONObject(jsonConfigContent);
+        FileValidator validator = new FileValidator(jsonObject);
+        byte[] fileInBytes = generatePdfBytes(250000);
+        String fileName = "test&test.pdf";
+        ValidationResponse fileValidationResultsFail = validator.validateFile("SmallDocuments", fileInBytes, fileName);
+        assertFalse(fileValidationResultsFail.isValid(), "Expected validation response to be invalid");
+        ValidationResponse fileValidationResultsPass = validator.validateFile("LargeDocuments", fileInBytes, fileName);
+        assertTrue(fileValidationResultsPass.isValid(), "Expected validation response to be valid");
+        assertEquals(fileValidationResultsPass.getFileChecksum(), "", "Expected response checksum to be empty");
+    }
+
     // Helper methods
 
     // Generate a pdf file with a given size in bytes
