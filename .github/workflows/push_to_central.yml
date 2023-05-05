@@ -37,7 +37,7 @@ jobs:
         run: |
           echo ${{ secrets.GPG_OWNERTRUST }} > gpg_owner_trust.b64
           openssl base64 -d -A -in gpg_owner_trust.b64 > gpg_owner_trust.txt
-          echo ${ {secrets.GPG_SECRET_KEYS }} > gpg_certs.b64
+          echo ${{ secrets.GPG_SECRET_KEYS }} > gpg_certs.b64
           openssl base64 -d -A -in gpg_certs.b64 > gpg_certs.asc
           gpg --import-ownertrust gpg_owner_trust.txt
           gpg --import --no-tty --batch --yes gpg_certs.asc
