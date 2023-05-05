@@ -35,6 +35,7 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
         run: |
+          export GPG_TTY=$(tty)
           echo ${{ secrets.GPG_OWNERTRUST }} > gpg_owner_trust.b64
           openssl base64 -d -A -in gpg_owner_trust.b64 > gpg_owner_trust.txt
           echo ${{ secrets.GPG_SECRET_KEYS }} > gpg_certs.b64
