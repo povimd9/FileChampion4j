@@ -7,7 +7,7 @@ on:
 
 jobs:
   package-and-deploy:
-    name: Build, Bench, and Package
+    name: Build, Sign, and Publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout release
