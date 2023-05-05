@@ -33,7 +33,10 @@ FileChampion4j is a powerful and flexible Java library for validating and proces
 
 ### Releases
 
-Working release versions, including slim/fat JARs, can be found on the `release-*` branches. A Maven Central package will be added for distribution soon.
+Latest release can be found under [***Releases***](https://github.com/povimd9/FileChampion4j/releases), and published to Maven Central, see [***Importing FileChampion***](https://github.com/povimd9/FileChampion4j/wiki/Usage#importing-filechampion4j) for more details.
+
+Compiled JARs of release versions, including slim/fat JARs, can be found on the `release-*` branches under 'target' directory.
+
 
 ### Compatibility
 
