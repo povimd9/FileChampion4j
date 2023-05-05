@@ -1,16 +1,12 @@
 name: Publish filechampion to the Maven Central Repository
 on:
   release:
-    types: [created]
+    types:
+      - created
+      - edited
 
 jobs:
-  check-master-build-result:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    steps: 
-      - run: exit 1
-      
-  bench-and-package:
+  package-and-deploy:
     name: Build, Bench, and Package
     runs-on: ubuntu-latest
     steps:
