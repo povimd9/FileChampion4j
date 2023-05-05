@@ -1,6 +1,7 @@
 ```java
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,8 +28,8 @@ public class Main {
 
         // Create a new FileValidator object with json config file
         try {
-            // Read the JSON object from the config.json file
-            jsonObject = new JSONObject(Files.readString(Paths.get(filePath)));
+            String jsonContent = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+            jsonObject = new JSONObject(jsonContent);
             // Create a new FileValidator object
             validator = new FileValidator(jsonObject);
         } catch (IOException e) {
