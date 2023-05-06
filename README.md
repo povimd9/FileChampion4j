@@ -2,8 +2,8 @@
 
 [![Build, Test, and Bench](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml/badge.svg)](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml)
 &nbsp;[![codecov](https://codecov.io/gh/povimd9/FileChampion4j/branch/master/graph/badge.svg?token=WUCKTU7ALO)](https://codecov.io/gh/povimd9/FileChampion4j)
-&nbsp;![License](https://img.shields.io/github/license/povimd9/FileChampion4j?style=plastic)
-&nbsp;![Maven Central](https://img.shields.io/maven-central/v/dev.filechampion/filechampion4j?color=blue&style=plastic)
+&nbsp;[![License](https://img.shields.io/github/license/povimd9/FileChampion4j?style=plastic)](https://github.com/povimd9/FileChampion4j/blob/master/LICENSE)
+&nbsp;[![Maven Central](https://img.shields.io/maven-central/v/dev.filechampion/filechampion4j?color=blue&style=plastic)](https://central.sonatype.com/artifact/dev.filechampion/filechampion4j)
 
 Thank you for your interest in FileChampion4j, a robust, secure, and flexible file validation library for Java. Documentation can be found via javacdoc and under the project WIKI section.
 
