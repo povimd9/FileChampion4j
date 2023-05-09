@@ -1,19 +1,17 @@
 # About FileChampion4j
 
+# About FileChampion4j
+
 [![Build, Test, and Bench](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml/badge.svg)](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml)
 &nbsp;[![codecov](https://codecov.io/gh/povimd9/FileChampion4j/branch/master/graph/badge.svg?token=WUCKTU7ALO)](https://codecov.io/gh/povimd9/FileChampion4j)
 &nbsp;[![License](https://img.shields.io/github/license/povimd9/FileChampion4j?style=plastic)](https://github.com/povimd9/FileChampion4j/blob/master/LICENSE)
 &nbsp;[![Maven Central](https://img.shields.io/maven-central/v/dev.filechampion/filechampion4j?color=blue&style=plastic)](https://central.sonatype.com/artifact/dev.filechampion/filechampion4j)
 
-Thank you for your interest in FileChampion4j, a robust, secure, and flexible file validation library for Java. Documentation can be found via javacdoc and under the project WIKI section.
-
-## Introduction
-
 FileChampion4j is a powerful and flexible Java library for validating and processing files. The library can be used to check files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, and more. The library can also execute extension plugins that are defined for the file type.
 
 **See [FileChampion4j Wiki](https://github.com/povimd9/FileChampion4j/wiki) for detailed instructions on configurations and usage.**
 
-**See [FileChampion4j Technical Stack](https://docs.filechampion.dev/) for javadocs, and class details (generated with Doxygen, Graphviz, and PlantUML).**
+**See [FileChampion4j Docs](https://docs.filechampion.dev/) for comprehensive documentations and design diagrams (generated with help of Doxygen, Graphviz, and PlantUML).**
 
 ### Features
 
@@ -35,10 +33,7 @@ FileChampion4j is a powerful and flexible Java library for validating and proces
 
 ### Releases
 
-Latest release can be found under [***Releases***](https://github.com/povimd9/FileChampion4j/releases), and published to Maven Central, see [***Importing FileChampion***](https://github.com/povimd9/FileChampion4j/wiki/Usage#importing-filechampion4j) for more details.
-
-Compiled JARs of release versions, including slim/fat JARs, can be found on the `release-*` branches under 'target' directory.
-
+Working release versions, including slim/fat JARs, can be found on the `release-*` branches. A Maven Central package will be added for distribution soon.
 
 ### Compatibility
 
