@@ -1,17 +1,17 @@
 # About FileChampion4j
 
-[![codecov](https://codecov.io/gh/povimd9/FileChampion4j/branch/master/graph/badge.svg?token=WUCKTU7ALO)](https://codecov.io/gh/povimd9/FileChampion4j)
-![Build Status](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml/badge.svg)
+# About FileChampion4j
 
-Thank you for your interest in FileChampion4j, a robust, secure, and flexible file validation library for Java. Documentation can be found via javacdoc and under the project WIKI section.
-
-## Introduction
+[![Build, Test, and Bench](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml/badge.svg)](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml)
+&nbsp;[![codecov](https://codecov.io/gh/povimd9/FileChampion4j/branch/master/graph/badge.svg?token=WUCKTU7ALO)](https://codecov.io/gh/povimd9/FileChampion4j)
+&nbsp;[![License](https://img.shields.io/github/license/povimd9/FileChampion4j?style=plastic)](https://github.com/povimd9/FileChampion4j/blob/master/LICENSE)
+&nbsp;[![Maven Central](https://img.shields.io/maven-central/v/dev.filechampion/filechampion4j?color=blue&style=plastic)](https://central.sonatype.com/artifact/dev.filechampion/filechampion4j)
 
 FileChampion4j is a powerful and flexible Java library for validating and processing files. The library can be used to check files for a variety of properties, including mime type, magic bytes, header signatures, footer signatures, maximum size, and more. The library can also execute extension plugins that are defined for the file type.
 
 **See [FileChampion4j Wiki](https://github.com/povimd9/FileChampion4j/wiki) for detailed instructions on configurations and usage.**
 
-**See [FileChampion4j Technical Stack](https://docs.filechampion.dev/) for javadocs, and class details (generated with Doxygen, Graphviz, and PlantUML).**
+**See [FileChampion4j Docs](https://www.filechampion.dev/) for comprehensive documentations and design diagrams (generated with help of Doxygen, Graphviz, and PlantUML).**
 
 ### Features
 

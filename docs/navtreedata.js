@@ -25,53 +25,53 @@
 var NAVTREE =
 [
   [ "filechampion4j", "index.html", [
-    [ "About FileChampion4j", "index.html", null ],
+    [ "About FileChampion4j", "index.html", "index" ],
     [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__home.html", [
-      [ "Welcome", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md8", null ],
-      [ "Benefits of using FileChampion4j", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md9", null ],
-      [ "Who is FileChampion4j for?", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md10", null ],
-      [ "FileChampion4j Roadmap", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md11", null ],
-      [ "Contributing", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md12", [
-        [ "High Level Flow", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md13", null ]
+      [ "Welcome", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md9", null ],
+      [ "Benefits of using FileChampion4j", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md10", null ],
+      [ "Who is FileChampion4j for?", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md11", null ],
+      [ "FileChampion4j Roadmap", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md12", null ],
+      [ "Contributing", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md13", [
+        [ "High Level Flow", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md14", null ]
       ] ],
-      [ "Contact", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md14", null ]
+      [ "Contact", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md15", null ]
     ] ],
     [ "Defining Validations", "md__c___users__user1_git__file_champion4j_wiki__configuration.html", [
-      [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md29", null ],
-      [ "JSON Structure", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md37", null ],
-      [ "Validation Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md39", null ],
-      [ "Defining Plugins", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md40", [
-        [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md41", null ],
-        [ "Variables for injection/extraction of steps fields", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md42", null ],
-        [ "Plugins Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md43", null ]
+      [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md17", null ],
+      [ "JSON Structure", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md18", null ],
+      [ "Validation Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md19", null ],
+      [ "Defining Plugins", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md20", [
+        [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md21", null ],
+        [ "Variables for injection/extraction of steps fields", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md23", null ],
+        [ "Plugins Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md24", null ]
       ] ],
-      [ "Defining Logging Level", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md44", null ],
-      [ "Example JSON", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md45", null ]
+      [ "Defining Logging Level", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md25", null ],
+      [ "Example JSON", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md26", null ]
     ] ],
     [ "Usage", "md__c___users__user1_git__file_champion4j_wiki__usage.html", [
-      [ "Getting Started", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md17", null ],
-      [ "Importing filechampion4j", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md18", [
-        [ "Build from source", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md19", null ],
-        [ "Use as JAR", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md20", null ],
-        [ "Importing Library", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md21", null ]
+      [ "Getting Started", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md27", null ],
+      [ "Importing filechampion4j", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md28", [
+        [ "Build from source", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md29", null ],
+        [ "Use as JAR", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md30", null ],
+        [ "Importing Library", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md31", null ]
       ] ],
-      [ "Configuring", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md22", null ],
-      [ "Creating a Validator Object", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md23", null ],
-      [ "Validating Files", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md24", [
-        [ "FileValidator.validateFile() Options", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md25", [
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md26", null ],
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md27", null ],
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md28", null ],
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md30", null ],
-          [ "validateFile (String fileCategory, Path filePath, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md31", null ],
-          [ "validateFile (String fileCategory, Path filePath, String fileName, Path outputDir)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md32", null ],
-          [ "validateFile (String fileCategory, Path filePath, String fileName, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md33", null ],
-          [ "validateFile (String fileCategory, Path filePath, String fileName, Path outputDir, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md34", null ]
+      [ "Configuring", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md32", null ],
+      [ "Creating a Validator Object", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md33", null ],
+      [ "Validating Files", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md34", [
+        [ "FileValidator.validateFile() Options", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md35", [
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md36", null ],
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md37", null ],
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md38", null ],
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md39", null ],
+          [ "validateFile (String fileCategory, Path filePath, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md40", null ],
+          [ "validateFile (String fileCategory, Path filePath, String fileName, Path outputDir)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md41", null ],
+          [ "validateFile (String fileCategory, Path filePath, String fileName, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md42", null ],
+          [ "validateFile (String fileCategory, Path filePath, String fileName, Path outputDir, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md43", null ]
         ] ],
-        [ "Response of validateFile() is a ValidationResponse object, which contains:", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md35", null ]
+        [ "Response of validateFile() is a ValidationResponse object, which contains:", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md44", null ]
       ] ],
-      [ "Performance Considerations", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md36", null ],
-      [ "Usage Example", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md38", null ]
+      [ "Performance Considerations", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md45", null ],
+      [ "Usage Example", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md46", null ]
     ] ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", null ]
