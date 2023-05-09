@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>filechampion4j: dev.filechampion.filechampion4j.FileAclHelper Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
@@ -18,40 +17,37 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-  $(document).ready(function() { init_search(); });
-/* @license-end */
-</script>
 <script type="text/javascript" src="darkmode_toggle.js"></script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript">
+	DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeParagraphLink.init()
+	DoxygenAwesomeInteractiveToc.init()
+</script>
 </head>
 <body>
-<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/povimd9/FileChampion4j" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="60" height="60" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
-  <td id="projectlogo"><img width="200" height="150" alt="Logo" src="FileChamp_cut.jpg"/></td>
+  <td id="projectlogo"><img alt="Logo" src="FileChamp_cut.jpg"/></td>
   <td id="projectalign">
    <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.2</span>
    </div>
    <div id="projectbrief">File validation library for Java</div>
   </td>
  </tr>
-   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
-          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
-          </span>
-        </div>
-</td></tr>
  </tbody>
 </table>
 </div>
@@ -62,7 +58,19 @@
 var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
       <div id="nav-sync" class="sync"></div>
@@ -109,15 +117,12 @@ $(document).ready(function(){initNavTree('classdev_1_1filechampion_1_1filechampi
   <div class="headertitle"><div class="title">dev.filechampion.filechampion4j.FileAclHelper Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Collaboration diagram for dev.filechampion.filechampion4j.FileAclHelper:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper__coll__graph.png" border="0" usemap="#adev_8filechampion_8filechampion4j_8_file_acl_helper_coll__map" alt="Collaboration graph"/></div>
-<map name="adev_8filechampion_8filechampion4j_8_file_acl_helper_coll__map" id="adev_8filechampion_8filechampion4j_8_file_acl_helper_coll__map">
-<area shape="rect" title=" " alt="" coords="5,145,212,575"/>
-<area shape="rect" title=" " alt="" coords="24,5,73,83"/>
-<area shape="rect" title=" " alt="" coords="138,5,199,83"/>
-</map>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for dev.filechampion.filechampion4j.FileAclHelper:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper__coll__graph.svg" width="226" height="580"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -278,33 +283,19 @@ Static Private Attributes</h2></td></tr>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00024">dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00023">dev.filechampion.filechampion4j.FileAclHelper.newPermissions</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00135">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissions()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_validator_8java_source.html#l00824">dev.filechampion.filechampion4j.FileValidator.setFileAttributes()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_cgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_cgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_cgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_cgraph">
-<area shape="rect" title=" " alt="" coords="5,129,212,169"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac1fb96739e62ad91d1f833908dc99442" title=" " alt="" coords="266,5,473,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a73d0b85c677037db5ab4865e005bc756" title=" " alt="" coords="845,129,1052,169"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a89a35f8379b106dcf38650384560ce9f" title=" " alt="" coords="559,161,765,201"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a00c73219098ca931f6dbfba1f45555ae" title=" " alt="" coords="260,97,479,137"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ab6fd281a6c09486bf16d2eea3a0ea1ea" title=" " alt="" coords="845,49,1052,89"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a957cd8f062521037c11e5d15d3785906" title=" " alt="" coords="540,97,784,137"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a5c4d050d4ddf432b45ffe49b48b20735" title=" " alt="" coords="527,33,797,73"/>
-</map>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_icgraph">
-<area shape="rect" title=" " alt="" coords="1287,5,1493,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,5,1239,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,5,984,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,5,721,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,5,467,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,5,212,45"/>
-</map>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_cgraph.svg" width="1058" height="236"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a7f56b5c25bc9643fe169f7f871029cca_icgraph.svg" width="1499" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -360,28 +351,19 @@ Here is the caller graph for this function:</div>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00024">dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_cgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_cgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_cgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,212,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ab6fd281a6c09486bf16d2eea3a0ea1ea" title=" " alt="" coords="260,5,467,45"/>
-</map>
+<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_icgraph">
-<area shape="rect" title=" " alt="" coords="1541,5,1748,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca" title=" " alt="" coords="1287,5,1493,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,5,1239,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,5,984,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,5,721,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,5,467,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,5,212,45"/>
-</map>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_cgraph.svg" width="472" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ac1fb96739e62ad91d1f833908dc99442_icgraph.svg" width="1754" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -421,23 +403,12 @@ Here is the caller graph for this function:</div>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00035">dev.filechampion.filechampion4j.FileAclHelper.LOGGER</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a73d0b85c677037db5ab4865e005bc756_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a73d0b85c677037db5ab4865e005bc756_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a73d0b85c677037db5ab4865e005bc756_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a73d0b85c677037db5ab4865e005bc756_icgraph">
-<area shape="rect" title=" " alt="" coords="2127,55,2333,95"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca" title=" " alt="" coords="1287,30,1493,70"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a89a35f8379b106dcf38650384560ce9f" title=" " alt="" coords="1547,30,1754,70"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a957cd8f062521037c11e5d15d3785906" title=" " alt="" coords="1821,83,2065,123"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a5c4d050d4ddf432b45ffe49b48b20735" title=" " alt="" coords="1808,147,2079,187"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,30,1239,70"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,30,984,70"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,30,721,70"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,30,467,70"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,30,212,70"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a00c73219098ca931f6dbfba1f45555ae" title=" " alt="" coords="1541,94,1760,134"/>
-</map>
+<div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a73d0b85c677037db5ab4865e005bc756_icgraph.svg" width="2339" height="192"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -476,24 +447,12 @@ Here is the caller graph for this function:</div>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00035">dev.filechampion.filechampion4j.FileAclHelper.LOGGER</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00098">dev.filechampion.filechampion4j.FileAclHelper.getUserPrinciple()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00111">dev.filechampion.filechampion4j.FileAclHelper.setNewOwner()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ab6fd281a6c09486bf16d2eea3a0ea1ea_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ab6fd281a6c09486bf16d2eea3a0ea1ea_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ab6fd281a6c09486bf16d2eea3a0ea1ea_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ab6fd281a6c09486bf16d2eea3a0ea1ea_icgraph">
-<area shape="rect" title=" " alt="" coords="2127,95,2333,135"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ac1fb96739e62ad91d1f833908dc99442" title=" " alt="" coords="1547,5,1754,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a89a35f8379b106dcf38650384560ce9f" title=" " alt="" coords="1547,69,1754,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a957cd8f062521037c11e5d15d3785906" title=" " alt="" coords="1821,123,2065,163"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a5c4d050d4ddf432b45ffe49b48b20735" title=" " alt="" coords="1808,187,2079,227"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca" title=" " alt="" coords="1287,69,1493,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,69,1239,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,69,984,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,69,721,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,69,467,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,69,212,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a00c73219098ca931f6dbfba1f45555ae" title=" " alt="" coords="1541,133,1760,173"/>
-</map>
+<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_ab6fd281a6c09486bf16d2eea3a0ea1ea_icgraph.svg" width="2339" height="232"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -549,29 +508,19 @@ Here is the caller graph for this function:</div>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00024">dev.filechampion.filechampion4j.FileAclHelper.newOwnerUsername</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_cgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_cgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_cgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,37,212,77"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a73d0b85c677037db5ab4865e005bc756" title=" " alt="" coords="260,5,467,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ab6fd281a6c09486bf16d2eea3a0ea1ea" title=" " alt="" coords="260,69,467,109"/>
-</map>
+<div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_icgraph">
-<area shape="rect" title=" " alt="" coords="1541,5,1748,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca" title=" " alt="" coords="1287,5,1493,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,5,1239,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,5,984,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,5,721,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,5,467,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,5,212,45"/>
-</map>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_cgraph.svg" width="472" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a89a35f8379b106dcf38650384560ce9f_icgraph.svg" width="1754" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -615,31 +564,19 @@ Here is the caller graph for this function:</div>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00197">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsUnix()</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00145">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissionsWindows()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00068">dev.filechampion.filechampion4j.FileAclHelper.changeFileAcl()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_cgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_cgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_cgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_cgraph">
-<area shape="rect" title=" " alt="" coords="5,37,224,77"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a957cd8f062521037c11e5d15d3785906" title=" " alt="" coords="285,5,529,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a5c4d050d4ddf432b45ffe49b48b20735" title=" " alt="" coords="272,69,543,109"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a73d0b85c677037db5ab4865e005bc756" title=" " alt="" coords="591,5,797,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ab6fd281a6c09486bf16d2eea3a0ea1ea" title=" " alt="" coords="591,69,797,109"/>
-</map>
+<div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_icgraph">
-<area shape="rect" title=" " alt="" coords="1541,5,1760,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca" title=" " alt="" coords="1287,5,1493,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,5,1239,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,5,984,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,5,721,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,5,467,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,5,212,45"/>
-</map>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_cgraph.svg" width="803" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a00c73219098ca931f6dbfba1f45555ae_icgraph.svg" width="1766" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -704,30 +641,19 @@ Here is the caller graph for this function:</div>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00023">dev.filechampion.filechampion4j.FileAclHelper.newPermissions</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00135">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissions()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_cgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_cgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_cgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_cgraph">
-<area shape="rect" title=" " alt="" coords="5,37,249,77"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a73d0b85c677037db5ab4865e005bc756" title=" " alt="" coords="297,5,504,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ab6fd281a6c09486bf16d2eea3a0ea1ea" title=" " alt="" coords="297,69,504,109"/>
-</map>
+<div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_icgraph">
-<area shape="rect" title=" " alt="" coords="1808,5,2052,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a00c73219098ca931f6dbfba1f45555ae" title=" " alt="" coords="1541,5,1760,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca" title=" " alt="" coords="1287,5,1493,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,5,1239,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,5,984,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,5,721,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,5,467,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,5,212,45"/>
-</map>
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_cgraph.svg" width="510" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a957cd8f062521037c11e5d15d3785906_icgraph.svg" width="2058" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -811,30 +737,19 @@ Here is the caller graph for this function:</div>
 <p class="reference">References <a class="el" href="_file_acl_helper_8java_source.html#l00025">dev.filechampion.filechampion4j.FileAclHelper.errMsg</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00041">dev.filechampion.filechampion4j.FileAclHelper.logFine()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00036">dev.filechampion.filechampion4j.FileAclHelper.logSevere()</a>, <a class="el" href="_file_acl_helper_8java_source.html#l00023">dev.filechampion.filechampion4j.FileAclHelper.newPermissions</a>, and <a class="el" href="_file_acl_helper_8java_source.html#l00022">dev.filechampion.filechampion4j.FileAclHelper.targetFilePath</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="_file_acl_helper_8java_source.html#l00135">dev.filechampion.filechampion4j.FileAclHelper.setNewPermissions()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_cgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_cgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_cgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_cgraph">
-<area shape="rect" title=" " alt="" coords="5,37,276,77"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a73d0b85c677037db5ab4865e005bc756" title=" " alt="" coords="324,5,531,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#ab6fd281a6c09486bf16d2eea3a0ea1ea" title=" " alt="" coords="324,69,531,109"/>
-</map>
+<div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_icgraph.png" border="0" usemap="#aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_icgraph" alt=""/></div>
-<map name="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_icgraph" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_icgraph">
-<area shape="rect" title=" " alt="" coords="1808,5,2079,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a00c73219098ca931f6dbfba1f45555ae" title=" " alt="" coords="1541,5,1760,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca" title=" " alt="" coords="1287,5,1493,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a302b5fbd0f5c96cdade46747ebbeaae1" title=" " alt="" coords="1032,5,1239,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a46f8dcb76a6e9b52838092b4c80b9d26" title=" " alt="" coords="769,5,984,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a48a54a63d062cd23af2d14a6af76899e" title=" " alt="" coords="515,5,721,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4" title=" " alt="" coords="260,5,467,45"/>
-<area shape="rect" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a492adb6357ac22bea8b79d036aa2a287" title=" " alt="" coords="5,5,212,45"/>
-</map>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_cgraph.svg" width="536" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper_a5c4d050d4ddf432b45ffe49b48b20735_icgraph.svg" width="2084" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -975,11 +890,12 @@ Here is the caller graph for this function:</div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>dev</b></li><li class="navelem"><b>filechampion</b></li><li class="navelem"><a class="el" href="namespacedev_1_1filechampion_1_1filechampion4j.html">filechampion4j</a></li><li class="navelem"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html">FileAclHelper</a></li>
-    <li class="footer">Generated on Thu May 4 2023 17:53:52 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Tue May 9 2023 15:36:45 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>
