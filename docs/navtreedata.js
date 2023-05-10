@@ -37,33 +37,33 @@ var NAVTREE =
       [ "Contact", "md__c___users__user1_git__file_champion4j_wiki__home.html#autotoc_md15", null ]
     ] ],
     [ "Defining Validations", "md__c___users__user1_git__file_champion4j_wiki__configuration.html", [
-      [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md17", null ],
-      [ "JSON Structure", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md18", null ],
-      [ "Validation Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md19", null ],
-      [ "Defining Plugins", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md20", [
-        [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md21", null ],
-        [ "Variables for injection/extraction of steps fields", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md23", null ],
-        [ "Plugins Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md24", null ]
+      [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md18", null ],
+      [ "JSON Structure", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md19", null ],
+      [ "Validation Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md20", null ],
+      [ "Defining Plugins", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md23", [
+        [ "Introduction", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md25", null ],
+        [ "Variables for injection/extraction of steps fields", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md29", null ],
+        [ "Plugins Options", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md36", null ]
       ] ],
-      [ "Defining Logging Level", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md25", null ],
-      [ "Example JSON", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md26", null ]
+      [ "Defining Logging Level", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md38", null ],
+      [ "Example JSON", "md__c___users__user1_git__file_champion4j_wiki__configuration.html#autotoc_md40", null ]
     ] ],
     [ "Usage", "md__c___users__user1_git__file_champion4j_wiki__usage.html", [
-      [ "Getting Started", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md27", null ],
-      [ "Importing filechampion4j", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md28", [
-        [ "Build from source", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md29", null ],
-        [ "Use as JAR", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md30", null ],
-        [ "Importing Library", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md31", null ]
+      [ "Getting Started", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md21", null ],
+      [ "Importing filechampion4j", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md22", [
+        [ "Build from source", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md24", null ],
+        [ "Use as JAR", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md26", null ],
+        [ "Importing Library", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md27", null ]
       ] ],
-      [ "Configuring", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md32", null ],
-      [ "Creating a Validator Object", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md33", null ],
-      [ "Validating Files", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md34", [
-        [ "FileValidator.validateFile() Options", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md35", [
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md36", null ],
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md37", null ],
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md38", null ],
-          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md39", null ],
-          [ "validateFile (String fileCategory, Path filePath, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md40", null ],
+      [ "Configuring", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md28", null ],
+      [ "Creating a Validator Object", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md30", null ],
+      [ "Validating Files", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md31", [
+        [ "FileValidator.validateFile() Options", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md32", [
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md33", null ],
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md34", null ],
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md35", null ],
+          [ "validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md37", null ],
+          [ "validateFile (String fileCategory, Path filePath, String fileName)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md39", null ],
           [ "validateFile (String fileCategory, Path filePath, String fileName, Path outputDir)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md41", null ],
           [ "validateFile (String fileCategory, Path filePath, String fileName, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md42", null ],
           [ "validateFile (String fileCategory, Path filePath, String fileName, Path outputDir, String mimeString)", "md__c___users__user1_git__file_champion4j_wiki__usage.html#autotoc_md43", null ]
