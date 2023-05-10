@@ -11,7 +11,7 @@ FileChampion4j is a powerful and flexible Java library for validating and proces
 
 **See [FileChampion4j Wiki](https://github.com/povimd9/FileChampion4j/wiki) for detailed instructions on configurations and usage.**
 
-**See [FileChampion4j Docs](https://docs.filechampion.dev/) for comprehensive documentations and design diagrams (generated with help of Doxygen, Graphviz, and PlantUML).**
+**See [FileChampion4j Docs](https://www.filechampion.dev/) for comprehensive documentations and design diagrams (generated with help of Doxygen, Graphviz, and PlantUML).**
 
 ### Features
 
