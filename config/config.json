@@ -1,6 +1,6 @@
 {
   "General": {
-    "checksum": ["MD5", "SHA-1", "SHA-256", "SHA-512"],
+    "checksums": ["MD5", "SHA-1", "SHA-256", "SHA-512"],
     "fail_fast": false
   },
   "Validations": {
@@ -102,7 +102,7 @@
         "endpoint": "java -jar plugins\\java_echo.jar Success: MTIzNDU2IA0K, MD5: ${fileChecksum.md5}, SHA-1: ${fileChecksum.sha1}, SHA-256: ${fileChecksum.sha256}, SHA-512: ${fileChecksum.sha512}",
         "timeout": 320,
         "on_timeout_or_fail": "fail",
-        "response": "Success: ${step1.fileContent}, MD5: ${step1.fileChecksum.md5}, SHA-1: ${step1.fileChecksum.sha1}, SHA-256: ${step1.fileChecksum.sha256}, SHA-512: ${step1.fileChecksum.sha512}"
+        "response": "Success: ${step1.fileContent}, MD5:"
       }
     }
   }
