@@ -30,4 +30,4 @@ bin/
 /tmp_tests/
 
 ### Github Actions ###
-.github/
+**/target/

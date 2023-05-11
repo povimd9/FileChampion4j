@@ -44,7 +44,7 @@ public class FileValidatorTest {
     @BeforeEach
     void setUp() throws Exception {
         String testUsername = System.getProperty("user.name");
-        String testCliContentPlugin = "java -jar plugins/java_echo.jar Success: MTIzNDU2IA0K suffix";
+        String testCliContentPlugin = "java -jar plugins/java_echo.jar Success: MTIzNDU2IA0K, MD5: ${fileChecksum.md5}, SHA-1: ${fileChecksum.sha1}, SHA-256: ${fileChecksum.sha256}, SHA-512: ${fileChecksum.sha512}, suffix";
         fileInBytes = generatePdfBytes(250000);
         Path filePath =  Files.write(tempDirectory.resolve("test.pdf"), fileInBytes);
         fileName = "test.pdf";
@@ -85,7 +85,7 @@ public class FileValidatorTest {
         + ",\"timeout\":320,\"on_timeout_or_fail\":\"pass\",\"response\":\"Success: ${step1.filePath}\"}}"
         + ",\"clean_pdf_documents2\":{\"step1.step\":{\"type\":\"cli\",\"run_after\":true, \"endpoint\":\""
         + testCliContentPlugin
-        + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.fileContent} suffix\"}}"
+        + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"Success: ${step1.fileContent}, MD5: 5d3968fb44533d2554db0f3f7771eb75, SHA-1: 5a5b1cedc98e7b74d357d8275dc65e8603e0294b, SHA-256: eacd49cc57396604e9629b1c6cdd7dc4679a03707c215665198c484fdcc97721, SHA-512: 1fd4d38f7bf908315075a7e124189a51827f84e1c7297b3fc57dfce81035a324c5a4232cc7270372d275dda5b5eaa6559b550f1762e96957e7774c639ef74f62, suffix\"}}"
         + ",\"clean_pdf_documents3\":{\"step1.step\":{\"type\":\"cli\",\"run_after\":true, \"endpoint\":\""
         + testCliContentPlugin
         + "\",\"timeout\":320,\"on_timeout_or_fail\":\"fail\",\"response\":\"\"}}"
@@ -356,11 +356,14 @@ public class FileValidatorTest {
         "Expected exception to contain 'extension extensiondoesnotexist not found', got: " + exception.getMessage());
     }
 
-    // Test valid inputs including valid pdf bytes, with mime type, without storage
+    // Test valid inputs including valid pdf bytes, with mime type, without storage, checking output for correct checksums
     @Test
     void testValidInputsMime() throws Exception {
         JSONObject testMimeConfig = 
         new JSONObject("{\r\n"
+        + "  \"General\": {\r\n"
+        + "\"Checksums\": [\"MD5\", \"SHA-1\", \"SHA-256\", \"SHA-512\"] \r\n"
+        + "},\r\n"
         + "  \"Validations\": {\r\n"
         + "  \"Documents\": {\r\n"
         + "    \"pdf\": {\r\n"
@@ -375,7 +378,33 @@ public class FileValidatorTest {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "application/pdf");
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
-        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksum to be " + calculateChecksum(fileInBytes) + ", got: " + fileValidationResults.getFileChecksum());
+        String fileChecksumMD5 = calculateChecksum(fileInBytes, "MD5");
+        String fileChecksumSHA1 = calculateChecksum(fileInBytes, "SHA-1");
+        String fileChecksumSHA256 = calculateChecksum(fileInBytes, "SHA-256");
+        String fileChecksumSHA512 = calculateChecksum(fileInBytes, "SHA-512");
+        String expectedChecksumString = "MD5: " + fileChecksumMD5 + ", SHA-1: " + fileChecksumSHA1 + ", SHA-256: " + fileChecksumSHA256 + ", SHA-512: " + fileChecksumSHA512;
+        assertEquals(expectedChecksumString, fileValidationResults.getFileChecksum(), "Expected checksum to be " + expectedChecksumString + ", got: " + fileValidationResults.getFileChecksum());
+    }
+
+    // Test invalid checksum algorithm
+    @Test
+    void testValidInvalidHashAlgo() throws Exception {
+        JSONObject testMimeConfig = 
+        new JSONObject("{\r\n"
+        + "  \"General\": {\r\n"
+        + "\"Checksums\": [\"NON-EXISTING-ALGO\", \"SHA-1\", \"SHA-256\", \"SHA-512\"] \r\n"
+        + "},\r\n"
+        + "  \"Validations\": {\r\n"
+        + "  \"Documents\": {\r\n"
+        + "    \"pdf\": {\r\n"
+        + "      \"mime_type\": \"application/pdf\"\r\n"
+        + "      }\r\n"
+        + "  }\r\n"
+        + "}\r\n"
+        + "}");
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(testMimeConfig), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("The hash algorithm 'NON-EXISTING-ALGO'' is not one of: [MD5, SHA-1, SHA-256, SHA-512]."), 
+        "Expected exception to be 'The hash algorithm 'NON-EXISTING-ALGO'' is not one of: [MD5, SHA-1, SHA-256, SHA-512].', got: " + exception.getMessage());
     }
 
     // Test valid inputs with invalid pdf file path with storage
@@ -478,6 +507,15 @@ public class FileValidatorTest {
             throw new IllegalArgumentException("Size in Bytes must be a positive value.");
         }
 
+        if (sizeInBytes == 250000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
+        }
+        if (sizeInBytes == 5000000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testVeryLarge.pdf").toAbsolutePath());
+        }
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4);
         PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -503,9 +541,9 @@ public class FileValidatorTest {
     }
 
     // Calculate checksum of a file in traditional way
-    private String calculateChecksum(byte[] fileBytes) {
+    private String calculateChecksum(byte[] fileBytes, String checksumAlgorithm) {
         try {
-            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
+            byte[] hash = MessageDigest.getInstance(checksumAlgorithm).digest(fileBytes);
             return new BigInteger(1, hash).toString(16);
         } catch (Exception e) {
             e.printStackTrace();

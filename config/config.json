@@ -1,4 +1,8 @@
 {
+  "General": {
+    "checksums": ["MD5", "SHA-1", "SHA-256", "SHA-512"],
+    "fail_fast": false
+  },
   "Validations": {
     "SmallDocuments": {
       "pdf": {
@@ -95,10 +99,10 @@
       "step1.step": {
         "type": "cli",
         "run_after": true,
-        "endpoint": "java -jar plugins\\java_echo.jar Success: MTIzNDU2IA0K",
+        "endpoint": "java -jar plugins\\java_echo.jar Success: MTIzNDU2IA0K, MD5: ${fileChecksum.md5}, SHA-1: ${fileChecksum.sha1}, SHA-256: ${fileChecksum.sha256}, SHA-512: ${fileChecksum.sha512}",
         "timeout": 320,
         "on_timeout_or_fail": "fail",
-        "response": "Success: ${step1.fileContent}"
+        "response": "Success: ${step1.fileContent}, MD5:"
       }
     }
   }
