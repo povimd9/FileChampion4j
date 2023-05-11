@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import dev.filechampion.filechampion4j.PluginsHelper.PluginConfig;
 import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
@@ -62,6 +64,8 @@ public class FileValidator {
     private StringBuilder sbresponseAggregationFail;
     private int responseMsgCountSuccess;
     private StringBuilder sbresponseAggregationSuccess;
+    private List<String> checksumAlgorithms = new ArrayList<>();
+    private static final List<String> supportedAlgorithms = Arrays.asList("MD5", "SHA-1", "SHA-256", "SHA-512");
 
     /**
      * This method is used to initiate the class with relevant json configurations
@@ -72,6 +76,19 @@ public class FileValidator {
             throw new IllegalArgumentException("Config JSON object cannot be null or empty, and must have Validations section.");
         } else {
             try {
+                if (configJsonObject.has("General") && configJsonObject.getJSONObject("General").has("Checksums"))
+                {
+                    JSONArray checksums = configJsonObject.getJSONObject("General").getJSONArray("Checksums");
+                    for (int i = 0; i < checksums.length(); i++) {
+                        if (!supportedAlgorithms.contains(checksums.getString(i))) {
+                            throw new IllegalArgumentException("The hash algorithm '" + checksums.getString(i) + "'' is not one of: " + supportedAlgorithms.toString() + ".");
+                        }
+                        checksumAlgorithms.add(checksums.getString(i));
+                    }
+                } else {
+                    checksumAlgorithms.add("SHA-256");
+                }
+
                 extensions = new Extensions(configJsonObject.getJSONObject("Validations"));
                 validationsHelper = new ValidationsHelper(extensions);
             } catch (Exception e) {
@@ -772,14 +789,18 @@ public class FileValidator {
      * @return String (String) the SHA-256 checksum of the file
      */
     private String calculateChecksum(byte[] fileBytes) {
-        try {
-            SH256Calculate paralChecksum = new SH256Calculate(fileBytes);
-            byte[] checksum = paralChecksum.getChecksum("SHA-256");
-            return new BigInteger(1, checksum).toString(16);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        CalculateChecksum checksumInstance = new CalculateChecksum(fileBytes);
+        StringBuilder checksums = new StringBuilder();
+        for (String algorithm : checksumAlgorithms) {
+            try {
+                byte[] checksum = checksumInstance.getChecksum(algorithm);
+                checksums.append(algorithm).append(": ").append(new BigInteger(1, checksum).toString(16)).append(", ");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
+        return checksums.toString().length()>2 ? checksums.toString().substring(0, checksums.length() - 2) : null;
     }
 
     /**

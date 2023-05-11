@@ -25,7 +25,8 @@ import java.util.stream.Stream;
 import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 
 /**
- * CliPluginHelper
+ * CliPluginHelper class is used to execute CLI commands Defined in the FileChampion Plugins.
+ * The class is responsible for injecting file path/content/hash into the CLI command, execute the command, and process the results.
  */
 public class CliPluginHelper {
     private StepConfig singleStepConfig;
@@ -301,7 +302,7 @@ public class CliPluginHelper {
      */
     private String calculateChecksum(byte[] fileBytes, String checksumAlgorithm) {
         try {
-            SH256Calculate paralChecksum = new SH256Calculate(fileBytes);
+            CalculateChecksum paralChecksum = new CalculateChecksum(fileBytes);
             byte[] checksum = paralChecksum.getChecksum(checksumAlgorithm);
             return new BigInteger(1, checksum).toString(16);
         } catch (Exception e) {
