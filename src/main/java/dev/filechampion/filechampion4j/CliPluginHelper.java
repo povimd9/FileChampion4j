@@ -183,7 +183,10 @@ public class CliPluginHelper {
         
         String newEndpoint = endpoint.contains("${filePath}") ? endpoint.replace("${filePath}", filePath) : endpoint;
         newEndpoint = newEndpoint.contains("${fileContent}") ? newEndpoint.replace("${fileContent}", Base64.getEncoder().encodeToString(fileContent)) : newEndpoint;
-        newEndpoint = newEndpoint.contains("${fileChecksum}") ? newEndpoint.replace("${fileChecksum}", calculateChecksum(fileContent)) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.md5}") ? newEndpoint.replace("${fileChecksum.md5}", calculateChecksum(fileContent, "MD5")) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.sha1}") ? newEndpoint.replace("${fileChecksum.sha1}", calculateChecksum(fileContent, "SHA-1")) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.sha256}") ? newEndpoint.replace("${fileChecksum.sha256}", calculateChecksum(fileContent, "SHA-256")) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.sha512}") ? newEndpoint.replace("${fileChecksum.sha512}", calculateChecksum(fileContent, "SHA-512")) : newEndpoint;
         endpoint = newEndpoint;
     }
 
@@ -296,10 +299,10 @@ public class CliPluginHelper {
      * @param fileBytes (byte[]) the file bytes of the file being validated
      * @return String (String) the SHA-256 checksum of the file
      */
-    private String calculateChecksum(byte[] fileBytes) {
+    private String calculateChecksum(byte[] fileBytes, String checksumAlgorithm) {
         try {
             SH256Calculate paralChecksum = new SH256Calculate(fileBytes);
-            byte[] checksum = paralChecksum.getChecksum();
+            byte[] checksum = paralChecksum.getChecksum(checksumAlgorithm);
             return new BigInteger(1, checksum).toString(16);
         } catch (Exception e) {
             e.printStackTrace();

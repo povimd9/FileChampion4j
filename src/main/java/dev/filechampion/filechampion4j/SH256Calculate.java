@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -19,7 +20,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class SH256Calculate {
     private static final int MIN_CHUNK_SIZE = 1024 * 1024; // 0.5 MB
-    private static final int MAX_CHUNK_SIZE = 5 * 1024 * 1024; // 2 MB
+    private static final int MAX_CHUNK_SIZE = 3 * 1024 * 1024; // 3 MB
+    private static final List<String> supportedAlgorithms = Arrays.asList("MD5", "SHA-1", "SHA-256", "SHA-512");
+    private MessageDigest md;
     private final byte[] inputData;
     private int byteSize;
 
@@ -44,7 +47,11 @@ public class SH256Calculate {
     * @throws ExecutionException Thrown if the execution fails.
     * @throws IOException Thrown if an I/O error occurs.
     */
-    public byte[] getChecksum() throws NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException {
+    public byte[] getChecksum(String hashAlgorithm) throws NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException {
+        if (!supportedAlgorithms.contains(hashAlgorithm)) {
+            throw new NoSuchAlgorithmException("The hash algorithm '" + hashAlgorithm + "'' is not one of: " + supportedAlgorithms.toString() + ".");
+        }
+        md = MessageDigest.getInstance(hashAlgorithm);
         if (byteSize < MIN_CHUNK_SIZE * 2) {
             return calculateSmallSHA256Checksum();
         }
@@ -56,8 +63,8 @@ public class SH256Calculate {
      * @return (byte[]) The SHA256 checksum.
      * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
      */
-    private byte[] calculateSmallSHA256Checksum() throws NoSuchAlgorithmException {
-        return MessageDigest.getInstance("SHA-256").digest(inputData);
+    private byte[] calculateSmallSHA256Checksum() {
+        return md.digest(inputData);
     }
 
     /**
@@ -68,8 +75,7 @@ public class SH256Calculate {
      * @throws ExecutionException Thrown if the execution fails.
      * @throws IOException Thrown if an I/O error occurs.
      */
-    private byte[] calculateSHA256Checksum() throws NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException  {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
+    private byte[] calculateSHA256Checksum() throws InterruptedException, ExecutionException, IOException  {
         ByteArrayInputStream bais = new ByteArrayInputStream(inputData);
         int numProcessors = Runtime.getRuntime().availableProcessors();
         ThreadPoolExecutor executor = new ThreadPoolExecutor(numProcessors, numProcessors,
