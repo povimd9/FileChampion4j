@@ -64,9 +64,9 @@ jobs:
           git add pom-release.xml
           git add benchmarks/
           git add docs/
-          git add target/dependency-list.txt
-          git add target/filechampion4j.jar
-          git add target/filechampion4j-jar-with-dependencies.jar
+          git add -f target/dependency-list.txt
+          git add -f target/filechampion4j.jar
+          git add -f target/filechampion4j-jar-with-dependencies.jar
           git commit -m "Add new package dist resources"
           git push -f --set-upstream origin "preview-$PREVIEW_VERSION"
 
