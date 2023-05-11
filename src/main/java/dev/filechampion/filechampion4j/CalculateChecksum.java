@@ -25,7 +25,7 @@ public class CalculateChecksum {
     private int byteSize;
 
     /**
-     * Creates a new instance of the SH256Calculate class.
+     * Creates a new instance of the this class.
      * @param inputData (bytep[]) The input data to calculate the checksum for.
      * @throws IllegalArgumentException Thrown if the input data is null or empty.
      */
@@ -38,7 +38,7 @@ public class CalculateChecksum {
     }
 
     /**
-    * Calculates the SHA256 checksum for the input data.
+    * Calculates the checksum for the input data.
     * @param hashAlgorithm (String) The hash algorithm to use. Must be one of: MD5, SHA-1, SHA-256, SHA-512.
     * @return (byte[]) The calculated checksum.
     * @throws NoSuchAlgorithmException Thrown if the algorithm is not available.
@@ -49,27 +49,27 @@ public class CalculateChecksum {
     public byte[] getChecksum(String hashAlgorithm) throws NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException {
         md = MessageDigest.getInstance(hashAlgorithm);
         if (byteSize < MIN_CHUNK_SIZE * 2) {
-            return calculateSmallSHA256Checksum();
+            return calculateSmallChecksum();
         }
-        return calculateSHA256Checksum() ;
+        return calculateChecksum() ;
     }
 
     /**
-     * Calculates the SHA256 checksum for small input data.
+     * Calculates the checksum for small input data.
      * @return (byte[]) The calculated checksum.
      */
-    private byte[] calculateSmallSHA256Checksum() {
+    private byte[] calculateSmallChecksum() {
         return md.digest(inputData);
     }
 
     /**
-     * Calculates the SHA256 checksum for large input data.
+     * Calculates the checksum for large input data.
      * @return (byte[]) The calculated checksum.
      * @throws InterruptedException Thrown if the thread is interrupted.
      * @throws ExecutionException Thrown if the execution fails.
      * @throws IOException Thrown if an I/O error occurs.
      */
-    private byte[] calculateSHA256Checksum() throws InterruptedException, ExecutionException, IOException  {
+    private byte[] calculateChecksum() throws InterruptedException, ExecutionException, IOException  {
         ByteArrayInputStream bais = new ByteArrayInputStream(inputData);
         int numProcessors = Runtime.getRuntime().availableProcessors();
         ThreadPoolExecutor executor = new ThreadPoolExecutor(numProcessors, numProcessors,
@@ -94,7 +94,7 @@ public class CalculateChecksum {
     }
 
     /**
-     * This class is used to calculate the SHA256 checksum for a chunk of data.
+     * This class is used to calculate the checksum for a chunk of data.
      */
     private static class ChecksumTask implements Runnable {
         private MessageDigest md;
