@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -14,14 +13,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This class is used to calculate the SHA256 checksum of a file.
+ * This class is used to calculate the checksums of a file.
  * It is optimized for large files and uses multiple threads to
  * calculate the checksum in parallel.
  */
-public class SH256Calculate {
+public class CalculateChecksum {
     private static final int MIN_CHUNK_SIZE = 1024 * 1024; // 0.5 MB
     private static final int MAX_CHUNK_SIZE = 3 * 1024 * 1024; // 3 MB
-    private static final List<String> supportedAlgorithms = Arrays.asList("MD5", "SHA-1", "SHA-256", "SHA-512");
     private MessageDigest md;
     private final byte[] inputData;
     private int byteSize;
@@ -31,7 +29,7 @@ public class SH256Calculate {
      * @param inputData (bytep[]) The input data to calculate the checksum for.
      * @throws IllegalArgumentException Thrown if the input data is null or empty.
      */
-    public SH256Calculate(byte[] inputData) throws IllegalArgumentException {
+    public CalculateChecksum(byte[] inputData) throws IllegalArgumentException {
         if (inputData == null || inputData.length == 0) {
             throw new IllegalArgumentException("Input data must contain at least one byte.");
         }
@@ -41,6 +39,7 @@ public class SH256Calculate {
 
     /**
     * Calculates the SHA256 checksum for the input data.
+    * @param hashAlgorithm (String) The hash algorithm to use. Must be one of: MD5, SHA-1, SHA-256, SHA-512.
     * @return (byte[]) The SHA256 checksum.
     * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
     * @throws InterruptedException Thrown if the thread is interrupted.
@@ -48,9 +47,6 @@ public class SH256Calculate {
     * @throws IOException Thrown if an I/O error occurs.
     */
     public byte[] getChecksum(String hashAlgorithm) throws NoSuchAlgorithmException, InterruptedException, ExecutionException, IOException {
-        if (!supportedAlgorithms.contains(hashAlgorithm)) {
-            throw new NoSuchAlgorithmException("The hash algorithm '" + hashAlgorithm + "'' is not one of: " + supportedAlgorithms.toString() + ".");
-        }
         md = MessageDigest.getInstance(hashAlgorithm);
         if (byteSize < MIN_CHUNK_SIZE * 2) {
             return calculateSmallSHA256Checksum();
