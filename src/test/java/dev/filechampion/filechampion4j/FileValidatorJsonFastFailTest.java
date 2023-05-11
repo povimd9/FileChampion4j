@@ -17,7 +17,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.UUID;
 
@@ -468,6 +469,17 @@ public class FileValidatorJsonFastFailTest {
         if (sizeInBytes <= 0) {
             throw new IllegalArgumentException("Size in Bytes must be a positive value.");
         }
+
+        if (sizeInBytes == 250000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
+        }
+        if (sizeInBytes == 5000000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testVeryLarge.pdf").toAbsolutePath());
+        }
+
+        
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4);
         PdfWriter writer = PdfWriter.getInstance(document, baos);

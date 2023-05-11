@@ -404,7 +404,7 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(CONFIG_JSON_CHECKSUMS);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
-        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
+        assertEquals("SHA-256: " + calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
     }
 
     // Test step timeout
@@ -659,6 +659,16 @@ public class FileValidatorJsonTest {
         if (sizeInBytes <= 0) {
             throw new IllegalArgumentException("Size in Bytes must be a positive value.");
         }
+
+        if (sizeInBytes == 250000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
+        }
+        if (sizeInBytes == 5000000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testVeryLarge.pdf").toAbsolutePath());
+        }
+        
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4);
         PdfWriter writer = PdfWriter.getInstance(document, baos);

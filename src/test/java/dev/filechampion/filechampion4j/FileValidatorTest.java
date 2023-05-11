@@ -356,11 +356,14 @@ public class FileValidatorTest {
         "Expected exception to contain 'extension extensiondoesnotexist not found', got: " + exception.getMessage());
     }
 
-    // Test valid inputs including valid pdf bytes, with mime type, without storage
+    // Test valid inputs including valid pdf bytes, with mime type, without storage, checking output for correct checksums
     @Test
     void testValidInputsMime() throws Exception {
         JSONObject testMimeConfig = 
         new JSONObject("{\r\n"
+        + "  \"General\": {\r\n"
+        + "\"Checksums\": [\"MD5\", \"SHA-1\", \"SHA-256\", \"SHA-512\"] \r\n"
+        + "},\r\n"
         + "  \"Validations\": {\r\n"
         + "  \"Documents\": {\r\n"
         + "    \"pdf\": {\r\n"
@@ -375,7 +378,33 @@ public class FileValidatorTest {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "application/pdf");
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
-        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksum to be " + calculateChecksum(fileInBytes) + ", got: " + fileValidationResults.getFileChecksum());
+        String fileChecksumMD5 = calculateChecksum(fileInBytes, "MD5");
+        String fileChecksumSHA1 = calculateChecksum(fileInBytes, "SHA-1");
+        String fileChecksumSHA256 = calculateChecksum(fileInBytes, "SHA-256");
+        String fileChecksumSHA512 = calculateChecksum(fileInBytes, "SHA-512");
+        String expectedChecksumString = "MD5: " + fileChecksumMD5 + ", SHA-1: " + fileChecksumSHA1 + ", SHA-256: " + fileChecksumSHA256 + ", SHA-512: " + fileChecksumSHA512;
+        assertEquals(expectedChecksumString, fileValidationResults.getFileChecksum(), "Expected checksum to be " + expectedChecksumString + ", got: " + fileValidationResults.getFileChecksum());
+    }
+
+    // Test invalid checksum algorithm
+    @Test
+    void testValidInvalidHashAlgo() throws Exception {
+        JSONObject testMimeConfig = 
+        new JSONObject("{\r\n"
+        + "  \"General\": {\r\n"
+        + "\"Checksums\": [\"NON-EXISTING-ALGO\", \"SHA-1\", \"SHA-256\", \"SHA-512\"] \r\n"
+        + "},\r\n"
+        + "  \"Validations\": {\r\n"
+        + "  \"Documents\": {\r\n"
+        + "    \"pdf\": {\r\n"
+        + "      \"mime_type\": \"application/pdf\"\r\n"
+        + "      }\r\n"
+        + "  }\r\n"
+        + "}\r\n"
+        + "}");
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> new FileValidator(testMimeConfig), "Expected exception to be thrown");
+        assertTrue(exception.getMessage().contains("The hash algorithm 'NON-EXISTING-ALGO'' is not one of: [MD5, SHA-1, SHA-256, SHA-512]."), 
+        "Expected exception to be 'The hash algorithm 'NON-EXISTING-ALGO'' is not one of: [MD5, SHA-1, SHA-256, SHA-512].', got: " + exception.getMessage());
     }
 
     // Test valid inputs with invalid pdf file path with storage
@@ -478,6 +507,15 @@ public class FileValidatorTest {
             throw new IllegalArgumentException("Size in Bytes must be a positive value.");
         }
 
+        if (sizeInBytes == 250000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testSmall.pdf").toAbsolutePath());
+        }
+        if (sizeInBytes == 5000000) {
+            return
+            Files.readAllBytes(Paths.get("src","test", "resources", "testVeryLarge.pdf").toAbsolutePath());
+        }
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4);
         PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -503,9 +541,9 @@ public class FileValidatorTest {
     }
 
     // Calculate checksum of a file in traditional way
-    private String calculateChecksum(byte[] fileBytes) {
+    private String calculateChecksum(byte[] fileBytes, String checksumAlgorithm) {
         try {
-            byte[] hash = MessageDigest.getInstance("SHA-256").digest(fileBytes);
+            byte[] hash = MessageDigest.getInstance(checksumAlgorithm).digest(fileBytes);
             return new BigInteger(1, hash).toString(16);
         } catch (Exception e) {
             e.printStackTrace();
