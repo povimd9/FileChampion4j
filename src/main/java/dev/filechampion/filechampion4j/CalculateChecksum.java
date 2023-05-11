@@ -40,8 +40,8 @@ public class CalculateChecksum {
     /**
     * Calculates the SHA256 checksum for the input data.
     * @param hashAlgorithm (String) The hash algorithm to use. Must be one of: MD5, SHA-1, SHA-256, SHA-512.
-    * @return (byte[]) The SHA256 checksum.
-    * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
+    * @return (byte[]) The calculated checksum.
+    * @throws NoSuchAlgorithmException Thrown if the algorithm is not available.
     * @throws InterruptedException Thrown if the thread is interrupted.
     * @throws ExecutionException Thrown if the execution fails.
     * @throws IOException Thrown if an I/O error occurs.
@@ -56,8 +56,7 @@ public class CalculateChecksum {
 
     /**
      * Calculates the SHA256 checksum for small input data.
-     * @return (byte[]) The SHA256 checksum.
-     * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
+     * @return (byte[]) The calculated checksum.
      */
     private byte[] calculateSmallSHA256Checksum() {
         return md.digest(inputData);
@@ -65,8 +64,7 @@ public class CalculateChecksum {
 
     /**
      * Calculates the SHA256 checksum for large input data.
-     * @return (byte[]) The SHA256 checksum.
-     * @throws NoSuchAlgorithmException Thrown if the SHA256 algorithm is not available.
+     * @return (byte[]) The calculated checksum.
      * @throws InterruptedException Thrown if the thread is interrupted.
      * @throws ExecutionException Thrown if the execution fails.
      * @throws IOException Thrown if an I/O error occurs.
