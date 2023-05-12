@@ -1,7 +1,6 @@
 {
   "General": {
-    "checksums": ["MD5", "SHA-1", "SHA-256", "SHA-512"],
-    "fail_fast": false
+    "checksums": ["MD5", "SHA-1", "SHA-256", "SHA-512"]
   },
   "Validations": {
     "SmallDocuments": {

@@ -37,7 +37,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/povimd9/FileChampion4j.git</connection>
-        <url>https://github.com/povimd9/FileChampion4j/tree/release-0.9.8.2</url>
+        <url>https://github.com/povimd9/FileChampion4j/tree/release-0.9.8.3</url>
     </scm>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

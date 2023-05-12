@@ -53,7 +53,7 @@ public class Main {
                 String validMessage = String.format("%s is a valid document file.%n New file: %s, Checksum: %s",
                         fileValidationResults.resultsInfo(),
                         fileValidationResults.getValidFilePath().length == 0 ? "" : fileValidationResults.getValidFilePath()[0],
-                        fileValidationResults.getFileChecksum());
+                        fileValidationResults.getFileChecksums());
                 System.out.println(validMessage);
             } else {
                 // Print the results if the file is invalid

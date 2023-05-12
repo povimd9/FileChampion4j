@@ -50,6 +50,7 @@ public class Extensions {
     private Map<String, Object> validationCache = new HashMap<>();
     private String sharedMessage1 = "Unsupported value type: ";
     private String sharedMessage2 = " for key: ";
+    // Allowed key values from the json Validations object
     private List<String> allowedKeyValues = Arrays.asList("mime_type", "magic_bytes", "header_signatures", 
         "footer_signatures", "change_ownership", "change_ownership_user", "change_ownership_mode",
         "name_encoding", "max_size", "extension_plugins", "add_checksum", "fail_fast");

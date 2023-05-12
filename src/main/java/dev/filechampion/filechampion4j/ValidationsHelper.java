@@ -14,7 +14,7 @@ import java.util.logging.LogManager;
 
 /**
  * This class contains helper methods for the FileValidator class
- * @version 0.9.8.2
+ * @version 0.9.8.3
  */
 public class ValidationsHelper {
     /**

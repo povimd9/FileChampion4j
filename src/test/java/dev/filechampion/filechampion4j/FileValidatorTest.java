@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.LogManager;
 
@@ -249,9 +251,10 @@ public class FileValidatorTest {
         + "}");
         validator = new FileValidator(testLargeConfig);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, tempOutDirectory, "application/pdf");
+        Map<String,String> emptyMap = new HashMap<>();
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
-        assertEquals( "", fileValidationResults.getFileChecksum(), "Expected checksum to be empty, got: " + fileValidationResults.getFileChecksum());
+        assertEquals( emptyMap, fileValidationResults.getFileChecksums(), "Expected checksum to be empty, got: " + fileValidationResults.getFileChecksums());
     }
 
     // Test valid inputs with add_checksum false
@@ -263,9 +266,10 @@ public class FileValidatorTest {
         fileInBytes = generatePdfBytes(250000);
         fileName = "test&test.pdf";
         ValidationResponse fileValidationResults = validator.validateFile("LargeDocuments", fileInBytes, fileName);
+        Map<String,String> emptyMap = new HashMap<>();
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
-        assertEquals( "", fileValidationResults.getFileChecksum(), "Expected checksum to be empty, got: " + fileValidationResults.getFileChecksum());
+        assertEquals( emptyMap, fileValidationResults.getFileChecksums(), "Expected checksum to be empty, got: " + fileValidationResults.getFileChecksums());
     }
 
         
@@ -378,12 +382,12 @@ public class FileValidatorTest {
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName, "application/pdf");
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
         assertFalse(fileValidationResults.resultsDetails().contains("Error"), "Expected results to be free of errors, got: " + fileValidationResults.resultsDetails());
-        String fileChecksumMD5 = calculateChecksum(fileInBytes, "MD5");
-        String fileChecksumSHA1 = calculateChecksum(fileInBytes, "SHA-1");
-        String fileChecksumSHA256 = calculateChecksum(fileInBytes, "SHA-256");
-        String fileChecksumSHA512 = calculateChecksum(fileInBytes, "SHA-512");
-        String expectedChecksumString = "MD5: " + fileChecksumMD5 + ", SHA-1: " + fileChecksumSHA1 + ", SHA-256: " + fileChecksumSHA256 + ", SHA-512: " + fileChecksumSHA512;
-        assertEquals(expectedChecksumString, fileValidationResults.getFileChecksum(), "Expected checksum to be " + expectedChecksumString + ", got: " + fileValidationResults.getFileChecksum());
+        Map<String, String> fileChecksums = new HashMap<>();
+        fileChecksums.put("MD5", calculateChecksum(fileInBytes, "MD5"));
+        fileChecksums.put("SHA-1", calculateChecksum(fileInBytes, "SHA-1"));
+        fileChecksums.put("SHA-256", calculateChecksum(fileInBytes, "SHA-256"));
+        fileChecksums.put("SHA-512", calculateChecksum(fileInBytes, "SHA-512"));
+        assertEquals(fileChecksums, fileValidationResults.getFileChecksums(), "Expected checksum to be " + fileChecksums.toString() + ", got: " + fileValidationResults.getFileChecksums());
     }
 
     // Test invalid checksum algorithm
