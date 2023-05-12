@@ -11,7 +11,7 @@ public class ValidationResponse {
     private final String resultsDetails;
     private final String cleanFileName;
     private final byte[] fileBytes;
-    private final Map<String, String> fileChecksum;
+    private final Map<String, String> fileChecksums;
     private final String[] validFilePath;
 
     /**
@@ -21,15 +21,15 @@ public class ValidationResponse {
     * @param resultsDetails (String) a String containing the details of the validation
     * @param cleanFileName (String) the file name with all special characters replaced with underscores
     * @param fileBytes (bytes[]) the file bytes
-    * @param fileChecksum (Map<String, String>) hash map containing the file checksums as 'algorithm' => 'checksum'
+    * @param fileChecksums (Map&lt;String, String&gt;) hash map containing the file checksums as 'algorithm' =&gt; 'checksum'
     * @param validFilePath (String) optional valid file path if outputDir was set in the filechampion4j constructor
     */
-    public ValidationResponse(boolean isValid, String resultsInfo, String resultsDetails, String cleanFileName, byte[] fileBytes, Map<String, String> fileChecksum, String... validFilePath) {
+    public ValidationResponse(boolean isValid, String resultsInfo, String resultsDetails, String cleanFileName, byte[] fileBytes, Map<String, String> fileChecksums, String... validFilePath) {
         this.isValid = isValid;
         this.resultsInfo = resultsInfo;
         this.resultsDetails = resultsDetails;
         this.fileBytes = fileBytes;
-        this.fileChecksum = fileChecksum.size() > 0 ? fileChecksum : null;
+        this.fileChecksums = fileChecksums;
         this.validFilePath = validFilePath;
         this.cleanFileName = cleanFileName;
     }
@@ -78,8 +78,8 @@ public class ValidationResponse {
      * Returns the file SHA-256 checksum
      * @return (String) the file checksum
      */
-    public Map<String, String> getFileChecksum() {
-        return fileChecksum;
+    public Map<String, String> getFileChecksums() {
+        return fileChecksums;
     }
 
     /**

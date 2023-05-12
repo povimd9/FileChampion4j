@@ -1,6 +1,9 @@
 package dev.filechampion.filechampion4j;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +21,8 @@ public class ValidationResponseTest {
         String resultsDetails = "Validation successful";
         String cleanFileName = "test-file.txt";
         byte[] fileBytes = new byte[] {0x01, 0x02, 0x03};
-        String fileChecksum = "abc123";
+        Map<String, String> fileChecksum = new HashMap<String, String>();
+        fileChecksum.put("SHA-256", "1234567890abcdef");
         String[] validFilePath = new String[] {"path/to/valid/file"};
 
         ValidationResponse response = new ValidationResponse(isValid, resultsInfo, resultsDetails, cleanFileName, fileBytes, fileChecksum, validFilePath);
@@ -29,7 +33,7 @@ public class ValidationResponseTest {
         Assertions.assertEquals(resultsDetails, response.resultsDetails(), "Expected resultsDetails to match input parameter");
         Assertions.assertEquals(cleanFileName, response.getCleanFileName(), "Expected cleanFileName to match input parameter");
         Assertions.assertArrayEquals(fileBytes, response.getFileBytes(), "Expected fileBytes to match input parameter");
-        Assertions.assertEquals(fileChecksum, response.getFileChecksum(), "Expected fileChecksum to match input parameter");
+        Assertions.assertEquals(fileChecksum, response.getFileChecksums(), "Expected fileChecksum to match input parameter");
         Assertions.assertArrayEquals(validFilePath, response.getValidFilePath(), "Expected validFilePath to match input parameter");
     }
 }

@@ -20,6 +20,8 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import java.util.logging.Level;
@@ -404,7 +406,7 @@ public class FileValidatorJsonTest {
         FileValidator validator = new FileValidator(CONFIG_JSON_CHECKSUMS);
         ValidationResponse fileValidationResults = validator.validateFile("Documents", fileInBytes, fileName);
         assertTrue(fileValidationResults.isValid(), "Expected validation response to be valid");
-        assertEquals("SHA-256: " + calculateChecksum(fileInBytes), fileValidationResults.getFileChecksum(), "Expected checksums to match");
+        assertEquals(calculateChecksum(fileInBytes), fileValidationResults.getFileChecksums().get("SHA-256"), "Expected checksums to match");
     }
 
     // Test step timeout
@@ -648,8 +650,9 @@ public class FileValidatorJsonTest {
         ValidationResponse fileValidationResultsFail = validator.validateFile("SmallDocuments", fileInBytes, fileName);
         assertFalse(fileValidationResultsFail.isValid(), "Expected validation response to be invalid");
         ValidationResponse fileValidationResultsPass = validator.validateFile("LargeDocuments", fileInBytes, fileName);
+        Map<String, String> emptyMap = new HashMap<>();
         assertTrue(fileValidationResultsPass.isValid(), "Expected validation response to be valid");
-        assertEquals(fileValidationResultsPass.getFileChecksum(), "", "Expected response checksum to be empty");
+        assertEquals(emptyMap, fileValidationResultsPass.getFileChecksums(), "Expected response checksum to be empty");
     }
 
     // Helper methods
