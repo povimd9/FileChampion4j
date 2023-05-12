@@ -1,5 +1,6 @@
 package dev.filechampion.filechampion4j;
 
+import java.util.Map;
 
 /**
  * This class is used to return the results of a file validation.
@@ -10,7 +11,7 @@ public class ValidationResponse {
     private final String resultsDetails;
     private final String cleanFileName;
     private final byte[] fileBytes;
-    private final String fileChecksum;
+    private final Map<String, String> fileChecksum;
     private final String[] validFilePath;
 
     /**
@@ -20,15 +21,15 @@ public class ValidationResponse {
     * @param resultsDetails (String) a String containing the details of the validation
     * @param cleanFileName (String) the file name with all special characters replaced with underscores
     * @param fileBytes (bytes[]) the file bytes
-    * @param fileChecksum (String) the file checksum
+    * @param fileChecksum (Map<String, String>) hash map containing the file checksums as 'algorithm' => 'checksum'
     * @param validFilePath (String) optional valid file path if outputDir was set in the filechampion4j constructor
     */
-    public ValidationResponse(boolean isValid, String resultsInfo, String resultsDetails, String cleanFileName, byte[] fileBytes, String fileChecksum, String... validFilePath) {
+    public ValidationResponse(boolean isValid, String resultsInfo, String resultsDetails, String cleanFileName, byte[] fileBytes, Map<String, String> fileChecksum, String... validFilePath) {
         this.isValid = isValid;
         this.resultsInfo = resultsInfo;
         this.resultsDetails = resultsDetails;
         this.fileBytes = fileBytes;
-        this.fileChecksum = fileChecksum != null ? fileChecksum : "null";
+        this.fileChecksum = fileChecksum.size() > 0 ? fileChecksum : null;
         this.validFilePath = validFilePath;
         this.cleanFileName = cleanFileName;
     }
@@ -77,7 +78,7 @@ public class ValidationResponse {
      * Returns the file SHA-256 checksum
      * @return (String) the file checksum
      */
-    public String getFileChecksum() {
+    public Map<String, String> getFileChecksum() {
         return fileChecksum;
     }
 

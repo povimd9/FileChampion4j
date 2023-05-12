@@ -24,8 +24,8 @@ import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 /**
  * This class is used to validate files
  * @author filechampion
- * @version 0.9.8.2
- * @see <a href="https://github.com/povimd9/FileChampion4j/wiki">FileChampion4j Wiki</a>
+ * @version 0.9.8.3
+ * @see <a href="https://www.filechampion.dev/">FileChampion4j Docs</a>
  */
 public class FileValidator {
     /**
@@ -362,15 +362,19 @@ public class FileValidator {
 
         // Check for after plugins
         executeAfterPlugins();
+        Map<String, String> checksumMap = new HashMap<>();
 
         boolean isAddChecksum = extensions.getValidationValue(fileCategory, fileExtension, "add_checksum") != null 
         ? (boolean) extensions.getValidationValue(fileCategory, fileExtension, "add_checksum") : true;
-        String checksumString = isAddChecksum ? calculateChecksum(originalFile) : "";
+        if (isAddChecksum) {
+            checksumMap = calculateChecksum(originalFile);
+        }
+
 
         // Check if file passed all defined validations, return false and reason if not.
         if (responseMsgCountFail > 0) {
             logWarn(sbresponseAggregationFail);
-            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, originalFile, checksumString);
+            return new ValidationResponse(false, errorResponse, sbresponseAggregationFail.toString(), originalFilenameClean, originalFile, checksumMap);
         }
 
         // Check if the file name should be encoded
@@ -398,14 +402,14 @@ public class FileValidator {
                     .append("File is valid but failed to save to output directory: ")
                     .append(savedFilePath);
                 logInfo(sbresponseAggregationSuccess);
-                return new ValidationResponse(true, "File is valid but failed to save to output directory", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);
+                return new ValidationResponse(true, "File is valid but failed to save to output directory", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumMap);
             }
             // Return valid file response if file was saved to output directory
             sbresponseAggregationSuccess.append(System.lineSeparator() + ++responseMsgCountSuccess + ". ")
                 .append("File is valid and was saved to output directory: ")
                 .append(savedFilePath);
             logInfo(sbresponseAggregationSuccess);
-            return new ValidationResponse(true, "File is valid and was saved to output directory", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);
+            return new ValidationResponse(true, "File is valid and was saved to output directory", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumMap);
         }
 
         // Return valid response if file passed all validations but is not meant to be saved to disk
@@ -413,7 +417,7 @@ public class FileValidator {
             .append("File is valid: ")
             .append(originalFilenameClean);
         logInfo(sbresponseAggregationSuccess);
-        return new ValidationResponse(true, "File is valid", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumString);
+        return new ValidationResponse(true, "File is valid", sbresponseAggregationSuccess.toString(), originalFilenameClean, originalFile, checksumMap);
     }
     
 
@@ -789,19 +793,19 @@ public class FileValidator {
      * @param fileBytes (byte[]) the file bytes of the file being validated
      * @return String (String) the SHA-256 checksum of the file
      */
-    private String calculateChecksum(byte[] fileBytes) {
+    private Map<String, String> calculateChecksum(byte[] fileBytes) {
         CalculateChecksum checksumInstance = new CalculateChecksum(fileBytes);
-        StringBuilder checksums = new StringBuilder();
+        Map<String, String> checksums = new HashMap<>();
         for (String algorithm : checksumAlgorithms) {
             try {
                 byte[] checksum = checksumInstance.getChecksum(algorithm);
-                checksums.append(algorithm).append(": ").append(new BigInteger(1, checksum).toString(16)).append(", ");
+                checksums.put(algorithm, new BigInteger(1, checksum).toString(16));
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
         }
-        return checksums.toString().length()>2 ? checksums.toString().substring(0, checksums.length() - 2) : null;
+        return checksums.size() > 0 ? checksums : null;
     }
 
     /**
