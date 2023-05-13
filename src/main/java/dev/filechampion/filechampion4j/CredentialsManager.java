@@ -17,21 +17,6 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 
-/*
- * "General": "secrets_path":"dir"
-parse plugins
-if secret.* collect them to list and create creds manager
-	check secrets_path for non empty file with relevant name
-	create linkedlist with secret_filename:00000000 for cache
-	create schedulued task every 2m to check secrets time expiration
-
-if plugin prep with secret.*
-	caller requests secret by name
-	manager writes 'timestamp_'+base64(cred from file) into char[] in the list
-	return char[] ref of secret
-	
- */
-
 /**
  * CredentialsManager class is used to manage any credendials that are needed for plugins, such as API keys, etc.
  */
@@ -57,22 +42,23 @@ public class CredentialsManager {
     private List<char[]> credsList = new LinkedList<>();
     private Map<String, Map<Integer, Long>> credsMap = new HashMap<>();
     private SecureRandom random = new SecureRandom();
-    private String randomString;
+    private String randomString = "";
     private int randomStringIndex = 0;
+    private boolean expirationTimerStarted = false;
 
     /**
      * Constructor for CredentialsManager class.
      * @param credsPath (Path) - Path to the directory where the credentials files are stored.
-     * @param credsNamesList (List<String>) - List of the names of the credentials names/files.
+     * @param credsNamesList (List &lt;String&gt;) - List of the names of the credentials names/files.
      * @throws IllegalArgumentException - If the credsPath is null or does not exist, or if the credsNamesList is null or empty, or if any of the credentials files are not found.
      */
     public CredentialsManager(Path credsPath, List<String> credsNamesList) throws IllegalArgumentException {
         if (credsPath == null || !Files.exists(credsPath)) {
-            logSevere(logMessage.append("Defined credentials path was not found."));
+            logSevere(logMessage.replace(0, logMessage.length() ,"Defined credentials path was not found."));
             throw new IllegalArgumentException("Defined credentials path was not found.");
         }
         if (credsNamesList == null || credsNamesList.isEmpty()) {
-            logSevere(logMessage.append("Defined credentials list was empty."));
+            logSevere(logMessage.replace(0, logMessage.length() ,"Defined credentials list was empty."));
             throw new IllegalArgumentException("Defined credentials list was empty.");
         }
         this.credsPath = credsPath;
@@ -81,12 +67,26 @@ public class CredentialsManager {
         for (String credsName : credsNamesList) {
             Path credFilePath = credsPath.resolve(credsName);
             if (!Files.exists(credFilePath)) {
-                logSevere(logMessage.append("Credentials file ").append(credsName).append(" was not found."));
+                logSevere(logMessage.replace(0, logMessage.length() ,"Credentials file ").append(credsName).append(" was not found."));
                 throw new IllegalArgumentException("Credentials file " + credsName + " was not found.");
             }
         }
         this.credsNamesList = credsNamesList;
+        logInfo(logMessage.replace(0, logMessage.length() ,"CredentialsManager initialized.")); 
+    }
 
+    /**
+     * This method allows the user to set the expiration time for credentials in milliseconds, overriding the default of 300000 (5 minutes).
+     * @param expirationTime (long) - The expiration time in milliseconds.
+     * @throws IllegalArgumentException - If the expirationTime is less than or equal to 0.
+     */
+    public void setExpirationTime(long expirationTime) throws IllegalArgumentException {
+        if (expirationTime <= 0) {
+            logSevere(logMessage.replace(0, logMessage.length() ,"Expiration time must be greater than 0."));
+            throw new IllegalArgumentException("Expiration time must be greater than 0.");
+        }
+        this.credsExpirationTime = expirationTime;
+        logInfo(logMessage.replace(0, logMessage.length() ,"Expiration time set to ").append(expirationTime).append(" milliseconds."));
         // add timer to remove expired creds from the list
         java.util.Timer timer = new java.util.Timer();
         timer.schedule(new java.util.TimerTask() {
@@ -95,21 +95,7 @@ public class CredentialsManager {
                 checkCredExpiration();
             }
         }, credsExpirationTime, credsExpirationTime);
-        logInfo(logMessage.append("Credentials manager initialized."));
-    }
-
-    /**
-     * This method allows the user to set the expiration time for credentials in milliseconds, overriding the default of 300000 (5 minutes).
-     * @param expirationTime
-     * @throws IllegalArgumentException - If the expirationTime is less than or equal to 0.
-     */
-    public void setExpirationTime(long expirationTime) throws IllegalArgumentException {
-        if (expirationTime <= 0) {
-            logSevere(logMessage.append("Expiration time must be greater than 0."));
-            throw new IllegalArgumentException("Expiration time must be greater than 0.");
-        }
-        this.credsExpirationTime = expirationTime;
-        logInfo(logMessage.append("Expiration time set to ").append(expirationTime).append(" milliseconds."));
+        logInfo(logMessage.replace(0, logMessage.length() ,"Scheduled timer to check for expired credentials every ").append(expirationTime).append(" milliseconds."));
     }
 
     /**
@@ -121,23 +107,27 @@ public class CredentialsManager {
      */
     public char[] getCredentials(String credsName) throws IllegalArgumentException, IOException{
         if (credsName == null || credsName.isEmpty()) {
-            logSevere(logMessage.append("Credentials name was empty."));
+            logSevere(logMessage.replace(0, logMessage.length() ,"Credentials name was empty."));
             throw new IllegalArgumentException("Credentials name was empty.");
         }
         if (!this.credsNamesList.contains(credsName)) {
-            logSevere(logMessage.append("Credentials name was not found."));
+            logSevere(logMessage.replace(0, logMessage.length() ,"Credentials name was not found."));
             throw new IllegalArgumentException("Credentials name was not found.");
+        }
+        if (!expirationTimerStarted) {
+            setExpirationTime(this.credsExpirationTime);
+            expirationTimerStarted = true;
         }
 
         if (!this.credsMap.containsKey(credsName)) {
             Path fullCredPath = this.credsPath.resolve(credsName);
             this.credsList.add(addSalt(this.getCredFileChars(fullCredPath)));
-            logFine(logMessage.append("Credentials ").append(credsName).append(" with salt added to list."));
+            logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" with salt added to list."));
             credsMap.computeIfAbsent(credsName, k -> new HashMap<>()).put(this.credsList.size() - 1, System.currentTimeMillis());
-            logFine(logMessage.append("Credentials metadata").append(credsName).append(" added to map."));
+            logFine(logMessage.replace(0, logMessage.length() ,"Credentials metadata").append(credsName).append(" added to map."));
         }
         this.credsMap.get(credsName).put(2, System.currentTimeMillis());
-        logFine(logMessage.append("Credentials ").append(credsName).append(" timestamp was updated in the list."));
+        logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" timestamp was updated in the list."));
         return this.credsList.get(this.credsMap.get(credsName).keySet().iterator().next());
     }
 
@@ -145,7 +135,7 @@ public class CredentialsManager {
      * This method is used to check if any credential is expired, and remove them from the list if it is.
      */
     private void checkCredExpiration() {
-        logFine(logMessage.append("Checking for expired credentials."));
+        logFine(logMessage.replace(0, logMessage.length() ,"Checking for expired credentials."));
         for (Map.Entry<String, Map<Integer, Long>> entry : this.credsMap.entrySet()) {
             String key = entry.getKey();
             Integer credPosition = entry.getValue().keySet().iterator().next();
@@ -154,7 +144,7 @@ public class CredentialsManager {
                 Arrays.fill(this.credsList.get(credPosition), '0');
                 this.credsList.remove(credPosition);
                 this.credsMap.remove(key);
-                logFine(logMessage.append("Credentials ").append(key).append(" removed from list."));
+                logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(key).append(" removed from list."));
             }
         }
     }
@@ -167,23 +157,23 @@ public class CredentialsManager {
      * @throws IOException - If there is an error reading the credentials file.
      */
     private char[] getCredFileChars(Path credFilePath) throws IOException {
-        logFine(logMessage.append("Reading credentials from file: ").append(credFilePath.toString()));
+        logFine(logMessage.replace(0, logMessage.length() ,"Reading credentials from file: ").append(credFilePath.toString()));
         try (BufferedReader br = new BufferedReader(new FileReader(credFilePath.toString()))) {
-            char[] tmpCharArray = new char[64];
+            char[] tmpCharArray = new char[1];
             int charRead = 0;
             int position = 0;
             while((charRead = br.read()) != -1) {
                 if(position == tmpCharArray.length) {
-                    char[] temp = new char[tmpCharArray.length * 2];
+                    char[] temp = new char[tmpCharArray.length + 1];
                     System.arraycopy(tmpCharArray, 0, temp, 0, position);
                     tmpCharArray = temp;
                 }
                 tmpCharArray[position++] = (char) charRead;
             }
-            logFine(logMessage.append("Credentials read from file: ").append(credFilePath.toString()));
+            logFine(logMessage.replace(0, logMessage.length() ,"Credentials read from file: ").append(credFilePath.toString()));
             return tmpCharArray;
         } catch (Exception e) {
-            logSevere(logMessage.append("Error reading credentials file: ").append(e.getMessage()));
+            logSevere(logMessage.replace(0, logMessage.length() ,"Error reading credentials file: ").append(e.getMessage()));
             throw new IOException("Error reading credentials file: " + e.getMessage());
         }
     }
@@ -236,7 +226,7 @@ public class CredentialsManager {
         .limit(targetStringLength)
         .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
         .toString();
-        logFine(logMessage.append("Random string generated."));
+        logFine(logMessage.replace(0, logMessage.length() ,"Random string generated."));
     }
 
     /**
@@ -249,8 +239,8 @@ public class CredentialsManager {
             generateRandomString();
             this.randomStringIndex = 0;
         }
-        char[] saltChars = randomString.substring(randomStringIndex, randomStringIndex + charString.length + 1).toCharArray();
-        char[] saltedString = new char[charString.length * 2 + 2 ];
+        char[] saltChars = randomString.substring(randomStringIndex, randomStringIndex + charString.length).toCharArray();
+        char[] saltedString = new char[charString.length * 2];
         int index = 0;
         for (int i = 0; i < charString.length; i++) {
             saltedString[index++] = charString[i];
