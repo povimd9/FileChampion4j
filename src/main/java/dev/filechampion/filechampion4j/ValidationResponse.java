@@ -17,7 +17,7 @@ public class ValidationResponse {
     /**
     * ValidationResponse is used to return the results of a file validation.
     * @param isValid (Boolean) true if the file is valid, false otherwise
-    * @param resultsInfo (String) a String containing the result sammery of the validation
+    * @param resultsInfo (String) a String containing the result summary of the validation
     * @param resultsDetails (String) a String containing the details of the validation
     * @param cleanFileName (String) the file name with all special characters replaced with underscores
     * @param fileBytes (bytes[]) the file bytes
