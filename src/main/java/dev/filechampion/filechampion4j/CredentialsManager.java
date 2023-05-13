@@ -4,14 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -88,7 +92,7 @@ public class CredentialsManager {
         this.credsExpirationTime = expirationTime;
         logInfo(logMessage.replace(0, logMessage.length() ,"Expiration time set to ").append(expirationTime).append(" milliseconds."));
         // add timer to remove expired creds from the list
-        java.util.Timer timer = new java.util.Timer();
+        Timer timer = new Timer();
         timer.schedule(new java.util.TimerTask() {
             @Override
             public void run() {
@@ -132,24 +136,6 @@ public class CredentialsManager {
     }
 
     /**
-     * This method is used to check if any credential is expired, and remove them from the list if it is.
-     */
-    private void checkCredExpiration() {
-        logFine(logMessage.replace(0, logMessage.length() ,"Checking for expired credentials."));
-        for (Map.Entry<String, Map<Integer, Long>> entry : this.credsMap.entrySet()) {
-            String key = entry.getKey();
-            Integer credPosition = entry.getValue().keySet().iterator().next();
-            long credLastTime = entry.getValue().getOrDefault(2, credsExpirationTime);
-            if (System.currentTimeMillis() - credLastTime > credsExpirationTime) {
-                Arrays.fill(this.credsList.get(credPosition), '0');
-                this.credsList.remove(credPosition);
-                this.credsMap.remove(key);
-                logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(key).append(" removed from list."));
-            }
-        }
-    }
-
-    /**
      * This method is used to read a single credential file into a char[] for storage in the Map.
      * char[] grows dynamically as the file is read using 64 byte chunks.
      * @param credFilePath (Path) - Path to the credentials file to read.
@@ -158,7 +144,7 @@ public class CredentialsManager {
      */
     private char[] getCredFileChars(Path credFilePath) throws IOException {
         logFine(logMessage.replace(0, logMessage.length() ,"Reading credentials from file: ").append(credFilePath.toString()));
-        try (BufferedReader br = new BufferedReader(new FileReader(credFilePath.toString()))) {
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(credFilePath.toString()), Charset.defaultCharset())) {
             char[] tmpCharArray = new char[1];
             int charRead = 0;
             int position = 0;
@@ -248,5 +234,28 @@ public class CredentialsManager {
         }
         this.randomStringIndex += saltChars.length;
         return saltedString;
+    }
+
+    /**
+     * This method is used to check if any credential is expired, and remove them from the list if it is.
+     */
+    private void checkCredExpiration() {
+        logFine(logMessage.replace(0, logMessage.length() ,"Checking for expired credentials."));
+        List<String> expiredKeys = new ArrayList<>();
+        for (Map.Entry<String, Map<Integer, Long>> entry : this.credsMap.entrySet()) {
+            String key = entry.getKey();
+            Integer credPosition = entry.getValue().keySet().iterator().next();
+            long credLastTime = entry.getValue().getOrDefault(2, credsExpirationTime);
+            if (System.currentTimeMillis() - credLastTime > credsExpirationTime) {
+                Arrays.fill(this.credsList.get(credPosition), '0');
+                this.credsList.remove(this.credsList.get(credPosition));
+                expiredKeys.add(key);
+                logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(key).append(" removed from list."));
+            }
+        }
+        for (String key : expiredKeys) {
+            this.credsMap.remove(key);
+            logFine(logMessage.replace(0, logMessage.length() ,"Expired credentials metadata ").append(key).append(" removed from map."));
+        }
     }
 }
