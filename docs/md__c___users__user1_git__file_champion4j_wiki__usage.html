@@ -53,7 +53,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="FileChamp_cut.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.2</span>
+   <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.3</span>
    </div>
    <div id="projectbrief">File validation library for Java</div>
   </td>
@@ -139,7 +139,7 @@ Import from Maven Central</h2>
 <div class="fragment"><div class="line">&lt;<span class="keywordtype">dependency</span>&gt;</div>
 <div class="line">    &lt;<span class="keywordtype">groupId</span>&gt;<span class="keyword">dev.filechampion</span>&lt;/<span class="keywordtype">groupId</span>&gt;</div>
 <div class="line">    &lt;<span class="keywordtype">artifactId</span>&gt;<span class="keyword">filechampion4j</span>&lt;/<span class="keywordtype">artifactId</span>&gt;</div>
-<div class="line">    &lt;<span class="keywordtype">version</span>&gt;0.9.8.2&lt;/<span class="keywordtype">version</span>&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">version</span>&gt;0.9.8.3&lt;/<span class="keywordtype">version</span>&gt;</div>
 <div class="line">&lt;/<span class="keywordtype">dependency</span>&gt;</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
 Build from source</h2>
@@ -162,61 +162,61 @@ Importing Library</h2>
 Configuring</h1>
 <p>JSON configurations must be defined and loaded for initializing the FileValidator class. For configuration details, see <a href="https://github.com/povimd9/FileChampion4j/wiki/Configuration">FileChampion Configurations</a>.</p>
 <p>The JSON object is loaded to memory once at initialization, and used throughout the lifecycle of the class.</p>
-<h1><a class="anchor" id="autotoc_md26"></a>
+<h1><a class="anchor" id="autotoc_md25"></a>
 Creating a Validator Object</h1>
 <p>FileValidator class expects FileChampion configurations as a <code>org.json.JSONObject</code>. Class initialization is done as follows:</p>
 <div class="fragment"><div class="line"><span class="comment">// Create a new FileValidator object</span></div>
 <div class="line">FileValidator validator = <span class="keyword">new</span> FileValidator(jsonObject);</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md26"></a>
 Validating Files</h1>
 <p>FileValidator.validateFile() is used for performing validation actions on a target file. This method supports multiple call arguments, impacting the behavior of the validation flow.</p>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 FileValidator.validateFile() Options</h2>
-<h3><a class="anchor" id="autotoc_md30"></a>
+<h3><a class="anchor" id="autotoc_md28"></a>
 validateFile (String fileCategory, byte[] originalFile, String fileName)</h3>
 <ul>
 <li>Validate file from byte array without storing file, returning only validation status.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md32"></a>
+<h3><a class="anchor" id="autotoc_md29"></a>
 validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir)</h3>
 <ul>
 <li>Validate file from byte array and store file, returning validation status, and new file path.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md33"></a>
+<h3><a class="anchor" id="autotoc_md30"></a>
 validateFile (String fileCategory, byte[] originalFile, String fileName, String mimeString)</h3>
 <ul>
 <li>Validate file from byte array without storing file, providing MIME type string as part of validation, returning validation status.</li>
 <li><b>Providing MIME type as part of the method call, is recommended for http uploads, reducing overhead of guessing file MIME type during validation flow.</b></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md34"></a>
+<h3><a class="anchor" id="autotoc_md31"></a>
 validateFile (String fileCategory, byte[] originalFile, String fileName, Path outputDir, String mimeString)</h3>
 <ul>
 <li>Validate file from byte array and store file, providing MIME type string as part of validation, returning validation status.</li>
 <li><b>Providing MIME type as part of the method call, is recommended for http uploads, reducing overhead of guessing file MIME type during validation flow.</b></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md35"></a>
+<h3><a class="anchor" id="autotoc_md32"></a>
 validateFile (String fileCategory, Path filePath, String fileName)</h3>
 <ul>
 <li>Validate file from file path without storing file, returning only validation status.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md36"></a>
+<h3><a class="anchor" id="autotoc_md33"></a>
 validateFile (String fileCategory, Path filePath, String fileName, Path outputDir)</h3>
 <ul>
 <li>Validate file from file path and store file, returning validation status, and new file path.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md37"></a>
+<h3><a class="anchor" id="autotoc_md34"></a>
 validateFile (String fileCategory, Path filePath, String fileName, String mimeString)</h3>
 <ul>
 <li>Validate file from file path without storing file, providing MIME type string as part of validation, returning validation status.</li>
 <li><b>Providing MIME type as part of the method call, is recommended for http uploads, reducing overhead of guessing file MIME type during validation flow.</b></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md38"></a>
+<h3><a class="anchor" id="autotoc_md35"></a>
 validateFile (String fileCategory, Path filePath, String fileName, Path outputDir, String mimeString)</h3>
 <ul>
 <li>Validate file from file path and store file, providing MIME type string as part of validation, returning validation status.</li>
 <li><b>Providing MIME type as part of the method call, is recommended for http uploads, reducing overhead of guessing file MIME type during validation flow.</b></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md39"></a>
+<h2><a class="anchor" id="autotoc_md36"></a>
 Response of validateFile() is a ValidationResponse object, which contains</h2>
 <ul>
 <li><dl class="params"><dt>Parameters</dt><dd>
@@ -276,7 +276,7 @@ Response of validateFile() is a ValidationResponse object, which contains</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Validate file assumed to be in the &quot;Documents&quot; category of the configurations with MIME type application/pdf, and save to &#39;outDir&#39; if validations passed.</span></div>
 <div class="line">ValidationResponse fileValidationResults = validator.validateFile(<span class="stringliteral">&quot;Documents&quot;</span>, fileInBytes, inFile.getName(),outDir, <span class="stringliteral">&quot;application/pdf&quot;</span>);</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md40"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md37"></a>
 Performance Considerations</h1>
 <p>FileChampion offers various approaches to file validations, supporting a wide range of use cases. This means that while some validations provide better accuracy, they might impact performance of the validation process. Below are some accuracy/performance considerations when using FileChampion:</p>
 <ul>
@@ -292,7 +292,7 @@ Performance Considerations</h1>
 </li>
 <li>Plugin performance is directly dependent on executed processes defined for the plugin. As such, defining relevant 'timeout' and testing the plugins for performance impact is critical for reliable estimates.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md41"></a>
+<h1><a class="anchor" id="autotoc_md38"></a>
 Usage Example</h1>
 <p>The following example shows simple use of filechampion on local pdf file, including saving of file if validations passed.</p>
 <p>Steps:</p>
@@ -380,7 +380,7 @@ Usage Example</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat May 13 2023 23:37:39 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Sun May 14 2023 00:15:10 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>
