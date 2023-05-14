@@ -193,7 +193,7 @@ public class CredentialsManager {
     /**
      * Custom exception for credential fetch errors
      */
-    public class CredentialsFetchError extends Exception { 
+    public static class CredentialsFetchError extends Exception { 
         public CredentialsFetchError(String errorMessage) {
             super(errorMessage);
         }
