@@ -83,7 +83,7 @@ class CredentialsManagerTest {
         assertEquals("NOT_REAL_SECRET_1", new String(originalSecret), "originalSecret was" + new String(originalSecret) + " instead of 'NOT_REAL_SECRET_1'.");
         String creds1FromCache = new String(credsManager.getCredentials("creds1.txt"));
         assertEquals(creds1Original, creds1FromCache, "creds1FromCache was not equal to creds1Original.");
-        Thread.sleep(10000);
+        Thread.sleep(20000);
         String creds1AfterExpiration = new String(credsManager.getCredentials("creds1.txt"));
         assertNotEquals(creds1Original, creds1AfterExpiration, "creds1AfterExpiration was equal to creds1Original.");
     }
