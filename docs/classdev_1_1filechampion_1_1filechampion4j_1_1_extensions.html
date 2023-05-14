@@ -6,9 +6,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://docs.filechampion.dev/">
+<meta property="og:url" content="https://docs.filechampion.dev/">
+<meta name="twitter:description" content="Powerful and Flexible File Validation Library for Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website">
+<meta name="description" content="Powerful and Flexible File Validation Library for Java">
+<meta property="og:image" content="https://docs.filechampion.dev/FileChamp_cut.jpg">
+<meta name="twitter:title" content="FileChampion">
+<link rel="icon" type="image/jpeg" sizes="499x433" href="FileChamp_cut.jpg">
+<link rel="icon" type="image/jpeg" sizes="499x433" href="FileChamp_cut.jpg">
 <title>filechampion4j: dev.filechampion.filechampion4j.Extensions Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
@@ -18,40 +27,37 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-  $(document).ready(function() { init_search(); });
-/* @license-end */
-</script>
 <script type="text/javascript" src="darkmode_toggle.js"></script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript">
+	DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeParagraphLink.init()
+	DoxygenAwesomeInteractiveToc.init()
+</script>
 </head>
 <body>
-<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/povimd9/FileChampion4j" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="60" height="60" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
-  <td id="projectlogo"><img width="200" height="150" alt="Logo" src="FileChamp_cut.jpg"/></td>
+  <td id="projectlogo"><img alt="Logo" src="FileChamp_cut.jpg"/></td>
   <td id="projectalign">
    <div id="projectname">filechampion4j<span id="projectnumber">&#160;0.9.8.2</span>
    </div>
    <div id="projectbrief">File validation library for Java</div>
   </td>
  </tr>
-   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
-          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
-          </span>
-        </div>
-</td></tr>
  </tbody>
 </table>
 </div>
@@ -62,7 +68,19 @@
 var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
       <div id="nav-sync" class="sync"></div>
@@ -114,7 +132,7 @@ Collaboration diagram for dev.filechampion.filechampion4j.Extensions:</div>
 <div class="dyncontent">
 <div class="center"><img src="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions__coll__graph.png" border="0" usemap="#adev_8filechampion_8filechampion4j_8_extensions_coll__map" alt="Collaboration graph"/></div>
 <map name="adev_8filechampion_8filechampion4j_8_extensions_coll__map" id="adev_8filechampion_8filechampion4j_8_extensions_coll__map">
-<area shape="rect" title=" " alt="" coords="162,344,377,788"/>
+<area shape="rect" title=" " alt="" coords="162,344,377,773"/>
 <area shape="rect" title=" " alt="" coords="5,167,67,245"/>
 <area shape="rect" title=" " alt="" coords="91,160,267,252"/>
 <area shape="rect" title=" " alt="" coords="250,5,297,83"/>
@@ -183,7 +201,7 @@ Static Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is used to load the Validations json objectand provide the validation values for a given extension. </p>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00018">18</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00016">16</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae95e2932f76f0acf941cb9fa093f6306" name="ae95e2932f76f0acf941cb9fa093f6306"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae95e2932f76f0acf941cb9fa093f6306">&#9670;&#160;</a></span>Extensions()</h2>
@@ -213,36 +231,36 @@ Static Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00066">66</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   66</span>                                             {</div>
-<div class="line"><span class="lineno">   67</span> </div>
-<div class="line"><span class="lineno">   68</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a> = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
-<div class="line"><span class="lineno">   69</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a> = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
-<div class="line"><span class="lineno">   70</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a> = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
-<div class="line"><span class="lineno">   71</span> </div>
-<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">if</span> (jsonObject == <span class="keyword">null</span>) {</div>
-<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="stringliteral">&quot;jsonObject cannot be null&quot;</span>);</div>
-<div class="line"><span class="lineno">   74</span>        }</div>
-<div class="line"><span class="lineno">   75</span> </div>
-<div class="line"><span class="lineno">   76</span>        <span class="keywordflow">for</span> (String category : jsonObject.keySet()) {</div>
-<div class="line"><span class="lineno">   77</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.put(category, jsonObject.getJSONObject(category).toMap());</div>
-<div class="line"><span class="lineno">   78</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), category).append(<span class="stringliteral">&quot; &quot;</span>)</div>
-<div class="line"><span class="lineno">   79</span>                .append(jsonObject.getJSONObject(category).toString());</div>
-<div class="line"><span class="lineno">   80</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">   81</span>        }</div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">if</span>( <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.isEmpty()) {</div>
-<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="stringliteral">&quot;Validations must contain categories objects&quot;</span>);</div>
-<div class="line"><span class="lineno">   84</span>        }</div>
-<div class="line"><span class="lineno">   85</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac7a42f1722ece112cb3249e20978956e">mapConfiguredExtensions</a>();</div>
-<div class="line"><span class="lineno">   86</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0aada571ca5ffb1ca298874d2c0fac50"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">dev.filechampion.filechampion4j.Extensions.logFine</a></div><div class="ttdeci">void logFine(String message)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00040">Extensions.java:40</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0e52b1ec4819708eb1e09ee147ba6320"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">dev.filechampion.filechampion4j.Extensions.extensionsMap</a></div><div class="ttdeci">Map&lt; String, Map&lt; String, Object &gt; &gt; extensionsMap</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00048">Extensions.java:48</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a1ad83bfecf2fe0ffb13fc7c9b1973d61"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">dev.filechampion.filechampion4j.Extensions.categoriesMap</a></div><div class="ttdeci">Map&lt; String, Map&lt; String, Object &gt; &gt; categoriesMap</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00047">Extensions.java:47</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a5ae592ab98b05f66f39838b07f9afeeb"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a></div><div class="ttdeci">StringBuilder sbLogMessage</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00046">Extensions.java:46</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ac7a42f1722ece112cb3249e20978956e"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac7a42f1722ece112cb3249e20978956e">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions</a></div><div class="ttdeci">void mapConfiguredExtensions()</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00091">Extensions.java:91</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ad2dcad4c97dde7ef35cc069220cac624"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">dev.filechampion.filechampion4j.Extensions.validationsMap</a></div><div class="ttdeci">Map&lt; String, Object &gt; validationsMap</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00049">Extensions.java:49</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00055">55</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>                                             {</div>
+<div class="line"><span class="lineno">   56</span> </div>
+<div class="line"><span class="lineno">   57</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a> = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><span class="lineno">   58</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a> = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><span class="lineno">   59</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a> = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><span class="lineno">   60</span> </div>
+<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">if</span> (jsonObject == <span class="keyword">null</span>) {</div>
+<div class="line"><span class="lineno">   62</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="stringliteral">&quot;jsonObject cannot be null&quot;</span>);</div>
+<div class="line"><span class="lineno">   63</span>        }</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">for</span> (String category : jsonObject.keySet()) {</div>
+<div class="line"><span class="lineno">   66</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.put(category, jsonObject.getJSONObject(category).toMap());</div>
+<div class="line"><span class="lineno">   67</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), category).append(<span class="stringliteral">&quot; &quot;</span>)</div>
+<div class="line"><span class="lineno">   68</span>                .append(jsonObject.getJSONObject(category).toString());</div>
+<div class="line"><span class="lineno">   69</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">   70</span>        }</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">if</span>( <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.isEmpty()) {</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="stringliteral">&quot;Validations must contain categories objects&quot;</span>);</div>
+<div class="line"><span class="lineno">   73</span>        }</div>
+<div class="line"><span class="lineno">   74</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac7a42f1722ece112cb3249e20978956e">mapConfiguredExtensions</a>();</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0aada571ca5ffb1ca298874d2c0fac50"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">dev.filechampion.filechampion4j.Extensions.logFine</a></div><div class="ttdeci">void logFine(String message)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00028">Extensions.java:28</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0e52b1ec4819708eb1e09ee147ba6320"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">dev.filechampion.filechampion4j.Extensions.extensionsMap</a></div><div class="ttdeci">Map&lt; String, Map&lt; String, Object &gt; &gt; extensionsMap</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00036">Extensions.java:36</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a1ad83bfecf2fe0ffb13fc7c9b1973d61"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">dev.filechampion.filechampion4j.Extensions.categoriesMap</a></div><div class="ttdeci">Map&lt; String, Map&lt; String, Object &gt; &gt; categoriesMap</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00035">Extensions.java:35</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a5ae592ab98b05f66f39838b07f9afeeb"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a></div><div class="ttdeci">StringBuilder sbLogMessage</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00034">Extensions.java:34</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ac7a42f1722ece112cb3249e20978956e"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac7a42f1722ece112cb3249e20978956e">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions</a></div><div class="ttdeci">void mapConfiguredExtensions()</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00080">Extensions.java:80</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ad2dcad4c97dde7ef35cc069220cac624"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">dev.filechampion.filechampion4j.Extensions.validationsMap</a></div><div class="ttdeci">Map&lt; String, Object &gt; validationsMap</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00037">Extensions.java:37</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00047">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00048">dev.filechampion.filechampion4j.Extensions.extensionsMap</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, and <a class="el" href="_extensions_8java_source.html#l00049">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00036">dev.filechampion.filechampion4j.Extensions.extensionsMap</a>, <a class="el" href="_extensions_8java_source.html#l00028">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, and <a class="el" href="_extensions_8java_source.html#l00037">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -311,31 +329,31 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00212">212</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  212</span>                                                                                      {</div>
-<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.containsKey(category)) {</div>
-<div class="line"><span class="lineno">  214</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;category &quot;</span>).append(category)</div>
-<div class="line"><span class="lineno">  215</span>                .append(<span class="stringliteral">&quot; not found&quot;</span>);</div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00201">201</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  201</span>                                                                                      {</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.containsKey(category)) {</div>
+<div class="line"><span class="lineno">  203</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;category &quot;</span>).append(category)</div>
+<div class="line"><span class="lineno">  204</span>                .append(<span class="stringliteral">&quot; not found&quot;</span>);</div>
+<div class="line"><span class="lineno">  205</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  207</span>        }</div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.get(category).containsKey(extension)) {</div>
+<div class="line"><span class="lineno">  209</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;extension &quot;</span>).append(extension)</div>
+<div class="line"><span class="lineno">  210</span>                .append(<span class="stringliteral">&quot; not found&quot;</span>);</div>
+<div class="line"><span class="lineno">  211</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  212</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  213</span>        }</div>
+<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">if</span> (validationKey == <span class="keyword">null</span> || validationKey.isEmpty()) {</div>
+<div class="line"><span class="lineno">  215</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;validationKey cannot be null or empty&quot;</span>);</div>
 <div class="line"><span class="lineno">  216</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  217</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  217</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="stringliteral">&quot;validationKey cannot be null or empty&quot;</span>);</div>
 <div class="line"><span class="lineno">  218</span>        }</div>
-<div class="line"><span class="lineno">  219</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.get(category).containsKey(extension)) {</div>
-<div class="line"><span class="lineno">  220</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;extension &quot;</span>).append(extension)</div>
-<div class="line"><span class="lineno">  221</span>                .append(<span class="stringliteral">&quot; not found&quot;</span>);</div>
-<div class="line"><span class="lineno">  222</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  223</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  224</span>        }</div>
-<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">if</span> (validationKey == <span class="keyword">null</span> || validationKey.isEmpty()) {</div>
-<div class="line"><span class="lineno">  226</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;validationKey cannot be null or empty&quot;</span>);</div>
-<div class="line"><span class="lineno">  227</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  228</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="stringliteral">&quot;validationKey cannot be null or empty&quot;</span>);</div>
-<div class="line"><span class="lineno">  229</span>        }</div>
-<div class="line"><span class="lineno">  230</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_adebd31331477fe200ec272ae4569f482"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">dev.filechampion.filechampion4j.Extensions.logWarn</a></div><div class="ttdeci">void logWarn(String message)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00035">Extensions.java:35</a></div></div>
+<div class="line"><span class="lineno">  219</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_adebd31331477fe200ec272ae4569f482"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">dev.filechampion.filechampion4j.Extensions.logWarn</a></div><div class="ttdeci">void logWarn(String message)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00023">Extensions.java:23</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00047">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, and <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00023">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, and <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00240">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00229">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -418,37 +436,37 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00240">240</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  240</span>                                                                                              {</div>
-<div class="line"><span class="lineno">  241</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441">checkInputs</a>(category, extension, validationKey);</div>
-<div class="line"><span class="lineno">  242</span>        String cacheKey = category + <span class="stringliteral">&quot;|&quot;</span> + extension + <span class="stringliteral">&quot;|&quot;</span> + validationKey;</div>
-<div class="line"><span class="lineno">  243</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">validationCache</a>.containsKey(cacheKey)) {</div>
-<div class="line"><span class="lineno">  244</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Returning &quot;</span>).append(validationKey)</div>
-<div class="line"><span class="lineno">  245</span>                .append(<span class="stringliteral">&quot; for &quot;</span>).append(extension).append(<span class="stringliteral">&quot; (cached)&quot;</span>);</div>
-<div class="line"><span class="lineno">  246</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  247</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">validationCache</a>.get(cacheKey);</div>
-<div class="line"><span class="lineno">  248</span>        }</div>
-<div class="line"><span class="lineno">  249</span>        </div>
-<div class="line"><span class="lineno">  250</span>        Object value = ((HashMap&lt;?,?&gt;) <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.get(category).get(extension)).<span class="keyword">get</span>(validationKey);</div>
-<div class="line"><span class="lineno">  251</span>        <span class="keywordflow">if</span> (value != <span class="keyword">null</span>) {</div>
-<div class="line"><span class="lineno">  252</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">validationCache</a>.put(cacheKey, value);</div>
-<div class="line"><span class="lineno">  253</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Returning &quot;</span>).append(validationKey)</div>
-<div class="line"><span class="lineno">  254</span>                .append(<span class="stringliteral">&quot; for &quot;</span>).append(extension);</div>
-<div class="line"><span class="lineno">  255</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  256</span>            <span class="keywordflow">return</span> value;</div>
-<div class="line"><span class="lineno">  257</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  258</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Returning null for &quot;</span>)</div>
-<div class="line"><span class="lineno">  259</span>                .append(validationKey).append(<span class="stringliteral">&quot; for &quot;</span>).append(extension);</div>
-<div class="line"><span class="lineno">  260</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  261</span>            <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
-<div class="line"><span class="lineno">  262</span>        }</div>
-<div class="line"><span class="lineno">  263</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0b4d6f0065a4fc61701be6ab4103c441"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441">dev.filechampion.filechampion4j.Extensions.checkInputs</a></div><div class="ttdeci">void checkInputs(String category, String extension, String validationKey)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00212">Extensions.java:212</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a39c1d13e4efa572988f044a4e4594cd6"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">dev.filechampion.filechampion4j.Extensions.validationCache</a></div><div class="ttdeci">Map&lt; String, Object &gt; validationCache</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00050">Extensions.java:50</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00229">229</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  229</span>                                                                                              {</div>
+<div class="line"><span class="lineno">  230</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441">checkInputs</a>(category, extension, validationKey);</div>
+<div class="line"><span class="lineno">  231</span>        String cacheKey = category + <span class="stringliteral">&quot;|&quot;</span> + extension + <span class="stringliteral">&quot;|&quot;</span> + validationKey;</div>
+<div class="line"><span class="lineno">  232</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">validationCache</a>.containsKey(cacheKey)) {</div>
+<div class="line"><span class="lineno">  233</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Returning &quot;</span>).append(validationKey)</div>
+<div class="line"><span class="lineno">  234</span>                .append(<span class="stringliteral">&quot; for &quot;</span>).append(extension).append(<span class="stringliteral">&quot; (cached)&quot;</span>);</div>
+<div class="line"><span class="lineno">  235</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  236</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">validationCache</a>.get(cacheKey);</div>
+<div class="line"><span class="lineno">  237</span>        }</div>
+<div class="line"><span class="lineno">  238</span>        </div>
+<div class="line"><span class="lineno">  239</span>        Object value = ((HashMap&lt;?,?&gt;) <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.get(category).get(extension)).<span class="keyword">get</span>(validationKey);</div>
+<div class="line"><span class="lineno">  240</span>        <span class="keywordflow">if</span> (value != <span class="keyword">null</span>) {</div>
+<div class="line"><span class="lineno">  241</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">validationCache</a>.put(cacheKey, value);</div>
+<div class="line"><span class="lineno">  242</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Returning &quot;</span>).append(validationKey)</div>
+<div class="line"><span class="lineno">  243</span>                .append(<span class="stringliteral">&quot; for &quot;</span>).append(extension);</div>
+<div class="line"><span class="lineno">  244</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  245</span>            <span class="keywordflow">return</span> value;</div>
+<div class="line"><span class="lineno">  246</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  247</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Returning null for &quot;</span>)</div>
+<div class="line"><span class="lineno">  248</span>                .append(validationKey).append(<span class="stringliteral">&quot; for &quot;</span>).append(extension);</div>
+<div class="line"><span class="lineno">  249</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  250</span>            <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  251</span>        }</div>
+<div class="line"><span class="lineno">  252</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0b4d6f0065a4fc61701be6ab4103c441"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441">dev.filechampion.filechampion4j.Extensions.checkInputs</a></div><div class="ttdeci">void checkInputs(String category, String extension, String validationKey)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00201">Extensions.java:201</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a39c1d13e4efa572988f044a4e4594cd6"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a39c1d13e4efa572988f044a4e4594cd6">dev.filechampion.filechampion4j.Extensions.validationCache</a></div><div class="ttdeci">Map&lt; String, Object &gt; validationCache</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00038">Extensions.java:38</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00047">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00212">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, and <a class="el" href="_extensions_8java_source.html#l00050">dev.filechampion.filechampion4j.Extensions.validationCache</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00201">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00028">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, and <a class="el" href="_extensions_8java_source.html#l00038">dev.filechampion.filechampion4j.Extensions.validationCache</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_validations_helper_8java_source.html#l00167">dev.filechampion.filechampion4j.ValidationsHelper.checkFileSize()</a>, <a class="el" href="_validations_helper_8java_source.html#l00202">dev.filechampion.filechampion4j.ValidationsHelper.checkMimeType()</a>, <a class="el" href="_validations_helper_8java_source.html#l00359">dev.filechampion.filechampion4j.ValidationsHelper.containsFooterSignatures()</a>, <a class="el" href="_validations_helper_8java_source.html#l00312">dev.filechampion.filechampion4j.ValidationsHelper.containsHeaderSignatures()</a>, <a class="el" href="_validations_helper_8java_source.html#l00258">dev.filechampion.filechampion4j.ValidationsHelper.containsMagicBytes()</a>, <a class="el" href="_file_validator_8java_source.html#l00328">dev.filechampion.filechampion4j.FileValidator.doValidations()</a>, <a class="el" href="_file_validator_8java_source.html#l00581">dev.filechampion.filechampion4j.FileValidator.executeAfterPlugins()</a>, <a class="el" href="_file_validator_8java_source.html#l00617">dev.filechampion.filechampion4j.FileValidator.executeAfterPluginsProcess()</a>, <a class="el" href="_file_validator_8java_source.html#l00536">dev.filechampion.filechampion4j.FileValidator.executeBeforePlugins()</a>, <a class="el" href="_validations_helper_8java_source.html#l00066">dev.filechampion.filechampion4j.ValidationsHelper.getValidationResults()</a>, <a class="el" href="_file_validator_8java_source.html#l00794">dev.filechampion.filechampion4j.FileValidator.saveFileToOutputDir()</a>, and <a class="el" href="_file_validator_8java_source.html#l00275">dev.filechampion.filechampion4j.FileValidator.validateFileMain()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_validations_helper_8java_source.html#l00152">dev.filechampion.filechampion4j.ValidationsHelper.checkFileSize()</a>, <a class="el" href="_validations_helper_8java_source.html#l00187">dev.filechampion.filechampion4j.ValidationsHelper.checkMimeType()</a>, <a class="el" href="_validations_helper_8java_source.html#l00344">dev.filechampion.filechampion4j.ValidationsHelper.containsFooterSignatures()</a>, <a class="el" href="_validations_helper_8java_source.html#l00297">dev.filechampion.filechampion4j.ValidationsHelper.containsHeaderSignatures()</a>, <a class="el" href="_validations_helper_8java_source.html#l00243">dev.filechampion.filechampion4j.ValidationsHelper.containsMagicBytes()</a>, <a class="el" href="_file_validator_8java_source.html#l00342">dev.filechampion.filechampion4j.FileValidator.doValidations()</a>, <a class="el" href="_file_validator_8java_source.html#l00599">dev.filechampion.filechampion4j.FileValidator.executeAfterPlugins()</a>, <a class="el" href="_file_validator_8java_source.html#l00635">dev.filechampion.filechampion4j.FileValidator.executeAfterPluginsProcess()</a>, <a class="el" href="_file_validator_8java_source.html#l00554">dev.filechampion.filechampion4j.FileValidator.executeBeforePlugins()</a>, <a class="el" href="_validations_helper_8java_source.html#l00051">dev.filechampion.filechampion4j.ValidationsHelper.getValidationResults()</a>, <a class="el" href="_file_validator_8java_source.html#l00816">dev.filechampion.filechampion4j.FileValidator.saveFileToOutputDir()</a>, and <a class="el" href="_file_validator_8java_source.html#l00289">dev.filechampion.filechampion4j.FileValidator.validateFileMain()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -509,17 +527,17 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00040">40</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   40</span>                                         {</div>
-<div class="line"><span class="lineno">   41</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.isLoggable(Level.FINE )) {</div>
-<div class="line"><span class="lineno">   42</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.fine(message);</div>
-<div class="line"><span class="lineno">   43</span>        }</div>
-<div class="line"><span class="lineno">   44</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a72e7dbb4c27012023fe71af808d04a4c"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">dev.filechampion.filechampion4j.Extensions.LOGGER</a></div><div class="ttdeci">static final Logger LOGGER</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00029">Extensions.java:29</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00028">28</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   28</span>                                         {</div>
+<div class="line"><span class="lineno">   29</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.isLoggable(Level.FINE )) {</div>
+<div class="line"><span class="lineno">   30</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.fine(message);</div>
+<div class="line"><span class="lineno">   31</span>        }</div>
+<div class="line"><span class="lineno">   32</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a72e7dbb4c27012023fe71af808d04a4c"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">dev.filechampion.filechampion4j.Extensions.LOGGER</a></div><div class="ttdeci">static final Logger LOGGER</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00017">Extensions.java:17</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00029">dev.filechampion.filechampion4j.Extensions.LOGGER</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00017">dev.filechampion.filechampion4j.Extensions.LOGGER</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00066">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00240">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>, <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, and <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00055">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00229">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>, <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, and <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -573,16 +591,16 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00030">30</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   30</span>                                         {</div>
-<div class="line"><span class="lineno">   31</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.isLoggable(Level.INFO)) {</div>
-<div class="line"><span class="lineno">   32</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.info(message);</div>
-<div class="line"><span class="lineno">   33</span>        }</div>
-<div class="line"><span class="lineno">   34</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00018">18</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   18</span>                                         {</div>
+<div class="line"><span class="lineno">   19</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.isLoggable(Level.INFO)) {</div>
+<div class="line"><span class="lineno">   20</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.info(message);</div>
+<div class="line"><span class="lineno">   21</span>        }</div>
+<div class="line"><span class="lineno">   22</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00029">dev.filechampion.filechampion4j.Extensions.LOGGER</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00017">dev.filechampion.filechampion4j.Extensions.LOGGER</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -621,16 +639,16 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00035">35</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   35</span>                                         {</div>
-<div class="line"><span class="lineno">   36</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.isLoggable(Level.WARNING)) {</div>
-<div class="line"><span class="lineno">   37</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.warning(message);</div>
-<div class="line"><span class="lineno">   38</span>        }</div>
-<div class="line"><span class="lineno">   39</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00023">23</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   23</span>                                         {</div>
+<div class="line"><span class="lineno">   24</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.isLoggable(Level.WARNING)) {</div>
+<div class="line"><span class="lineno">   25</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a72e7dbb4c27012023fe71af808d04a4c">LOGGER</a>.warning(message);</div>
+<div class="line"><span class="lineno">   26</span>        }</div>
+<div class="line"><span class="lineno">   27</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00029">dev.filechampion.filechampion4j.Extensions.LOGGER</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00017">dev.filechampion.filechampion4j.Extensions.LOGGER</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00212">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00193">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00175">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00157">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00201">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00182">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00164">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00146">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -688,38 +706,38 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Load extensions from json object into extensionsMap </p>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00091">91</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   91</span>                                          {</div>
-<div class="line"><span class="lineno">   92</span>        <span class="keywordflow">for</span> (Map.Entry&lt;String, Object&gt; extensionEntry : <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.entrySet().iterator().next().getValue().entrySet()) {</div>
-<div class="line"><span class="lineno">   93</span>            String extension = extensionEntry.getKey();</div>
-<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">if</span> (extensionEntry.getValue() instanceof HashMap) {</div>
-<div class="line"><span class="lineno">   95</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.put(extensionEntry.getKey(), (HashMap) extensionEntry.getValue());</div>
-<div class="line"><span class="lineno">   96</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), extension).append(<span class="stringliteral">&quot; &quot;</span>)</div>
-<div class="line"><span class="lineno">   97</span>                    .append(extensionEntry.getValue().toString());</div>
-<div class="line"><span class="lineno">   98</span>                <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">   99</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  100</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
-<div class="line"><span class="lineno">  101</span>                    .append(extensionEntry.getValue().getClass().getName())</div>
-<div class="line"><span class="lineno">  102</span>                    .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
-<div class="line"><span class="lineno">  103</span>                    .append(extension);</div>
-<div class="line"><span class="lineno">  104</span>                <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  105</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  106</span>            }</div>
-<div class="line"><span class="lineno">  107</span>        }</div>
-<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.entrySet().iterator().next().getValue().entrySet().isEmpty()) {</div>
-<div class="line"><span class="lineno">  109</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;At least one validation must be configured&quot;</span>);</div>
-<div class="line"><span class="lineno">  110</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  111</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  112</span>        }</div>
-<div class="line"><span class="lineno">  113</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac905bd4c26533f81b804c16a2b7cf1df">mapExtensionValidations</a>();</div>
-<div class="line"><span class="lineno">  114</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a3ffb0ea6bd94ffbdb79a4a444112e4a0"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a></div><div class="ttdeci">String sharedMessage1</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00051">Extensions.java:51</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ac905bd4c26533f81b804c16a2b7cf1df"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac905bd4c26533f81b804c16a2b7cf1df">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations</a></div><div class="ttdeci">void mapExtensionValidations()</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00119">Extensions.java:119</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ad22eaf5da91b032cb077d4b708636d0a"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a></div><div class="ttdeci">String sharedMessage2</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00052">Extensions.java:52</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00080">80</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>                                          {</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">for</span> (Map.Entry&lt;String, Object&gt; extensionEntry : <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.entrySet().iterator().next().getValue().entrySet()) {</div>
+<div class="line"><span class="lineno">   82</span>            String extension = extensionEntry.getKey();</div>
+<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">if</span> (extensionEntry.getValue() instanceof HashMap) {</div>
+<div class="line"><span class="lineno">   84</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.put(extensionEntry.getKey(), (HashMap) extensionEntry.getValue());</div>
+<div class="line"><span class="lineno">   85</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), extension).append(<span class="stringliteral">&quot; &quot;</span>)</div>
+<div class="line"><span class="lineno">   86</span>                    .append(extensionEntry.getValue().toString());</div>
+<div class="line"><span class="lineno">   87</span>                <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">   88</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   89</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
+<div class="line"><span class="lineno">   90</span>                    .append(extensionEntry.getValue().getClass().getName())</div>
+<div class="line"><span class="lineno">   91</span>                    .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
+<div class="line"><span class="lineno">   92</span>                    .append(extension);</div>
+<div class="line"><span class="lineno">   93</span>                <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">   94</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">   95</span>            }</div>
+<div class="line"><span class="lineno">   96</span>        }</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.entrySet().iterator().next().getValue().entrySet().isEmpty()) {</div>
+<div class="line"><span class="lineno">   98</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;At least one validation must be configured&quot;</span>);</div>
+<div class="line"><span class="lineno">   99</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  100</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  101</span>        }</div>
+<div class="line"><span class="lineno">  102</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac905bd4c26533f81b804c16a2b7cf1df">mapExtensionValidations</a>();</div>
+<div class="line"><span class="lineno">  103</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a3ffb0ea6bd94ffbdb79a4a444112e4a0"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a></div><div class="ttdeci">String sharedMessage1</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00039">Extensions.java:39</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ac905bd4c26533f81b804c16a2b7cf1df"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ac905bd4c26533f81b804c16a2b7cf1df">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations</a></div><div class="ttdeci">void mapExtensionValidations()</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00108">Extensions.java:108</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ad22eaf5da91b032cb077d4b708636d0a"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a></div><div class="ttdeci">String sharedMessage2</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00040">Extensions.java:40</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00047">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00048">dev.filechampion.filechampion4j.Extensions.extensionsMap</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00051">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, and <a class="el" href="_extensions_8java_source.html#l00052">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00036">dev.filechampion.filechampion4j.Extensions.extensionsMap</a>, <a class="el" href="_extensions_8java_source.html#l00028">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00023">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00039">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, and <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00066">dev.filechampion.filechampion4j.Extensions.Extensions()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00055">dev.filechampion.filechampion4j.Extensions.Extensions()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -771,48 +789,48 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Load extension validations into validationsMap </p>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00119">119</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  119</span>                                            {</div>
-<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">for</span> (Map.Entry&lt;String, Object&gt; validationEntry : <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.entrySet().iterator().next().getValue().entrySet() ) {</div>
-<div class="line"><span class="lineno">  121</span>            String validation = validationEntry.getKey();</div>
-<div class="line"><span class="lineno">  122</span>            Object value = validationEntry.getValue();</div>
-<div class="line"><span class="lineno">  123</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adfbb87bc762856b29c057c464aa2052c">allowedKeyValues</a>.contains(validation)) {</div>
-<div class="line"><span class="lineno">  124</span>                <span class="keywordflow">if</span> (value instanceof String || value instanceof Integer) {</div>
-<div class="line"><span class="lineno">  125</span>                    <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad1fe364836f20ce9ff85b8f19ad2ba12">setString</a>(validation, value);</div>
-<div class="line"><span class="lineno">  126</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (value instanceof Boolean) {</div>
-<div class="line"><span class="lineno">  127</span>                    <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ae8f04f4e1d62e544e1ec5893bff82a4d">setBoolean</a>(validation, value);</div>
-<div class="line"><span class="lineno">  128</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (value instanceof ArrayList ) {</div>
-<div class="line"><span class="lineno">  129</span>                    <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#aae54a0c575ab050d505554b827eba486">setArrayList</a>(validation, value);</div>
-<div class="line"><span class="lineno">  130</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  131</span>                    <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
-<div class="line"><span class="lineno">  132</span>                            .append(value.getClass().getName())</div>
-<div class="line"><span class="lineno">  133</span>                            .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
-<div class="line"><span class="lineno">  134</span>                            .append(validation);</div>
-<div class="line"><span class="lineno">  135</span>                    <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  136</span>                }</div>
-<div class="line"><span class="lineno">  137</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  138</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Unsupported key: &quot;</span>)</div>
-<div class="line"><span class="lineno">  139</span>                .append(validation);</div>
-<div class="line"><span class="lineno">  140</span>                <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  141</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  142</span>            }</div>
-<div class="line"><span class="lineno">  143</span>        }</div>
-<div class="line"><span class="lineno">  144</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Loaded &quot;</span>).append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.size()).append(<span class="stringliteral">&quot; categories, &quot;</span>)</div>
-<div class="line"><span class="lineno">  145</span>            .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.size()).append(<span class="stringliteral">&quot; extensions, &quot;</span>)</div>
-<div class="line"><span class="lineno">  146</span>            .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.size()).append(<span class="stringliteral">&quot; validations&quot;</span>);</div>
-<div class="line"><span class="lineno">  147</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  148</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a366117a17cfa799e9056a5929b60f99a">logInfo</a>(<span class="stringliteral">&quot;Loaded Validations Configurtion&quot;</span>);</div>
-<div class="line"><span class="lineno">  149</span> </div>
-<div class="line"><span class="lineno">  150</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a366117a17cfa799e9056a5929b60f99a"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a366117a17cfa799e9056a5929b60f99a">dev.filechampion.filechampion4j.Extensions.logInfo</a></div><div class="ttdeci">void logInfo(String message)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00030">Extensions.java:30</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_aae54a0c575ab050d505554b827eba486"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#aae54a0c575ab050d505554b827eba486">dev.filechampion.filechampion4j.Extensions.setArrayList</a></div><div class="ttdeci">void setArrayList(String validation, Object value)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00193">Extensions.java:193</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ad1fe364836f20ce9ff85b8f19ad2ba12"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad1fe364836f20ce9ff85b8f19ad2ba12">dev.filechampion.filechampion4j.Extensions.setString</a></div><div class="ttdeci">void setString(String validation, Object value)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00157">Extensions.java:157</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_adfbb87bc762856b29c057c464aa2052c"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adfbb87bc762856b29c057c464aa2052c">dev.filechampion.filechampion4j.Extensions.allowedKeyValues</a></div><div class="ttdeci">List&lt; String &gt; allowedKeyValues</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00053">Extensions.java:53</a></div></div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ae8f04f4e1d62e544e1ec5893bff82a4d"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ae8f04f4e1d62e544e1ec5893bff82a4d">dev.filechampion.filechampion4j.Extensions.setBoolean</a></div><div class="ttdeci">void setBoolean(String validation, Object value)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00175">Extensions.java:175</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00108">108</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  108</span>                                            {</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">for</span> (Map.Entry&lt;String, Object&gt; validationEntry : <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.entrySet().iterator().next().getValue().entrySet() ) {</div>
+<div class="line"><span class="lineno">  110</span>            String validation = validationEntry.getKey();</div>
+<div class="line"><span class="lineno">  111</span>            Object value = validationEntry.getValue();</div>
+<div class="line"><span class="lineno">  112</span>            <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adfbb87bc762856b29c057c464aa2052c">allowedKeyValues</a>.contains(validation)) {</div>
+<div class="line"><span class="lineno">  113</span>                <span class="keywordflow">if</span> (value instanceof String || value instanceof Integer) {</div>
+<div class="line"><span class="lineno">  114</span>                    <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad1fe364836f20ce9ff85b8f19ad2ba12">setString</a>(validation, value);</div>
+<div class="line"><span class="lineno">  115</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (value instanceof Boolean) {</div>
+<div class="line"><span class="lineno">  116</span>                    <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ae8f04f4e1d62e544e1ec5893bff82a4d">setBoolean</a>(validation, value);</div>
+<div class="line"><span class="lineno">  117</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (value instanceof ArrayList ) {</div>
+<div class="line"><span class="lineno">  118</span>                    <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#aae54a0c575ab050d505554b827eba486">setArrayList</a>(validation, value);</div>
+<div class="line"><span class="lineno">  119</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  120</span>                    <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
+<div class="line"><span class="lineno">  121</span>                            .append(value.getClass().getName())</div>
+<div class="line"><span class="lineno">  122</span>                            .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
+<div class="line"><span class="lineno">  123</span>                            .append(validation);</div>
+<div class="line"><span class="lineno">  124</span>                    <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  125</span>                }</div>
+<div class="line"><span class="lineno">  126</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  127</span>                <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Unsupported key: &quot;</span>)</div>
+<div class="line"><span class="lineno">  128</span>                .append(validation);</div>
+<div class="line"><span class="lineno">  129</span>                <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  130</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  131</span>            }</div>
+<div class="line"><span class="lineno">  132</span>        }</div>
+<div class="line"><span class="lineno">  133</span>        <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(), <span class="stringliteral">&quot;Loaded &quot;</span>).append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a1ad83bfecf2fe0ffb13fc7c9b1973d61">categoriesMap</a>.size()).append(<span class="stringliteral">&quot; categories, &quot;</span>)</div>
+<div class="line"><span class="lineno">  134</span>            .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0e52b1ec4819708eb1e09ee147ba6320">extensionsMap</a>.size()).append(<span class="stringliteral">&quot; extensions, &quot;</span>)</div>
+<div class="line"><span class="lineno">  135</span>            .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.size()).append(<span class="stringliteral">&quot; validations&quot;</span>);</div>
+<div class="line"><span class="lineno">  136</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0aada571ca5ffb1ca298874d2c0fac50">logFine</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  137</span>        <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a366117a17cfa799e9056a5929b60f99a">logInfo</a>(<span class="stringliteral">&quot;Loaded Validations Configurtion&quot;</span>);</div>
+<div class="line"><span class="lineno">  138</span> </div>
+<div class="line"><span class="lineno">  139</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a366117a17cfa799e9056a5929b60f99a"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a366117a17cfa799e9056a5929b60f99a">dev.filechampion.filechampion4j.Extensions.logInfo</a></div><div class="ttdeci">void logInfo(String message)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00018">Extensions.java:18</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_aae54a0c575ab050d505554b827eba486"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#aae54a0c575ab050d505554b827eba486">dev.filechampion.filechampion4j.Extensions.setArrayList</a></div><div class="ttdeci">void setArrayList(String validation, Object value)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00182">Extensions.java:182</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ad1fe364836f20ce9ff85b8f19ad2ba12"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad1fe364836f20ce9ff85b8f19ad2ba12">dev.filechampion.filechampion4j.Extensions.setString</a></div><div class="ttdeci">void setString(String validation, Object value)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00146">Extensions.java:146</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_adfbb87bc762856b29c057c464aa2052c"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adfbb87bc762856b29c057c464aa2052c">dev.filechampion.filechampion4j.Extensions.allowedKeyValues</a></div><div class="ttdeci">List&lt; String &gt; allowedKeyValues</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00042">Extensions.java:42</a></div></div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_ae8f04f4e1d62e544e1ec5893bff82a4d"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ae8f04f4e1d62e544e1ec5893bff82a4d">dev.filechampion.filechampion4j.Extensions.setBoolean</a></div><div class="ttdeci">void setBoolean(String validation, Object value)</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00164">Extensions.java:164</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00053">dev.filechampion.filechampion4j.Extensions.allowedKeyValues</a>, <a class="el" href="_extensions_8java_source.html#l00047">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00048">dev.filechampion.filechampion4j.Extensions.extensionsMap</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00030">dev.filechampion.filechampion4j.Extensions.logInfo()</a>, <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00193">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00175">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, <a class="el" href="_extensions_8java_source.html#l00157">dev.filechampion.filechampion4j.Extensions.setString()</a>, <a class="el" href="_extensions_8java_source.html#l00051">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00052">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, and <a class="el" href="_extensions_8java_source.html#l00049">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00042">dev.filechampion.filechampion4j.Extensions.allowedKeyValues</a>, <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.categoriesMap</a>, <a class="el" href="_extensions_8java_source.html#l00036">dev.filechampion.filechampion4j.Extensions.extensionsMap</a>, <a class="el" href="_extensions_8java_source.html#l00028">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00018">dev.filechampion.filechampion4j.Extensions.logInfo()</a>, <a class="el" href="_extensions_8java_source.html#l00023">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00182">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00164">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, <a class="el" href="_extensions_8java_source.html#l00146">dev.filechampion.filechampion4j.Extensions.setString()</a>, <a class="el" href="_extensions_8java_source.html#l00039">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, and <a class="el" href="_extensions_8java_source.html#l00037">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -881,23 +899,23 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00193">193</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  193</span>                                                                {</div>
-<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">if</span> (validation.equals(<span class="stringliteral">&quot;extension_plugins&quot;</span>)) {</div>
-<div class="line"><span class="lineno">  195</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, (ArrayList) value);</div>
-<div class="line"><span class="lineno">  196</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  197</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
-<div class="line"><span class="lineno">  198</span>                .append(value.getClass().getName())</div>
-<div class="line"><span class="lineno">  199</span>                .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
-<div class="line"><span class="lineno">  200</span>                .append(validation);</div>
-<div class="line"><span class="lineno">  201</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  202</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  203</span>        }</div>
-<div class="line"><span class="lineno">  204</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00182">182</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  182</span>                                                                {</div>
+<div class="line"><span class="lineno">  183</span>        <span class="keywordflow">if</span> (validation.equals(<span class="stringliteral">&quot;extension_plugins&quot;</span>)) {</div>
+<div class="line"><span class="lineno">  184</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, (ArrayList) value);</div>
+<div class="line"><span class="lineno">  185</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  186</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
+<div class="line"><span class="lineno">  187</span>                .append(value.getClass().getName())</div>
+<div class="line"><span class="lineno">  188</span>                .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
+<div class="line"><span class="lineno">  189</span>                .append(validation);</div>
+<div class="line"><span class="lineno">  190</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  192</span>        }</div>
+<div class="line"><span class="lineno">  193</span>    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00051">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00052">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, and <a class="el" href="_extensions_8java_source.html#l00049">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00023">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00039">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, and <a class="el" href="_extensions_8java_source.html#l00037">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -962,24 +980,24 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00175">175</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  175</span>                                                              {</div>
-<div class="line"><span class="lineno">  176</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0f7cba89986dfc7c79e1ec67f3ce6d68">boolKeyValues</a>.contains(validation)) {</div>
-<div class="line"><span class="lineno">  177</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, (<span class="keywordtype">boolean</span>) value);</div>
-<div class="line"><span class="lineno">  178</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  179</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
-<div class="line"><span class="lineno">  180</span>                .append(value.getClass().getName())</div>
-<div class="line"><span class="lineno">  181</span>                .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
-<div class="line"><span class="lineno">  182</span>                .append(validation);</div>
-<div class="line"><span class="lineno">  183</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  185</span>        }</div>
-<div class="line"><span class="lineno">  186</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0f7cba89986dfc7c79e1ec67f3ce6d68"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0f7cba89986dfc7c79e1ec67f3ce6d68">dev.filechampion.filechampion4j.Extensions.boolKeyValues</a></div><div class="ttdeci">List&lt; String &gt; boolKeyValues</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00059">Extensions.java:59</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00164">164</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  164</span>                                                              {</div>
+<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0f7cba89986dfc7c79e1ec67f3ce6d68">boolKeyValues</a>.contains(validation)) {</div>
+<div class="line"><span class="lineno">  166</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, (<span class="keywordtype">boolean</span>) value);</div>
+<div class="line"><span class="lineno">  167</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  168</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
+<div class="line"><span class="lineno">  169</span>                .append(value.getClass().getName())</div>
+<div class="line"><span class="lineno">  170</span>                .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
+<div class="line"><span class="lineno">  171</span>                .append(validation);</div>
+<div class="line"><span class="lineno">  172</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  173</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  174</span>        }</div>
+<div class="line"><span class="lineno">  175</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a0f7cba89986dfc7c79e1ec67f3ce6d68"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0f7cba89986dfc7c79e1ec67f3ce6d68">dev.filechampion.filechampion4j.Extensions.boolKeyValues</a></div><div class="ttdeci">List&lt; String &gt; boolKeyValues</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00048">Extensions.java:48</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00059">dev.filechampion.filechampion4j.Extensions.boolKeyValues</a>, <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00051">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00052">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, and <a class="el" href="_extensions_8java_source.html#l00049">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00048">dev.filechampion.filechampion4j.Extensions.boolKeyValues</a>, <a class="el" href="_extensions_8java_source.html#l00023">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00039">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, and <a class="el" href="_extensions_8java_source.html#l00037">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1044,24 +1062,24 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00157">157</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  157</span>                                                             {</div>
-<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a90d91f0bf36cbb203c321674c977ea07">stringKeyValues</a>.contains(validation)) {</div>
-<div class="line"><span class="lineno">  159</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, value.toString());</div>
-<div class="line"><span class="lineno">  160</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  161</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
-<div class="line"><span class="lineno">  162</span>                .append(value.getClass().getName())</div>
-<div class="line"><span class="lineno">  163</span>                .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
-<div class="line"><span class="lineno">  164</span>                .append(validation);</div>
-<div class="line"><span class="lineno">  165</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  166</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
-<div class="line"><span class="lineno">  167</span>        }</div>
-<div class="line"><span class="lineno">  168</span>    }</div>
-<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a90d91f0bf36cbb203c321674c977ea07"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a90d91f0bf36cbb203c321674c977ea07">dev.filechampion.filechampion4j.Extensions.stringKeyValues</a></div><div class="ttdeci">List&lt; String &gt; stringKeyValues</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00056">Extensions.java:56</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00146">146</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>                                                             {</div>
+<div class="line"><span class="lineno">  147</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a90d91f0bf36cbb203c321674c977ea07">stringKeyValues</a>.contains(validation)) {</div>
+<div class="line"><span class="lineno">  148</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad2dcad4c97dde7ef35cc069220cac624">validationsMap</a>.put(validation, value.toString());</div>
+<div class="line"><span class="lineno">  149</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  150</span>            <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.replace(0, <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.length(),  <a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a3ffb0ea6bd94ffbdb79a4a444112e4a0">sharedMessage1</a>)</div>
+<div class="line"><span class="lineno">  151</span>                .append(value.getClass().getName())</div>
+<div class="line"><span class="lineno">  152</span>                .append(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#ad22eaf5da91b032cb077d4b708636d0a">sharedMessage2</a>)</div>
+<div class="line"><span class="lineno">  153</span>                .append(validation);</div>
+<div class="line"><span class="lineno">  154</span>            <a class="code hl_function" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#adebd31331477fe200ec272ae4569f482">logWarn</a>(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  155</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<a class="code hl_variable" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a5ae592ab98b05f66f39838b07f9afeeb">sbLogMessage</a>.toString());</div>
+<div class="line"><span class="lineno">  156</span>        }</div>
+<div class="line"><span class="lineno">  157</span>    }</div>
+<div class="ttc" id="aclassdev_1_1filechampion_1_1filechampion4j_1_1_extensions_html_a90d91f0bf36cbb203c321674c977ea07"><div class="ttname"><a href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a90d91f0bf36cbb203c321674c977ea07">dev.filechampion.filechampion4j.Extensions.stringKeyValues</a></div><div class="ttdeci">List&lt; String &gt; stringKeyValues</div><div class="ttdef"><b>Definition:</b> <a href="_extensions_8java_source.html#l00045">Extensions.java:45</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00046">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00051">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00052">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, <a class="el" href="_extensions_8java_source.html#l00056">dev.filechampion.filechampion4j.Extensions.stringKeyValues</a>, and <a class="el" href="_extensions_8java_source.html#l00049">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
+<p class="reference">References <a class="el" href="_extensions_8java_source.html#l00023">dev.filechampion.filechampion4j.Extensions.logWarn()</a>, <a class="el" href="_extensions_8java_source.html#l00034">dev.filechampion.filechampion4j.Extensions.sbLogMessage</a>, <a class="el" href="_extensions_8java_source.html#l00039">dev.filechampion.filechampion4j.Extensions.sharedMessage1</a>, <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.sharedMessage2</a>, <a class="el" href="_extensions_8java_source.html#l00045">dev.filechampion.filechampion4j.Extensions.stringKeyValues</a>, and <a class="el" href="_extensions_8java_source.html#l00037">dev.filechampion.filechampion4j.Extensions.validationsMap</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1109,9 +1127,9 @@ Here is the caller graph for this function:</div>
 <div class="line">        <span class="stringliteral">&quot;footer_signatures&quot;</span>, <span class="stringliteral">&quot;change_ownership&quot;</span>, <span class="stringliteral">&quot;change_ownership_user&quot;</span>, <span class="stringliteral">&quot;change_ownership_mode&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;name_encoding&quot;</span>, <span class="stringliteral">&quot;max_size&quot;</span>, <span class="stringliteral">&quot;extension_plugins&quot;</span>, <span class="stringliteral">&quot;add_checksum&quot;</span>, <span class="stringliteral">&quot;fail_fast&quot;</span>)</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00053">53</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00042">42</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 
 </div>
 </div>
@@ -1135,9 +1153,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00059">59</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00048">48</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00175">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00164">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>.</p>
 
 </div>
 </div>
@@ -1161,9 +1179,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00047">47</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00035">35</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00066">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00212">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00240">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>, <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, and <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00055">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00201">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00229">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>, <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, and <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 
 </div>
 </div>
@@ -1187,9 +1205,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00048">48</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00036">36</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00066">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, and <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00055">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, and <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>.</p>
 
 </div>
 </div>
@@ -1213,9 +1231,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00029">29</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00017">17</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00040">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00030">dev.filechampion.filechampion4j.Extensions.logInfo()</a>, and <a class="el" href="_extensions_8java_source.html#l00035">dev.filechampion.filechampion4j.Extensions.logWarn()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00028">dev.filechampion.filechampion4j.Extensions.logFine()</a>, <a class="el" href="_extensions_8java_source.html#l00018">dev.filechampion.filechampion4j.Extensions.logInfo()</a>, and <a class="el" href="_extensions_8java_source.html#l00023">dev.filechampion.filechampion4j.Extensions.logWarn()</a>.</p>
 
 </div>
 </div>
@@ -1239,9 +1257,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00046">46</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00034">34</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00066">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00212">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00240">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>, <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00193">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00175">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00157">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00055">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00201">dev.filechampion.filechampion4j.Extensions.checkInputs()</a>, <a class="el" href="_extensions_8java_source.html#l00229">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>, <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00182">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00164">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00146">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
 
 </div>
 </div>
@@ -1265,9 +1283,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00051">51</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00039">39</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00193">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00175">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00157">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00182">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00164">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00146">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
 
 </div>
 </div>
@@ -1291,9 +1309,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00052">52</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00040">40</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00091">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00193">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00175">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00157">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00080">dev.filechampion.filechampion4j.Extensions.mapConfiguredExtensions()</a>, <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00182">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00164">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00146">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
 
 </div>
 </div>
@@ -1320,9 +1338,9 @@ Here is the caller graph for this function:</div>
 <div class="line">    <span class="stringliteral">&quot;footer_signatures&quot;</span>, <span class="stringliteral">&quot;change_ownership_user&quot;</span>, <span class="stringliteral">&quot;change_ownership_mode&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;max_size&quot;</span>, <span class="stringliteral">&quot;extension_plugins&quot;</span>)</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00056">56</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00045">45</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00157">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00146">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
 
 </div>
 </div>
@@ -1346,9 +1364,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00050">50</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00038">38</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00240">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00229">dev.filechampion.filechampion4j.Extensions.getValidationValue()</a>.</p>
 
 </div>
 </div>
@@ -1372,9 +1390,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00049">49</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_extensions_8java_source.html#l00037">37</a> of file <a class="el" href="_extensions_8java_source.html">Extensions.java</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00066">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00119">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00193">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00175">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00157">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_extensions_8java_source.html#l00055">dev.filechampion.filechampion4j.Extensions.Extensions()</a>, <a class="el" href="_extensions_8java_source.html#l00108">dev.filechampion.filechampion4j.Extensions.mapExtensionValidations()</a>, <a class="el" href="_extensions_8java_source.html#l00182">dev.filechampion.filechampion4j.Extensions.setArrayList()</a>, <a class="el" href="_extensions_8java_source.html#l00164">dev.filechampion.filechampion4j.Extensions.setBoolean()</a>, and <a class="el" href="_extensions_8java_source.html#l00146">dev.filechampion.filechampion4j.Extensions.setString()</a>.</p>
 
 </div>
 </div>
@@ -1383,11 +1401,12 @@ Here is the caller graph for this function:</div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>dev</b></li><li class="navelem"><b>filechampion</b></li><li class="navelem"><a class="el" href="namespacedev_1_1filechampion_1_1filechampion4j.html">filechampion4j</a></li><li class="navelem"><a class="el" href="classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html">Extensions</a></li>
-    <li class="footer">Generated on Thu May 4 2023 17:53:52 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Sat May 13 2023 23:37:40 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

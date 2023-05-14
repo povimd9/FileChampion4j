@@ -1,21 +1,4 @@
 var searchData=
 [
-  ['calculatechecksum_0',['calculateChecksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html#a1909fb4ef2f9e8a3029bbc8c921bc2fa',1,'dev.filechampion.filechampion4j.CliPluginHelper.calculateChecksum()'],['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af3055195e4109920308326f7d807cc29',1,'dev.filechampion.filechampion4j.FileValidator.calculateChecksum()']]],
-  ['calculatesha256checksum_1',['calculateSHA256Checksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_s_h256_calculate.html#a34e1629b0d7c954639e688ff9ee9bd63',1,'dev::filechampion::filechampion4j::SH256Calculate']]],
-  ['calculatesmallsha256checksum_2',['calculateSmallSHA256Checksum',['../classdev_1_1filechampion_1_1filechampion4j_1_1_s_h256_calculate.html#a33c4e0514e71ad95a82eda265a5f0252',1,'dev::filechampion::filechampion4j::SH256Calculate']]],
-  ['changefileacl_3',['changeFileAcl',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html#a7f56b5c25bc9643fe169f7f871029cca',1,'dev::filechampion::filechampion4j::FileAclHelper']]],
-  ['checkfilesize_4',['checkFileSize',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a4b5f515c54272fa1c4f177ef05c4fffe',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
-  ['checkinputs_5',['checkInputs',['../classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html#a0b4d6f0065a4fc61701be6ab4103c441',1,'dev::filechampion::filechampion4j::Extensions']]],
-  ['checkmethodinputs_6',['checkMethodInputs',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a5fc1e662912e9b0e80550aa7b244d394',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['checkmimetype_7',['checkMimeType',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a43b491bbdf4b6104d060386d4371753c',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
-  ['checkpluginsconfig_8',['checkPluginsConfig',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a62c4a7a9000c3144937697051081dce2',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['checkpluginsexist_9',['checkPluginsExist',['../classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a4e885231ccddcf38fe15a3caa3168c2b',1,'dev::filechampion::filechampion4j::FileValidator']]],
-  ['checksumtask_10',['ChecksumTask',['../classdev_1_1filechampion_1_1filechampion4j_1_1_s_h256_calculate_1_1_checksum_task.html#a0de3d40c8b2b5b9b84e4d4141d1b7d5d',1,'dev::filechampion::filechampion4j::SH256Calculate::ChecksumTask']]],
-  ['clipluginhelper_11',['CliPluginHelper',['../classdev_1_1filechampion_1_1filechampion4j_1_1_cli_plugin_helper.html#ae5a576210723f85200cb56142bf90c53',1,'dev::filechampion::filechampion4j::CliPluginHelper']]],
-  ['containsfootersignatures_12',['containsFooterSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a9c7f6f3159fef96d606ca0a6712b2165',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
-  ['containsfootersignaturesprocessor_13',['containsFooterSignaturesProcessor',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a6861ee5ffd86e302ecd8fda347815a5f',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
-  ['containsheadersignatures_14',['containsHeaderSignatures',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#aab316adeef5b3b9c80ef17bd05826582',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
-  ['containsheadersignaturesprocessor_15',['containsHeaderSignaturesProcessor',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#aee8c1624a8bb9b5b96d9ea0bdf385e3a',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
-  ['containsmagicbytes_16',['containsMagicBytes',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a480b1c09382ee05e547a68c7eed8e2ed',1,'dev::filechampion::filechampion4j::ValidationsHelper']]],
-  ['containsmagicbytesprocessor_17',['containsMagicBytesProcessor',['../classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html#a2cee2da5d1c0b48a0e76439ec43c9f6b',1,'dev::filechampion::filechampion4j::ValidationsHelper']]]
+  ['addsalt_0',['addSalt',['../classdev_1_1filechampion_1_1filechampion4j_1_1_credentials_manager.html#a21ac02e31cb0420584ce9c4d9722c093',1,'dev::filechampion::filechampion4j::CredentialsManager']]]
 ];

@@ -1,7 +1,7 @@
 var classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator =
 [
     [ "FileValidator", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a5239bec4548e36c68d28e92281006d99", null ],
-    [ "calculateChecksum", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af3055195e4109920308326f7d807cc29", null ],
+    [ "calculateChecksum", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#ad0cbcc510e7b87f101d30299e919fe43", null ],
     [ "checkMethodInputs", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a5fc1e662912e9b0e80550aa7b244d394", null ],
     [ "checkPluginsConfig", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a62c4a7a9000c3144937697051081dce2", null ],
     [ "checkPluginsExist", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a4e885231ccddcf38fe15a3caa3168c2b", null ],
@@ -29,6 +29,7 @@ var classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator =
     [ "validateFile", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#ae3a3c9ce65aceb99c4b075a58ab971aa", null ],
     [ "validateFile", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a7fe8162b70f7a57ddc964633b4024134", null ],
     [ "validateFileMain", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2ac42f051e5724b165e5b0234a1e23f4", null ],
+    [ "checksumAlgorithms", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a638e4b883ce75af07fb98a300f558a81", null ],
     [ "commonFileError", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a4fe69bdcc32188c3f29fcd1f0d846df6", null ],
     [ "commonLogString", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a0a0e80a325b1aeccd6bf80fc1c82186d", null ],
     [ "configJsonObject", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a7b99c979ed2edc47dd99d52803ae7cbc", null ],
@@ -38,6 +39,7 @@ var classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator =
     [ "fileExtension", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a98ac299ff7afaa3a48563293caa74c90", null ],
     [ "fileName", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a73eae52b52dbc48855dd0ae417224255", null ],
     [ "filePath", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a6997021a27bb3315be08284343335901", null ],
+    [ "LOG", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#ac3d351da2572b6c69146c7e178e754be", null ],
     [ "LOGGER", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a3f78a3c8dca9d0a5f1556505169b021d", null ],
     [ "mimeString", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#af12be7cc3fa9c7f1ea3ec0101e93d737", null ],
     [ "originalFile", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a2c1df9d9c45e5bcdf6a2920fb4ef7b89", null ],
@@ -51,5 +53,6 @@ var classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator =
     [ "sharedStringBuilder", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a6fd015ae0b254a0736e6b5605bc9fda0", null ],
     [ "stepConfigsAfter", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a999f3e44488641abbb60a49a895446ce", null ],
     [ "stepConfigsBefore", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a131b88fd48872df69eb057441fb518ce", null ],
+    [ "supportedAlgorithms", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a88b029d59e2b4941af8571445ba09009", null ],
     [ "validationsHelper", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html#a93b5230e2ecf87d1afb86d898e0a91e6", null ]
 ];
