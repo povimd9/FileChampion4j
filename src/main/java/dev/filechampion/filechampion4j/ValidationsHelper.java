@@ -2,14 +2,12 @@ package dev.filechampion.filechampion4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 
 
 /**
@@ -17,19 +15,6 @@ import java.util.logging.LogManager;
  * @version 0.9.8.3
  */
 public class ValidationsHelper {
-    /**
-     * Initialize logging configuration from logging.properties file in resources folder
-     */
-    static {
-        try {
-            Object o = FileValidator.class.getResourceAsStream("/logging.properties");
-            LogManager.getLogManager().readConfiguration((InputStream) o);
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: file not found", e);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: error reading file", e);
-        }
-    }
     private static final Logger LOGGER = Logger.getLogger(ValidationsHelper.class.getName());
     private Extensions extensions;
     private boolean failFast = false;

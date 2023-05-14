@@ -1,6 +1,5 @@
 package dev.filechampion.filechampion4j;
 
-import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileSystemException;
 import java.nio.file.Files;
@@ -8,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.attribute.*;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -23,15 +21,6 @@ public class FileAclHelper {
     private String newPermissions;
     private String newOwnerUsername;
     private StringBuilder errMsg = new StringBuilder();
-
-    static {
-        try {
-            LogManager.getLogManager().readConfiguration(
-                FileValidator.class.getResourceAsStream("/logging.properties"));
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: ", e);
-        }
-    }
     private static final Logger LOGGER = Logger.getLogger(FileAclHelper.class.getName());
     private void logSevere(String message) {
         if (LOGGER.isLoggable(Level.SEVERE)) {

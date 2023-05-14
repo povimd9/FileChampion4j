@@ -2,7 +2,6 @@ package dev.filechampion.filechampion4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -31,17 +30,14 @@ public class FileValidator {
     /**
      * Initialize logging configuration from logging.properties file in resources folder
      */
-    static {
-        try {
-            Object o = FileValidator.class.getResourceAsStream("/logging.properties");
-            LogManager.getLogManager().readConfiguration((InputStream) o);
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: file not found", e);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: error reading file", e);
+     private static final Logger LOG = LogManager.getLogManager().getLogger("");
+     static {
+        if (System.getProperty("java.util.logging.config.file") == null || LOG.getLevel() == null) {
+            LOG.setLevel(Level.INFO);
         }
     }
     private static final Logger LOGGER = Logger.getLogger(FileValidator.class.getName());
+
     private JSONObject configJsonObject;
     private PluginsHelper pluginsHelper;
     private Map<String, StepConfig> stepConfigsBefore = new HashMap<>();

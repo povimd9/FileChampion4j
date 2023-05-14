@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,15 +34,6 @@ public class CliPluginHelper {
     private String endpoint;
     private String responseConfig;
     private StringBuilder logMessage = new StringBuilder();
-
-    static {
-        try {
-            LogManager.getLogManager().readConfiguration(
-                FileValidator.class.getResourceAsStream("/logging.properties"));
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: ", e);
-        }
-    }
     private static final Logger LOGGER = Logger.getLogger(CliPluginHelper.class.getName());
     private void logFine(String message) {
         if (LOGGER.isLoggable(Level.FINE )) {

@@ -1,7 +1,6 @@
 package dev.filechampion.filechampion4j;
 
 
-import java.io.InputStream;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,23 +8,12 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
  * This class is used to load the Validations json objectand provide the validation values for a given extension.
  */
 public class Extensions {
-    static {
-        try {
-            Object o = Extensions.class.getResourceAsStream("/logging.properties");
-            LogManager.getLogManager().readConfiguration((InputStream) o);
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: file not found", e);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: error reading file", e);
-        }
-    }
     private static final Logger LOGGER = Logger.getLogger(Extensions.class.getName());
     private void logInfo(String message) {
         if (LOGGER.isLoggable(Level.INFO)) {
