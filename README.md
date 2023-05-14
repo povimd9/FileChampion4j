@@ -1,7 +1,5 @@
 # About FileChampion4j
 
-# About FileChampion4j
-
 [![Build, Test, and Bench](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml/badge.svg)](https://github.com/povimd9/FileChampion4j/actions/workflows/master_build_workflow.yml)
 &nbsp;[![codecov](https://codecov.io/gh/povimd9/FileChampion4j/branch/master/graph/badge.svg?token=WUCKTU7ALO)](https://codecov.io/gh/povimd9/FileChampion4j)
 &nbsp;[![License](https://img.shields.io/github/license/povimd9/FileChampion4j?style=plastic)](https://github.com/povimd9/FileChampion4j/blob/master/LICENSE)
