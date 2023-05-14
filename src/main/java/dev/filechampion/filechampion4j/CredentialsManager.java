@@ -1,9 +1,7 @@
 package dev.filechampion.filechampion4j;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 
@@ -25,19 +22,6 @@ import java.util.logging.Logger;
  * CredentialsManager class is used to manage any credendials that are needed for plugins, such as API keys, etc.
  */
 public class CredentialsManager {
-    /**
-     * Initialize logging configuration from logging.properties file in resources folder
-     */
-    static {
-        try {
-            Object o = CredentialsManager.class.getResourceAsStream("/logging.properties");
-            LogManager.getLogManager().readConfiguration((InputStream) o);
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: file not found", e);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Could not load default logging configuration: error reading file", e);
-        }
-    }
     private static final Logger LOGGER = Logger.getLogger(CredentialsManager.class.getName());
     private StringBuilder logMessage = new StringBuilder();
     private long credsExpirationTime = 300000;
@@ -107,32 +91,36 @@ public class CredentialsManager {
      * @param credsName (String) - Name of the credentials name/file to retrieve.
      * @return (char[]) - The credentials as a char[].
      * @throws IllegalArgumentException - If the credsName is null or empty, or if the credsName is not found in the credsNamesList.
-     * @throws IOException - If there is an error reading the credentials file.
+     * @throws CredentialsFetchError - If there is an error reading the credentials file or adding the credentials to the list.
      */
-    public char[] getCredentials(String credsName) throws IllegalArgumentException, IOException{
+    public char[] getCredentials(String credsName) throws IllegalArgumentException, CredentialsFetchError {
         if (credsName == null || credsName.isEmpty()) {
             logSevere(logMessage.replace(0, logMessage.length() ,"Credentials name was empty."));
             throw new IllegalArgumentException("Credentials name was empty.");
         }
         if (!this.credsNamesList.contains(credsName)) {
-            logSevere(logMessage.replace(0, logMessage.length() ,"Credentials name was not found."));
-            throw new IllegalArgumentException("Credentials name was not found.");
+            logSevere(logMessage.replace(0, logMessage.length() ,"Credentials name was not found in credentials list."));
+            throw new IllegalArgumentException("Credentials name was not found in credentials list.");
         }
         if (!expirationTimerStarted) {
             setExpirationTime(this.credsExpirationTime);
             expirationTimerStarted = true;
         }
-
-        if (!this.credsMap.containsKey(credsName)) {
-            Path fullCredPath = this.credsPath.resolve(credsName);
-            this.credsList.add(addSalt(this.getCredFileChars(fullCredPath)));
-            logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" with salt added to list."));
-            credsMap.computeIfAbsent(credsName, k -> new HashMap<>()).put(this.credsList.size() - 1, System.currentTimeMillis());
-            logFine(logMessage.replace(0, logMessage.length() ,"Credentials metadata").append(credsName).append(" added to map."));
+        try {
+            if (!this.credsMap.containsKey(credsName)) {
+                Path fullCredPath = this.credsPath.resolve(credsName);
+                this.credsList.add(addSalt(this.getCredFileChars(fullCredPath)));
+                logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" with salt added to list."));
+                credsMap.computeIfAbsent(credsName, k -> new HashMap<>()).put(this.credsList.size() - 1, System.currentTimeMillis());
+                logFine(logMessage.replace(0, logMessage.length() ,"Credentials metadata").append(credsName).append(" added to map."));
+            }
+            this.credsMap.get(credsName).put(2, System.currentTimeMillis());
+            logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" timestamp was updated in the list."));
+            return this.credsList.get(this.credsMap.get(credsName).keySet().iterator().next());
+        } catch (Exception e) {
+            logSevere(logMessage.replace(0, logMessage.length() ,"Error retrieving credentials: ").append(e.getMessage()));
+            throw new CredentialsFetchError("Error retrieving credentials: " + credsName);
         }
-        this.credsMap.get(credsName).put(2, System.currentTimeMillis());
-        logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" timestamp was updated in the list."));
-        return this.credsList.get(this.credsMap.get(credsName).keySet().iterator().next());
     }
 
     /**
@@ -140,10 +128,10 @@ public class CredentialsManager {
      * char[] grows dynamically as the file is read using 64 byte chunks.
      * @param credFilePath (Path) - Path to the credentials file to read.
      * @return (char[]) - The credentials as a char[].
-     * @throws IOException - If there is an error reading the credentials file.
+     * @throws CredentialsFetchError - If there is an error reading the credentials file, or if the credentials file is empty.
      */
-    private char[] getCredFileChars(Path credFilePath) throws IOException {
-        logFine(logMessage.replace(0, logMessage.length() ,"Reading credentials from file: ").append(credFilePath.toString()));
+    private char[] getCredFileChars(Path credFilePath) throws CredentialsFetchError {
+        logFine(logMessage.replace(0, logMessage.length() ,"Reading credentials from file: ").append(credFilePath.getFileName()));
         try (BufferedReader br = Files.newBufferedReader(Paths.get(credFilePath.toString()), Charset.defaultCharset())) {
             char[] tmpCharArray = new char[1];
             int charRead = 0;
@@ -157,10 +145,12 @@ public class CredentialsManager {
                 tmpCharArray[position++] = (char) charRead;
             }
             logFine(logMessage.replace(0, logMessage.length() ,"Credentials read from file: ").append(credFilePath.toString()));
+            if (tmpCharArray[0] == '\u0000') {
+                throw new CredentialsFetchError("Credentials file was empty: " + credFilePath.getFileName());
+            }
             return tmpCharArray;
         } catch (Exception e) {
-            logSevere(logMessage.replace(0, logMessage.length() ,"Error reading credentials file: ").append(e.getMessage()));
-            throw new IOException("Error reading credentials file: " + e.getMessage());
+            throw new CredentialsFetchError("Error reading credentials file: " + e.getMessage());
         }
     }
 
@@ -197,6 +187,15 @@ public class CredentialsManager {
     private void logFine(StringBuilder message) {
         if (LOGGER.isLoggable(Level.FINE )) {
             LOGGER.fine(message.toString());
+        }
+    }
+
+    /**
+     * Custom exception for credential fetch errors
+     */
+    public class CredentialsFetchError extends Exception { 
+        public CredentialsFetchError(String errorMessage) {
+            super(errorMessage);
         }
     }
 
