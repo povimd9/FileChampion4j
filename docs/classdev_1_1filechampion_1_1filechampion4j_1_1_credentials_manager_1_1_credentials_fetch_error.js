@@ -1,0 +1,4 @@
+var classdev_1_1filechampion_1_1filechampion4j_1_1_credentials_manager_1_1_credentials_fetch_error =
+[
+    [ "CredentialsFetchError", "classdev_1_1filechampion_1_1filechampion4j_1_1_credentials_manager_1_1_credentials_fetch_error.html#a78343dbb4ab984c6758e97f64ec2df77", null ]
+];

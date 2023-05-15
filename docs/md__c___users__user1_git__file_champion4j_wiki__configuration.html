@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('md__c___users__user1_git__file_champio
 <li><b>Validations</b> - configurations of validation categories and related definitions</li>
 <li><b>Plugins</b> - configurations of plugins that can be used in validations</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md39"></a>
+<h1><a class="anchor" id="autotoc_md38"></a>
 JSON Structure</h1>
 <p>FileChampion configurations are defined in a JSON object with the following structure:</p>
 <div class="fragment"><div class="line">{</div>
@@ -166,10 +166,10 @@ JSON Structure</h1>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md40"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md39"></a>
 General Options</h1>
 <p>Configurations defined in this section impact all validations/plugins.</p>
-<h2><a class="anchor" id="autotoc_md41"></a>
+<h2><a class="anchor" id="autotoc_md40"></a>
 Checksums</h2>
 <p>Files checksum is a Hash-based signature, corresponding uniquely to the file content.</p>
 <p>Checksum values can be used for multiple purposes, including:</p>
@@ -194,7 +194,7 @@ Checksums</h2>
 <div class="line">  &quot;checksums&quot;: [&quot;MD5&quot;, &quot;SHA-1&quot;, &quot;SHA-256&quot;, &quot;SHA-512&quot;]</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Using these configurations will result in 4 key:value sets in the getFileChecksums(), with corresponding algorithm:checksum entries.</p>
-<h1><a class="anchor" id="autotoc_md42"></a>
+<h1><a class="anchor" id="autotoc_md41"></a>
 Defining Validations</h1>
 <p>The "Validations" section of the configurations includes all validation-related definitions, and has the following structure:</p>
 <div class="fragment"><div class="line">&quot;Validations&quot;: {</div>
@@ -231,7 +231,7 @@ Defining Validations</h1>
 <li>Common MIME types: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types</a></li>
 <li>File signatures/patterns: <a href="https://www.garykessler.net/library/file_sigs.html">https://www.garykessler.net/library/file_sigs.html</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 Validation Options</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -261,9 +261,9 @@ Validation Options</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyCenter">Extensions to be executed as part of file extension validations   </td><td class="markdownTableBodyCenter">String Array   </td><td class="markdownTableBodyCenter">"extension_plugins"   </td><td class="markdownTableBodyCenter">list of plugins that should be executed as part of file type validations   </td><td class="markdownTableBodyCenter">"extension_plugins": ["PLUGIN_NAME.STEP_NAME", "handle_pdf_documents.step1", "handle_pdf_documents.step2"]   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md44"></a>
+<h1><a class="anchor" id="autotoc_md43"></a>
 Defining Plugins</h1>
-<h2><a class="anchor" id="autotoc_md45"></a>
+<h2><a class="anchor" id="autotoc_md44"></a>
 Introduction</h2>
 <p>FileChampion plugins engine allows defining custom tasks, to be carried out before/after file validation controls execution.</p>
 <p>Currently only 'Cli' plugin type is supported, which allows running any target process available on the system.</p>
@@ -279,7 +279,7 @@ Introduction</h2>
 <li>If neither 'run_before' or 'run_after' are set, the step will not execute.</li>
 <li>Plugins will only run for extensions that define the correct step in 'extension_plugins'.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md46"></a>
+<h2><a class="anchor" id="autotoc_md45"></a>
 Variables for injection/extraction of steps fields</h2>
 <p>FileChampion supports injection and extraction of values during plugin steps execution, supporting passing/receiving of relevant values to/from other services.</p>
 <p>Injection variables can be defined in 'endpoint', 'header', and 'body' arguments, and include:</p>
@@ -315,7 +315,7 @@ Variables for injection/extraction of steps fields</h2>
 <li>endpoint: "**clean_pdf_file.sh ${filePath}__clean_file.pdf**" - will execute "**clean_pdf_file.sh /full_path/TARGET_PDF_FILE_clean_file.pdf**"</li>
 <li>response: "**results: Success. File: ${STEP_NAME.filePath}.**" - will extract and read "**_/full_path/TARGET_PDF_FILE_clean_file.pdf**" if response is "**results: Success. File: /full_path/TARGET_PDF_FILE_clean_file.pdf.**" or fail if the response does not contain this pattern.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md47"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 Plugins Options</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -335,13 +335,13 @@ Plugins Options</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter">Expected response pattern for successful step execution   </td><td class="markdownTableBodyCenter">No   </td><td class="markdownTableBodyCenter">String   </td><td class="markdownTableBodyCenter">"response"   </td><td class="markdownTableBodyCenter">Pattern expected in return   </td><td class="markdownTableBodyCenter">"response": "Success: ${step1.filePath}"   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md48"></a>
+<h1><a class="anchor" id="autotoc_md47"></a>
 Defining Logging Level</h1>
 <p>FileChampion4j utilizes java default logging library. By default, logging level and properties are loaded from default locations defined for the environment, or can be set by argument:</p>
 <div class="fragment"><div class="line">-Djava.util.logging.config.file=src\test\resources\logging.properties</div>
 </div><!-- fragment --><p>Overriding these properties can be done by using dedicated logging libraries, or running the application with <code>java.util.logging.config.file=resources/logging.properties</code>.</p>
 <p>Normal use should define 'INFO' for logging level, while 'FINE' log level can be used for detailed information, intended for troubleshooting purposes.</p>
-<h1><a class="anchor" id="autotoc_md49"></a>
+<h1><a class="anchor" id="autotoc_md48"></a>
 Example JSON</h1>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;General&quot;: {</div>
@@ -458,7 +458,7 @@ Example JSON</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun May 14 2023 00:15:10 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Mon May 15 2023 17:58:30 for filechampion4j by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

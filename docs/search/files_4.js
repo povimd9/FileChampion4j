@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pluginshelper_2ejava_0',['PluginsHelper.java',['../_plugins_helper_8java.html',1,'']]]
+  ['indexsynchronizer_2ejava_0',['IndexSynchronizer.java',['../_index_synchronizer_8java.html',1,'']]]
 ];

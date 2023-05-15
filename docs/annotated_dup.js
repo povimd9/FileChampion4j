@@ -9,7 +9,9 @@ var annotated_dup =
           [ "Extensions", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_extensions" ],
           [ "FileAclHelper", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_acl_helper" ],
           [ "FileValidator", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_file_validator" ],
+          [ "IndexSynchronizer", "classdev_1_1filechampion_1_1filechampion4j_1_1_index_synchronizer.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_index_synchronizer" ],
           [ "PluginsHelper", "classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_plugins_helper" ],
+          [ "SecureFileReader", "classdev_1_1filechampion_1_1filechampion4j_1_1_secure_file_reader.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_secure_file_reader" ],
           [ "ValidationResponse", "classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_validation_response" ],
           [ "ValidationsHelper", "classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper.html", "classdev_1_1filechampion_1_1filechampion4j_1_1_validations_helper" ]
         ] ]
