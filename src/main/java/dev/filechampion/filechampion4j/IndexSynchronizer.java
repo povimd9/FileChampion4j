@@ -43,7 +43,7 @@ public class IndexSynchronizer {
 
     /**
      * Get a secret value from the cache.
-     * @param secret (String) name of the secret.
+     * @param secret (String) name of the secret (considered not sensitive, as it originated in the JSONObject).
      * @return (char[]) secret value as char array for mutability, or null if not found.
      */
     public char[] getSecretValue(String secret) {
