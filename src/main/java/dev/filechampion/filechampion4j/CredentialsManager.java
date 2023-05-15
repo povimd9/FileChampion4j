@@ -1,7 +1,6 @@
 package dev.filechampion.filechampion4j;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,6 +25,7 @@ public class CredentialsManager {
     private StringBuilder logMessage = new StringBuilder();
     private long credsExpirationTime = 300000;
     private Path credsPath;
+    private IndexSynchronizer credsSynchronizer = new IndexSynchronizer();
     private List<String> credsNamesList;
     private List<char[]> credsList = new LinkedList<>();
     private Map<String, Map<Integer, Long>> credsMap = new HashMap<>();
@@ -80,10 +80,10 @@ public class CredentialsManager {
         timer.schedule(new java.util.TimerTask() {
             @Override
             public void run() {
-                checkCredExpiration();
+                checkCredExpiration(credsExpirationTime);
             }
-        }, credsExpirationTime, credsExpirationTime);
-        logInfo(logMessage.replace(0, logMessage.length() ,"Scheduled timer to check for expired credentials every ").append(expirationTime).append(" milliseconds."));
+        }, credsExpirationTime / 2 , credsExpirationTime / 2);
+        logFine(logMessage.replace(0, logMessage.length() ,"Scheduled timer to check for expired credentials every ").append(expirationTime).append(" milliseconds."));
     }
 
     /**
@@ -107,16 +107,15 @@ public class CredentialsManager {
             expirationTimerStarted = true;
         }
         try {
-            if (!this.credsMap.containsKey(credsName)) {
+            if (credsSynchronizer.getSecretValue(credsName)!=null) {
+                logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" found in list."));
+                return credsSynchronizer.getSecretValue(credsName);
+            } else {
+                logFine(logMessage.replace(0, logMessage.length() ,"Adding ").append(credsName).append(" to credentials list."));
                 Path fullCredPath = this.credsPath.resolve(credsName);
-                this.credsList.add(addSalt(this.getCredFileChars(fullCredPath)));
-                logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" with salt added to list."));
-                credsMap.computeIfAbsent(credsName, k -> new HashMap<>()).put(this.credsList.size() - 1, System.currentTimeMillis());
-                logFine(logMessage.replace(0, logMessage.length() ,"Credentials metadata").append(credsName).append(" added to map."));
+                credsSynchronizer.addItem(addSalt(this.getCredFileChars(fullCredPath)), credsName);
+                return credsSynchronizer.getSecretValue(credsName);
             }
-            this.credsMap.get(credsName).put(2, System.currentTimeMillis());
-            logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" timestamp was updated in the list."));
-            return this.credsList.get(this.credsMap.get(credsName).keySet().iterator().next());
         } catch (Exception e) {
             logSevere(logMessage.replace(0, logMessage.length() ,"Error retrieving credentials: ").append(e.getMessage()));
             throw new CredentialsFetchError("Error retrieving credentials: " + credsName);
@@ -238,23 +237,7 @@ public class CredentialsManager {
     /**
      * This method is used to check if any credential is expired, and remove them from the list if it is.
      */
-    private void checkCredExpiration() {
-        logFine(logMessage.replace(0, logMessage.length() ,"Checking for expired credentials."));
-        List<String> expiredKeys = new ArrayList<>();
-        for (Map.Entry<String, Map<Integer, Long>> entry : this.credsMap.entrySet()) {
-            String key = entry.getKey();
-            Integer credPosition = entry.getValue().keySet().iterator().next();
-            long credLastTime = entry.getValue().getOrDefault(2, credsExpirationTime);
-            if (System.currentTimeMillis() - credLastTime > credsExpirationTime) {
-                Arrays.fill(this.credsList.get(credPosition), '0');
-                this.credsList.remove(this.credsList.get(credPosition));
-                expiredKeys.add(key);
-                logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(key).append(" removed from list."));
-            }
-        }
-        for (String key : expiredKeys) {
-            this.credsMap.remove(key);
-            logFine(logMessage.replace(0, logMessage.length() ,"Expired credentials metadata ").append(key).append(" removed from map."));
-        }
+    private void checkCredExpiration(Long credsExpirationTime) {
+        credsSynchronizer.checkAndRemoveStaleSecrets(credsExpirationTime);
     }
 }
