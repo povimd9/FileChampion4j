@@ -2,11 +2,15 @@ package dev.filechampion.filechampion4j;
 
 import org.junit.jupiter.api.*;
 
+import dev.filechampion.filechampion4j.CredentialsManager.CredentialsFetchError;
+
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.LogManager;
 
 /**
  * Tests for CredentialsManager class.
@@ -20,9 +24,11 @@ class CredentialsManagerTest {
      * Initializes the CredentialsManager and its dependencies.
      */
     @BeforeAll
-    static void setUp() {
+    static void setUp() throws Exception {
+        Object o = FileValidator.class.getResourceAsStream("/logging.properties");
+        LogManager.getLogManager().readConfiguration((InputStream) o);
         credsPath = Paths.get("src/test/resources/creds/");
-        credsNamesList = Arrays.asList("creds1.txt", "creds2.txt", "creds3.txt");
+        credsNamesList = Arrays.asList("creds1.txt", "creds2.txt", "creds3.txt", "emptycreds.txt");
         credsManager = new CredentialsManager(credsPath, credsNamesList);
     }
 
@@ -35,6 +41,18 @@ class CredentialsManagerTest {
         char[] creds1 = credsManager.getCredentials("creds1.txt");
         assertNotNull(creds1, "Credentials were null instead of secret value.");
         assertTrue(creds1.length > 0, "Credentials were empty instead of secret value.");
+    }
+
+    /**
+     * Tests the getCredentials to validate that it throws a CredentialsFetchError when given an empty file.
+     * @throws Exception if the credentials file cannot be read.
+     */
+    @Test
+    void testGetCredentialsFromEmptyFile() throws Exception {
+        assertThrows(CredentialsFetchError.class, () -> {
+            credsManager.getCredentials("emptycreds.txt");
+        }, "CredentialsManager did not throw CredentialsFetchError when requesting an empty credentials file.");
+        
     }
 
     /**
