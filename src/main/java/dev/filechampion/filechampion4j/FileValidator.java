@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import dev.filechampion.filechampion4j.PluginsHelper.PluginConfig;
@@ -23,15 +22,15 @@ import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 /**
  * This class is used to validate files
  * @author filechampion
- * @version 0.9.8.3
+ * @version 0.9.8.4
  * @see <a href="https://www.filechampion.dev/">FileChampion4j Docs</a>
  */
 public class FileValidator {
     /**
-     * Initialize logging configuration from logging.properties file in resources folder
+     * Set logging level to INFO if not set in config file/other.
      */
-     private static final Logger LOG = LogManager.getLogManager().getLogger("");
-     static {
+    private static final Logger LOG = LogManager.getLogManager().getLogger("");
+    static {
         if (System.getProperty("java.util.logging.config.file") == null || LOG.getLevel() == null) {
             LOG.setLevel(Level.INFO);
         }
