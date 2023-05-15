@@ -28,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * Unit test for FileValidator class.
@@ -45,6 +44,8 @@ public class FileValidatorTest {
     @Setup
     @BeforeEach
     void setUp() throws Exception {
+        Object o = FileValidator.class.getResourceAsStream("/logging.properties");
+        LogManager.getLogManager().readConfiguration((InputStream) o);
         String testUsername = System.getProperty("user.name");
         String testCliContentPlugin = "java -jar plugins/java_echo.jar Success: MTIzNDU2IA0K, MD5: ${fileChecksum.md5}, SHA-1: ${fileChecksum.sha1}, SHA-256: ${fileChecksum.sha256}, SHA-512: ${fileChecksum.sha512}, suffix";
         fileInBytes = generatePdfBytes(250000);
@@ -95,14 +96,6 @@ public class FileValidatorTest {
         + "}");
         
         validator = new FileValidator(CONFIG_JSON);
-    }
-
-    @Test
-    void testDefaultLoggingConfiguration() {
-        assertDoesNotThrow(() -> {
-            Object o = FileValidator.class.getResourceAsStream("/logging.properties");
-            LogManager.getLogManager().readConfiguration((InputStream) o);
-        }, "Failed to load default logging configuration");
     }
 
     // Test empty json config object
