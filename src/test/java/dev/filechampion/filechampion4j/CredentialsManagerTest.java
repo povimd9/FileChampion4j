@@ -38,6 +38,11 @@ class CredentialsManagerTest {
      */
     @Test
     void testGetCredentials() throws Exception {
+        String creds1Original = new String(credsManager.getCredentials("creds1.txt"));
+        assertNotNull(creds1Original, "creds1Original was null instead of secret value.");
+        char[] originalSecret = getOriginalSecret(credsManager.getCredentials("creds1.txt")).toCharArray();
+        assertEquals("NOT_REAL_SECRET_1", new String(originalSecret), "originalSecret was" + new String(originalSecret) + " instead of 'NOT_REAL_SECRET_1'.");
+
         char[] creds1 = credsManager.getCredentials("creds1.txt");
         assertNotNull(creds1, "Credentials were null instead of secret value.");
         assertTrue(creds1.length > 0, "Credentials were empty instead of secret value.");
