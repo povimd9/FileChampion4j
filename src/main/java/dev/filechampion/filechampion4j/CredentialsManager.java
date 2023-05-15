@@ -1,5 +1,6 @@
 package dev.filechampion.filechampion4j;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -124,7 +125,13 @@ public class CredentialsManager {
      */
     private char[] getCredFileChars(Path credFilePath) throws CredentialsFetchError {
         logFine(logMessage.replace(0, logMessage.length() ,"Reading credentials from file: ").append(credFilePath.getFileName()));
-        try (Reader br = new SecureFileReader(new FileReader(credFilePath.toFile()), 1)) {
+        FileReader fileHandle;
+        try {
+            fileHandle = new FileReader(credFilePath.toFile());
+        } catch (FileNotFoundException e) {
+            throw new CredentialsFetchError("Credentials file was not found: " + credFilePath.getFileName());
+        }
+        try (Reader br = new SecureFileReader(fileHandle, 1)) {
             char[] tmpCharArray = new char[1];
             int charRead = 0;
             int position = 0;
@@ -143,6 +150,12 @@ public class CredentialsManager {
             return tmpCharArray;
         } catch (Exception e) {
             throw new CredentialsFetchError("Error reading credentials file: " + e.getMessage());
+        } finally {
+            try {
+                fileHandle.close();
+            } catch (Exception e) {
+                logSevere(logMessage.replace(0, logMessage.length() ,"Error closing credentials file: ").append(e.getMessage()));
+            }
         }
     }
 
