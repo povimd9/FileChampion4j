@@ -1,17 +1,11 @@
 package dev.filechampion.filechampion4j;
 
-import java.io.BufferedReader;
-import java.nio.charset.Charset;
+import java.io.FileReader;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,8 +21,6 @@ public class CredentialsManager {
     private Path credsPath;
     private IndexSynchronizer credsSynchronizer = new IndexSynchronizer();
     private List<String> credsNamesList;
-    private List<char[]> credsList = new LinkedList<>();
-    private Map<String, Map<Integer, Long>> credsMap = new HashMap<>();
     private SecureRandom random = new SecureRandom();
     private String randomString = "";
     private int randomStringIndex = 0;
@@ -106,6 +98,7 @@ public class CredentialsManager {
             setExpirationTime(this.credsExpirationTime);
             expirationTimerStarted = true;
         }
+        // wrap in try/catch to catch any errors while reading sensitive file content.
         try {
             if (credsSynchronizer.getSecretValue(credsName)!=null) {
                 logFine(logMessage.replace(0, logMessage.length() ,"Credentials ").append(credsName).append(" found in list."));
@@ -131,7 +124,7 @@ public class CredentialsManager {
      */
     private char[] getCredFileChars(Path credFilePath) throws CredentialsFetchError {
         logFine(logMessage.replace(0, logMessage.length() ,"Reading credentials from file: ").append(credFilePath.getFileName()));
-        try (BufferedReader br = Files.newBufferedReader(Paths.get(credFilePath.toString()), Charset.defaultCharset())) {
+        try (Reader br = new SecureFileReader(new FileReader(credFilePath.toFile()), 1)) {
             char[] tmpCharArray = new char[1];
             int charRead = 0;
             int position = 0;
