@@ -57,11 +57,11 @@ public class PluginsHelper {
 
                         continue;
                     case "http":
-                        stepConfig.setMethod(step.optString("method"));
+                        stepConfig.setMethod(step.getString("method"));
                         stepConfig.setHeaders(step.optJSONObject("headers"));
                         stepConfig.setBody(step.optJSONObject("body"));
-                        stepConfig.setHttpPassCode(step.optInt("http_pass_code"));
-                        stepConfig.setHttpFailCode(step.optInt("http_fail_code"));
+                        stepConfig.setHttpPassCode(step.getInt("http_pass_code"));
+                        stepConfig.setHttpFailCode(step.getInt("http_fail_code"));
                         stepConfigs.put(pluginStepName, stepConfig);
                         continue;
                     default:

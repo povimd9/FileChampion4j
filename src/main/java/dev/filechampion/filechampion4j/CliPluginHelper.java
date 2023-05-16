@@ -247,6 +247,9 @@ public class CliPluginHelper {
         }
     }
 
+    ////////////////////
+    // Helper methods //
+    ////////////////////
     
     /**
      * Saves the file to a temporary directory

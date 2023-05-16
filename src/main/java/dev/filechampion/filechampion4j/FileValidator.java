@@ -122,11 +122,10 @@ public class FileValidator {
      * @throws IllegalArgumentException - If any of the required inputs are null or empty.
      */
     public ValidationResponse validateFile(String fileCategory, byte[] originalFile, String fileName, Path outputDir,  String mimeString) {
-        sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating with request mime ")
+        logFine(sharedStringBuilder.replace(0, sharedStringBuilder.length(), "Validating with request mime ")
             .append(mimeString)
             .append(" and storage for file bytes of: ")
-            .append(fileName);
-        logFine(sharedStringBuilder);
+            .append(fileName));
         this.fileCategory = fileCategory;
         this.fileName = fileName;
         this.originalFile = originalFile;
