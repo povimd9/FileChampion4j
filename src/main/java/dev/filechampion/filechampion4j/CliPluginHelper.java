@@ -28,12 +28,6 @@ import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
  * The class is responsible for injecting file path/content/hash into the CLI command, execute the command, and process the results.
  */
 public class CliPluginHelper {
-    private StepConfig singleStepConfig;
-    private int timeout;
-    private String errString = "Error: ";
-    private String endpoint;
-    private String responseConfig;
-    private StringBuilder logMessage = new StringBuilder();
     private static final Logger LOGGER = Logger.getLogger(CliPluginHelper.class.getName());
     private void logFine(String message) {
         if (LOGGER.isLoggable(Level.FINE )) {
@@ -45,6 +39,13 @@ public class CliPluginHelper {
             LOGGER.warning(message);
         }
     }
+    private StepConfig singleStepConfig;
+    private int timeout;
+    private String errString = "Error: ";
+    private String endpoint;
+    private String responseConfig;
+    private StringBuilder logMessage = new StringBuilder();
+    private Path filePathRaw;
 
     /**
      * Constructor for CliPluginHelper
@@ -69,43 +70,60 @@ public class CliPluginHelper {
     String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
         Map<String, String> responsePatterns = new HashMap<>();
-        Path filePathRaw;
-
-        filePathRaw = saveFileToTempDir(fileExtension, fileContent);
-        if (filePathRaw == null) {
-            responsePatterns.put(errString, "Failed to save file to temporary directory");
-            responseMap.put(errString, responsePatterns);
-            return responseMap;
-        }
-
-        String filePath = filePathRaw.toString();
-        prepEndpoint(filePath, fileContent);
-        logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(" endpoint: ").append(endpoint);
-        logFine(logMessage.toString());
-
         try {
+            prepEndpoint(fileContent, fileExtension);
+            logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(" endpoint: ").append(endpoint);
+            logFine(logMessage.toString());
             result = timedProcessExecution(endpoint);
             logFine(singleStepConfig.getName() + " result: " + result);
         } catch (IOException|NullPointerException|InterruptedException e) {
             Thread.currentThread().interrupt();
             responsePatterns.put(errString, e.getMessage());
         }
-
         String expectedResults = responseConfig.substring(0, responseConfig.indexOf("${")>-1?
         responseConfig.indexOf("${") : responseConfig.length());
 
         if (result.contains(expectedResults)) {
             responsePatterns = extractResponsePatterns(result);
             responseMap.put("Success", responsePatterns);
+            if (filePathRaw != null) {
+                deleteTempDir(filePathRaw);
+            }
             return responseMap;
         } else {
             logMessage.replace(0, logMessage.length(), "Error, expected: \"")
                     .append(expectedResults).append("\", received: ");
             responsePatterns.put(logMessage.toString(), result);
             responseMap.put(errString, responsePatterns);
-            deleteTempDir(filePathRaw);
+            if (filePathRaw != null) {
+                deleteTempDir(filePathRaw);
+            }
             return responseMap;
         }
+    }
+
+    /**
+     * Prepares the endpoint command by replacing the placeholders with the actual values
+     * @param fileContent (byte[]) - the file content
+     * @param fileExtension (String) - the file extension
+     * @throws IOException - if failed to save the file to temporary directory
+     */
+    private void prepEndpoint(byte[] fileContent, String fileExtension) throws IOException {
+        String newEndpoint = endpoint;
+        if (endpoint.contains("${filePath}")) {
+            filePathRaw = saveFileToTempDir(fileExtension, fileContent);
+            if (filePathRaw == null) {
+                throw new IOException("Failed to save file to temporary directory");
+            }
+            String filePath = filePathRaw.toString();
+            newEndpoint = endpoint.replace("${filePath}", filePath);
+        }
+        newEndpoint = newEndpoint.contains("${fileContent}") ? newEndpoint.replace("${fileContent}", Base64.getEncoder().encodeToString(fileContent)) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.md5}") ? newEndpoint.replace("${fileChecksum.md5}", calculateChecksum(fileContent, "MD5")) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.sha1}") ? newEndpoint.replace("${fileChecksum.sha1}", calculateChecksum(fileContent, "SHA-1")) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.sha256}") ? newEndpoint.replace("${fileChecksum.sha256}", calculateChecksum(fileContent, "SHA-256")) : newEndpoint;
+        newEndpoint = newEndpoint.contains("${fileChecksum.sha512}") ? newEndpoint.replace("${fileChecksum.sha512}", calculateChecksum(fileContent, "SHA-512")) : newEndpoint;
+        endpoint = newEndpoint;
     }
 
     /**
@@ -165,22 +183,6 @@ public class CliPluginHelper {
         return responsePatterns;
     }
     
-    /**
-     * Prepares the endpoint command by replacing the placeholders with the actual values
-     * @param filePath (String) - the path to the file
-     * @param fileContent (byte[]) - the file content
-     */
-    private void prepEndpoint(String filePath, byte[] fileContent) {
-        
-        String newEndpoint = endpoint.contains("${filePath}") ? endpoint.replace("${filePath}", filePath) : endpoint;
-        newEndpoint = newEndpoint.contains("${fileContent}") ? newEndpoint.replace("${fileContent}", Base64.getEncoder().encodeToString(fileContent)) : newEndpoint;
-        newEndpoint = newEndpoint.contains("${fileChecksum.md5}") ? newEndpoint.replace("${fileChecksum.md5}", calculateChecksum(fileContent, "MD5")) : newEndpoint;
-        newEndpoint = newEndpoint.contains("${fileChecksum.sha1}") ? newEndpoint.replace("${fileChecksum.sha1}", calculateChecksum(fileContent, "SHA-1")) : newEndpoint;
-        newEndpoint = newEndpoint.contains("${fileChecksum.sha256}") ? newEndpoint.replace("${fileChecksum.sha256}", calculateChecksum(fileContent, "SHA-256")) : newEndpoint;
-        newEndpoint = newEndpoint.contains("${fileChecksum.sha512}") ? newEndpoint.replace("${fileChecksum.sha512}", calculateChecksum(fileContent, "SHA-512")) : newEndpoint;
-        endpoint = newEndpoint;
-    }
-
     /**
      * Executes the CLI command with a timeout
      * @param command (String) - the command to execute

@@ -33,7 +33,7 @@ public class CredentialsManager {
      * @param credsNamesList (List &lt;String&gt;) - List of the names of the credentials names/files.
      * @throws IllegalArgumentException - If the credsPath is null or does not exist, or if the credsNamesList is null or empty, or if any of the credentials files are not found.
      */
-    public CredentialsManager(Path credsPath, List<String> credsNamesList) throws IllegalArgumentException {
+    protected CredentialsManager(Path credsPath, List<String> credsNamesList) throws IllegalArgumentException {
         if (credsPath == null || !Files.exists(credsPath)) {
             logSevere(logMessage.replace(0, logMessage.length() ,"Defined credentials path was not found."));
             throw new IllegalArgumentException("Defined credentials path was not found.");
@@ -61,7 +61,7 @@ public class CredentialsManager {
      * @param expirationTime (long) - The expiration time in milliseconds.
      * @throws IllegalArgumentException - If the expirationTime is less than or equal to 0.
      */
-    public void setExpirationTime(long expirationTime) throws IllegalArgumentException {
+    protected void setExpirationTime(long expirationTime) throws IllegalArgumentException {
         if (expirationTime <= 0) {
             logSevere(logMessage.replace(0, logMessage.length() ,"Expiration time must be greater than 0."));
             throw new IllegalArgumentException("Expiration time must be greater than 0.");
@@ -86,7 +86,7 @@ public class CredentialsManager {
      * @throws IllegalArgumentException - If the credsName is null or empty, or if the credsName is not found in the credsNamesList.
      * @throws CredentialsFetchError - If there is an error reading the credentials file or adding the credentials to the list.
      */
-    public char[] getCredentials(String credsName) throws IllegalArgumentException, CredentialsFetchError {
+    protected char[] getCredentials(String credsName) throws IllegalArgumentException, CredentialsFetchError {
         if (credsName == null || credsName.isEmpty()) {
             logSevere(logMessage.replace(0, logMessage.length() ,"Credentials name was empty."));
             throw new IllegalArgumentException("Credentials name was empty.");
