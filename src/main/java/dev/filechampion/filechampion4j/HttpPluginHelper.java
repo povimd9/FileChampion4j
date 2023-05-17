@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
@@ -25,7 +26,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
+import org.json.JSONWriter;
 
 import dev.filechampion.filechampion4j.PluginsHelper.StepConfig;
 
@@ -81,15 +85,15 @@ public class HttpPluginHelper {
         logFine(logMessage.toString());
     }
     
-    public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent) { 
+    public Map<String, Map<String, String>> execute(String fileExtension, byte[] fileContent) {
         String result = "";
         Map<String, Map<String, String>> responseMap = new HashMap<>();
         Map<String, String> responsePatterns = new HashMap<>();
         try {
             this.endpoint = prepRequestData(this.endpoint, fileContent, fileExtension);
+            this.httpHeaders = prepJsonRequestData(this.httpHeaders.toString(), fileContent, fileExtension);
+            this.httpBody = prepJsonRequestData(this.httpBody.toString(), fileContent, fileExtension);
 
-            logMessage.replace(0, logMessage.length(), singleStepConfig.getName()).append(" endpoint: ").append(endpoint);
-            logFine(logMessage.toString());
             result = timedProcessExecution(endpoint);
             logFine(singleStepConfig.getName() + " result: " + result);
         } catch (IOException|NullPointerException|InterruptedException e) {
@@ -120,13 +124,16 @@ public class HttpPluginHelper {
     
     /**
      * Prepares the endpoint command by replacing the placeholders with the actual values
+     * @param requestData (String) - the data to be manipulated
      * @param fileContent (byte[]) - the file content
      * @param fileExtension (String) - the file extension
      * @throws IOException - if failed to save the file to temporary directory
      */
     private String prepRequestData(String requestData, byte[] fileContent, String fileExtension) throws IOException {
         if (requestData.contains("${filePath}")) {
-            filePathRaw = saveFileToTempDir(fileExtension, fileContent);
+            if (filePathRaw == null) {
+                filePathRaw = saveFileToTempDir(fileExtension, fileContent);
+            }
             if (filePathRaw == null) {
                 throw new IOException("Failed to save file to temporary directory");
             }
@@ -139,6 +146,35 @@ public class HttpPluginHelper {
         requestData = requestData.contains("${fileChecksum.sha256}") ? requestData.replace("${fileChecksum.sha256}", calculateChecksum(fileContent, "SHA-256")) : requestData;
         requestData = requestData.contains("${fileChecksum.sha512}") ? requestData.replace("${fileChecksum.sha512}", calculateChecksum(fileContent, "SHA-512")) : requestData;
         return requestData;
+
+        
+    }
+
+    /**
+     * Prepares the endpoint command by replacing the placeholders with the actual values
+     * @param requestData (String) - the data to be manipulated
+     * @param fileContent (byte[]) - the file content
+     * @param fileExtension (String) - the file extension
+     * @throws IOException - if failed to save the file to temporary directory
+     */
+    private JSONObject prepJsonRequestData(String requestData, byte[] fileContent, String fileExtension) throws IOException {
+        if (requestData.contains("${filePath}")) {
+            if (filePathRaw == null) {
+                filePathRaw = saveFileToTempDir(fileExtension, fileContent);
+            }
+            if (filePathRaw == null) {
+                throw new IOException("Failed to save file to temporary directory");
+            }
+            String filePath = filePathRaw.toString();
+            requestData = requestData.replace("${filePath}", JSONWriter.valueToString(filePath));
+        }
+        requestData = requestData.contains("${fileContent}") ? requestData.replace("${fileContent}", JSONWriter.valueToString(Base64.getEncoder().encodeToString(fileContent))) : requestData;
+        requestData = requestData.contains("${fileChecksum.md5}") ? requestData.replace("${fileChecksum.md5}", calculateChecksum(fileContent, "MD5")) : requestData;
+        requestData = requestData.contains("${fileChecksum.sha1}") ? requestData.replace("${fileChecksum.sha1}", calculateChecksum(fileContent, "SHA-1")) : requestData;
+        requestData = requestData.contains("${fileChecksum.sha256}") ? requestData.replace("${fileChecksum.sha256}", calculateChecksum(fileContent, "SHA-256")) : requestData;
+        requestData = requestData.contains("${fileChecksum.sha512}") ? requestData.replace("${fileChecksum.sha512}", calculateChecksum(fileContent, "SHA-512")) : requestData;
+
+        return new JSONObject(requestData);
     }
 
     /**
@@ -194,7 +230,7 @@ public class HttpPluginHelper {
         return responsePatterns;
     }
 
-    private String doHttpGetRequest() throws IOException {
+    private String doHttpGetRequest() throws IOException, JSONException {
         URL url = new URL(endpoint);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -220,13 +256,13 @@ public class HttpPluginHelper {
     }
     
 
-    private String doHttpPostRequest() throws IOException {
+    private String doHttpPostRequest() throws IOException, JSONException {
         URL url = new URL(endpoint);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setConnectTimeout(timeout);
         connection.setReadTimeout(timeout);
-
+    
         JSONObject httpHeadersObject = new JSONObject(httpHeaders);
         Iterator<String> headerKeys = httpHeadersObject.keys();
         while (headerKeys.hasNext()) {
@@ -235,7 +271,7 @@ public class HttpPluginHelper {
             connection.setRequestProperty(headerKey, headerValue);
         }
         connection.setDoOutput(true);
-
+    
         StringBuilder postData = new StringBuilder();
         JSONObject httpBodyObject = new JSONObject(httpBody);
         Iterator<String> bodyKeys = httpBodyObject.keys();
@@ -247,13 +283,16 @@ public class HttpPluginHelper {
             postData.append(URLEncoder.encode(value, "UTF-8"));
             postData.append('&');
         }
-
+    
         if (postData.length() > 0) {
             postData.setLength(postData.length() - 1);
         }
-
-        try (Writer writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8")) {
+    
+        try (Writer writer = new OutputStreamWriter(connection.getOutputStream(), StandardCharsets.UTF_8)) {
             writer.write(postData.toString());
+        } catch (IOException e) {
+            // Handle exceptions during the HTTP request
+            throw new IOException("Error occurred during the HTTP request: " + e.getMessage(), e);
         }
     
         int responseCode = connection.getResponseCode();
@@ -266,8 +305,13 @@ public class HttpPluginHelper {
         }
     }
     
+    
 
-    private String doHttpPostMultiPartRequest(String filePath) throws IOException {
+    private String doHttpPostMultiPartRequest(String fileExtension, byte[] fileContent) throws IOException, JSONException {
+        if (filePathRaw == null) {
+            filePathRaw = saveFileToTempDir(fileExtension, fileContent);
+        }
+    
         URL url = new URL(endpoint);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
@@ -275,11 +319,10 @@ public class HttpPluginHelper {
         connection.setReadTimeout(timeout);
         connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + generateRandomBoundary());
     
-        JSONObject httpHeadersObject = new JSONObject(httpHeaders);
-        Iterator<String> headerKeys = httpHeadersObject.keys();
+        Iterator<String> headerKeys = httpHeaders.keys();
         while (headerKeys.hasNext()) {
             String headerKey = headerKeys.next();
-            String headerValue = httpHeadersObject.getString(headerKey);
+            String headerValue = httpHeaders.getString(headerKey);
             connection.setRequestProperty(headerKey, headerValue);
         }
     
@@ -288,19 +331,24 @@ public class HttpPluginHelper {
         String lineEnd = "\r\n";
     
         try (OutputStream outputStream = connection.getOutputStream();
-             FileInputStream fis = new FileInputStream(filePath);
+             FileInputStream fis = new FileInputStream(filePathRaw.toFile());
              BufferedInputStream fileStream = new BufferedInputStream(fis)) {
             outputStream.write(("--" + boundary + lineEnd).getBytes());
-            outputStream.write(("Content-Disposition: form-data; name=\"file\"; filename=\"" + filePath + "\"" + lineEnd).getBytes());
+            String fileName = filePathRaw.getFileName().toString();
+            outputStream.write(("Content-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"" + lineEnd).getBytes());
             outputStream.write(("Content-Type: application/octet-stream" + lineEnd).getBytes());
             outputStream.write(("Content-Transfer-Encoding: binary" + lineEnd + lineEnd).getBytes());
-
-            byte[] buffer = new byte[4096];
+    
+            byte[] buffer = new byte[8192];
             int bytesRead;
             while ((bytesRead = fileStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
+    
             outputStream.write((lineEnd + "--" + boundary + "--" + lineEnd).getBytes());
+        } catch (IOException e) {
+            // Handle exceptions during file upload
+            throw new IOException("Error occurred during file upload: " + e.getMessage(), e);
         }
     
         int responseCode = connection.getResponseCode();
@@ -312,6 +360,7 @@ public class HttpPluginHelper {
             throw new IOException(requestFailedWithUnknownCode + responseCode);
         }
     }
+    
     
 
 
